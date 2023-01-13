@@ -1,2 +1,2 @@
 # ECE1140-Team-1
-# Jacob
+# Jacob Kerstetter
