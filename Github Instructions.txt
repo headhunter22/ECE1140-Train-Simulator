@@ -10,4 +10,5 @@
 10. Edit the README file as desired and save
 11. Go into Git Bash and run git add -A
 12. Run git commit -m "MESSAGE"
-13. Go to Git Hub and follow the commit pull request instructions
+13. Run git push origin branchName
+14. Go to Git Hub and follow the commit pull request instructions
