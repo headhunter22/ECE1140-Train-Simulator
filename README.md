@@ -2,3 +2,4 @@
 # Jacob Kerstetter
 # Adam Kort
 # Jason Head
+# Lauren Duffitt
