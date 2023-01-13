@@ -1,2 +1,3 @@
 # ECE1140-Team-1
-#Adam Kort
+# Jacob Kerstetter
+# Adam Kort
