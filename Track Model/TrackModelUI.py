@@ -6,27 +6,37 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Set MainWindow
         self.setWindowTitle("My App")
-        button = QPushButton("Press Me!")
-        button.setCheckable(True)
+        self.setBaseSize(QSize(400, 400))
+
+        # Set VBox with buttons
+        VBox = QVBoxLayout()
+        CentralWidget = QWidget()
+        self.setCentralWidget(CentralWidget)
+
+        # Add Buttons to VBox
+        VBox.addWidget(self.createButton())
+        VBox.addWidget(self.createButton())
+
+        CentralWidget.setLayout(VBox)
+
+    def createButton(self):
+        button = QPushButton("CLICK")
+        button.setGeometry(0,0,200,200)
         button.clicked.connect(self.buttonClick)
 
-        self.setCentralWidget(button)
+        return button
 
     def buttonClick(self):
         print("Clicked")
 
-# Create an application
-app = QApplication(sys.argv)
+# Run Code
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    #with open("styles.css","r") as file:
+    #   app.setStyleSheet(file.read())
 
-# Create a Qt widget, which will be our window.
-window = MainWindow()
-
-with open("styles.css","r") as file:
-    app.setStyleSheet(file.read())
-
-# Show window
-window.show()
-
-# Start the event loop.
-app.exec()
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
