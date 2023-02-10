@@ -23,10 +23,6 @@ app = QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
 window = MainWindow()
-
-with open("styles.css","r") as file:
-    app.setStyleSheet(file.read())
-
 # Show window
 window.show()
 
