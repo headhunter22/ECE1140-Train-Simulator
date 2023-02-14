@@ -29,14 +29,28 @@ class MainWindow(QMainWindow):
         return button
 
     def buttonClick(self):
-        print("Clicked")
+        CentralWidget.setCurrentIndex(CentralWidget.currentIndex() + 1)
+
+class SecondScreen(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        loadUi("gui.ui", self)
 
 # Run Code
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+    widget = QWidget
     #with open("styles.css","r") as file:
     #   app.setStyleSheet(file.read())
 
     window = MainWindow()
-    window.show()
+    screen2 = SecondScreen()
+
+    widget.addWidget(window)
+    widget.add(screen2)
+    widget.setFixedSize(300, 400)
+    widget.show()
+
     sys.exit(app.exec())
