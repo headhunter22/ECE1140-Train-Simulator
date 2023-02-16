@@ -1,6 +1,15 @@
 # necessary imports
 from PyQt6 import QtCore, QtGui, QtWidgets
-import SelectSwitchs
+import SwitchQuery
+
+redOcc, greenOcc, blueOcc = {}, {}, {}
+
+for i in range(1, 77):
+    redOcc[i] = 0
+for i in range(1, 151):
+    greenOcc[i] = 0
+for i in range(1, 16):
+    blueOcc[i] = 0
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -164,8 +173,8 @@ class Ui_MainWindow(object):
         self.SwitchLine.currentTextChanged.connect(self.switchLineChanged)
 
         # connect section and block changing to the same function to update connection labels
-        self.SwitchSectionDropDown.currentTextChanged.connect(self.switchLineChanged)
-        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchLineChanged)
+        self.SwitchSectionDropDown.currentTextChanged.connect(self.switchSectionOrBlockChange)
+        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchSectionOrBlockChange)
 
         # block occupancy set/unset
         self.OccLineSel.addItems(['Red', 'Green', 'Blue'])
@@ -220,8 +229,17 @@ class Ui_MainWindow(object):
             self.SwitchSectionDropDown.addItems(list(map(chr, range(65,91))))
             self.SwitchBlockDropDown.addItems(map(str, range(1, 151)))
 
+    def switchSectionOrBlockChange(self):
         # update the label for the connection
-        self.connection.setText()    
+        rawtext = SwitchQuery.selectSwitches(self.SwitchLine.currentText(), self.SwitchSectionDropDown.currentText(), self.SwitchBlockDropDown.currentText())
+        charRemove = ['[', ']', ',', '\'', '(', ')']
+
+        # remove unnecessary characters from query
+        for char in charRemove:
+            rawtext = rawtext.replace(char, '')
+
+        # set the label text
+        self.Connection.setText(rawtext)    
 
     def occLineChanged(self, selection):
         # clear current options in the dropdowns 
@@ -239,10 +257,21 @@ class Ui_MainWindow(object):
             self.OccSecSel.addItems(list(map(chr, range(65,91))))
             self.OccBlockSel.addItems(map(str, range(1, 151)))
 
-    # def setOcc(self):
+    def setOcc(self):
+        if self.OccLineSel.currentText() == 'Red':
+            redOcc[int(self.OccBlockSel.currentText())] = 1
+        elif self.OccLineSel.currentText() == 'Green':
+            greenOcc[int(self.OccBlockSel.currentText())] = 1
+        else:
+            blueOcc[int(self.OccBlockSel.currentText())] = 1
 
-    # def setVac(self):
-
+    def setVac(self):
+        if self.OccLineSel.currentText() == 'Red':
+            redOcc[int(self.OccBlockSel.currentText())] = 0
+        elif self.OccLineSel.currentText() == 'Green':
+            greenOcc[int(self.OccBlockSel.currentText())] = 0
+        else:
+            blueOcc[int(self.OccBlockSel.currentText())] = 0
 
 if __name__ == "__main__":
     import sys
