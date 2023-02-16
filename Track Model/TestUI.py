@@ -20,9 +20,6 @@ class Ui_MainWindow(object):
         self.switchLabel = QtWidgets.QLabel(parent=self.centralwidget)
         self.switchLabel.setGeometry(QtCore.QRect(180, 10, 58, 16))
         self.switchLabel.setObjectName("switchLabel")
-        self.SwitchSec = QtWidgets.QLabel(parent=self.centralwidget)
-        self.SwitchSec.setGeometry(QtCore.QRect(110, 60, 58, 16))
-        self.SwitchSec.setObjectName("SwitchSec")
         self.SwitchBlock = QtWidgets.QLabel(parent=self.centralwidget)
         self.SwitchBlock.setGeometry(QtCore.QRect(210, 60, 58, 16))
         self.SwitchBlock.setObjectName("SwitchBlock")
@@ -61,9 +58,6 @@ class Ui_MainWindow(object):
         self.OccHeader = QtWidgets.QLabel(parent=self.centralwidget)
         self.OccHeader.setGeometry(QtCore.QRect(160, 270, 121, 16))
         self.OccHeader.setObjectName("OccHeader")
-        self.OccSec = QtWidgets.QLabel(parent=self.centralwidget)
-        self.OccSec.setGeometry(QtCore.QRect(110, 300, 58, 16))
-        self.OccSec.setObjectName("OccSec")
         self.OccBlock = QtWidgets.QLabel(parent=self.centralwidget)
         self.OccBlock.setGeometry(QtCore.QRect(190, 300, 58, 16))
         self.OccBlock.setObjectName("OccBlock")
@@ -104,9 +98,6 @@ class Ui_MainWindow(object):
         self.setVacant = QtWidgets.QPushButton(parent=self.centralwidget)
         self.setVacant.setGeometry(QtCore.QRect(330, 330, 71, 32))
         self.setVacant.setObjectName("setVacant")
-        self.SwitchSectionDropDown = QtWidgets.QComboBox(parent=self.centralwidget)
-        self.SwitchSectionDropDown.setGeometry(QtCore.QRect(90, 90, 91, 32))
-        self.SwitchSectionDropDown.setObjectName("comboBox")
         self.SwitchBlockDropDown = QtWidgets.QComboBox(parent=self.centralwidget)
         self.SwitchBlockDropDown.setGeometry(QtCore.QRect(200, 90, 71, 32))
         self.SwitchBlockDropDown.setObjectName("comboBox_2")
@@ -122,9 +113,6 @@ class Ui_MainWindow(object):
         self.OccLineSel = QtWidgets.QComboBox(parent=self.centralwidget)
         self.OccLineSel.setGeometry(QtCore.QRect(0, 320, 91, 32))
         self.OccLineSel.setObjectName("OccLineSel")
-        self.OccSecSel = QtWidgets.QComboBox(parent=self.centralwidget)
-        self.OccSecSel.setGeometry(QtCore.QRect(90, 320, 91, 32))
-        self.OccSecSel.setObjectName("OccSecSel")
         self.OccBlockSel = QtWidgets.QComboBox(parent=self.centralwidget)
         self.OccBlockSel.setGeometry(QtCore.QRect(180, 320, 71, 32))
         self.OccBlockSel.setObjectName("OccBlockSel")
@@ -137,7 +125,6 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.switchLabel.setText(_translate("MainWindow", "Switches"))
-        self.SwitchSec.setText(_translate("MainWindow", "Section"))
         self.SwitchBlock.setText(_translate("MainWindow", "Block"))
         self.SwitchConn.setText(_translate("MainWindow", "Connection"))
         self.RRXing.setText(_translate("MainWindow", "Railroad Crossings"))
@@ -154,7 +141,6 @@ class Ui_MainWindow(object):
         self.GreenXing.toggled.connect(self.getCrossingStatuses)
 
         self.OccHeader.setText(_translate("MainWindow", "Occupancy"))
-        self.OccSec.setText(_translate("MainWindow", "Section"))
         self.OccBlock.setText(_translate("MainWindow", "Block"))
         self.SetTo.setText(_translate("MainWindow", "Set To:"))
         self.OccLine.setText(_translate("MainWindow", "Line"))
@@ -165,7 +151,6 @@ class Ui_MainWindow(object):
         # switch section dropdowns
         # switch select lines, sections, and blocks (default red)
         self.SwitchLine.addItems(['Red', 'Green', 'Blue'])
-        self.SwitchSectionDropDown.addItems(list(map(chr, range(65,85))))
         self.SwitchBlockDropDown.addItems(map(str, range(1, 77)))
         self.Connection.setText("Connection")
         
@@ -173,12 +158,14 @@ class Ui_MainWindow(object):
         self.SwitchLine.currentTextChanged.connect(self.switchLineChanged)
 
         # connect section and block changing to the same function to update connection labels
-        self.SwitchSectionDropDown.currentTextChanged.connect(self.switchSectionOrBlockChange)
-        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchSectionOrBlockChange)
+        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchBlockChange)
 
         # block occupancy set/unset
         self.OccLineSel.addItems(['Red', 'Green', 'Blue'])
-        self.OccSecSel.addItems(list(map(chr, range(65,85))))
+        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchBlockChange)
+
+        # block occupancy set/unset
+        self.OccLineSel.addItems(['Red', 'Green', 'Blue'])
         self.OccBlockSel.addItems(map(str, range(1, 77)))
 
         # detect switch in line to change section and block options
@@ -216,20 +203,30 @@ class Ui_MainWindow(object):
     def switchLineChanged(self, selection):
         # clear current options in the dropdowns 
         self.SwitchBlockDropDown.clear()
+
+        # for each line, add correct blocks
+        if selection == 'Red':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 77)))
+        if selection == 'Blue':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 16)))
+        if selection == 'Green':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 151)))
+
+    def switchBlockChange(self):
+        # update the label for the connection
+        rawtext = SwitchQuery.selectSwitches(self.SwitchLine.currentText(), self.SwitchBlockDropDown.currentText())
+        
         self.SwitchSectionDropDown.clear()
 
         # for each line, add correct sections and blocks
         if selection == 'Red':
-            self.SwitchSectionDropDown.addItems(list(map(chr, range(65,85))))
             self.SwitchBlockDropDown.addItems(map(str, range(1, 77)))
         if selection == 'Blue':
-            self.SwitchSectionDropDown.addItems(list(map(chr, range(65,68))))
             self.SwitchBlockDropDown.addItems(map(str, range(1, 16)))
         if selection == 'Green':
-            self.SwitchSectionDropDown.addItems(list(map(chr, range(65,91))))
             self.SwitchBlockDropDown.addItems(map(str, range(1, 151)))
 
-    def switchSectionOrBlockChange(self):
+    def switchBlockChange(self):
         # update the label for the connection
         rawtext = SwitchQuery.selectSwitches(self.SwitchLine.currentText(), self.SwitchSectionDropDown.currentText(), self.SwitchBlockDropDown.currentText())
         charRemove = ['[', ']', ',', '\'', '(', ')']
@@ -244,17 +241,20 @@ class Ui_MainWindow(object):
     def occLineChanged(self, selection):
         # clear current options in the dropdowns 
         self.OccBlockSel.clear()
-        self.OccSecSel.clear()
 
         # for each line, add correct sections and blocks
         if selection == 'Red':
-            self.OccSecSel.addItems(list(map(chr, range(65,85))))
             self.OccBlockSel.addItems(map(str, range(1, 77)))
         if selection == 'Blue':
-            self.OccSecSel.addItems(list(map(chr, range(65,68))))
             self.OccBlockSel.addItems(map(str, range(1, 16)))
         if selection == 'Green':
-            self.OccSecSel.addItems(list(map(chr, range(65,91))))
+
+        # for each line, add correct sections and blocks
+        if selection == 'Red':
+            self.OccBlockSel.addItems(map(str, range(1, 77)))
+        if selection == 'Blue':
+            self.OccBlockSel.addItems(map(str, range(1, 16)))
+        if selection == 'Green':
             self.OccBlockSel.addItems(map(str, range(1, 151)))
 
     def setOcc(self):
