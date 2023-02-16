@@ -162,6 +162,10 @@ class Ui_MainWindow(object):
 
         # block occupancy set/unset
         self.OccLineSel.addItems(['Red', 'Green', 'Blue'])
+        self.SwitchBlockDropDown.currentTextChanged.connect(self.switchBlockChange)
+
+        # block occupancy set/unset
+        self.OccLineSel.addItems(['Red', 'Green', 'Blue'])
         self.OccBlockSel.addItems(map(str, range(1, 77)))
 
         # detect switch in line to change section and block options
@@ -211,6 +215,20 @@ class Ui_MainWindow(object):
     def switchBlockChange(self):
         # update the label for the connection
         rawtext = SwitchQuery.selectSwitches(self.SwitchLine.currentText(), self.SwitchBlockDropDown.currentText())
+        
+        self.SwitchSectionDropDown.clear()
+
+        # for each line, add correct sections and blocks
+        if selection == 'Red':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 77)))
+        if selection == 'Blue':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 16)))
+        if selection == 'Green':
+            self.SwitchBlockDropDown.addItems(map(str, range(1, 151)))
+
+    def switchBlockChange(self):
+        # update the label for the connection
+        rawtext = SwitchQuery.selectSwitches(self.SwitchLine.currentText(), self.SwitchSectionDropDown.currentText(), self.SwitchBlockDropDown.currentText())
         charRemove = ['[', ']', ',', '\'', '(', ')']
 
         # remove unnecessary characters from query
@@ -223,6 +241,13 @@ class Ui_MainWindow(object):
     def occLineChanged(self, selection):
         # clear current options in the dropdowns 
         self.OccBlockSel.clear()
+
+        # for each line, add correct sections and blocks
+        if selection == 'Red':
+            self.OccBlockSel.addItems(map(str, range(1, 77)))
+        if selection == 'Blue':
+            self.OccBlockSel.addItems(map(str, range(1, 16)))
+        if selection == 'Green':
 
         # for each line, add correct sections and blocks
         if selection == 'Red':
