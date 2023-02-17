@@ -44,6 +44,8 @@ class Ui_MainWindow(object):
         self.InputsBox = QtWidgets.QFrame(parent=self.centralwidget)
         self.InputsBox.setGeometry(QtCore.QRect(60, 10, 411, 51))
         self.InputsBox.setAutoFillBackground(True)
+        self.InputsBox.setStyleSheet("background-color: 0xDDDDDD\n"
+"")
         self.InputsBox.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.InputsBox.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.InputsBox.setObjectName("InputsBox")
