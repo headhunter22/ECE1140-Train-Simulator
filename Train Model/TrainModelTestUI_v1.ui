@@ -169,7 +169,7 @@
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>310</y>
+      <y>330</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -182,7 +182,7 @@
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>330</y>
+      <y>350</y>
       <width>101</width>
       <height>21</height>
      </rect>
@@ -195,7 +195,7 @@
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>350</y>
+      <y>310</y>
       <width>101</width>
       <height>21</height>
      </rect>
@@ -546,28 +546,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>CheckBox</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_3">
-    <property name="geometry">
-     <rect>
-      <x>640</x>
-      <y>310</y>
-      <width>111</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">    QCheckBox::indicator:unchecked {
-		color: rgb(0, 170, 0);
-    }
-    QCheckBox::indicator:checked {
-		color: rgb(255, 0, 0);
-    }</string>
-    </property>
-    <property name="text">
-     <string>CheckBox</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_4">
+   <widget class="QCheckBox" name="leftDoor">
     <property name="geometry">
      <rect>
       <x>640</x>
@@ -588,11 +567,32 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>CheckBox</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_5">
+   <widget class="QCheckBox" name="rightDoor">
     <property name="geometry">
      <rect>
       <x>640</x>
       <y>350</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    QCheckBox::indicator:unchecked {
+		color: rgb(0, 170, 0);
+    }
+    QCheckBox::indicator:checked {
+		color: rgb(255, 0, 0);
+    }</string>
+    </property>
+    <property name="text">
+     <string>CheckBox</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="headlights">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>310</y>
       <width>111</width>
       <height>18</height>
      </rect>
@@ -614,7 +614,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <rect>
       <x>240</x>
       <y>80</y>
-      <width>191</width>
+      <width>221</width>
       <height>131</height>
      </rect>
     </property>
@@ -637,7 +637,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <x>20</x>
       <y>80</y>
       <width>171</width>
-      <height>91</height>
+      <height>101</height>
      </rect>
     </property>
     <item>
@@ -669,8 +669,81 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="intLightLabel">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>110</x>
       <y>80</y>
+      <width>37</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="extLights">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>290</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    QCheckBox::indicator:unchecked {
+		color: rgb(0, 170, 0);
+    }
+    QCheckBox::indicator:checked {
+		color: rgb(255, 0, 0);
+    }</string>
+    </property>
+    <property name="text">
+     <string>CheckBox</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="extLightLabel">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>100</y>
+      <width>37</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="headlightLabel">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>120</y>
+      <width>37</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lDoorLabel">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>140</y>
+      <width>37</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rDoorLabel">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>160</y>
       <width>37</width>
       <height>12</height>
      </rect>
