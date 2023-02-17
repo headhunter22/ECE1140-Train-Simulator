@@ -22,8 +22,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.checkBox.setIconSize(QSize(300, 300))
 
         #light status change
-        self.intLights.stateChanged.connect(self.clickIntLights)
-
+        self.intLights.stateChanged.connect(self.clickBox)
+        #self.extLights.stateChanged.connect(self.clickBox)
 
     #temp set function
     def tempInputfunc(self):
@@ -35,21 +35,27 @@ class MainWindow(QtWidgets.QMainWindow):
         inputPow = self.inputPow.text()
         self.outputPow.setText("{0} Watts".format(inputPow))
 
-    #changing box icon
+    #changing box 
     def clickBox(self):
         if self.checkBox.isChecked():
             icon = QtGui.QIcon("switch_on.jpg")
+            self.checkBox.setIcon(icon)
+            self.checkBox.setIconSize(QSize(300, 300))
         else:
             icon = QtGui.QIcon("switch_off.jpg")
-        self.checkBox.setIcon(icon)
-        self.checkBox.setIconSize(QSize(300, 300))
-    
-    #internal lights
-    def clickIntLights(self):
+            self.checkBox.setIcon(icon)
+            self.checkBox.setIconSize(QSize(300, 300))
+
         if self.intLights.isChecked():
-            self.intLightLabel.setStyleSheet("background-color: green")
+                self.intLightLabel.setStyleSheet("background-color: green")
         else:
             self.intLightLabel.setStyleSheet("background-color: red")
+
+       # if self.extLights.isChecked():
+       #         self.extLightLabel.setStyleSheet("background-color: green")
+       # else:
+       #     self.extLightLabel.setStyleSheet("background-color: red")
+
 
 
             
