@@ -106,6 +106,10 @@
     <property name="autoFillBackground">
      <bool>true</bool>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: 0xDDDDDD
+</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
