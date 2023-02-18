@@ -1,19 +1,27 @@
 import Block
 
 class Section:
-    # declare attributes
-    blocks = []
-
     # constructor
     def __init__(self, sectionName):
+        self.blocks = []
         self.sectionName = sectionName
 
     # declare methods
-    def addBlock(block):
-        blocks.append(block)
+    def addBlock(self, block):
+        self.blocks.append(block)
 
-    def removeBlock(block):
-        blocks.remove(block)
+    def removeBlock(self, block):
+        self.blocks.remove(block)
 
-    def clearBlocks():
-        blocks.clear()
+    def clearBlocks(self):
+        self.blocks.clear()
+
+    def hasBlock(self, blockID):
+        for b in self.blocks:
+            if b.blockName == blockID:
+                return True
+
+    def hasBlock(self, blockID):
+        for b in self.blocks:
+            if b.blockName == blockID:
+                return b
