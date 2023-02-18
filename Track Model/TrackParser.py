@@ -23,16 +23,23 @@ with open('Track Layout.csv', newline='') as csvfile:
         newBlock = Block(row[2:])
 
         # if line does not exist, add it to track lines
-        if not track.lineExists(newLine.lineName):
+        if not track.hasLine(newLine.lineName):
             track.addLine(newLine)
+        currLine = track.getLine(newLine.lineName)
 
         # if section does not exist on the line, add it to the line
-        if not track.getLine(newLine.lineName).hasSection(newSection.sectionName):
-
+        if not currLine.hasSection(newSection.sectionName):
+            currLine.addSection(newSection)
+        currSection = currLine.getSection(newSection.sectionName)
 
         # if block does not exist in the section, add it to the block
-
+        if not currSection.hasBlock(newBlock.blockName):
+            currSection.addBlock(newBlock)
 
 
 for line in track.lines:
     print(line.lineName)
+    for section in line.sections:
+        print('\t' + section.sectionName)
+        for block in section.blocks:
+            print('\t\t' + block.blockName)

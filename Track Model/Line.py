@@ -16,5 +16,12 @@ class Line:
     def clearSection(self):
         self.sections.clear()
 
-    def hasSection(self, section):
-        
+    def hasSection(self, sectionID):
+        for s in self.sections:
+            if s.sectionName == sectionID:
+                return True
+
+    def getSection(self, sectionID):
+        for s in self.sections:
+            if s.sectionName == sectionID:
+                return s
