@@ -53,6 +53,8 @@ class Ui_MainWindow(object):
         self.InputsBox.setObjectName(u"InputsBox")
         self.InputsBox.setGeometry(QRect(60, 10, 411, 51))
         self.InputsBox.setAutoFillBackground(True)
+        self.InputsBox.setStyleSheet(u"background-color: 0xDDDDDD\n"
+"")
         self.InputsBox.setFrameShape(QFrame.StyledPanel)
         self.InputsBox.setFrameShadow(QFrame.Raised)
         self.Inputs = QLabel(self.InputsBox)
