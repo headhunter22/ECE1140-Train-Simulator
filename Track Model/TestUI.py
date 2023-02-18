@@ -97,7 +97,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
 #end class definition
 
-
 #defining the app and the window
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()
