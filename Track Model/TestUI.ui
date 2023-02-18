@@ -27,23 +27,10 @@
      <string>Switches</string>
     </property>
    </widget>
-   <widget class="QLabel" name="SwitchSec">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>60</y>
-      <width>58</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Section</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="SwitchBlock">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>120</x>
       <y>60</y>
       <width>58</width>
       <height>16</height>
@@ -56,7 +43,7 @@
    <widget class="QLabel" name="SwitchConn">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>270</x>
       <y>60</y>
       <width>81</width>
       <height>20</height>
@@ -118,7 +105,7 @@
      <string>Green Line</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="RedXing">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -131,7 +118,7 @@
      <string>E-19</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_2">
+   <widget class="QCheckBox" name="GreenXing">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -170,23 +157,10 @@
      <string>Occupancy</string>
     </property>
    </widget>
-   <widget class="QLabel" name="OccSec">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>300</y>
-      <width>58</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Section</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="OccBlock">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>130</x>
       <y>300</y>
       <width>58</width>
       <height>16</height>
@@ -300,7 +274,7 @@
      <string>Date/Time</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="tempEntry">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -336,55 +310,15 @@
      <string>Vacant</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="SwitchBlockDropDown">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>90</y>
-      <width>91</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>A</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>C</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QComboBox" name="comboBox_2">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
+      <x>100</x>
       <y>90</y>
       <width>71</width>
       <height>32</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>A</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>C</string>
-     </property>
-    </item>
    </widget>
    <widget class="QLabel" name="SwitchSec_2">
     <property name="geometry">
@@ -462,60 +396,20 @@
      </property>
     </item>
    </widget>
-   <widget class="QComboBox" name="OccSecSel">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>320</y>
-      <width>91</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>A</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>C</string>
-     </property>
-    </item>
-   </widget>
    <widget class="QComboBox" name="OccBlockSel">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>110</x>
       <y>320</y>
       <width>71</width>
       <height>32</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>A</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>C</string>
-     </property>
-    </item>
    </widget>
    <widget class="QLabel" name="Connection">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>90</y>
       <width>121</width>
       <height>20</height>

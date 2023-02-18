@@ -6,7 +6,7 @@ class Section:
 
     # constructor
     def __init__(self, sectionName):
-        self.section = sectionName
+        self.sectionName = sectionName
 
     # declare methods
     def addBlock(block):

@@ -1,35 +1,38 @@
-import csv
-import sqlite3
+import csv, sys
 
-# db to store table
-connection = sqlite3.connect('tracklayout.db')
-cursor = connection.cursor()
+sys.path.append('../ECE1140-TEAM-1/')
 
-# define the table
-tracklayout = '''CREATE TABLE tracklayout (
-             line TEXT,
-             section TEXT,
-             block_number TEXT,
-             block_length INTEGER,
-             block_grade,
-             speed_limit,
-             infrastructure TEXT,
-             blank,
-             elevation INTEGER,
-             cum_elevation INTEGER); 
-           '''
+from Track import Track
+from Line import Line
+from Section import Section
+from Block import Block
 
-# create table in db
-cursor.execute(tracklayout)
+track = Track()
 
-# open file and insert into table
-file = open('Track Layout.csv')
-content = csv.reader(file)
+with open('Track Layout.csv', newline='') as csvfile:
+    trackReader = csv.reader(csvfile)
 
-# query to insert data
-insert = "INSERT INTO tracklayout (line, section, block_number, block_length, block_grade, speed_limit, infrastructure, blank, elevation, cum_elevation) VALUES(?,?,?,?,?,?,?,?,?,?)"
-cursor.executemany(insert, content)
+    # skip first line of headers
+    next(trackReader)
 
-# commit changes and close
-connection.commit()
-connection.close()
+    # for each real row in csv, read in data
+    for row in trackReader:
+        # define objects for row line, section, and block
+        newLine = Line(row[0])
+        newSection = Section(row[1])
+        newBlock = Block(row[2:])
+
+        # if line does not exist, add it to track lines
+        if not track.lineExists(newLine.lineName):
+            track.addLine(newLine)
+
+        # if section does not exist on the line, add it to the line
+        if not track.getLine(newLine.lineName).hasSection(newSection.sectionName):
+
+
+        # if block does not exist in the section, add it to the block
+
+
+
+for line in track.lines:
+    print(line.lineName)
