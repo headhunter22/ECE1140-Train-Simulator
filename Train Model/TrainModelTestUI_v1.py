@@ -10,16 +10,11 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("TrainModelTestUI_v1.ui", self)
         self.setWindowTitle('Train Model Test UI')
+       
         #temperature set
         self.tempButton.clicked.connect(self.tempInputfunc)
         #power set 
         self.powButton.clicked.connect(self.powInputfunc)
-
-        #icon change
-        icon = QtGui.QIcon("switch_off.jpg")
-        self.checkBox.stateChanged.connect(self.clickBox)
-        self.checkBox.setIcon(icon)
-        self.checkBox.setIconSize(QSize(300, 300))
 
         #light status change
         self.intLights.stateChanged.connect(self.clickBox)
@@ -27,27 +22,45 @@ class MainWindow(QtWidgets.QMainWindow):
         self.headlights.stateChanged.connect(self.clickBox)
         self.leftDoor.stateChanged.connect(self.clickBox)
         self.rightDoor.stateChanged.connect(self.clickBox)
+        
+        #Fault/AC icon init
+        sigIcon = QtGui.QIcon("sigOFF.png")
+        powIcon = QtGui.QIcon("powOFF.png")
+        brakeIcon = QtGui.QIcon("brakesOFF.png")
+        ACIm =  QtGui.QIcon("ACOFF.png")
+      
+        self.sigFaultLabel.setIcon(sigIcon)
+        self.sigFaultLabel.setIconSize(QSize(50, 50))
+        self.powFaultLabel.setIcon(powIcon)
+        self.powFaultLabel.setIconSize(QSize(50, 50))
+        self.brakeFaultLabel.setIcon(brakeIcon)
+        self.brakeFaultLabel.setIconSize(QSize(50, 50))
+        self.ACIcon.setIcon(ACIm)
+        self.ACIcon.setIconSize(QSize(50, 50))
+
+        self.sigFault.stateChanged.connect(self.clickBox)
+        self.powFault.stateChanged.connect(self.clickBox)
+        self.brakeFault.stateChanged.connect(self.clickBox)
+        self.AC.stateChanged.connect(self.clickBox)
+
+        #Setting speed icon (static)
+        SpeedIm =  QtGui.QIcon("speed.png")
+        self.speedIcon.setIcon(SpeedIm)
+        self.speedIcon.setIconSize(QSize(75, 75))
+
 
     #temp set function
     def tempInputfunc(self):
         inputTemp = self.inputTemp.text()
-        self.outputTemp.setText("{0} degrees F".format(inputTemp))
+        self.tempLabel.setText("Current Temp: {0} degrees F".format(inputTemp))
     
     #power set function
     def powInputfunc(self):
         inputPow = self.inputPow.text()
-        self.outputPow.setText("{0} Watts".format(inputPow))
+        self.powLabel.setText("Current Power: {0} Watts".format(inputPow))
 
     #changing box 
     def clickBox(self):
-        if self.checkBox.isChecked():
-            icon = QtGui.QIcon("switch_on.jpg")
-            self.checkBox.setIcon(icon)
-            self.checkBox.setIconSize(QSize(300, 300))
-        else:
-            icon = QtGui.QIcon("switch_off.jpg")
-            self.checkBox.setIcon(icon)
-            self.checkBox.setIconSize(QSize(300, 300))
 
         #internal lights
         if self.intLights.isChecked():
@@ -88,6 +101,46 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.rDoorLabel.setStyleSheet("background-color: red")
             self.rDoorLabel.setText("OFF")
+
+        #Signal Fault
+        if self.sigFault.isChecked():
+                sigIcon = QtGui.QIcon("sigON.png")
+                self.sigFaultLabel.setIcon(sigIcon)
+                self.sigFaultLabel.setIconSize(QSize(50, 50))
+        else:
+            sigIcon = QtGui.QIcon("sigOFF.png")
+            self.sigFaultLabel.setIcon(sigIcon)
+            self.sigFaultLabel.setIconSize(QSize(50, 50))
+        #power Fault
+        if self.powFault.isChecked():
+                powIcon = QtGui.QIcon("powON.png")
+                self.powFaultLabel.setIcon(powIcon)
+                self.powFaultLabel.setIconSize(QSize(50, 50))
+        else:
+            powIcon = QtGui.QIcon("powOFF.png")
+            self.powFaultLabel.setIcon(powIcon)
+            self.powFaultLabel.setIconSize(QSize(50, 50))
+        #brake Fault
+        if self.brakeFault.isChecked():
+                brakeIcon = QtGui.QIcon("brakesON.png")
+                self.brakeFaultLabel.setIcon(brakeIcon)
+                self.brakeFaultLabel.setIconSize(QSize(50, 50))
+        else:
+            brakeIcon = QtGui.QIcon("brakesOFF.png")
+            self.brakeFaultLabel.setIcon(brakeIcon)
+            self.brakeFaultLabel.setIconSize(QSize(50, 50))
+
+        #AC Fault
+        if self.AC.isChecked():
+                ACIm = QtGui.QIcon("ACON.png")
+                self.ACIcon.setIcon(ACIm)
+                self.ACIcon.setIconSize(QSize(50, 50))
+        else:
+            ACIm = QtGui.QIcon("ACOFF.png")
+            self.ACIcon.setIcon(ACIm)
+            self.ACIcon.setIconSize(QSize(50, 50))
+
+    
     
 
 #end class definition
