@@ -1,0 +1,8 @@
+
+
+#suggested speed set
+    self.pushButton.clicked.connect(self.showSuggSpeed)
+
+def showSuggSpeed(self):
+    entSpeed = self.EnterSpeed.text()
+    self.SuggSpeed_2.setText("Suggested Speed: {0}mph".format(entSpeed))
