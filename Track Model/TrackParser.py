@@ -1,0 +1,45 @@
+import csv, sys
+
+sys.path.append('../ECE1140-TEAM-1/')
+
+from Track import Track
+from Line import Line
+from Section import Section
+from Block import Block
+
+track = Track()
+
+with open('Track Layout.csv', newline='') as csvfile:
+    trackReader = csv.reader(csvfile)
+
+    # skip first line of headers
+    next(trackReader)
+
+    # for each real row in csv, read in data
+    for row in trackReader:
+        # define objects for row line, section, and block
+        newLine = Line(row[0])
+        newSection = Section(row[1])
+        newBlock = Block(row[2:])
+
+        # if line does not exist, add it to track lines
+        if not track.hasLine(newLine.lineName):
+            track.addLine(newLine)
+        currLine = track.getLine(newLine.lineName)
+
+        # if section does not exist on the line, add it to the line
+        if not currLine.hasSection(newSection.sectionName):
+            currLine.addSection(newSection)
+        currSection = currLine.getSection(newSection.sectionName)
+
+        # if block does not exist in the section, add it to the block
+        if not currSection.hasBlock(newBlock.blockName):
+            currSection.addBlock(newBlock)
+
+
+for line in track.lines:
+    print(line.lineName)
+    for section in line.sections:
+        print('\t' + section.sectionName)
+        for block in section.blocks:
+            print('\t\t' + block.blockName)
