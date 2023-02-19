@@ -17,7 +17,7 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="InputLocation">
+   <widget class="QLabel" name="locationText">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -35,7 +35,7 @@
      <string>Enter Train Location:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="EnterLocation">
+   <widget class="QLineEdit" name="enterLocation">
     <property name="geometry">
      <rect>
       <x>400</x>
@@ -45,7 +45,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="EnterSpeed">
+   <widget class="QLineEdit" name="enterSpeed">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -58,7 +58,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="InputSpeed">
+   <widget class="QLabel" name="speedText">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -104,10 +104,10 @@
      </rect>
     </property>
     <property name="autoFillBackground">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: 0xDDDDDD
+     <string notr="true">background-color: #B8B8B8
 </string>
     </property>
     <property name="frameShape">
@@ -119,9 +119,9 @@
     <widget class="QLabel" name="Inputs">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>170</x>
        <y>0</y>
-       <width>81</width>
+       <width>61</width>
        <height>41</height>
       </rect>
      </property>
@@ -129,6 +129,9 @@
       <font>
        <pointsize>16</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: black</string>
      </property>
      <property name="text">
       <string>Inputs</string>
@@ -145,7 +148,10 @@
      </rect>
     </property>
     <property name="autoFillBackground">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #B8B8B8</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -156,9 +162,9 @@
     <widget class="QLabel" name="Outputs_2">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>170</x>
        <y>0</y>
-       <width>101</width>
+       <width>81</width>
        <height>41</height>
       </rect>
      </property>
@@ -167,17 +173,20 @@
        <pointsize>16</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: black</string>
+     </property>
      <property name="text">
       <string>Outputs</string>
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="SuggAuth_2">
+   <widget class="QLabel" name="authority">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>160</x>
       <y>320</y>
-      <width>241</width>
+      <width>121</width>
       <height>31</height>
      </rect>
     </property>
@@ -187,10 +196,10 @@
      </font>
     </property>
     <property name="text">
-     <string>Suggested Authority: 1.52mi</string>
+     <string>Authority: 1.52mi</string>
     </property>
    </widget>
-   <widget class="QLabel" name="SuggSpeed_2">
+   <widget class="QLabel" name="suggSpeedOutput">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -205,7 +214,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Suggested Speed: 42mph</string>
+     <string>Suggested Speed: --mph</string>
     </property>
    </widget>
    <widget class="Line" name="line_3">
@@ -221,7 +230,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="GreenLine_2">
+   <widget class="QLabel" name="greenLine_2">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -239,7 +248,7 @@
      <string>Green Line</string>
     </property>
    </widget>
-   <widget class="QLabel" name="RedLine_2">
+   <widget class="QLabel" name="redLineText">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -270,14 +279,14 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>G</string>
+        <string>           G</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>M</string>
+        <string>           M</string>
        </property>
       </widget>
      </item>
@@ -312,7 +321,7 @@
      <item row="5" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>N</string>
+        <string>           N</string>
        </property>
       </widget>
      </item>
@@ -354,7 +363,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>J</string>
+        <string>           J</string>
        </property>
       </widget>
      </item>
@@ -368,7 +377,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>J</string>
+        <string>           J</string>
        </property>
       </widget>
      </item>
@@ -389,7 +398,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>C</string>
+        <string>           C</string>
        </property>
       </widget>
      </item>
@@ -408,7 +417,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>H</string>
+        <string>           H</string>
        </property>
       </widget>
      </item>
@@ -422,7 +431,7 @@
      <item row="1" column="1">
       <widget class="QLabel" name="red_H_sw1_1">
        <property name="text">
-        <string>15-16</string>
+        <string>       15-16</string>
        </property>
       </widget>
      </item>
@@ -443,14 +452,14 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
-        <string>H</string>
+        <string>           H</string>
        </property>
       </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label_21">
        <property name="text">
-        <string>N</string>
+        <string>           N</string>
        </property>
       </widget>
      </item>
@@ -464,21 +473,21 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_9">
        <property name="text">
-        <string>H</string>
+        <string>           H</string>
        </property>
       </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_13">
        <property name="text">
-        <string>E</string>
+        <string>           E</string>
        </property>
       </widget>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_12">
        <property name="text">
-        <string>J</string>
+        <string>           J</string>
        </property>
       </widget>
      </item>
@@ -492,28 +501,28 @@
      <item row="0" column="1">
       <widget class="QLabel" name="red_E_sw1">
        <property name="text">
-        <string>9-10</string>
+        <string>         9-10</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_11">
        <property name="text">
-        <string>H</string>
+        <string>           H</string>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
       <widget class="QLabel" name="red_E_sw2">
        <property name="text">
-        <string>9-Yard</string>
+        <string>        9-Yard</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
       <widget class="QLabel" name="label_33">
        <property name="text">
-        <string>1-16</string>
+        <string>        1-16</string>
        </property>
       </widget>
      </item>
@@ -554,7 +563,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="lineSelect">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -574,7 +583,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="InputLocation_2">
+   <widget class="QLabel" name="lineText">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -592,7 +601,7 @@
      <string>Line</string>
     </property>
    </widget>
-   <widget class="QLabel" name="InputLocation_3">
+   <widget class="QLabel" name="blockText">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -610,7 +619,7 @@
      <string>Block</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="enterButton">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -623,7 +632,7 @@
      <string>Enter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="clearButton">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -636,6 +645,58 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="autoSelect">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>720</y>
+      <width>78</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Automatic</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="manualSelect">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>720</y>
+      <width>61</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Manual</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="maintenanceSelect">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>720</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Maintenance</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="modesText">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>720</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Modes:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -643,7 +704,7 @@
      <x>0</x>
      <y>0</y>
      <width>657</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCTC_Dispatcher_Test_UI">
