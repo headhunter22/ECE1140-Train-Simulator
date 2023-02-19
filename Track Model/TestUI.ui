@@ -310,7 +310,7 @@
      <string>Vacant</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="SwitchBlockDropDown">
+   <widget class="QComboBox" name="SwitchBlockSelect">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -333,7 +333,7 @@
      <string>Line</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_3">
+   <widget class="QComboBox" name="SwitchLineSelect">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -342,21 +342,6 @@
       <height>32</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Red</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Green</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Blue</string>
-     </property>
-    </item>
    </widget>
    <widget class="QPushButton" name="EnterTemp">
     <property name="geometry">
@@ -380,21 +365,6 @@
       <height>32</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>Red</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Green</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Blue</string>
-     </property>
-    </item>
    </widget>
    <widget class="QComboBox" name="OccBlockSel">
     <property name="geometry">
@@ -409,9 +379,9 @@
    <widget class="QLabel" name="Connection">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>180</x>
       <y>90</y>
-      <width>121</width>
+      <width>231</width>
       <height>20</height>
      </rect>
     </property>
@@ -420,6 +390,88 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="FaultLineSelect">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>450</y>
+      <width>91</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="FaultBlockSelect">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>450</y>
+      <width>71</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="FaultBlockLabel">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>420</y>
+      <width>58</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Block</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="FaultLineLabel">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>420</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Line</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="FaultTypeLabel">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>500</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fault Type:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="FaultTypeSelect">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>490</y>
+      <width>71</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="GoButton">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>490</y>
+      <width>51</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Go</string>
     </property>
    </widget>
   </widget>
