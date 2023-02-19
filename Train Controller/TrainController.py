@@ -89,6 +89,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.PowerShown.setCheckable(False)
         self.PowerShown.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
 
+        # Init Manual/Automatic Buttons #
+        self.ManualMode = QtWidgets.QPushButton("Manual Mode", self)
+        self.ManualMode.setGeometry(775, 400, 100, 100)
+        self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.ManualMode.setCheckable(True)
+        self.AutoMode = QtWidgets.QPushButton("Automatic Mode", self)
+        self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.AutoMode.setGeometry(775, 505, 100, 100)
+        self.AutoMode.setCheckable(True)
+
+        #Connections #
+        self.ManualMode.clicked.connect(self.ManualModeClick)
+        self.AutoMode.clicked.connect(self.AutoModeClick)
+
 
         # Calling the clicked-on EmerBrake functions #
     def EBClick(self):
@@ -116,6 +130,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Commanded Speed Changes #
     def CommandedSpeedChange(self, j):
          self.CommandedSpeed.setText("Commanded Speed: {0}".format(j))
+         self.CommandedSpeed.update()
 
         
         # Calling headlights clicked function #
@@ -157,6 +172,22 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.RightDoors.isChecked() == False:
              self.RightDoors.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
              print("Left Doors Closed")
+
+        # Calling Manual button Functions #
+    def ManualModeClick(self):
+        if self.ManualMode.isChecked() == True:
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+
+        if self.ManualMode.isChecked() == False:
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+
+       # Calling Auto button function #
+    def AutoModeClick(self):
+         if self.AutoMode.isChecked() == True:
+              self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+
+         if self.AutoMode.isChecked() == False:
+              self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
 
 
 # You need one (and only one) QApplication instance per application.
