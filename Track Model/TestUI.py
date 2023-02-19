@@ -4,7 +4,6 @@ from PyQt6 import uic
 from PyQt6.QtCore import QSize
 import TrackParser
 
-
 class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, *args, **kwargs):
