@@ -1,19 +1,8 @@
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 import sys
+from PyQt6 import QtWidgets, uic
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+app = QtWidgets.QApplication(sys.argv)
 
-        self.setWindowTitle("My App")
-        button = QPushButton("Press Me!")
-
-        # Set the central widget of the Window.
-        self.setCentralWidget(button)
-
-app = QApplication(sys.argv)
-window = MainWindow()
+window = uic.loadUi("mainwindow.ui")
 window.show()
-
 app.exec()
