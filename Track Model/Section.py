@@ -21,7 +21,7 @@ class Section:
             if b.blockName == blockID:
                 return True
 
-    def hasBlock(self, blockID):
+    def getBlock(self, blockID):
         for b in self.blocks:
             if b.blockName == blockID:
                 return b
