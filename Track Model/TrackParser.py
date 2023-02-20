@@ -36,6 +36,8 @@ def parseTrack(filename):
             # if block does not exist in the section, add it to the block
             if not currSection.hasBlock(newBlock.blockName):
                 currSection.addBlock(newBlock)
+
+            if not currLine.hasBlock(newBlock.blockName):
                 currLine.addBlock(newBlock)
 
     return track
