@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'E:\ECE1140-Team-1\CTC_Office\CTC_test.ui'
+# Form implementation generated from reading ui file 'D:\ECE_1140\ECE1140-Team-1\CTC_Office\CTC_test.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -8,15 +8,11 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-switchStateButtons = [
-    "green_C1", "green_C2", "green_G1", "green_G2", "green_J1_1", "green_J1_2", "green_J2_1", "green_J2_2", "green_M1", "green_M2", "green_N1", "green_N2",
-    "red_C1", "red_C2", "red_E1", "red_E2", "red_H1_1", "red_H1_2", "red_H2_1", "red_H2_2", "red_H3_1", "red_H3_2", "red_H4_1", "red_H4_2", "red_J1", "red_J2"
-]
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(603, 743)
+        MainWindow.resize(1113, 743)
         MainWindow.setAutoFillBackground(True)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -26,13 +22,6 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         self.locationText.setFont(font)
         self.locationText.setObjectName("locationText")
-        self.enterLocation = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.enterLocation.setGeometry(QtCore.QRect(400, 110, 91, 28))
-        self.enterLocation.setObjectName("enterLocation")
-        self.enterSpeed = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.enterSpeed.setGeometry(QtCore.QRect(340, 160, 91, 28))
-        self.enterSpeed.setText("")
-        self.enterSpeed.setObjectName("enterSpeed")
         self.speedText = QtWidgets.QLabel(parent=self.centralwidget)
         self.speedText.setGeometry(QtCore.QRect(130, 160, 201, 31))
         font = QtGui.QFont()
@@ -40,7 +29,7 @@ class Ui_MainWindow(object):
         self.speedText.setFont(font)
         self.speedText.setObjectName("speedText")
         self.mph = QtWidgets.QLabel(parent=self.centralwidget)
-        self.mph.setGeometry(QtCore.QRect(440, 160, 51, 31))
+        self.mph.setGeometry(QtCore.QRect(390, 160, 51, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.mph.setFont(font)
@@ -48,7 +37,8 @@ class Ui_MainWindow(object):
         self.InputsBox = QtWidgets.QFrame(parent=self.centralwidget)
         self.InputsBox.setGeometry(QtCore.QRect(100, 20, 411, 51))
         self.InputsBox.setAutoFillBackground(False)
-        self.InputsBox.setStyleSheet("background-color: #B8B8B8\n""")
+        self.InputsBox.setStyleSheet("background-color: #B8B8B8\n"
+"")
         self.InputsBox.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.InputsBox.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.InputsBox.setObjectName("InputsBox")
@@ -74,13 +64,13 @@ class Ui_MainWindow(object):
         self.Outputs_2.setStyleSheet("color: black")
         self.Outputs_2.setObjectName("Outputs_2")
         self.authority = QtWidgets.QLabel(parent=self.centralwidget)
-        self.authority.setGeometry(QtCore.QRect(160, 320, 101, 31))
+        self.authority.setGeometry(QtCore.QRect(120, 320, 131, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.authority.setFont(font)
         self.authority.setObjectName("authority")
         self.suggSpeedOutput = QtWidgets.QLabel(parent=self.centralwidget)
-        self.suggSpeedOutput.setGeometry(QtCore.QRect(330, 320, 171, 31))
+        self.suggSpeedOutput.setGeometry(QtCore.QRect(300, 320, 211, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.suggSpeedOutput.setFont(font)
@@ -132,7 +122,7 @@ class Ui_MainWindow(object):
         self.manualSelect.setGeometry(QtCore.QRect(370, 650, 61, 22))
         self.manualSelect.setObjectName("manualSelect")
         self.maintenanceSelect = QtWidgets.QCheckBox(parent=self.centralwidget)
-        self.maintenanceSelect.setGeometry(QtCore.QRect(440, 650, 91, 22))
+        self.maintenanceSelect.setGeometry(QtCore.QRect(440, 650, 121, 22))
         self.maintenanceSelect.setObjectName("maintenanceSelect")
         self.modesText = QtWidgets.QLabel(parent=self.centralwidget)
         self.modesText.setGeometry(QtCore.QRect(240, 650, 41, 16))
@@ -254,9 +244,22 @@ class Ui_MainWindow(object):
         self.green_text_J2 = QtWidgets.QLabel(parent=self.centralwidget)
         self.green_text_J2.setGeometry(QtCore.QRect(90, 510, 16, 16))
         self.green_text_J2.setObjectName("green_text_J2")
+        self.enterLocation = QtWidgets.QSpinBox(parent=self.centralwidget)
+        self.enterLocation.setGeometry(QtCore.QRect(417, 110, 51, 29))
+        self.enterLocation.setMaximumSize(QtCore.QSize(61, 16777215))
+        self.enterLocation.setObjectName("enterLocation")
+        self.enterSpeed = QtWidgets.QSpinBox(parent=self.centralwidget)
+        self.enterSpeed.setGeometry(QtCore.QRect(340, 160, 48, 29))
+        self.enterSpeed.setObjectName("enterSpeed")
+        self.toolButton1 = QtWidgets.QToolButton(parent=self.centralwidget)
+        self.toolButton1.setGeometry(QtCore.QRect(770, 290, 101, 27))
+        self.toolButton1.setObjectName("toolButton1")
+        self.toolButton_2 = QtWidgets.QToolButton(parent=self.centralwidget)
+        self.toolButton_2.setGeometry(QtCore.QRect(870, 290, 101, 27))
+        self.toolButton_2.setObjectName("toolButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 603, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1113, 25))
         self.menubar.setObjectName("menubar")
         self.menuCTC_Dispatcher_Test_UI = QtWidgets.QMenu(parent=self.menubar)
         self.menuCTC_Dispatcher_Test_UI.setObjectName("menuCTC_Dispatcher_Test_UI")
@@ -266,154 +269,8 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.menubar.addAction(self.menuCTC_Dispatcher_Test_UI.menuAction())
 
-        #switch which mode the test UI is in
-        self.autoSelect.clicked.connect(self.autoSwitch)
-        self.autoSelect.clicked.connect(self.otherModes)
-        self.manualSelect.clicked.connect(self.manualSwitch)
-        self.manualSelect.clicked.connect(self.otherModes)
-        self.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
-        self.maintenanceSelect.clicked.connect(self.maintenanceMode)
-        self.autoSelect.setChecked(True) #always initially in auto mode
-
-        #set initial switch states
-        self.green_C1.clicked.connect(lambda: self.toggleColor(self.green_C1))
-        self.green_C2.clicked.connect(lambda: self.toggleColor(self.green_C2))
-
-        #suggested speed set
-        self.enterButton.clicked.connect(self.showSuggSpeed)
-
-        #clear button clears all text fields
-        self.clearButton.clicked.connect(self.clearInputs)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def toggleColor(self, button):
-        #button = self.sender()
-        if button.styleSheet() == 'background-color: white':
-            button.setStyleSheet('background-color: blue')
-            if button == self.green_C1:
-                self.green_C1.setStyleSheet('background-color: white')
-            else:
-                self.green_C2.setStyleSheet('background-color: white')
-        else:
-            button.setStyleSheet('background-color: white')
-
-    def switchStates(self):
-        if self.green_C1.isChecked:
-            self.green_C1.setStyleSheet("background-color: #ADD8E6")
-            self.green_C2.setStyleSheet("background-color: None")
-        else:
-            self.green_C1.setStyleSheet("background-color: None")
-            self.green_C2.setStyleSheet("background-color: #ADD8E6")
-
-
-    def maintenanceMode(self):
-        self.enterLocation.setEnabled(False)
-        self.enterSpeed.setEnabled(False)
-        self.lineSelect.setEnabled(False)
-        self.enterButton.setEnabled(False)
-        self.clearButton.setEnabled(False)
-
-        self.green_C1.setEnabled(True)
-        self.green_C2.setEnabled(True)
-        self.green_G1.setEnabled(True)
-        self.green_G2.setEnabled(True)
-        self.green_J1_1.setEnabled(True)
-        self.green_J1_2.setEnabled(True)
-        self.green_J2_1.setEnabled(True)
-        self.green_J2_2.setEnabled(True)
-        self.green_M1.setEnabled(True)
-        self.green_M2.setEnabled(True)
-        self.green_N1.setEnabled(True)
-        self.green_N2.setEnabled(True)
-
-        self.red_C1.setEnabled(True)
-        self.red_C2.setEnabled(True)
-        self.red_E1.setEnabled(True)
-        self.red_E2.setEnabled(True)
-        self.red_H1_1.setEnabled(True)
-        self.red_H1_2.setEnabled(True)
-        self.red_H2_1.setEnabled(True)
-        self.red_H2_2.setEnabled(True)
-        self.red_H3_1.setEnabled(True)
-        self.red_H3_2.setEnabled(True)
-        self.red_H4_1.setEnabled(True)
-        self.red_H4_2.setEnabled(True)
-        self.red_J1.setEnabled(True)
-        self.red_J2.setEnabled(True)
-
-
-    def otherModes(self):
-        self.enterLocation.setEnabled(True)
-        self.enterSpeed.setEnabled(True)
-        self.lineSelect.setEnabled(True)
-        self.enterButton.setEnabled(True)
-        self.clearButton.setEnabled(True)
-
-        self.green_C1.setEnabled(False)
-        self.green_C2.setEnabled(False)
-        self.green_G1.setEnabled(False)
-        self.green_G2.setEnabled(False)
-        self.green_J1_1.setEnabled(False)
-        self.green_J1_2.setEnabled(False)
-        self.green_J2_1.setEnabled(False)
-        self.green_J2_2.setEnabled(False)
-        self.green_M1.setEnabled(False)
-        self.green_M2.setEnabled(False)
-        self.green_N1.setEnabled(False)
-        self.green_N2.setEnabled(False)
-
-        self.red_C1.setEnabled(False)
-        self.red_C2.setEnabled(False)
-        self.red_E1.setEnabled(False)
-        self.red_E2.setEnabled(False)
-        self.red_H1_1.setEnabled(False)
-        self.red_H1_2.setEnabled(False)
-        self.red_H2_1.setEnabled(False)
-        self.red_H2_2.setEnabled(False)
-        self.red_H3_1.setEnabled(False)
-        self.red_H3_2.setEnabled(False)
-        self.red_H4_1.setEnabled(False)
-        self.red_H4_2.setEnabled(False)
-        self.red_J1.setEnabled(False)
-        self.red_J2.setEnabled(False)
-
-    def clearInputs(self):
-        self.enterLocation.setText("{0}".format(""))
-        self.enterSpeed.setText("{0}".format(""))
-        self.suggSpeedOutput.setText("Suggested Speed: --mph")
-        self.authority.setText("Authority: --mi")
-
-    def showSuggSpeed(self):
-        entSpeed = self.enterSpeed.text()
-        self.suggSpeedOutput.setText("Suggested Speed: {0}mph".format(entSpeed))
-        self.enterLocation.setText("{0}".format(""))
-        self.enterSpeed.setText("{0}".format(""))
-
-    def autoSwitch(self):
-        self.manualSelect.setChecked(False)
-        self.maintenanceSelect.setChecked(False)
-        self.greenLine_2.setStyleSheet("background-color: none")
-        self.greenLine_2.setStyleSheet("color: black")
-        self.redLineText.setStyleSheet("background-color: none")
-        self.redLineText.setStyleSheet("color: black")
-
-    def manualSwitch(self):
-        self.autoSelect.setChecked(False)
-        self.maintenanceSelect.setChecked(False)
-        self.greenLine_2.setStyleSheet("background-color: none")
-        self.greenLine_2.setStyleSheet("color: black")
-        self.redLineText.setStyleSheet("background-color: none")
-        self.redLineText.setStyleSheet("color: black")
-
-    def maintenanceSwitch(self):
-        self.manualSelect.setChecked(False)
-        self.autoSelect.setChecked(False)
-        self.greenLine_2.setStyleSheet("background-color: green")
-        self.greenLine_2.setStyleSheet("color: green")
-        self.redLineText.setStyleSheet("background-color: pink")
-        self.redLineText.setStyleSheet("color: red")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -476,6 +333,8 @@ class Ui_MainWindow(object):
         self.green_text_G.setText(_translate("MainWindow", "G"))
         self.green_text_J1.setText(_translate("MainWindow", "J"))
         self.green_text_J2.setText(_translate("MainWindow", "J"))
+        self.toolButton1.setText(_translate("MainWindow", "12-13"))
+        self.toolButton_2.setText(_translate("MainWindow", "1-13"))
         self.menuCTC_Dispatcher_Test_UI.setTitle(_translate("MainWindow", "CTC Dispatcher - Test UI"))
 
 
