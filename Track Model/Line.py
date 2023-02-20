@@ -30,6 +30,11 @@ class Line:
             if s.sectionName == sectionID:
                 return s
 
+    def hasBlock(self, blockID):
+        for b in self.blocks:
+            if b.blockName == blockID:
+                return True
+
     def getBlock(self, blockID):
         for b in self.blocks:
             if b.blockName == blockID:
