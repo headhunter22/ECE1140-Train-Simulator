@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1113, 743)
+        MainWindow.resize(590, 743)
         MainWindow.setAutoFillBackground(True)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -251,15 +251,9 @@ class Ui_MainWindow(object):
         self.enterSpeed = QtWidgets.QSpinBox(parent=self.centralwidget)
         self.enterSpeed.setGeometry(QtCore.QRect(340, 160, 48, 29))
         self.enterSpeed.setObjectName("enterSpeed")
-        self.toolButton1 = QtWidgets.QToolButton(parent=self.centralwidget)
-        self.toolButton1.setGeometry(QtCore.QRect(770, 290, 101, 27))
-        self.toolButton1.setObjectName("toolButton1")
-        self.toolButton_2 = QtWidgets.QToolButton(parent=self.centralwidget)
-        self.toolButton_2.setGeometry(QtCore.QRect(870, 290, 101, 27))
-        self.toolButton_2.setObjectName("toolButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1113, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 590, 25))
         self.menubar.setObjectName("menubar")
         self.menuCTC_Dispatcher_Test_UI = QtWidgets.QMenu(parent=self.menubar)
         self.menuCTC_Dispatcher_Test_UI.setObjectName("menuCTC_Dispatcher_Test_UI")
@@ -333,8 +327,6 @@ class Ui_MainWindow(object):
         self.green_text_G.setText(_translate("MainWindow", "G"))
         self.green_text_J1.setText(_translate("MainWindow", "J"))
         self.green_text_J2.setText(_translate("MainWindow", "J"))
-        self.toolButton1.setText(_translate("MainWindow", "12-13"))
-        self.toolButton_2.setText(_translate("MainWindow", "1-13"))
         self.menuCTC_Dispatcher_Test_UI.setTitle(_translate("MainWindow", "CTC Dispatcher - Test UI"))
 
 

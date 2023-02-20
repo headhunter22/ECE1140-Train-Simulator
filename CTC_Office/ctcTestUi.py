@@ -63,21 +63,9 @@ class MainWindow(QMainWindow):
 
         if button1.styleSheet() == 'background-color: white':
             button1.setStyleSheet('background-color: blue')
-            
-            if button1 == self.ui.green_C1:
-                self.ui.green_C2.setStyleSheet('background-color: white')
-            else:
-                self.ui.green_C1.setStyleSheet('background-color: white')
+            button2.setStyleSheet('background-color: white')
         else:
             button1.setStyleSheet('background-color: white')
-
-    def switchStates(self):
-        if self.ui.green_C1.isChecked:
-            self.ui.green_C1.setStyleSheet("background-color: #ADD8E6")
-            self.ui.green_C2.setStyleSheet("background-color: None")
-        else:
-            self.ui.green_C1.setStyleSheet("background-color: None")
-            self.ui.green_C2.setStyleSheet("background-color: #ADD8E6")
 
     def trainLocation(self):
         #only allowing certain inputs for the inputs section
