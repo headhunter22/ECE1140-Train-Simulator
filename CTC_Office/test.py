@@ -25,8 +25,11 @@ class MainWindow(QMainWindow):
         self.ui.clearButton.clicked.connect(self.clearInputs)
         
         self.ui.green_C1.clicked.connect(lambda: self.toggleColor(self.ui.green_C1))
-        self.toggle_state = False
+        self.ui.green_C1.setStyleSheet('background-color: blue')
+        self.green_C1_state = True
         self.ui.green_C2.clicked.connect(lambda: self.toggleColor(self.ui.green_C2))
+        self.ui.green_C2.setStyleSheet('background-color: white')
+        self.green_C2_state = False
         
         self.show()
 
@@ -35,10 +38,9 @@ class MainWindow(QMainWindow):
     
         
     def toggleColor(self, button):
-        self.toggle_state = not self.toggle_state
-        print("green_C_1 state: ", self.toggle_state)
         if button.styleSheet() == 'background-color: white':
             button.setStyleSheet('background-color: blue')
+            
             if button == self.ui.green_C1:
                 self.ui.green_C2.setStyleSheet('background-color: white')
             else:
