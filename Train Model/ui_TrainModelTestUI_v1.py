@@ -17,10 +17,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
-    QFrame, QLabel, QLineEdit, QListWidget,
-    QListWidgetItem, QMainWindow, QMenu, QMenuBar,
-    QPushButton, QSizePolicy, QStatusBar, QTextEdit,
-    QWidget)
+    QFrame, QLabel, QLineEdit, QMainWindow,
+    QMenu, QMenuBar, QProgressBar, QPushButton,
+    QSizePolicy, QStatusBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -58,52 +57,53 @@ class Ui_MainWindow(object):
         self.label_4.setGeometry(QRect(520, 170, 141, 21))
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(520, 230, 141, 21))
+        self.label_5.setGeometry(QRect(520, 220, 141, 21))
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(520, 210, 121, 21))
+        self.label_6.setGeometry(QRect(520, 200, 121, 21))
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(520, 270, 91, 21))
+        self.label_7.setGeometry(QRect(520, 250, 91, 21))
         self.label_8 = QLabel(self.centralwidget)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(520, 290, 101, 21))
+        self.label_8.setGeometry(QRect(520, 270, 101, 21))
         self.label_9 = QLabel(self.centralwidget)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(520, 330, 91, 21))
+        self.label_9.setGeometry(QRect(520, 310, 91, 21))
         self.label_10 = QLabel(self.centralwidget)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setGeometry(QRect(520, 350, 101, 21))
+        self.label_10.setGeometry(QRect(520, 330, 101, 21))
         self.label_11 = QLabel(self.centralwidget)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(520, 310, 101, 21))
+        self.label_11.setGeometry(QRect(520, 290, 101, 21))
         self.inputPow = QLineEdit(self.centralwidget)
         self.inputPow.setObjectName(u"inputPow")
-        self.inputPow.setGeometry(QRect(640, 230, 81, 20))
+        self.inputPow.setGeometry(QRect(640, 220, 81, 20))
         self.inputCommSpeed = QLineEdit(self.centralwidget)
         self.inputCommSpeed.setObjectName(u"inputCommSpeed")
         self.inputCommSpeed.setGeometry(QRect(640, 80, 81, 20))
-        self.outputPow = QTextEdit(self.centralwidget)
-        self.outputPow.setObjectName(u"outputPow")
-        self.outputPow.setGeometry(QRect(280, 300, 81, 21))
         self.inputTemp = QLineEdit(self.centralwidget)
         self.inputTemp.setObjectName(u"inputTemp")
-        self.inputTemp.setGeometry(QRect(640, 210, 81, 20))
-        self.outputTemp = QTextEdit(self.centralwidget)
-        self.outputTemp.setObjectName(u"outputTemp")
-        self.outputTemp.setGeometry(QRect(100, 300, 81, 21))
+        self.inputTemp.setGeometry(QRect(640, 200, 81, 20))
         self.tempButton = QPushButton(self.centralwidget)
         self.tempButton.setObjectName(u"tempButton")
-        self.tempButton.setGeometry(QRect(740, 210, 41, 18))
+        self.tempButton.setGeometry(QRect(740, 200, 41, 18))
         self.powButton = QPushButton(self.centralwidget)
         self.powButton.setObjectName(u"powButton")
-        self.powButton.setGeometry(QRect(740, 230, 41, 18))
+        self.powButton.setGeometry(QRect(740, 220, 41, 18))
         self.tempLabel = QLabel(self.centralwidget)
         self.tempLabel.setObjectName(u"tempLabel")
-        self.tempLabel.setGeometry(QRect(10, 300, 81, 16))
+        self.tempLabel.setGeometry(QRect(10, 310, 151, 21))
+        self.tempLabel.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;\n"
+"font: 11pt \"Segoe UI\";")
         self.powLabel = QLabel(self.centralwidget)
         self.powLabel.setObjectName(u"powLabel")
-        self.powLabel.setGeometry(QRect(200, 300, 81, 20))
+        self.powLabel.setGeometry(QRect(240, 370, 231, 31))
+        self.powLabel.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
         self.dateTimeEdit = QDateTimeEdit(self.centralwidget)
         self.dateTimeEdit.setObjectName(u"dateTimeEdit")
         self.dateTimeEdit.setGeometry(QRect(640, 50, 81, 22))
@@ -152,16 +152,18 @@ class Ui_MainWindow(object):
         self.label_15.setGeometry(QRect(520, 140, 121, 21))
         self.intLights = QCheckBox(self.centralwidget)
         self.intLights.setObjectName(u"intLights")
-        self.intLights.setGeometry(QRect(640, 270, 111, 18))
+        self.intLights.setGeometry(QRect(640, 250, 111, 18))
         self.intLights.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
 "		color: rgb(0, 170, 0);\n"
 "    }\n"
 "    QCheckBox::indicator:checked {\n"
 "		color: rgb(255, 0, 0);\n"
-"    }")
+"    }\n"
+"\n"
+"")
         self.leftDoor = QCheckBox(self.centralwidget)
         self.leftDoor.setObjectName(u"leftDoor")
-        self.leftDoor.setGeometry(QRect(640, 330, 111, 18))
+        self.leftDoor.setGeometry(QRect(640, 310, 111, 18))
         self.leftDoor.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
 "		color: rgb(0, 170, 0);\n"
 "    }\n"
@@ -170,7 +172,7 @@ class Ui_MainWindow(object):
 "    }")
         self.rightDoor = QCheckBox(self.centralwidget)
         self.rightDoor.setObjectName(u"rightDoor")
-        self.rightDoor.setGeometry(QRect(640, 350, 111, 18))
+        self.rightDoor.setGeometry(QRect(640, 330, 111, 18))
         self.rightDoor.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
 "		color: rgb(0, 170, 0);\n"
 "    }\n"
@@ -179,32 +181,19 @@ class Ui_MainWindow(object):
 "    }")
         self.headlights = QCheckBox(self.centralwidget)
         self.headlights.setObjectName(u"headlights")
-        self.headlights.setGeometry(QRect(640, 310, 111, 18))
+        self.headlights.setGeometry(QRect(640, 290, 111, 18))
         self.headlights.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
 "		color: rgb(0, 170, 0);\n"
 "    }\n"
 "    QCheckBox::indicator:checked {\n"
 "		color: rgb(255, 0, 0);\n"
 "    }")
-        self.checkBox = QCheckBox(self.centralwidget)
-        self.checkBox.setObjectName(u"checkBox")
-        self.checkBox.setGeometry(QRect(240, 80, 221, 131))
-        self.checkBox.setMaximumSize(QSize(451, 131))
-        self.checkBox.setStyleSheet(u"")
-        self.listWidget = QListWidget(self.centralwidget)
-        QListWidgetItem(self.listWidget)
-        QListWidgetItem(self.listWidget)
-        QListWidgetItem(self.listWidget)
-        QListWidgetItem(self.listWidget)
-        QListWidgetItem(self.listWidget)
-        self.listWidget.setObjectName(u"listWidget")
-        self.listWidget.setGeometry(QRect(20, 80, 171, 101))
         self.intLightLabel = QLabel(self.centralwidget)
         self.intLightLabel.setObjectName(u"intLightLabel")
-        self.intLightLabel.setGeometry(QRect(110, 80, 37, 12))
+        self.intLightLabel.setGeometry(QRect(180, 110, 37, 12))
         self.extLights = QCheckBox(self.centralwidget)
         self.extLights.setObjectName(u"extLights")
-        self.extLights.setGeometry(QRect(640, 290, 111, 18))
+        self.extLights.setGeometry(QRect(640, 270, 111, 18))
         self.extLights.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
 "		color: rgb(0, 170, 0);\n"
 "    }\n"
@@ -213,16 +202,171 @@ class Ui_MainWindow(object):
 "    }")
         self.extLightLabel = QLabel(self.centralwidget)
         self.extLightLabel.setObjectName(u"extLightLabel")
-        self.extLightLabel.setGeometry(QRect(110, 100, 37, 12))
+        self.extLightLabel.setGeometry(QRect(180, 140, 37, 12))
         self.headlightLabel = QLabel(self.centralwidget)
         self.headlightLabel.setObjectName(u"headlightLabel")
-        self.headlightLabel.setGeometry(QRect(110, 120, 37, 12))
+        self.headlightLabel.setGeometry(QRect(180, 170, 37, 12))
         self.lDoorLabel = QLabel(self.centralwidget)
         self.lDoorLabel.setObjectName(u"lDoorLabel")
-        self.lDoorLabel.setGeometry(QRect(110, 140, 37, 12))
+        self.lDoorLabel.setGeometry(QRect(180, 200, 37, 12))
         self.rDoorLabel = QLabel(self.centralwidget)
         self.rDoorLabel.setObjectName(u"rDoorLabel")
-        self.rDoorLabel.setGeometry(QRect(110, 160, 37, 12))
+        self.rDoorLabel.setGeometry(QRect(180, 230, 37, 12))
+        self.brakeFault = QCheckBox(self.centralwidget)
+        self.brakeFault.setObjectName(u"brakeFault")
+        self.brakeFault.setGeometry(QRect(790, 290, 111, 18))
+        self.brakeFault.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
+"		color: rgb(0, 170, 0);\n"
+"    }\n"
+"    QCheckBox::indicator:checked {\n"
+"		color: rgb(255, 0, 0);\n"
+"    }")
+        self.sigFault_2 = QLabel(self.centralwidget)
+        self.sigFault_2.setObjectName(u"sigFault_2")
+        self.sigFault_2.setGeometry(QRect(670, 250, 101, 21))
+        self.brakeFault_2 = QLabel(self.centralwidget)
+        self.brakeFault_2.setObjectName(u"brakeFault_2")
+        self.brakeFault_2.setGeometry(QRect(670, 290, 101, 21))
+        self.powFault = QCheckBox(self.centralwidget)
+        self.powFault.setObjectName(u"powFault")
+        self.powFault.setGeometry(QRect(790, 270, 111, 18))
+        self.powFault.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
+"		color: rgb(0, 170, 0);\n"
+"    }\n"
+"    QCheckBox::indicator:checked {\n"
+"		color: rgb(255, 0, 0);\n"
+"    }")
+        self.sigFault = QCheckBox(self.centralwidget)
+        self.sigFault.setObjectName(u"sigFault")
+        self.sigFault.setGeometry(QRect(790, 250, 111, 18))
+        self.sigFault.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
+"		color: rgb(0, 170, 0);\n"
+"    }\n"
+"    QCheckBox::indicator:checked {\n"
+"		color: rgb(255, 0, 0);\n"
+"    }")
+        self.powFault_2 = QLabel(self.centralwidget)
+        self.powFault_2.setObjectName(u"powFault_2")
+        self.powFault_2.setGeometry(QRect(670, 270, 91, 21))
+        self.sigFaultLabel = QPushButton(self.centralwidget)
+        self.sigFaultLabel.setObjectName(u"sigFaultLabel")
+        self.sigFaultLabel.setGeometry(QRect(10, 380, 71, 61))
+        self.sigFaultLabel.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.powFaultLabel = QPushButton(self.centralwidget)
+        self.powFaultLabel.setObjectName(u"powFaultLabel")
+        self.powFaultLabel.setGeometry(QRect(80, 380, 71, 61))
+        self.powFaultLabel.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.brakeFaultLabel = QPushButton(self.centralwidget)
+        self.brakeFaultLabel.setObjectName(u"brakeFaultLabel")
+        self.brakeFaultLabel.setGeometry(QRect(150, 380, 71, 61))
+        self.brakeFaultLabel.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.label_12 = QLabel(self.centralwidget)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setGeometry(QRect(10, 360, 121, 21))
+        self.label_12.setStyleSheet(u"font: 15pt \"Segoe UI\";")
+        self.AC = QCheckBox(self.centralwidget)
+        self.AC.setObjectName(u"AC")
+        self.AC.setGeometry(QRect(640, 350, 111, 18))
+        self.AC.setStyleSheet(u"    QCheckBox::indicator:unchecked {\n"
+"		color: rgb(0, 170, 0);\n"
+"    }\n"
+"    QCheckBox::indicator:checked {\n"
+"		color: rgb(255, 0, 0);\n"
+"    }")
+        self.ACLabel = QLabel(self.centralwidget)
+        self.ACLabel.setObjectName(u"ACLabel")
+        self.ACLabel.setGeometry(QRect(520, 350, 101, 21))
+        self.pushButton = QPushButton(self.centralwidget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(240, 409, 231, 31))
+        self.pushButton.setStyleSheet(u"background-color: rgb(255, 0, 0);")
+        self.powProgressBar = QProgressBar(self.centralwidget)
+        self.powProgressBar.setObjectName(u"powProgressBar")
+        self.powProgressBar.setGeometry(QRect(240, 350, 231, 23))
+        self.powProgressBar.setStyleSheet(u"")
+        self.powProgressBar.setValue(24)
+        self.ACLabel_2 = QLabel(self.centralwidget)
+        self.ACLabel_2.setObjectName(u"ACLabel_2")
+        self.ACLabel_2.setGeometry(QRect(10, 330, 151, 21))
+        self.ACLabel_2.setStyleSheet(u"font: 11pt \"Segoe UI\";\n"
+"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.ACIcon = QPushButton(self.centralwidget)
+        self.ACIcon.setObjectName(u"ACIcon")
+        self.ACIcon.setGeometry(QRect(170, 300, 51, 51))
+        self.ACIcon.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.ACprogressBar = QProgressBar(self.centralwidget)
+        self.ACprogressBar.setObjectName(u"ACprogressBar")
+        self.ACprogressBar.setGeometry(QRect(10, 290, 151, 23))
+        self.ACprogressBar.setValue(24)
+        self.label_14 = QLabel(self.centralwidget)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setGeometry(QRect(280, 20, 191, 31))
+        self.label_14.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.label_16 = QLabel(self.centralwidget)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setGeometry(QRect(240, 150, 231, 31))
+        self.label_16.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.label_17 = QLabel(self.centralwidget)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(240, 70, 231, 81))
+        self.label_17.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.label_18 = QLabel(self.centralwidget)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setGeometry(QRect(330, 190, 141, 31))
+        self.label_18.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.label_19 = QLabel(self.centralwidget)
+        self.label_19.setObjectName(u"label_19")
+        self.label_19.setGeometry(QRect(330, 230, 141, 31))
+        self.label_19.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
+        self.speedIcon = QPushButton(self.centralwidget)
+        self.speedIcon.setObjectName(u"speedIcon")
+        self.speedIcon.setGeometry(QRect(240, 190, 71, 71))
+        self.speedIcon.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.tempLabel_2 = QLabel(self.centralwidget)
+        self.tempLabel_2.setObjectName(u"tempLabel_2")
+        self.tempLabel_2.setGeometry(QRect(240, 290, 231, 21))
+        self.tempLabel_2.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;\n"
+"font: 11pt \"Segoe UI\";")
+        self.tempLabel_3 = QLabel(self.centralwidget)
+        self.tempLabel_3.setObjectName(u"tempLabel_3")
+        self.tempLabel_3.setGeometry(QRect(240, 310, 231, 21))
+        self.tempLabel_3.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;\n"
+"font: 11pt \"Segoe UI\";")
+        self.label_20 = QLabel(self.centralwidget)
+        self.label_20.setObjectName(u"label_20")
+        self.label_20.setGeometry(QRect(140, 40, 71, 16))
+        self.label_21 = QLabel(self.centralwidget)
+        self.label_21.setObjectName(u"label_21")
+        self.label_21.setGeometry(QRect(150, 60, 61, 20))
+        self.comboBox = QComboBox(self.centralwidget)
+        self.comboBox.setObjectName(u"comboBox")
+        self.comboBox.setGeometry(QRect(20, 45, 111, 31))
+        self.label_22 = QLabel(self.centralwidget)
+        self.label_22.setObjectName(u"label_22")
+        self.label_22.setGeometry(QRect(20, 10, 131, 31))
+        self.pushButton_2 = QPushButton(self.centralwidget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setGeometry(QRect(570, 400, 211, 20))
+        self.pushButton_2.setStyleSheet(u"font: italic 9pt \"Segoe UI\";")
+        self.label_23 = QLabel(self.centralwidget)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setGeometry(QRect(20, 80, 111, 191))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -245,7 +389,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:22pt; text-decoration: underline; color:#000000;\">Test Data</span></p></body></html>", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Current Time:</span></p></body></html>", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Commanded Speed:</span></p></body></html>", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Comm. Speed:</span></p></body></html>", None))
         self.clButtonR.setText(QCoreApplication.translate("MainWindow", u"RED", None))
         self.clButtonGreen.setText(QCoreApplication.translate("MainWindow", u"GREEN", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Current Line: </span></p></body></html>", None))
@@ -256,18 +400,10 @@ class Ui_MainWindow(object):
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Left Doors:</span></p></body></html>", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Right Doors:</span></p></body></html>", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Headlights:</span></p></body></html>", None))
-        self.outputTemp.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.tempButton.setText(QCoreApplication.translate("MainWindow", u"Set", None))
         self.powButton.setText(QCoreApplication.translate("MainWindow", u"Set", None))
-        self.tempLabel.setText(QCoreApplication.translate("MainWindow", u"Current Temp:", None))
-        self.powLabel.setText(QCoreApplication.translate("MainWindow", u"Current Power:", None))
+        self.tempLabel.setText(QCoreApplication.translate("MainWindow", u"Internal Temp:", None))
+        self.powLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:11pt;\">Power Input:</span></p></body></html>", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Current Section</span></p></body></html>", None))
         self.commSpeedButton.setText(QCoreApplication.translate("MainWindow", u"Set", None))
         self.comboBox_Section.setItemText(0, QCoreApplication.translate("MainWindow", u"A", None))
@@ -301,32 +437,44 @@ class Ui_MainWindow(object):
         self.comboBox_Block.setItemText(9, QCoreApplication.translate("MainWindow", u"10", None))
 
         self.label_15.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Current Block</span></p></body></html>", None))
-        self.intLights.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.leftDoor.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.rightDoor.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.headlights.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.checkBox.setText("")
-
-        __sortingEnabled = self.listWidget.isSortingEnabled()
-        self.listWidget.setSortingEnabled(False)
-        ___qlistwidgetitem = self.listWidget.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"Internal Lights", None));
-        ___qlistwidgetitem1 = self.listWidget.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("MainWindow", u"External Lights", None));
-        ___qlistwidgetitem2 = self.listWidget.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Headlights", None));
-        ___qlistwidgetitem3 = self.listWidget.item(3)
-        ___qlistwidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Left Door", None));
-        ___qlistwidgetitem4 = self.listWidget.item(4)
-        ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Right Door", None));
-        self.listWidget.setSortingEnabled(__sortingEnabled)
-
-        self.intLightLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.extLights.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.extLightLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.headlightLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.lDoorLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.rDoorLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.intLights.setText("")
+        self.leftDoor.setText("")
+        self.rightDoor.setText("")
+        self.headlights.setText("")
+        self.intLightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
+        self.extLights.setText("")
+        self.extLightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
+        self.headlightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
+        self.lDoorLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
+        self.rDoorLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
+        self.brakeFault.setText("")
+        self.sigFault_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Signal Fault:</span></p></body></html>", None))
+        self.brakeFault_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Brake Fault:</span></p></body></html>", None))
+        self.powFault.setText("")
+        self.sigFault.setText("")
+        self.powFault_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Power Fault:</span></p></body></html>", None))
+        self.sigFaultLabel.setText("")
+        self.powFaultLabel.setText("")
+        self.brakeFaultLabel.setText("")
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Fault Status", None))
+        self.AC.setText("")
+        self.ACLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">AC:</span></p></body></html>", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"EMERGENCY BRAKE", None))
+        self.ACLabel_2.setText(QCoreApplication.translate("MainWindow", u"AC Status:", None))
+        self.ACIcon.setText("")
+        self.label_14.setText("")
+        self.label_16.setText(QCoreApplication.translate("MainWindow", u"Commanded Speed:", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Next Station:</p><p>Scheduled Arrival:</p><p>Estimated Arrival:</p></body></html>", None))
+        self.label_18.setText(QCoreApplication.translate("MainWindow", u"Speed Limit:", None))
+        self.label_19.setText(QCoreApplication.translate("MainWindow", u"Actual Limit:", None))
+        self.speedIcon.setText("")
+        self.tempLabel_2.setText(QCoreApplication.translate("MainWindow", u"Current Section:", None))
+        self.tempLabel_3.setText(QCoreApplication.translate("MainWindow", u"Current Block:", None))
+        self.label_20.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"right\">Red Line</p></body></html>", None))
+        self.label_21.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"right\">Green Line</p></body></html>", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt;\">Current Train:</span></p></body></html>", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Load Train Schedule", None))
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Internal Lights:</span></p><p><span style=\" font-size:12pt;\">External Lights:</span></p><p><span style=\" font-size:12pt;\">Headlights:</span></p><p><span style=\" font-size:12pt;\">Left Doors:</span></p><p><span style=\" font-size:12pt;\">Right Doors:</span></p></body></html>", None))
         self.menuTrain_Model_Test_UI.setTitle(QCoreApplication.translate("MainWindow", u"Train Model Test UI", None))
     # retranslateUi
 
