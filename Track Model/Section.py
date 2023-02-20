@@ -4,6 +4,7 @@ class Section:
     # constructor
     def __init__(self, sectionName):
         self.blocks = []
+        self.numTrains = 0
         self.sectionName = sectionName
 
     # declare methods
