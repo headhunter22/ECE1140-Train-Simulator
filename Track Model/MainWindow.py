@@ -2,6 +2,7 @@ import sys
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
+import TestUI
 
 class MainWindow(QtWidgets.QMainWindow):
         def __init__(self, *args, **kwargs):
@@ -9,7 +10,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 uic.loadUi("MainTrackModel.ui", self)
                 self.setWindowTitle('Track Model UI')
 
+                self.createLineItem()
+
                 #self.pushButton.clicked.connect(self.getInfoPage)
+
+        def createLineItem(self):
+                for line in track.lines:
+                        for section in line.sections:
+                                print(section)
 
         def getInfoPage(self):
                 self.openBlockInfo()
