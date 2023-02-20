@@ -115,7 +115,8 @@ class TestUI(QtWidgets.QMainWindow):
                 self.FaultBlockSelect.addItem(block.blockName)
 
     def setOcc(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = True        
+        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = True
+
 
     def setVac(self):
         track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = False
@@ -129,74 +130,75 @@ class TestUI(QtWidgets.QMainWindow):
 
 # Main Window Class
 class MainWindow(QtWidgets.QMainWindow):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            uic.loadUi("MainTrackModel.ui", self)
-            self.setWindowTitle('Track Model UI')
+    # create items in scroll area based on track that was instantiated 
+    sectionDict = {}
 
-            # create items in scroll area based on track that was instantiated 
-            sectionDict = {}
-            self.createLineItem(sectionDict)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("MainTrackModel.ui", self)
+        self.setWindowTitle('Track Model UI')
 
-            #self.pushButton.clicked.connect(self.getInfoPage)
+        self.createLineItem(sectionDict)
 
-        def createLineItem(self, sectionDict):
-            scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
+        #self.pushButton.clicked.connect(self.getInfoPage)
 
-            i = 0
-            for line in track.lines:
-            
-                self.vbox = QtWidgets.QVBoxLayout()
-                self.widget = QtWidgets.QWidget()
+    def createLineItem(self, sectionDict):
+        scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
 
-                for section in line.sections:
-                    # create a new horizontal layout
-                    self.hbox = QtWidgets.QHBoxLayout()
+        i = 0
+        for line in track.lines:
+        
+            self.vbox = QtWidgets.QVBoxLayout()
+            self.widget = QtWidgets.QWidget()
 
-                    # create labels and add to the hbox
-                    sectionLabel = QtWidgets.QLabel(section.sectionName, self)
-                    sectionLabel.setFixedHeight(50)
-                    sectionLabel.setFixedWidth(75)
-                    sectionLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                    self.hbox.addWidget(sectionLabel)
+            for section in line.sections:
+                # create a new horizontal layout
+                self.hbox = QtWidgets.QHBoxLayout()
 
-                    # create label for # of trains
-                    trainCount = QtWidgets.QLabel('-', self)
-                    trainCount.setFixedHeight(50)
-                    trainCount.setFixedWidth(75)
-                    trainCount.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                    self.hbox.addWidget(trainCount)
+                # create labels and add to the hbox
+                sectionLabel = QtWidgets.QLabel(section.sectionName, self)
+                sectionLabel.setFixedHeight(50)
+                sectionLabel.setFixedWidth(75)
+                sectionLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                self.hbox.addWidget(sectionLabel)
 
-                    # create label for occupancy
-                    occupiedLabel = QtWidgets.QLabel('-', self)
-                    occupiedLabel.setFixedHeight(50)
-                    occupiedLabel.setFixedWidth(50)
-                    occupiedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                    self.hbox.addWidget(occupiedLabel)
+                # create label for # of trains
+                trainCount = QtWidgets.QLabel('-', self)
+                trainCount.setFixedHeight(50)
+                trainCount.setFixedWidth(75)
+                trainCount.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                self.hbox.addWidget(trainCount)
 
-                    # create info button and add to hbox
-                    button = QtWidgets.QPushButton(text='INFO')
-                    button.setFixedWidth(50)
-                    self.hbox.addWidget(button)
+                # create label for occupancy
+                occupiedLabel = QtWidgets.QLabel('-', self)
+                occupiedLabel.setFixedHeight(50)
+                occupiedLabel.setFixedWidth(50)
+                occupiedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                self.hbox.addWidget(occupiedLabel)
 
-                    # add layout to scroll area
-                    self.vbox.addLayout(self.hbox)
+                # create info button and add to hbox
+                button = QtWidgets.QPushButton(text='INFO')
+                button.setFixedWidth(50)
+                self.hbox.addWidget(button)
 
-                # add widget to the scroll area
-                self.widget.setLayout(self.vbox)
-                scrollArea[i].setWidget(self.widget)
+                # add layout to scroll area
+                self.vbox.addLayout(self.hbox)
 
-                # increment the scroll area used
-                i+=1
+            # add widget to the scroll area
+            self.widget.setLayout(self.vbox)
+            scrollArea[i].setWidget(self.widget)
 
-        def getInfoPage(self):
-            self.openBlockInfo()
+            # increment the scroll area used
+            i+=1
 
-        def openBlockInfo(self):
-            self.window = QtWidgets.QMainWindow()
-            self.ui = BlockInfo()
-            self.ui.setupUi(self.window)
-            self.window.show()
+    def getInfoPage(self):
+        self.openBlockInfo()
+
+    def openBlockInfo(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = BlockInfo()
+        self.ui.setupUi(self.window)
+        self.window.show()
 
 # defining the app and the window
 # parse the track file
@@ -208,7 +210,7 @@ testWindow = TestUI()
 window = MainWindow()
 
 # show windows
-#testWindow.show()
+testWindow.show()
 window.show()
 
 app.exec()
