@@ -28,6 +28,8 @@ def parseTrack(filename):
                 track.addLine(newLine)
             currLine = track.getLine(newLine.lineName)
 
+            assert currLine is not None
+
             # if section does not exist on the line, add it to the line
             if not currLine.hasSection(newSection.sectionName):
                 currLine.addSection(newSection)
