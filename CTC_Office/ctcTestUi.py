@@ -117,6 +117,7 @@ class MainWindow(QMainWindow):
         for section in track.lines[0].sections:
             for block in section.blocks:
                 self.ui.enterLocation.addItem(block.blockName)
+                #
 
         
     def toggleColor(self, button1, button2):
