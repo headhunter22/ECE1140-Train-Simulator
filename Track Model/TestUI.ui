@@ -115,7 +115,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>E-19</string>
+     <string>I-47</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="GreenXing">
@@ -128,7 +128,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>I-47</string>
+     <string>E-19</string>
     </property>
    </widget>
    <widget class="Line" name="divider2">
@@ -258,7 +258,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Heater Status: ON</string>
+     <string>Heater Status: OFF</string>
     </property>
    </widget>
    <widget class="QLabel" name="DateTime">
