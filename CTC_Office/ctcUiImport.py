@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\ECE_1140\ECE1140-Team-1\CTC_Office\CTC_test.ui'
+# Form implementation generated from reading ui file 'E:\ECE1140-Team-1\CTC_Office\CTC_test.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -95,8 +95,6 @@ class Ui_MainWindow(object):
         self.lineSelect = QtWidgets.QComboBox(parent=self.centralwidget)
         self.lineSelect.setGeometry(QtCore.QRect(300, 110, 82, 28))
         self.lineSelect.setObjectName("lineSelect")
-        self.lineSelect.addItem("")
-        self.lineSelect.addItem("")
         self.lineText = QtWidgets.QLabel(parent=self.centralwidget)
         self.lineText.setGeometry(QtCore.QRect(320, 80, 41, 31))
         font = QtGui.QFont()
@@ -244,16 +242,15 @@ class Ui_MainWindow(object):
         self.green_text_J2 = QtWidgets.QLabel(parent=self.centralwidget)
         self.green_text_J2.setGeometry(QtCore.QRect(90, 510, 16, 16))
         self.green_text_J2.setObjectName("green_text_J2")
-        self.enterLocation = QtWidgets.QSpinBox(parent=self.centralwidget)
-        self.enterLocation.setGeometry(QtCore.QRect(417, 110, 51, 29))
-        self.enterLocation.setMaximumSize(QtCore.QSize(61, 16777215))
-        self.enterLocation.setObjectName("enterLocation")
         self.enterSpeed = QtWidgets.QSpinBox(parent=self.centralwidget)
         self.enterSpeed.setGeometry(QtCore.QRect(340, 160, 48, 29))
         self.enterSpeed.setObjectName("enterSpeed")
+        self.enterLocation = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.enterLocation.setGeometry(QtCore.QRect(410, 110, 61, 28))
+        self.enterLocation.setObjectName("enterLocation")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 590, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 590, 21))
         self.menubar.setObjectName("menubar")
         self.menuCTC_Dispatcher_Test_UI = QtWidgets.QMenu(parent=self.menubar)
         self.menuCTC_Dispatcher_Test_UI.setObjectName("menuCTC_Dispatcher_Test_UI")
@@ -278,8 +275,6 @@ class Ui_MainWindow(object):
         self.suggSpeedOutput.setText(_translate("MainWindow", "Suggested Speed: --mph"))
         self.greenLine_2.setText(_translate("MainWindow", "Green Line"))
         self.redLineText.setText(_translate("MainWindow", "Red Line"))
-        self.lineSelect.setItemText(0, _translate("MainWindow", "Green"))
-        self.lineSelect.setItemText(1, _translate("MainWindow", "Red"))
         self.lineText.setText(_translate("MainWindow", "Line"))
         self.blockText.setText(_translate("MainWindow", "Block"))
         self.enterButton.setText(_translate("MainWindow", "Enter"))
