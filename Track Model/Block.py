@@ -1,7 +1,7 @@
 class Block:
 
     # constructor
-    def __init__(self, blockInfo):
+    def __init__(self, blockInfo, section):
         self.blockName = blockInfo[0]
         self.length = blockInfo[1]
         self.grade = blockInfo[2]
@@ -14,6 +14,8 @@ class Block:
         self.occupied = False
         self.switchConnection = False
         self.maintenance = False
+
+        self.section = section
 
     # declare methods
     def setMaintenance(self, underMaintenance):
