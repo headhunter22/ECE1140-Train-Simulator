@@ -4,6 +4,8 @@ from PyQt6 import uic
 from PyQt6.QtCore import QSize
 import TrackParser
 
+sectionDict = {}
+
 # Test UI class
 class TestUI(QtWidgets.QMainWindow):
 
@@ -74,9 +76,6 @@ class TestUI(QtWidgets.QMainWindow):
 
     def switchBlockChanged(self):
         # update the label for the connection
-        if self.SwitchBlockSelect.currentText() == '':
-            return
- 
         infrastructureText = track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).infrastructure
 
         # if its not a switch, don't display
@@ -115,11 +114,63 @@ class TestUI(QtWidgets.QMainWindow):
                 self.FaultBlockSelect.addItem(block.blockName)
 
     def setOcc(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = True
+        line = track.getLine(self.OccLineSel.currentText())
+        block = line.getBlock(self.OccBlockSel.currentText())
+        section = block.section
+    
+        # if block is already occupied, do nothing
+        if block.occupied:
+            return    
 
+        block.occupied = True
+
+        # create index string to access dict 
+        index = line.lineName + section
+
+        # increment train count on main UI
+        sectionDict[index].trainCount.setText(str(int(sectionDict[index].trainCount.text()) + 1))
+
+        # edit blocks occupied list
+        currentText = sectionDict[index].occupied.text()
+
+        # if text is currently blank, replace with block
+        # if not, append to list
+        if currentText == '-':
+            sectionDict[index].occupied.setText(block.blockName)
+        else:
+            currentText += ' ' + block.blockName
+            sectionDict[index].occupied.setText(currentText)
 
     def setVac(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = False
+        line = track.getLine(self.OccLineSel.currentText())
+        block = line.getBlock(self.OccBlockSel.currentText())
+        section = block.section
+
+        # if block is not occupied, don't do anything
+        if not block.occupied:
+            return    
+
+        block.occupied = False
+
+        # create index string to access dict 
+        index = line.lineName + section
+
+        # decrement train count on main UI
+        sectionDict[index].trainCount.setText(str(int(sectionDict[index].trainCount.text()) - 1))
+
+        # edit blocks occupied list
+        currentText = sectionDict[index].occupied.text()
+
+        # if text is currently only 1 block, replace with blank
+        # if not, append to list
+        if len(currentText.split()) == 1:
+            sectionDict[index].occupied.setText('-')
+        elif currentText.split()[0] == block.blockName: 
+            currentText = currentText.replace(block.blockName + ' ', '')
+            sectionDict[index].occupied.setText(currentText)
+        else:
+            currentText = currentText.replace(' ' + block.blockName, '')
+            sectionDict[index].occupied.setText(currentText)
 
     def changeSwitchOpt1(self):
         track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = True
@@ -130,14 +181,13 @@ class TestUI(QtWidgets.QMainWindow):
 
 # Main Window Class
 class MainWindow(QtWidgets.QMainWindow):
-    # create items in scroll area based on track that was instantiated 
-    sectionDict = {}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("MainTrackModel.ui", self)
         self.setWindowTitle('Track Model UI')
 
+        # create items in scroll area based on track that was instantiated 
         self.createLineItem(sectionDict)
 
         #self.pushButton.clicked.connect(self.getInfoPage)
@@ -147,12 +197,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         i = 0
         for line in track.lines:
-        
-            self.vbox = QtWidgets.QVBoxLayout()
             self.widget = QtWidgets.QWidget()
+            self.vbox = QtWidgets.QVBoxLayout()
 
             for section in line.sections:
-                # create a new horizontal layout
                 self.hbox = QtWidgets.QHBoxLayout()
 
                 # create labels and add to the hbox
@@ -163,7 +211,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.hbox.addWidget(sectionLabel)
 
                 # create label for # of trains
-                trainCount = QtWidgets.QLabel('-', self)
+                trainCount = QtWidgets.QLabel(str(section.numTrains), self)
                 trainCount.setFixedHeight(50)
                 trainCount.setFixedWidth(75)
                 trainCount.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -181,7 +229,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 button.setFixedWidth(50)
                 self.hbox.addWidget(button)
 
-                # add layout to scroll area
+                row = RowWidget(sectionLabel, trainCount, occupiedLabel, button)
+
+                sectionDict[line.lineName + section.sectionName] = row
+
+                # add row to vbox
                 self.vbox.addLayout(self.hbox)
 
             # add widget to the scroll area
@@ -199,6 +251,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = BlockInfo()
         self.ui.setupUi(self.window)
         self.window.show()
+# end main UI class
+
+# class for row objects that go in the scroll window
+class RowWidget():
+    def __init__(self, section, trainCount, occupied, button):
+        self.section = section
+        self.trainCount = trainCount
+        self.occupied = occupied
+        self.button = button
 
 # defining the app and the window
 # parse the track file
