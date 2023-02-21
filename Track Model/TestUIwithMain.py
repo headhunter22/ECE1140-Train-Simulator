@@ -31,8 +31,8 @@ class TestUI(QtWidgets.QMainWindow):
         self.SwitchOption2.clicked.connect(self.changeSwitchOpt2)
 
         # connect crossing checkboxes
-        self.RedXing.toggled.connect(self.getCrossingStatuses)
-        self.GreenXing.toggled.connect(self.getCrossingStatuses)
+        self.RedXing.toggled.connect(self.changeCrossingStatuses)
+        self.GreenXing.toggled.connect(self.changeCrossingStatuses)
 
         # connect dropdowns to switching functions
         self.SwitchBlockSelect.currentTextChanged.connect(self.switchBlockChanged)
@@ -50,16 +50,38 @@ class TestUI(QtWidgets.QMainWindow):
     # FUNCTIONS
     # function to change the track heater status based on temp input
     def tempChanged(self):
+        # if entry is nonsense, do nothing
         if not self.tempEntry.text().isnumeric(): 
             return
+
+        # turn heaters on if temp is lower than 39deg
         if int(self.tempEntry.text()) >= 39:
             self.HeaterStatus.setText("Heater Status: OFF")
+            window.HeaterStatus.setText("Off")
+            window.HeaterStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
         else:
             self.HeaterStatus.setText("Heater Status: ON")
+            window.HeaterStatus.setText("On")
+            window.HeaterStatus.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+
+        # display current temp on mainUI
+        window.CurrentTempLabel.setText("Current Temp: " + self.tempEntry.text())
 
     # function to get crossing statuses when they change
-    def getCrossingStatuses(self):
-        print([self.RedXing.isChecked(), self.GreenXing.isChecked()])
+    def changeCrossingStatuses(self):
+        if self.RedXing.isChecked(): 
+            window.I47Status.setText("Active")
+            window.I47Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+        else:
+            window.I47Status.setText("Inactive")
+            window.I47Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+        
+        if self.GreenXing.isChecked():
+            window.E19Status.setText("Active")
+            window.E19Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+        else:
+            window.E19Status.setText("Inactive")
+            window.E19Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
 
     # function to change dropdowns for switch selection
     def switchLineChanged(self, line):
@@ -124,6 +146,12 @@ class TestUI(QtWidgets.QMainWindow):
 
         block.occupied = True
 
+        # change total train count
+        if line.lineName == 'Red':
+            window.RedTrainCt.setText(str(int(window.RedTrainCt.text()) + 1))
+        else:
+            window.GreenTrainCt.setText(str(int(window.GreenTrainCt.text()) + 1))
+
         # create index string to access dict 
         index = line.lineName + section
 
@@ -151,6 +179,12 @@ class TestUI(QtWidgets.QMainWindow):
             return    
 
         block.occupied = False
+
+        # update total line truck count
+        if line.lineName == 'Red':
+            window.RedTrainCt.setText(str(int(window.RedTrainCt.text()) - 1))
+        else:
+            window.GreenTrainCt.setText(str(int(window.GreenTrainCt.text()) - 1))
 
         # create index string to access dict 
         index = line.lineName + section
@@ -190,7 +224,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # create items in scroll area based on track that was instantiated 
         self.createLineItem(sectionDict)
 
-        #self.pushButton.clicked.connect(self.getInfoPage)
+        # connect all buttons to block pages
+        for section in sectionDict:
+            self.blockInfo = BlockInfo()
+            sectionDict[section].button.clicked.connect(self.openBlockInfo)
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -243,14 +280,14 @@ class MainWindow(QtWidgets.QMainWindow):
             # increment the scroll area used
             i+=1
 
-    def getInfoPage(self):
-        self.openBlockInfo()
+
+    #def generateBlockInfoPage():
+
 
     def openBlockInfo(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = BlockInfo()
-        self.ui.setupUi(self.window)
-        self.window.show()
+        self.generateBlockInfoPage()
+        self.blockInfo.show()
+
 # end main UI class
 
 # class for row objects that go in the scroll window
@@ -260,6 +297,13 @@ class RowWidget():
         self.trainCount = trainCount
         self.occupied = occupied
         self.button = button
+
+# Main Window Class
+class BlockInfo(QtWidgets.QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("BlockInfo.ui", self)
+        self.setWindowTitle('Block Info')
 
 # defining the app and the window
 # parse the track file
