@@ -118,6 +118,10 @@ class TestUI(QtWidgets.QMainWindow):
         block = line.getBlock(self.OccBlockSel.currentText())
         section = block.section
     
+        # if block is already occupied, do nothing
+        if block.occupied:
+            return    
+
         block.occupied = True
 
         # create index string to access dict 
@@ -126,8 +130,47 @@ class TestUI(QtWidgets.QMainWindow):
         # increment train count on main UI
         sectionDict[index].trainCount.setText(str(int(sectionDict[index].trainCount.text()) + 1))
 
+        # edit blocks occupied list
+        currentText = sectionDict[index].occupied.text()
+
+        # if text is currently blank, replace with block
+        # if not, append to list
+        if currentText == '-':
+            sectionDict[index].occupied.setText(block.blockName)
+        else:
+            currentText += ' ' + block.blockName
+            sectionDict[index].occupied.setText(currentText)
+
     def setVac(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = False
+        line = track.getLine(self.OccLineSel.currentText())
+        block = line.getBlock(self.OccBlockSel.currentText())
+        section = block.section
+
+        # if block is not occupied, don't do anything
+        if not block.occupied:
+            return    
+
+        block.occupied = False
+
+        # create index string to access dict 
+        index = line.lineName + section
+
+        # decrement train count on main UI
+        sectionDict[index].trainCount.setText(str(int(sectionDict[index].trainCount.text()) - 1))
+
+        # edit blocks occupied list
+        currentText = sectionDict[index].occupied.text()
+
+        # if text is currently only 1 block, replace with blank
+        # if not, append to list
+        if len(currentText.split()) == 1:
+            sectionDict[index].occupied.setText('-')
+        elif currentText.split()[0] == block.blockName: 
+            currentText = currentText.replace(block.blockName + ' ', '')
+            sectionDict[index].occupied.setText(currentText)
+        else:
+            currentText = currentText.replace(' ' + block.blockName, '')
+            sectionDict[index].occupied.setText(currentText)
 
     def changeSwitchOpt1(self):
         track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = True
