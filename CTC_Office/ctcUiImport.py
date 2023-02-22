@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'E:\ECE1140-Team-1\CTC_Office\CTC_test.ui'
+# Form implementation generated from reading ui file 'D:\ECE_1140\ECE1140-Team-1\CTC_Office\CTC_test.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(590, 743)
+        MainWindow.resize(629, 743)
         MainWindow.setAutoFillBackground(True)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -250,7 +250,7 @@ class Ui_MainWindow(object):
         self.enterLocation.setObjectName("enterLocation")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 590, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 629, 25))
         self.menubar.setObjectName("menubar")
         self.menuCTC_Dispatcher_Test_UI = QtWidgets.QMenu(parent=self.menubar)
         self.menuCTC_Dispatcher_Test_UI.setObjectName("menuCTC_Dispatcher_Test_UI")

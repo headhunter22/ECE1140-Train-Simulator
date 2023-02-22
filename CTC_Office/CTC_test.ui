@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
+    <width>629</width>
     <height>743</height>
    </rect>
   </property>
@@ -900,8 +900,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>590</width>
-     <height>21</height>
+     <width>629</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCTC_Dispatcher_Test_UI">
