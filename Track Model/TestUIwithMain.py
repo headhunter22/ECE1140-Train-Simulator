@@ -226,8 +226,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # connect all buttons to block pages
         for section in sectionDict:
-            self.blockInfo = BlockInfo()
-            sectionDict[section].button.clicked.connect(self.openBlockInfo)
+            sectionDict[section].button.clicked.connect(lambda ch, i=sectionDict[section].section: self.generateBlockInfoPage(i))
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -241,11 +240,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.hbox = QtWidgets.QHBoxLayout()
 
                 # create labels and add to the hbox
-                sectionLabel = QtWidgets.QLabel(section.sectionName, self)
-                sectionLabel.setFixedHeight(50)
-                sectionLabel.setFixedWidth(75)
-                sectionLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                self.hbox.addWidget(sectionLabel)
+                blockLabel = QtWidgets.QLabel(section.sectionName, self)
+                blockLabel.setFixedHeight(50)
+                blockLabel.setFixedWidth(75)
+                blockLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                self.hbox.addWidget(blockLabel)
 
                 # create label for # of trains
                 trainCount = QtWidgets.QLabel(str(section.numTrains), self)
@@ -266,7 +265,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 button.setFixedWidth(50)
                 self.hbox.addWidget(button)
 
-                row = RowWidget(sectionLabel, trainCount, occupiedLabel, button)
+                row = RowWidget(section, blockLabel, trainCount, occupiedLabel, button)
 
                 sectionDict[line.lineName + section.sectionName] = row
 
@@ -281,29 +280,118 @@ class MainWindow(QtWidgets.QMainWindow):
             i+=1
 
 
-    #def generateBlockInfoPage():
-
+    def generateBlockInfoPage(self, section):
+        self.blockInfo = BlockInfo(section)
+        self.openBlockInfo()
 
     def openBlockInfo(self):
-        self.generateBlockInfoPage()
         self.blockInfo.show()
 
 # end main UI class
 
 # class for row objects that go in the scroll window
 class RowWidget():
-    def __init__(self, section, trainCount, occupied, button):
+    def __init__(self, section, blockLabel, trainCount, occupied, button):
         self.section = section
+        self.blockLabel = blockLabel
         self.trainCount = trainCount
         self.occupied = occupied
         self.button = button
 
 # Main Window Class
 class BlockInfo(QtWidgets.QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, section, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("BlockInfo.ui", self)
         self.setWindowTitle('Block Info')
+
+        # set the header
+        self.Header.setText("Section " + section.sectionName + " Info")
+
+        # fill the rest of the window with appropriate info
+        self.widget = QtWidgets.QWidget()
+        self.vbox = QtWidgets.QVBoxLayout()
+
+        for block in section.blocks:
+            self.hbox = QtWidgets.QHBoxLayout()
+
+            # create labels and add to the hbox
+            # create label for block name
+            blockLabel = QtWidgets.QLabel(block.blockName, self)
+            blockLabel.setFixedHeight(50)
+            blockLabel.setFixedWidth(75)
+            blockLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(blockLabel)
+
+            # create label for occupancy
+            occupiedLabel = QtWidgets.QLabel(str(block.occupied), self)
+            occupiedLabel.setFixedHeight(50)
+            occupiedLabel.setFixedWidth(75)
+            occupiedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(occupiedLabel)
+
+            # create label for length
+            lengthLabel = QtWidgets.QLabel(block.length, self)
+            lengthLabel.setFixedHeight(50)
+            lengthLabel.setFixedWidth(50)
+            lengthLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(lengthLabel)
+
+            # create label for elevation
+            elevationLabel = QtWidgets.QLabel(block.elevation, self)
+            elevationLabel.setFixedHeight(50)
+            elevationLabel.setFixedWidth(100)
+            elevationLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(elevationLabel)
+
+            # create label for grade
+            gradeLabel = QtWidgets.QLabel(block.grade, self)
+            gradeLabel.setFixedHeight(50)
+            gradeLabel.setFixedWidth(75)
+            gradeLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(gradeLabel)
+
+            # create label for speed limit
+            speedLabel = QtWidgets.QLabel(block.speedLimit, self)
+            speedLabel.setFixedHeight(50)
+            speedLabel.setFixedWidth(125)
+            speedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(speedLabel)
+
+            # create label for station side
+            stationLabel = QtWidgets.QLabel(block.stationSide, self)
+            stationLabel.setFixedHeight(50)
+            stationLabel.setFixedWidth(100)
+            stationLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(stationLabel)
+
+            # create label for underground
+            undergroundLabel = QtWidgets.QLabel(str(block.underground), self)
+            undergroundLabel.setFixedHeight(50)
+            undergroundLabel.setFixedWidth(100)
+            undergroundLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(undergroundLabel)
+
+            # create label for switchConnection
+            switchLabel = QtWidgets.QLabel(str(block.switchConnection), self)
+            switchLabel.setFixedHeight(50)
+            switchLabel.setFixedWidth(125)
+            switchLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(switchLabel)
+
+            # create label for passengers
+            passengersLabel = QtWidgets.QLabel(str(block.passengers), self)
+            passengersLabel.setFixedHeight(50)
+            passengersLabel.setFixedWidth(75)
+            passengersLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.hbox.addWidget(passengersLabel)
+
+            # add row to vbox
+            self.vbox.addLayout(self.hbox)
+
+        self.widget.setLayout(self.vbox)
+        self.MainScrollArea.setWidget(self.widget)
+
 
 # defining the app and the window
 # parse the track file
