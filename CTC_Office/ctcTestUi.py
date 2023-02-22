@@ -15,8 +15,6 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        trackCSV = pd.read_csv('Track Layout.csv')
-
         for line in track.lines:
             self.ui.lineSelect.addItem(line.lineName)
 
