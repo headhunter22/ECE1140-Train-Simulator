@@ -116,3 +116,24 @@ def manualSwitch(self):
 def maintenanceSwitch(self):
     self.manualSelect.setChecked(False)
     self.autoSelect.setChecked(False)
+
+
+
+
+
+
+    newAuthority = 0
+
+        if line.currentText == "Green":
+            startingBlock = block.currentData + 75
+        else:
+            startingBlock = block
+
+        for startingBlock in zip(blockLength, infrastructure):
+            for startingBlock in infrastructure:
+            if 'SWITCH' not in infrastructure:
+                newAuthority += blockLength[startingBlock]
+            else:
+                break
+        
+        self.ui.authority.setText("Authority: {0}mph".format(newAuthority))
