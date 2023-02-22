@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(590, 743)
+        MainWindow.resize(629, 743)
         MainWindow.setAutoFillBackground(True)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -246,7 +246,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 590, 21))
+        self.menubar.setGeometry(QRect(0, 0, 629, 25))
         self.menuCTC_Dispatcher_Test_UI = QMenu(self.menubar)
         self.menuCTC_Dispatcher_Test_UI.setObjectName(u"menuCTC_Dispatcher_Test_UI")
         MainWindow.setMenuBar(self.menubar)
