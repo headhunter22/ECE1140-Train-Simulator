@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
@@ -46,6 +46,9 @@ class TestUI(QtWidgets.QMainWindow):
 
         # connect enter temperature button
         self.EnterTemp.clicked.connect(self.tempChanged)
+
+        # link fault go button
+        self.GoButton.clicked.connect(lambda: self.induceFault(self.FaultTypeSelect.currentText()))
 
     # FUNCTIONS
     # function to change the track heater status based on temp input
@@ -211,11 +214,26 @@ class TestUI(QtWidgets.QMainWindow):
 
     def changeSwitchOpt2(self):
         track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = False
+
+    def induceFault(self, faultType):
+        # highlight fault type orange in fault labels
+
+        if faultType == 'Broken Rail':
+            return
+            # if line is red
+            # create label with fixed height
+            # add to self.RedBreakagesScroll
+
+            # if line is green
+            # create label with fixed height
+            # add to self.GreenBreakagesScroll
+
+        # create entry a fault window -- connect to a button to show the window
+
 #end TestUI class 
 
 # Main Window Class
 class MainWindow(QtWidgets.QMainWindow):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("MainTrackModel.ui", self)
@@ -227,6 +245,12 @@ class MainWindow(QtWidgets.QMainWindow):
         # connect all buttons to block pages
         for section in sectionDict:
             sectionDict[section].button.clicked.connect(lambda ch, i=sectionDict[section].section: self.generateBlockInfoPage(i))
+
+        # connect upload track button to open that page
+        self.UploadTrack.clicked.connect(self.openTrackUpload)
+
+        # connect a button to show the fault window
+        self.FaultWindowButton.clicked.connect(self.showFaultWindow)
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -279,13 +303,19 @@ class MainWindow(QtWidgets.QMainWindow):
             # increment the scroll area used
             i+=1
 
-
     def generateBlockInfoPage(self, section):
         self.blockInfo = BlockInfo(section)
         self.openBlockInfo()
 
     def openBlockInfo(self):
         self.blockInfo.show()
+
+    def openTrackUpload(self):
+        self.uploadWindow = UploadFile()
+        self.uploadWindow.show()
+
+    def showFaultWindow(self):
+        faultWindow.show()
 
 # end main UI class
 
@@ -331,14 +361,14 @@ class BlockInfo(QtWidgets.QMainWindow):
             self.hbox.addWidget(occupiedLabel)
 
             # create label for length
-            lengthLabel = QtWidgets.QLabel(block.length, self)
+            lengthLabel = QtWidgets.QLabel(str(block.length), self)
             lengthLabel.setFixedHeight(50)
             lengthLabel.setFixedWidth(50)
             lengthLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(lengthLabel)
 
             # create label for elevation
-            elevationLabel = QtWidgets.QLabel(block.elevation, self)
+            elevationLabel = QtWidgets.QLabel(str(block.elevation), self)
             elevationLabel.setFixedHeight(50)
             elevationLabel.setFixedWidth(100)
             elevationLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -352,7 +382,7 @@ class BlockInfo(QtWidgets.QMainWindow):
             self.hbox.addWidget(gradeLabel)
 
             # create label for speed limit
-            speedLabel = QtWidgets.QLabel(block.speedLimit, self)
+            speedLabel = QtWidgets.QLabel(str(block.speedLimit), self)
             speedLabel.setFixedHeight(50)
             speedLabel.setFixedWidth(125)
             speedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -392,7 +422,44 @@ class BlockInfo(QtWidgets.QMainWindow):
         self.widget.setLayout(self.vbox)
         self.MainScrollArea.setWidget(self.widget)
 
+# Upload File Class
+class UploadFile(QtWidgets.QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("UploadRoute.ui", self)
+        self.setWindowTitle('Upload File')
 
+        self.fileBrowser = QtWidgets.QFileDialog()
+        self.SelectFileButton.clicked.connect(self.selectFile)
+        self.CancelButton.clicked.connect(self.closeWindow)
+        self.GoButton.clicked.connect(self.reparseTrack)
+
+    def selectFile(self):
+        response = self.fileBrowser.getOpenFileNames(
+            caption='Select File',
+            directory=os.getcwd(),
+            initialFilter='Data File (*.csv)'
+        )
+
+        self.fileName = str(response[0][0])
+        print(self.fileName)
+
+    def closeWindow(self):
+        self.close()
+
+    def reparseTrack(self):
+        return
+        # this function needs to reparse the track and update the main window
+# end upload file clas
+
+# Fault Display Class
+class FaultDisplay(QtWidgets.QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("FaultDisplay.ui", self)
+        self.setWindowTitle('Fault Display')
+# end fault display class
+    
 # defining the app and the window
 # parse the track file
 track = TrackParser.parseTrack('Track Layout.csv')
@@ -401,6 +468,7 @@ app = QtWidgets.QApplication(sys.argv)
 # create window objects
 testWindow = TestUI()
 window = MainWindow()
+faultWindow = FaultDisplay()
 
 # show windows
 testWindow.show()

@@ -4,13 +4,13 @@ class Block:
     def __init__(self, blockInfo, section):
         # info attributes
         self.blockName = blockInfo[0]
-        self.length = blockInfo[1]
+        self.length = round(float(blockInfo[1]) * 3.28084)
         self.grade = blockInfo[2]
-        self.speedLimit = blockInfo[3]
+        self.speedLimit = round(float(blockInfo[3]) * 0.621371)
         self.infrastructure = blockInfo[4]
         self.stationSide = blockInfo[5]
-        self.elevation = blockInfo[6]
-        self.cumElevation = blockInfo[7]
+        self.elevation = round(float(blockInfo[6]) * 3.28084)
+        self.cumElevation = round(float(blockInfo[7]) * 3.28084)
         self.section = section
 
         # boolean attributes
