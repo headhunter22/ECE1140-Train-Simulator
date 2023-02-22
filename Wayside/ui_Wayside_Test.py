@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Wayside_Main.ui'
+## Form generated from reading UI file 'Wayside_Test.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -16,16 +16,17 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QHeaderView,
-    QLCDNumber, QLabel, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QRadioButton, QSizePolicy,
+from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFrame,
+    QHBoxLayout, QHeaderView, QLCDNumber, QLabel,
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QRadioButton, QSizePolicy, QSpinBox, QStackedWidget,
     QStatusBar, QTableWidget, QTableWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(562, 581)
+        MainWindow.resize(562, 691)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.maintenancemode = QPushButton(self.centralwidget)
@@ -33,7 +34,7 @@ class Ui_MainWindow(object):
         self.maintenancemode.setGeometry(QRect(160, 500, 391, 29))
         self.trackconfiguration = QPushButton(self.centralwidget)
         self.trackconfiguration.setObjectName(u"trackconfiguration")
-        self.trackconfiguration.setGeometry(QRect(160, 460, 391, 29))
+        self.trackconfiguration.setGeometry(QRect(160, 470, 391, 29))
         self.tableWidget = QTableWidget(self.centralwidget)
         if (self.tableWidget.columnCount() < 1):
             self.tableWidget.setColumnCount(1)
@@ -119,7 +120,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem33 = QTableWidgetItem()
         self.tableWidget_2.setItem(3, 0, __qtablewidgetitem33)
         self.tableWidget_2.setObjectName(u"tableWidget_2")
-        self.tableWidget_2.setGeometry(QRect(160, 150, 391, 181))
+        self.tableWidget_2.setGeometry(QRect(160, 130, 391, 181))
         self.tableWidget_2.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget_2.horizontalHeader().setMinimumSectionSize(49)
         self.tableWidget_2.horizontalHeader().setDefaultSectionSize(387)
@@ -149,97 +150,73 @@ class Ui_MainWindow(object):
         __qtablewidgetitem42 = QTableWidgetItem()
         self.tableWidget_3.setItem(1, 1, __qtablewidgetitem42)
         self.tableWidget_3.setObjectName(u"tableWidget_3")
-        self.tableWidget_3.setGeometry(QRect(160, 340, 391, 111))
+        self.tableWidget_3.setGeometry(QRect(160, 320, 391, 111))
         self.tableWidget_3.horizontalHeader().setDefaultSectionSize(128)
         self.tableWidget_3.verticalHeader().setDefaultSectionSize(42)
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(220, 60, 161, 20))
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(220, 20, 141, 20))
-        self.label_3 = QLabel(self.centralwidget)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(220, 100, 141, 20))
-        self.SAuthority = QLCDNumber(self.centralwidget)
-        self.SAuthority.setObjectName(u"SAuthority")
-        self.SAuthority.setGeometry(QRect(410, 20, 64, 23))
-        self.CAuthority = QLCDNumber(self.centralwidget)
-        self.CAuthority.setObjectName(u"CAuthority")
-        self.CAuthority.setGeometry(QRect(410, 60, 64, 23))
-        self.SSpeed = QLCDNumber(self.centralwidget)
-        self.SSpeed.setObjectName(u"SSpeed")
-        self.SSpeed.setGeometry(QRect(410, 100, 64, 23))
         self.radioButton_2 = QRadioButton(self.centralwidget)
         self.radioButton_2.setObjectName(u"radioButton_2")
-        self.radioButton_2.setGeometry(QRect(470, 370, 21, 26))
+        self.radioButton_2.setGeometry(QRect(470, 350, 21, 26))
         self.radioButton_3 = QRadioButton(self.centralwidget)
         self.radioButton_3.setObjectName(u"radioButton_3")
-        self.radioButton_3.setGeometry(QRect(510, 370, 21, 26))
+        self.radioButton_3.setGeometry(QRect(510, 350, 21, 26))
         self.radioButton_4 = QRadioButton(self.centralwidget)
         self.radioButton_4.setObjectName(u"radioButton_4")
-        self.radioButton_4.setGeometry(QRect(430, 420, 21, 26))
+        self.radioButton_4.setGeometry(QRect(430, 400, 21, 26))
         self.radioButton_5 = QRadioButton(self.centralwidget)
         self.radioButton_5.setObjectName(u"radioButton_5")
-        self.radioButton_5.setGeometry(QRect(470, 420, 21, 26))
+        self.radioButton_5.setGeometry(QRect(470, 400, 21, 26))
         self.radioButton_6 = QRadioButton(self.centralwidget)
         self.radioButton_6.setObjectName(u"radioButton_6")
-        self.radioButton_6.setGeometry(QRect(510, 420, 21, 26))
+        self.radioButton_6.setGeometry(QRect(510, 400, 21, 26))
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(10, 0, 141, 20))
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(290, 180, 63, 20))
+        self.label_5.setGeometry(QRect(290, 160, 63, 20))
+        self.label_5.setStyleSheet(u"font: 12pt \"Segoe UI\";\n"
+"background-color: rgb(0, 255, 255);\n"
+"color: rgb(0, 0, 0);")
         self.label_5.setFrameShadow(QFrame.Plain)
+        self.label_5.setTextFormat(Qt.AutoText)
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(420, 180, 63, 20))
+        self.label_6.setGeometry(QRect(420, 160, 63, 20))
         self.label_6.setFrameShadow(QFrame.Plain)
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(290, 220, 63, 20))
+        self.label_7.setGeometry(QRect(290, 200, 63, 20))
         self.label_7.setFrameShadow(QFrame.Plain)
         self.label_8 = QLabel(self.centralwidget)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(420, 220, 63, 20))
+        self.label_8.setGeometry(QRect(420, 200, 63, 20))
         self.label_8.setFrameShadow(QFrame.Plain)
         self.label_9 = QLabel(self.centralwidget)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(290, 260, 63, 20))
+        self.label_9.setGeometry(QRect(290, 240, 63, 20))
         self.label_9.setFrameShadow(QFrame.Plain)
         self.label_10 = QLabel(self.centralwidget)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setGeometry(QRect(420, 260, 63, 20))
+        self.label_10.setGeometry(QRect(420, 240, 63, 20))
         self.label_10.setFrameShadow(QFrame.Plain)
         self.label_11 = QLabel(self.centralwidget)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(290, 300, 63, 20))
+        self.label_11.setGeometry(QRect(290, 280, 63, 20))
         self.label_11.setFrameShadow(QFrame.Plain)
         self.label_12 = QLabel(self.centralwidget)
         self.label_12.setObjectName(u"label_12")
-        self.label_12.setGeometry(QRect(420, 300, 63, 20))
+        self.label_12.setGeometry(QRect(420, 280, 63, 20))
         self.label_12.setFrameShadow(QFrame.Plain)
         self.label_14 = QLabel(self.centralwidget)
         self.label_14.setObjectName(u"label_14")
         self.label_14.setGeometry(QRect(90, 90, 31, 31))
         self.label_14.setPixmap(QPixmap(u"tracks.png"))
         self.label_14.setScaledContents(True)
-        self.label_15 = QLabel(self.centralwidget)
-        self.label_15.setObjectName(u"label_15")
-        self.label_15.setGeometry(QRect(90, 370, 31, 31))
-        self.label_15.setPixmap(QPixmap(u"redtrain.png"))
-        self.label_15.setScaledContents(True)
         self.label_16 = QLabel(self.centralwidget)
         self.label_16.setObjectName(u"label_16")
         self.label_16.setGeometry(QRect(90, 490, 31, 31))
         self.label_16.setPixmap(QPixmap(u"tracks.png"))
         self.label_16.setScaledContents(True)
-        self.label_17 = QLabel(self.centralwidget)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(90, 450, 31, 31))
-        self.label_17.setPixmap(QPixmap(u"tracks.png"))
-        self.label_17.setScaledContents(True)
         self.label_18 = QLabel(self.centralwidget)
         self.label_18.setObjectName(u"label_18")
         self.label_18.setGeometry(QRect(90, 410, 31, 31))
@@ -282,7 +259,153 @@ class Ui_MainWindow(object):
         self.label_25.setScaledContents(True)
         self.radioButton_7 = QRadioButton(self.centralwidget)
         self.radioButton_7.setObjectName(u"radioButton_7")
-        self.radioButton_7.setGeometry(QRect(430, 370, 21, 26))
+        self.radioButton_7.setGeometry(QRect(430, 350, 21, 26))
+        self.occupied = QStackedWidget(self.centralwidget)
+        self.occupied.setObjectName(u"occupied")
+        self.occupied.setGeometry(QRect(80, 440, 51, 41))
+        self.empty = QWidget()
+        self.empty.setObjectName(u"empty")
+        self.label_17 = QLabel(self.empty)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(10, 10, 31, 31))
+        self.label_17.setPixmap(QPixmap(u"tracks.png"))
+        self.label_17.setScaledContents(True)
+        self.occupied.addWidget(self.empty)
+        self.occupied1 = QWidget()
+        self.occupied1.setObjectName(u"occupied1")
+        self.label_15 = QLabel(self.occupied1)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setGeometry(QRect(10, 10, 31, 31))
+        self.label_15.setPixmap(QPixmap(u"redtrain.png"))
+        self.label_15.setScaledContents(True)
+        self.occupied.addWidget(self.occupied1)
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(280, 580, 234, 30))
+        self.horizontalLayout = QHBoxLayout(self.widget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.label_28 = QLabel(self.widget)
+        self.label_28.setObjectName(u"label_28")
+
+        self.horizontalLayout.addWidget(self.label_28)
+
+        self.changeswitch = QComboBox(self.widget)
+        self.changeswitch.addItem("")
+        self.changeswitch.addItem("")
+        self.changeswitch.addItem("")
+        self.changeswitch.addItem("")
+        self.changeswitch.addItem("")
+        self.changeswitch.setObjectName(u"changeswitch")
+
+        self.horizontalLayout.addWidget(self.changeswitch)
+
+        self.changedirection = QComboBox(self.widget)
+        self.changedirection.addItem("")
+        self.changedirection.addItem("")
+        self.changedirection.setObjectName(u"changedirection")
+        self.changedirection.setFrame(True)
+
+        self.horizontalLayout.addWidget(self.changedirection)
+
+        self.widget1 = QWidget(self.centralwidget)
+        self.widget1.setObjectName(u"widget1")
+        self.widget1.setGeometry(QRect(30, 600, 200, 31))
+        self.horizontalLayout_2 = QHBoxLayout(self.widget1)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.label_27 = QLabel(self.widget1)
+        self.label_27.setObjectName(u"label_27")
+
+        self.horizontalLayout_2.addWidget(self.label_27)
+
+        self.sauthorituin = QSpinBox(self.widget1)
+        self.sauthorituin.setObjectName(u"sauthorituin")
+        self.sauthorituin.setMaximum(999)
+
+        self.horizontalLayout_2.addWidget(self.sauthorituin)
+
+        self.widget2 = QWidget(self.centralwidget)
+        self.widget2.setObjectName(u"widget2")
+        self.widget2.setGeometry(QRect(30, 550, 181, 31))
+        self.horizontalLayout_3 = QHBoxLayout(self.widget2)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.label_26 = QLabel(self.widget2)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_3.addWidget(self.label_26)
+
+        self.sspeedin = QSpinBox(self.widget2)
+        self.sspeedin.setObjectName(u"sspeedin")
+        self.sspeedin.setMaximum(999)
+
+        self.horizontalLayout_3.addWidget(self.sspeedin)
+
+        self.widget3 = QWidget(self.centralwidget)
+        self.widget3.setObjectName(u"widget3")
+        self.widget3.setGeometry(QRect(220, 20, 208, 25))
+        self.horizontalLayout_4 = QHBoxLayout(self.widget3)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.label_2 = QLabel(self.widget3)
+        self.label_2.setObjectName(u"label_2")
+
+        self.horizontalLayout_4.addWidget(self.label_2)
+
+        self.SAuthority = QLCDNumber(self.widget3)
+        self.SAuthority.setObjectName(u"SAuthority")
+
+        self.horizontalLayout_4.addWidget(self.SAuthority)
+
+        self.widget4 = QWidget(self.centralwidget)
+        self.widget4.setObjectName(u"widget4")
+        self.widget4.setGeometry(QRect(220, 60, 224, 25))
+        self.horizontalLayout_5 = QHBoxLayout(self.widget4)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(self.widget4)
+        self.label.setObjectName(u"label")
+
+        self.horizontalLayout_5.addWidget(self.label)
+
+        self.CAuthority = QLCDNumber(self.widget4)
+        self.CAuthority.setObjectName(u"CAuthority")
+
+        self.horizontalLayout_5.addWidget(self.CAuthority)
+
+        self.widget5 = QWidget(self.centralwidget)
+        self.widget5.setObjectName(u"widget5")
+        self.widget5.setGeometry(QRect(220, 100, 189, 25))
+        self.horizontalLayout_6 = QHBoxLayout(self.widget5)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.label_3 = QLabel(self.widget5)
+        self.label_3.setObjectName(u"label_3")
+
+        self.horizontalLayout_6.addWidget(self.label_3)
+
+        self.SSpeed = QLCDNumber(self.widget5)
+        self.SSpeed.setObjectName(u"SSpeed")
+
+        self.horizontalLayout_6.addWidget(self.SSpeed)
+
+        self.widget6 = QWidget(self.centralwidget)
+        self.widget6.setObjectName(u"widget6")
+        self.widget6.setGeometry(QRect(220, 440, 156, 25))
+        self.horizontalLayout_7 = QHBoxLayout(self.widget6)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.label_13 = QLabel(self.widget6)
+        self.label_13.setObjectName(u"label_13")
+
+        self.horizontalLayout_7.addWidget(self.label_13)
+
+        self.SAuthority_2 = QLCDNumber(self.widget6)
+        self.SAuthority_2.setObjectName(u"SAuthority_2")
+
+        self.horizontalLayout_7.addWidget(self.SAuthority_2)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -297,6 +420,13 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuWayside_UI.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.trackconfiguration.clicked.connect(MainWindow.show)
+        self.sspeedin.valueChanged.connect(self.SSpeed.display)
+        self.sauthorituin.valueChanged.connect(self.SAuthority.display)
+        self.sauthorituin.valueChanged.connect(self.CAuthority.display)
+
+        self.occupied.setCurrentIndex(0)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -342,13 +472,13 @@ class Ui_MainWindow(object):
         __sortingEnabled1 = self.tableWidget_2.isSortingEnabled()
         self.tableWidget_2.setSortingEnabled(False)
         ___qtablewidgetitem14 = self.tableWidget_2.item(0, 0)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"C", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u" C", None));
         ___qtablewidgetitem15 = self.tableWidget_2.item(1, 0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"G", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u" G", None));
         ___qtablewidgetitem16 = self.tableWidget_2.item(2, 0)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"J", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u" J", None));
         ___qtablewidgetitem17 = self.tableWidget_2.item(3, 0)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"J", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u" J", None));
         self.tableWidget_2.setSortingEnabled(__sortingEnabled1)
 
         ___qtablewidgetitem18 = self.tableWidget_3.horizontalHeaderItem(0)
@@ -370,9 +500,6 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"Inactive", None));
         self.tableWidget_3.setSortingEnabled(__sortingEnabled2)
 
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Commanded Authority", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Suggested Authority", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Suggested Speed", None))
         self.radioButton_2.setText("")
         self.radioButton_3.setText("")
         self.radioButton_4.setText("")
@@ -388,9 +515,7 @@ class Ui_MainWindow(object):
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Yard - 63", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"62 - 63", None))
         self.label_14.setText("")
-        self.label_15.setText("")
         self.label_16.setText("")
-        self.label_17.setText("")
         self.label_18.setText("")
         self.label_19.setText("")
         self.label_20.setText("")
@@ -400,6 +525,27 @@ class Ui_MainWindow(object):
         self.label_24.setText("")
         self.label_25.setText("")
         self.radioButton_7.setText("")
+        self.label_17.setText("")
+        self.label_15.setText("")
+        self.label_28.setText(QCoreApplication.translate("MainWindow", u"Change", None))
+        self.changeswitch.setItemText(0, QCoreApplication.translate("MainWindow", u"Switch", None))
+        self.changeswitch.setItemText(1, QCoreApplication.translate("MainWindow", u" C", None))
+        self.changeswitch.setItemText(2, QCoreApplication.translate("MainWindow", u" G", None))
+        self.changeswitch.setItemText(3, QCoreApplication.translate("MainWindow", u" J", None))
+        self.changeswitch.setItemText(4, QCoreApplication.translate("MainWindow", u" J", None))
+
+        self.changeswitch.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Switch", None))
+        self.changedirection.setItemText(0, QCoreApplication.translate("MainWindow", u"Direction", None))
+        self.changedirection.setItemText(1, QCoreApplication.translate("MainWindow", u"12 - 13", None))
+
+        self.changedirection.setCurrentText("")
+        self.changedirection.setPlaceholderText(QCoreApplication.translate("MainWindow", u"DIrection", None))
+        self.label_27.setText(QCoreApplication.translate("MainWindow", u"Suggested Authority", None))
+        self.label_26.setText(QCoreApplication.translate("MainWindow", u"Suggested Speed", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Suggested Authority", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Commanded Authority", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Suggested Speed", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Active Trains", None))
         self.menuWayside_UI.setTitle(QCoreApplication.translate("MainWindow", u"Wayside UI", None))
     # retranslateUi
 

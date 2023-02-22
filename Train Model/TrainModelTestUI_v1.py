@@ -3,6 +3,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
 
+trainArray = []
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -10,11 +11,14 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("TrainModelTestUI_v1.ui", self)
         self.setWindowTitle('Train Model Test UI')
+        self.trainBox.addItem("Train 0")
        
         #temperature set
         self.tempButton.clicked.connect(self.tempInputfunc)
         #power set 
         self.powButton.clicked.connect(self.powInputfunc)
+        #commanded speed 
+        self.commSpeedButton.clicked.connect(self.commSpeedInputfunc)
 
         #light status change
         self.intLights.stateChanged.connect(self.clickBox)
@@ -48,6 +52,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.speedIcon.setIcon(SpeedIm)
         self.speedIcon.setIconSize(QSize(75, 75))
 
+        #Adding train to map 
+        self.addTrain.clicked.connect(self.addingTrainFunc)
+
 
     #temp set function
     def tempInputfunc(self):
@@ -58,6 +65,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def powInputfunc(self):
         inputPow = self.inputPow.text()
         self.powLabel.setText("Current Power: {0} Watts".format(inputPow))
+
+    #commanded speed function
+    def commSpeedInputfunc(self):
+        inputCommSpeed = self.commSpeed.text()
+        self.commSpeedLabel.setText("Comm Speed: {0} mph".format(inputCommSpeed))
 
     #changing box 
     def clickBox(self):
@@ -139,15 +151,28 @@ class MainWindow(QtWidgets.QMainWindow):
             ACIm = QtGui.QIcon("ACOFF.png")
             self.ACIcon.setIcon(ACIm)
             self.ACIcon.setIconSize(QSize(50, 50))
-
     
-    
+    def addingTrainFunc(self):
+        numTrains = self.trainBox.count()
+        self.trainBox.addItem("Train {0}".format(numTrains))
+        newTrain = Train
+        trainArray.append(newTrain)  
 
-#end class definition
+
+#end mainWindow definition
+
+class Train(MainWindow):
+    pass    
+
+#end Train class window
 
 
 #defining the app and the window
 app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
+
+firstTrain = Train()
+trainArray.append(firstTrain)
+
+window = trainArray[0]
 window.show()
 app.exec()

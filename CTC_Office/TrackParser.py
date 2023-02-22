@@ -21,7 +21,7 @@ def parseTrack(filename):
             # define objects for row line, section, and block
             newLine = Line(row[0])
             newSection = Section(row[1])
-            newBlock = Block(row[2:], newSection.sectionName)
+            newBlock = Block(row[2:])
 
             # if line does not exist, add it to track lines
             if not track.hasLine(newLine.lineName):
