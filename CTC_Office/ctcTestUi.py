@@ -117,9 +117,6 @@ class MainWindow(QMainWindow):
             for block in section.blocks:
                 self.ui.enterLocation.addItem(block.blockName)
 
-        # add connection if there is one
-        #self.switchBlockChanged()
-
     def setSuggSpeed(self):
         self.ui.enterSpeed.setMinimum(0)
         #cathes the case when switching lines and there are no options for line blocks that populate the enterLocation comboBox
@@ -144,7 +141,7 @@ class MainWindow(QMainWindow):
 
         for i in range(selectedNum, endIndex):
             #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
-            if 'SWITCH' not in str(trackDict['Infrastructure'][i]):
+            if 'SWITCH' not in str(trackDict['Infrastructure'][i]) or 'CROSSING' not in str(trackDict['Infrastructure'][i]):
                 #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
                 #print(int(trackDict['Block Length (m)'][i]))
                 metricAuthority += int(trackDict['Block Length (m)'][i])

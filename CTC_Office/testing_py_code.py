@@ -1,23 +1,18 @@
-import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog
+from PyQt6.QtGui import QColor, QBrush
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem
 
-class MainWindow(QWidget):
-    def __init__(self):
-        super().__init__()
+app = QApplication([])
+window = QMainWindow()
+table_widget = QTableWidget()
 
-        # Create a QPushButton
-        self.button = QPushButton('Open File', self)
-        self.button.clicked.connect(self.open_file)
+table_widget.setRowCount(3)
+table_widget.setColumnCount(3)
 
-    def open_file(self):
-        # Open a file dialog and get the path of the selected file
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
+# Add a new item to row 0, column 0 with a green background
+item = QTableWidgetItem('Hello')
+item.setBackground(QBrush(QColor('green')))
+table_widget.setItem(0, 0, item)
 
-        # Do something with the selected file
-        print('Selected file:', file_path)
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
+window.setCentralWidget(table_widget)
+window.show()
+app.exec()
