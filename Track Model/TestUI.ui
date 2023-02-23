@@ -460,7 +460,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="GoButton">
+   <widget class="QPushButton" name="FaultGoButton">
     <property name="geometry">
      <rect>
       <x>350</x>

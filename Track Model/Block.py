@@ -17,8 +17,20 @@ class Block:
         self.occupied = False
         self.maintenance = False
 
-        # need actual logic
-        self.switchConnection = False
+        # switch logic
+        # if the block does not have a switch, the connection is blank
+        if 'SWITCH' not in self.infrastructure:
+            self.switchConnection = ''
+        else:
+            # if the block has a connection, default to first option
+            # parse out the options
+            start = self.infrastructure.find('(')
+            middle = self.infrastructure.find(';') 
+
+            opt1 = self.infrastructure[start+1:middle]
+            self.switchConnection = opt1
+
+        # placeholder until train model and track model communicate
         self.passengers = 0
 
         # underground logic
