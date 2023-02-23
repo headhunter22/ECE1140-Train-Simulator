@@ -4,6 +4,7 @@ from PyQt6 import uic
 from PyQt6.QtCore import QSize
 import TrackParser
 
+
 trainArray = []
 track = TrackParser.parseTrack('Track Layout.csv')
 
@@ -35,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.headlights.stateChanged.connect(self.clickBox)
         self.leftDoor.stateChanged.connect(self.clickBox)
         self.rightDoor.stateChanged.connect(self.clickBox)
+
         
         #Fault/AC icon init
         sigIcon = QtGui.QIcon("sigOFF.png")

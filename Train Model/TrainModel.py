@@ -1,19 +1,25 @@
 import sys
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QFileDialog
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
 import TrackParser
+from pathlib import Path
+import os
+import time
 
 trainArray = []
 track = TrackParser.parseTrack('Track Layout.csv')
 
 class MainWindowTestUI(QtWidgets.QMainWindow):
 
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi("TrainModelTestUI_v2.ui", self)
         self.setWindowTitle('Train Model Test UI')
-        #window.trainBox.addItem("Train 0")  
+        #window.trainBox.addItem("Train 0") 
+        self.currentBlock.setCurrentIndex(0)      
         
         #temperature set
         self.tempButton.clicked.connect(self.tempInputfunc)
@@ -34,24 +40,55 @@ class MainWindowTestUI(QtWidgets.QMainWindow):
         self.brakeFault.stateChanged.connect(self.clickBox)
         self.AC.stateChanged.connect(self.clickBox)
 
+        #adding a train schedule function
+        self.loadTrainSchedule.clicked.connect(self.trainScheduleFunc)
 
         #Adding train to map 
         self.addTrain.clicked.connect(self.addingTrainFunc)
 
+        #when the current block is changed
+        self.currentBlock.currentIndexChanged.connect(self.changedCurrentBlock)
+
+        #when the time is changed
+        self.dateBox.dateTimeChanged.connect(self.dateTimeFunc)
+
+    def trainScheduleFunc(self):
+        home_dir = str(Path.home())
+        fname = QFileDialog.getOpenFileName(self,'Open file', home_dir)
+        file_name = os.path.basename(fname[0])
+        window.currentFile.setText("Current Schedule: {0}.csv".format(os.path.splitext(file_name)[0]))
+        if fname[0]:
+             f = open(fname[0], 'r')
+             with f:
+                  data = f.read()
+
+        track = TrackParser.parseTrack(file_name)
+        return track
+
     #temp set function
     def tempInputfunc(self):
         inputTemp = self.inputTemp.text()
-        window.tempLabel.setText("Current Temp: {0} degrees F".format(inputTemp))
+        if int(inputTemp) > 90 or int(inputTemp)<60:
+            return
+        window.tempLabel.setText("Internal Temp: {0} degrees F".format(inputTemp))
+        window.ACprogressBar.setMinimum(60)
+        window.ACprogressBar.setMaximum(90)
+        window.ACprogressBar.setTextVisible(0)
+        window.ACprogressBar.setValue(int(inputTemp))
     
     #power set function
     def powInputfunc(self):
         inputPow = self.inputPow.text()
-        window.powLabel.setText("Current Power: {0} Watts".format(inputPow))
+        window.powLabel.setText("Power Input: {0} Watts".format(inputPow))
+        window.powProgressBar.setMinimum(0)
+        window.powProgressBar.setMaximum(10000)
+        window.powProgressBar.setTextVisible(0)
+        window.powProgressBar.setValue(int(inputPow))
 
     #commanded speed function
     def commSpeedInputfunc(self):
         inputCommSpeed = self.commSpeed.text()
-        window.commSpeedLabel.setText("Comm Speed: {0} mph".format(inputCommSpeed))
+        window.commSpeedLabel.setText("Commanded Speed: {0} mph".format(inputCommSpeed))
 
     #changing box 
     def clickBox(self):
@@ -83,18 +120,18 @@ class MainWindowTestUI(QtWidgets.QMainWindow):
         #Left doors
         if self.leftDoor.isChecked():
                 window.lDoorLabel.setStyleSheet("background-color: green")
-                window.lDoorLabel.setText("ON")
+                window.lDoorLabel.setText("OPEN")
         else:
             window.lDoorLabel.setStyleSheet("background-color: red")
-            window.lDoorLabel.setText("OFF")
+            window.lDoorLabel.setText("CLOSED")
 
         #Right doors
         if self.rightDoor.isChecked():
                 window.rDoorLabel.setStyleSheet("background-color: green")
-                window.rDoorLabel.setText("ON")
+                window.rDoorLabel.setText("OPEN")
         else:
             window.rDoorLabel.setStyleSheet("background-color: red")
-            window.rDoorLabel.setText("OFF")
+            window.rDoorLabel.setText("CLOSED")
 
         #Signal Fault
         if self.sigFault.isChecked():
@@ -119,7 +156,7 @@ class MainWindowTestUI(QtWidgets.QMainWindow):
                 brakeIcon = QtGui.QIcon("brakesON.png")
                 window.brakeFaultLabel.setIcon(brakeIcon)
                 window.brakeFaultLabel.setIconSize(QSize(50, 50))
-        else:
+        else:   
             brakeIcon = QtGui.QIcon("brakesOFF.png")
             window.brakeFaultLabel.setIcon(brakeIcon)
             window.brakeFaultLabel.setIconSize(QSize(50, 50))
@@ -139,9 +176,24 @@ class MainWindowTestUI(QtWidgets.QMainWindow):
         window.trainBox.addItem("Train {0}".format(numTrains))
         newTrain = Train
         trainArray.append(newTrain)  
+    
+    def changedCurrentBlock(self):
+         if self.currentBlock.currentText() == "":
+            return
+         currentBlockVal = self.currentBlock.currentIndex()
+         blockVal = int(currentBlockVal) + 1
+         window.currBlockLabel.setText("Current Block:  {0}".format(str(blockVal)))
+         speedVar = track.getLine('Red').getBlock(str(blockVal)).speedLimit
+         window.speedLimitLabel.setText("Speed Limit: {0}".format(speedVar))
 
-
+    def dateTimeFunc(self):
+        dateTime = self.dateBox.dateTime()
+        dateTime_str = dateTime.toString(self.dateBox.displayFormat())
+        window.dateLabel.setText(dateTime_str) 
+  
 #end test UI definition
+
+############################################# BEGIN MAIN UI ###########################################################
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -178,6 +230,7 @@ class MainWindow(QtWidgets.QMainWindow):
        
     def greenclickedButton(self):
         if (self.greenLineButton.clicked):
+            
             greenTrack = QtGui.QIcon("GREENtrain_layout")
             self.trainMapLabel.setIcon(greenTrack)
             self.trainMapLabel.setIconSize(QSize(225,425))
@@ -188,6 +241,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
             for x in range(1,151):
                 testUI.currentBlock.addItem("{0}".format(x))
+
+            testUI.currentBlock.setCurrentIndex(0)
+
     
     def redclickedButton(self):    
         if (self.redLineButton.clicked):
@@ -201,6 +257,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
             for x in range(1,77):
                 testUI.currentBlock.addItem("{0}".format(x))
+            
+            testUI.currentBlock.setCurrentIndex(0)
 
     def emerBrakeButton(self):
 
@@ -223,7 +281,6 @@ class Train(MainWindow):
     pass    
 
 #end Train class window
-
 
 
 #defining the app and the window
