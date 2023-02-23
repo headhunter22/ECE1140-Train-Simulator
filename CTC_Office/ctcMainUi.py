@@ -331,8 +331,6 @@ class MainWindow(QMainWindow):
             button.setStyleSheet("background-color: white;")
 
     def addGreenTentBlock(self):
-        print(self.ui.greenBlockDispatch.currentIndex())
-
         if self.ui.greenBlockDispatch.currentIndex() != 0:
             
             greenTime = self.ui.greenArrivalInput.time()
@@ -343,17 +341,20 @@ class MainWindow(QMainWindow):
         self.ui.greenBlockDispatch.setCurrentIndex(0)
 
     def addRedTentBlock(self):
-        print(self.ui.redBlockDispatch.currentIndex())
+        if self.ui.redBlockDispatch.currentIndex() != 0:
+            
+            redTime = self.ui.greenArrivalInput.time()
+            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Block: ' + str(self.ui.greenBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + redTime.toString("hh:mm")
+            item = QListWidgetItem(blockString)
+            self.ui.redTentSchedule.addItem(item)
+
         self.ui.redBlockDispatch.setCurrentIndex(0)
-        redTime = self.ui.redArrivalInput.time()
-        redTime.toString("hh:mm:ss")
-        print('arrival time: ', redTime)
 
     def addGreenYard(self):
-        if self.ui.greenBlockDispatch.currentIndex() != 0:
-            greenTime = self.ui.greenArrivalInput.time()
-            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + greenTime.toString("hh:mm")
-            item = QListWidgetItem(blockString)
+        if self.ui.greenBlockDispatch.currentIndex() == 0:
+            yardTime = self.ui.greenArrivalInput.time()
+            yardString = str(self.ui.greenTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
+            item = QListWidgetItem(yardString)
             self.ui.greenTentSchedule.addItem(item)
 
     def handleGreenStationClicked(self):

@@ -107,7 +107,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -481,16 +481,11 @@
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>150</y>
+        <y>170</y>
         <width>151</width>
-        <height>201</height>
+        <height>181</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Tentative Schedule:</string>
-       </property>
-      </item>
      </widget>
      <widget class="QLabel" name="arrivalLabel_2">
       <property name="geometry">
@@ -670,6 +665,19 @@
       </property>
       <property name="text">
        <string>Dispatch</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_4">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>151</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tentative Schedule:</string>
       </property>
      </widget>
     </widget>
@@ -2048,17 +2056,30 @@
     </column>
     <item>
      <property name="text">
-      <string>New Item</string>
+      <string>427</string>
+     </property>
+     <property name="text">
+      <string>27mph</string>
+     </property>
+     <property name="text">
+      <string>.31mi</string>
+     </property>
+     <property name="text">
+      <string>Edgebrook Station</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>New Item</string>
+      <string>275</string>
      </property>
-    </item>
-    <item>
      <property name="text">
-      <string>New Item</string>
+      <string>18mph</string>
+     </property>
+     <property name="text">
+      <string>.16mi</string>
+     </property>
+     <property name="text">
+      <string>Overbrook Station</string>
      </property>
     </item>
    </widget>
