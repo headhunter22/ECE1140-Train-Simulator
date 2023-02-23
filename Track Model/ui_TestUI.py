@@ -142,9 +142,9 @@ class Ui_MainWindow(object):
         self.FaultTypeSelect.addItem("")
         self.FaultTypeSelect.setObjectName(u"FaultTypeSelect")
         self.FaultTypeSelect.setGeometry(QRect(240, 490, 111, 32))
-        self.GoButton = QPushButton(self.centralwidget)
-        self.GoButton.setObjectName(u"GoButton")
-        self.GoButton.setGeometry(QRect(350, 490, 51, 32))
+        self.FaultGoButton = QPushButton(self.centralwidget)
+        self.FaultGoButton.setObjectName(u"FaultGoButton")
+        self.FaultGoButton.setGeometry(QRect(350, 490, 51, 32))
         self.SwitchOption1 = QPushButton(self.centralwidget)
         self.SwitchOption1.setObjectName(u"SwitchOption1")
         self.SwitchOption1.setGeometry(QRect(190, 90, 100, 32))
@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         self.FaultTypeSelect.setItemText(1, QCoreApplication.translate("MainWindow", u"Broken Rail", None))
         self.FaultTypeSelect.setItemText(2, QCoreApplication.translate("MainWindow", u"Broken Circuit", None))
 
-        self.GoButton.setText(QCoreApplication.translate("MainWindow", u"Go", None))
+        self.FaultGoButton.setText(QCoreApplication.translate("MainWindow", u"Go", None))
         self.SwitchOption1.setText("")
         self.SwitchOption2.setText("")
     # retranslateUi

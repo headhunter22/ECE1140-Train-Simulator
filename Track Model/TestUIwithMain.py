@@ -3,8 +3,10 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
 import TrackParser
+from Fault import Fault
 
 sectionDict = {}
+faultDict = {}
 
 # Test UI class
 class TestUI(QtWidgets.QMainWindow):
@@ -48,7 +50,7 @@ class TestUI(QtWidgets.QMainWindow):
         self.EnterTemp.clicked.connect(self.tempChanged)
 
         # link fault go button
-        self.GoButton.clicked.connect(lambda: self.induceFault(self.FaultTypeSelect.currentText()))
+        self.FaultGoButton.clicked.connect(lambda: self.induceFault(self.FaultTypeSelect.currentText()))
 
     # FUNCTIONS
     # function to change the track heater status based on temp input
@@ -210,25 +212,40 @@ class TestUI(QtWidgets.QMainWindow):
             sectionDict[index].occupied.setText(currentText)
 
     def changeSwitchOpt1(self):
-        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = True
+        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = self.SwitchOption1.text()
 
     def changeSwitchOpt2(self):
-        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = False
+        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = self.SwitchOption2.text()
 
     def induceFault(self, faultType):
-        # highlight fault type orange in fault labels
+        # create label for rail breakages scroll and add to section
+        faultLabel = QtWidgets.QLabel(self.FaultLineSelect.currentText() + ' ' + self.FaultBlockSelect.currentText(), self)
+        faultLabel.setFixedHeight(30)
 
         if faultType == 'Broken Rail':
-            return
-            # if line is red
-            # create label with fixed height
-            # add to self.RedBreakagesScroll
+            # highlight Broken Rail orange
+            window.BrokenRailLabel.setStyleSheet("color: orange")
 
-            # if line is green
-            # create label with fixed height
-            # add to self.GreenBreakagesScroll
+            # add to broken rails section
+            if self.FaultLineSelect.currentText() == 'Red':
+                window.RedFaultLayout.addWidget(faultLabel)
+            else:
+                window.GreenFaultLayout.addWidget(faultLabel)
+        elif faultType == 'Power':
+            # highlight Power orange
+            window.PowerFaultLabel.setStyleSheet("color: orange")
+        else: 
+            # highlight Broken Circuit orange
+            window.BrokenCircuitLabel.setStyleSheet("color: orange")
 
-        # create entry a fault window -- connect to a button to show the window
+        # create fault object
+        fault = Fault(faultType, faultLabel.text())
+
+        # add to faultDict
+        if faultType not in faultDict:
+            faultDict[faultType] = [fault.location]
+        else:
+            faultDict[faultType].append(fault.location)
 
 #end TestUI class 
 
@@ -251,6 +268,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # connect a button to show the fault window
         self.FaultWindowButton.clicked.connect(self.showFaultWindow)
+
+        self.RedFaultLayout = QtWidgets.QVBoxLayout()
+        self.GreenFaultLayout = QtWidgets.QVBoxLayout()
+
+        self.RedFaultWidget = QtWidgets.QWidget()
+        self.RedFaultWidget.setLayout(self.RedFaultLayout)
+        self.GreenFaultWidget = QtWidgets.QWidget()
+        self.GreenFaultWidget.setLayout(self.GreenFaultLayout)
+
+        self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
+        self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -458,6 +486,20 @@ class FaultDisplay(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("FaultDisplay.ui", self)
         self.setWindowTitle('Fault Display')
+
+        # connect dropdowns changing to function to pull up locations with that fault type
+        self.FaultSelect.currentTextChanged.connect(self.getLocation)
+
+    def getLocation(self):
+        # line block select
+        faultType = self.FaultSelect.currentText()
+
+        # search faultDict for faults of that type
+        if faultType in faultDict:
+            self.LocationLabel.setText(str(faultDict[faultType]))
+        else:
+            self.LocationLabel.setText('')
+
 # end fault display class
     
 # defining the app and the window

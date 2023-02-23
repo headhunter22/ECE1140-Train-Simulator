@@ -288,10 +288,10 @@ class Ui_MainWindow(object):
         self.BrokenRailLabel.setObjectName(u"BrokenRailLabel")
         self.BrokenRailLabel.setGeometry(QRect(920, 550, 91, 20))
         self.BrokenRailLabel.setAlignment(Qt.AlignCenter)
-        self.BrokenRailLabel_2 = QLabel(self.centralwidget)
-        self.BrokenRailLabel_2.setObjectName(u"BrokenRailLabel_2")
-        self.BrokenRailLabel_2.setGeometry(QRect(1010, 550, 101, 20))
-        self.BrokenRailLabel_2.setAlignment(Qt.AlignCenter)
+        self.BrokenCircuitLabel = QLabel(self.centralwidget)
+        self.BrokenCircuitLabel.setObjectName(u"BrokenCircuitLabel")
+        self.BrokenCircuitLabel.setGeometry(QRect(1010, 550, 101, 20))
+        self.BrokenCircuitLabel.setAlignment(Qt.AlignCenter)
         self.FaultWindowButton = QPushButton(self.centralwidget)
         self.FaultWindowButton.setObjectName(u"FaultWindowButton")
         self.FaultWindowButton.setGeometry(QRect(1110, 550, 41, 32))
@@ -329,7 +329,7 @@ class Ui_MainWindow(object):
         self.FaultSpacer2.raise_()
         self.PowerFaultLabel.raise_()
         self.BrokenRailLabel.raise_()
-        self.BrokenRailLabel_2.raise_()
+        self.BrokenCircuitLabel.raise_()
         self.FaultWindowButton.raise_()
 
         self.retranslateUi(MainWindow)
@@ -369,7 +369,7 @@ class Ui_MainWindow(object):
         self.HeaterStatus.setText(QCoreApplication.translate("MainWindow", u"Off", None))
         self.PowerFaultLabel.setText(QCoreApplication.translate("MainWindow", u"Power", None))
         self.BrokenRailLabel.setText(QCoreApplication.translate("MainWindow", u"Broken Rail", None))
-        self.BrokenRailLabel_2.setText(QCoreApplication.translate("MainWindow", u"Broken Circuit", None))
+        self.BrokenCircuitLabel.setText(QCoreApplication.translate("MainWindow", u"Broken Circuit", None))
         self.FaultWindowButton.setText(QCoreApplication.translate("MainWindow", u"View", None))
     # retranslateUi
 
