@@ -9,6 +9,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         uic.loadUi("TrainModelUI.ui", self)
         self.setWindowTitle('Train Model UI')
 
@@ -17,8 +18,6 @@ class MainWindow(QtWidgets.QMainWindow):
         powIcon = QtGui.QIcon("powOFF.png")
         brakeIcon = QtGui.QIcon("brakesOFF.png")
         ACIm =  QtGui.QIcon("ACOFF.png")
-        
-        redTrack = QtGui.QIcon("REDtrain_layout")
 
         self.sigFaultLabel.setIcon(sigIcon)
         self.sigFaultLabel.setIconSize(QSize(50, 50))
@@ -38,7 +37,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.redLineButton.clicked.connect(self.redclickedButton)
         self.EmerButton.setStyleSheet("background-color: red")
         self.EmerButton.clicked.connect(self.emerBrakeButton)
-
+       
     def greenclickedButton(self):
         if (self.greenLineButton.clicked):
             greenTrack = QtGui.QIcon("GREENtrain_layout")
@@ -70,8 +69,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.EmerButton.setStyleSheet("background-color: red")
 
 
-
-
 #end mainWindow definition
 
 class Train(MainWindow):
@@ -87,5 +84,6 @@ firstTrain = Train()
 trainArray.append(firstTrain)
 
 window = trainArray[0]
+
 window.show()
 app.exec()
