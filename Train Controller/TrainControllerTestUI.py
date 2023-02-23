@@ -1,5 +1,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
+from TrainController import *
 
 class TestWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -94,6 +95,9 @@ class TestWindow(QtWidgets.QMainWindow):
         font.setPointSize(18)
         self.TestAutoModeLabel.setFont(font)
 
+    def UpdateTestHeadlights(self):
+        self.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0)}")
+        print("This is coming from TCTUI")
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
@@ -101,9 +105,9 @@ class TestWindow(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
-window = TestWindow()
+#window = TestWindow()
 # Show window
-window.show()
+#window.show()
 
 # Start the event loop.
-app.exec()
+#app.exec()
