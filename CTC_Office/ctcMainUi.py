@@ -1,15 +1,21 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QIntValidator
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem
 from ctcMainUiImport import Ui_MainWindow
 import TrackParser
-import pandas
+import pandas as pd
+
+trackCSV = pd.read_csv('Track Layout.csv')
+trackDict = trackCSV.to_dict()
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        for line in track.lines:
+            self.ui.lineSelectMaintenance.addItem(line.lineName)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -18,6 +24,9 @@ class MainWindow(QMainWindow):
         #main ui starts up in auto mode
         self.autoMode()
         self.ui.autoSelect.setChecked(True)
+        self.fillOccupancy("Green")
+        self.fillOccupancy("Red")
+        self.greenView()
 
 
         ##################################
@@ -92,6 +101,15 @@ class MainWindow(QMainWindow):
         ########UTILITY BUTTONS###########
         ##################################
 
+        #occupancy buttons
+        self.ui.greenOccupancyView.clicked.connect(lambda: self.toggleView(self.ui.greenOccupancyView, self.ui.redOccupancyView))
+        self.ui.greenOccupancyView.setStyleSheet('background-color: LightGreen; color: black')
+        self.ui.redOccupancyView.clicked.connect(lambda: self.toggleView(self.ui.redOccupancyView, self.ui.greenOccupancyView))
+        self.ui.redOccupancyView.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.greenOccupancyView.clicked.connect(self.greenView)
+        self.ui.redOccupancyView.clicked.connect(self.redView)
+
         #mode buttons
         self.ui.autoSelect.clicked.connect(self.autoSwitch)
         self.ui.manualSelect.clicked.connect(self.manualSwitch)
@@ -100,11 +118,11 @@ class MainWindow(QMainWindow):
 
         #dispatch buttons
         self.ui.dispatchGreen.clicked.connect(self.showPages)
-        self.ui.dispatchGreen.clicked.connect(self.greenDispatch)
+        #self.ui.dispatchGreen.clicked.connect(self.greenDispatch)
         self.ui.dispatchRed.clicked.connect(self.showPages)
-        self.ui.dispatchRed.clicked.connect(self.redDispacth)
+        #self.ui.dispatchRed.clicked.connect(self.redDispacth)
         self.ui.scheduledTrains.clicked.connect(self.showPages)
-        self.ui.scheduledTrains.clicked.connect(self.schedTrains)
+        #self.ui.scheduledTrains.clicked.connect(self.schedTrains)
 
         #upload schedule
         self.ui.uploadSchedule.clicked.connect(self.openFile)
@@ -125,6 +143,13 @@ class MainWindow(QMainWindow):
         ########OPTIONS / XINGS###########
         ##################################
 
+        self.ui.greenXingStatus.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+        self.ui.redXingStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119); Text-Align: center")
+
+        self.ui.lineSelectMaintenance.currentTextChanged.connect(self.switchLineChanged)
+        self.ui.xButton.clicked.connect(self.clearBlockOptions)
+        self.ui.checkButton.clicked.connect(self.updateBlockStatus)
+
 
         self.show()
 
@@ -132,12 +157,99 @@ class MainWindow(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
+    def fillOccupancy(self, line):
+
+        #self.ui.greenOccupancy.setVerticalHeader().setVisible(False)
+
+        if line == 'Red':
+            startIndex = 0
+            endIndex = 76
+
+            for rows in range(startIndex, endIndex):
+                rowCount = self.ui.redOccupancy.rowCount()
+
+                #insert a new row at the bottom of the table
+                self.ui.redOccupancy.insertRow(rowCount)
+
+                #stage item name to be added
+                blockNumberItem = QTableWidgetItem(str(trackDict['Block Number'][rows]))
+
+                if str(trackDict['Infrastructure'][rows]) == 'nan':
+                    infrastructureText = QTableWidgetItem("")
+                else:
+                    infrastructureText = QTableWidgetItem(str(trackDict['Infrastructure'][rows]))
+
+                blockStatus = QTableWidgetItem("Open")
+                
+                self.ui.redOccupancy.setItem(rowCount, 1, infrastructureText)
+                self.ui.redOccupancy.setItem(rowCount, 2, blockStatus)
+
+                if rowCount == 21 or rowCount == 43:
+                    train = QTableWidgetItem('')
+                    train.setBackground(QColor('green'))
+                    self.ui.redOccupancy.setItem(rowCount, 0, train)
+
+                if (rowCount > 21 and rowCount < 27) or (rowCount > 43 and rowCount < 47):
+                    authority = QTableWidgetItem('')
+                    authority.setBackground(QColor('red'))
+                    self.ui.redOccupancy.setItem(rowCount, 0, authority)
+        else:
+            startIndex = 76
+            endIndex = 226
+
+            for rows in range(startIndex, endIndex):
+                rowCount = self.ui.greenOccupancy.rowCount()
+
+                #insert a new row at the bottom of the table
+                self.ui.greenOccupancy.insertRow(rowCount)
+
+                #stage item name to be added
+                blockNumberItem = QTableWidgetItem(str(trackDict['Block Number'][rows]))
+
+                if str(trackDict['Infrastructure'][rows]) == 'nan':
+                    infrastructureText = QTableWidgetItem("")
+                else:
+                    infrastructureText = QTableWidgetItem(str(trackDict['Infrastructure'][rows]))
+
+                blockStatus = QTableWidgetItem("Open")
+                
+                self.ui.greenOccupancy.setItem(rowCount, 1, infrastructureText)
+                self.ui.greenOccupancy.setItem(rowCount, 2, blockStatus)
+
+                if rowCount == 6 or rowCount == 48:
+                    train = QTableWidgetItem('')
+                    train.setBackground(QColor('green'))
+                    self.ui.greenOccupancy.setItem(rowCount, 0, train)
+
+                if (rowCount > 6 and rowCount < 12) or (rowCount > 48 and rowCount < 59):
+                    authority = QTableWidgetItem('')
+                    authority.setBackground(QColor('red'))
+                    self.ui.greenOccupancy.setItem(rowCount, 0, authority)
+
+    def greenView(self):
+        self.ui.stackedWidget_2.setCurrentIndex(0)
+
+    def redView(self):
+        self.ui.stackedWidget_2.setCurrentIndex(1)
+
     #toggles the color and boolean value of buttons in maintenance mode
     def toggleColor(self, button1, button2):
         button1.setEnabled(False)
         button2.setEnabled(True)
         button1.setStyleSheet('background-color: SkyBlue')
         button2.setStyleSheet('background-color: white; color: gray')
+
+    def toggleView(self, button1, button2):
+        if button1 == self.ui.greenOccupancyView:
+            button1.setEnabled(False)
+            button2.setEnabled(True)
+            button1.setStyleSheet('background-color: LightGreen; color: black')
+            button2.setStyleSheet('background-color: white; color: gray')
+        else:
+            button1.setEnabled(False)
+            button2.setEnabled(True)
+            button1.setStyleSheet('background-color: LightCoral; color: Black')
+            button2.setStyleSheet('background-color: white; color: gray')
 
 
     ############################################
@@ -168,7 +280,6 @@ class MainWindow(QMainWindow):
         self.ui.xButton.setEnabled(False)
         self.ui.lineLabel.setStyleSheet("color: LightGrey")
         self.ui.blockLabel_2.setStyleSheet("color: LightGrey")
-        self.ui.blockCurrentState.setStyleSheet("color: LightGrey")
         self.ui.optionsLabel.setStyleSheet("color: GhostWhite")
         self.ui.xButton.setStyleSheet("background-color: None")
         self.ui.checkButton.setStyleSheet("background-color: None")
@@ -197,7 +308,6 @@ class MainWindow(QMainWindow):
         self.ui.xButton.setEnabled(False)
         self.ui.lineLabel.setStyleSheet("color: LightGrey")
         self.ui.blockLabel_2.setStyleSheet("color: LightGrey")
-        self.ui.blockCurrentState.setStyleSheet("color: LightGrey")
         self.ui.optionsLabel.setStyleSheet("color: GhostWhite")
         self.ui.xButton.setStyleSheet("background-color: None")
         self.ui.checkButton.setStyleSheet("background-color: None")
@@ -226,14 +336,13 @@ class MainWindow(QMainWindow):
         self.ui.xButton.setEnabled(True)
         self.ui.lineLabel.setStyleSheet("color: Black")
         self.ui.blockLabel_2.setStyleSheet("color: Black")
-        self.ui.blockCurrentState.setStyleSheet("color: Black")
         self.ui.optionsLabel.setStyleSheet("color: Black")
         self.ui.xButton.setStyleSheet("background-color: red")
         self.ui.checkButton.setStyleSheet("background-color: green")
     
     def greenDispatch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.dispatchGreen.isChecked:
+        if self.ui.dispatchGreen.isChecked():
             self.ui.dispatchGreen.setChecked(True)
         
         self.ui.dispatchRed.setChecked(False)
@@ -241,7 +350,7 @@ class MainWindow(QMainWindow):
 
     def redDispacth(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.redDispatch.isChecked:
+        if self.ui.redDispatch.isChecked():
             self.ui.redDispatch.setChecked(True)
         
         self.ui.greenDispatch.setChecked(False)
@@ -249,7 +358,7 @@ class MainWindow(QMainWindow):
 
     def schedTrains(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.scheduledTrains.isChecked:
+        if self.ui.scheduledTrains.isChecked():
             self.ui.scheduledTrains.setChecked(True)
         
         self.ui.dispatchRed.setChecked(False)
@@ -265,8 +374,47 @@ class MainWindow(QMainWindow):
 
 
 
+    ############################################
+    ########OPTIONS / XINGS FUNCTIONS###########
+    ############################################
 
+    def updateBlockStatus(self):
+        if self.ui.lineSelectMaintenance.currentIndex() == 0:
+            if self.ui.modeSelect.currentIndex() == 0:
 
+                open = QTableWidgetItem('Open')
+                open.setBackground(QColor('White'))
+                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
+            else:
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
+        else:
+            if self.ui.modeSelect.currentIndex() == 0:
+
+                open = QTableWidgetItem('Open')
+                open.setBackground(QColor('White'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
+            else:
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
+    
+
+    def clearBlockOptions(self):
+        self.ui.lineSelectMaintenance.setCurrentIndex(0)
+        self.ui.blockSelectMaintenance.setCurrentIndex(0)
+        self.ui.modeSelect.setCurrentIndex(0)
+
+    #when the line is switched this replaced the block selection to the correct amount for the given line
+    def switchLineChanged(self, line):
+        # clear current options in the dropdowns 
+        self.ui.blockSelectMaintenance.clear()
+
+        # add the appropriate blocks
+        for section in track.getLine(line).sections:
+            for block in section.blocks:
+                self.ui.blockSelectMaintenance.addItem(block.blockName)
 
 
 
