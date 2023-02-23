@@ -92,7 +92,6 @@ class MainWindow(QMainWindow):
         self.redStations.append(self.ui.southHillsStation)
 
         #add station buttons
-        
         self.ui.greenAddStation.clicked.connect(self.addGreenTentStation)
         self.ui.redAddStation.clicked.connect(self.addRedTentStation)
 
@@ -102,12 +101,13 @@ class MainWindow(QMainWindow):
 
         #add yard buttons
         self.ui.greenAddYard.clicked.connect(self.addGreenYard)
+        self.ui.redAddYard.clicked.connect(self.addRedYard)
 
         #dispatch and clear buttons for red and green line
         self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
 
-        #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
+        self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
         self.ui.redClear.clicked.connect(self.clearRedDispatch)
 
 
@@ -236,14 +236,41 @@ class MainWindow(QMainWindow):
     ############################################
 
     def dipatchGreenTrain(self):
+        if self.ui.greenTentSchedule.item(0).text() == '':
+            return
+
         for button in self.greenStations:
             button.setProperty("selected", False)
 
         # Update the background color of all buttons to white
         for button in self.greenStations:
             button.setStyleSheet("background-color: white;")
+        
+        nextTrain = self.ui.greenTentSchedule.item(0).text()
 
-    #def dipatchRedTrain(self): 
+        slicedText = str(self.ui.greenScheduledTrains.count() + 1) + nextTrain[nextTrain.find('.'):nextTrain.find('\n')] + '\n   Departure: hh:mm\n   ' + nextTrain[nextTrain.find('A'):]  + '\n'
+
+        item = QListWidgetItem(slicedText)
+
+        self.ui.greenScheduledTrains.addItem(item)
+        self.ui.greenTentSchedule.clear()
+
+    def dipatchRedTrain(self):
+        for button in self.redStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.redStations:
+            button.setStyleSheet("background-color: white;")
+        
+        nextTrain = self.ui.redTentSchedule.item(0).text()
+
+        slicedText = str(self.ui.redTentSchedule_3.count() + 1) + nextTrain[nextTrain.find('.'):nextTrain.find('\n')] + '\n   Departure: hh:mm\n   ' + nextTrain[nextTrain.find('A'):]  + '\n'
+
+        item = QListWidgetItem(slicedText)
+
+        self.ui.redTentSchedule_3.addItem(item)
+        self.ui.redTentSchedule.clear()
 
     def clearGreenDispatch(self):
         #clear the station selections
@@ -269,6 +296,8 @@ class MainWindow(QMainWindow):
         # Update the background color of all buttons to white
         for button in self.redStations:
             button.setStyleSheet("background-color: white;")
+
+        self.ui.redTentSchedule.clear()
 
         self.ui.redBlockDispatch.setCurrentIndex(0)
 
@@ -343,8 +372,8 @@ class MainWindow(QMainWindow):
     def addRedTentBlock(self):
         if self.ui.redBlockDispatch.currentIndex() != 0:
             
-            redTime = self.ui.greenArrivalInput.time()
-            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Block: ' + str(self.ui.greenBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + redTime.toString("hh:mm")
+            redTime = self.ui.redArrivalInput.time()
+            blockString = str(self.ui.redTentSchedule.count() + 1) + '. Block: ' + str(self.ui.redBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + redTime.toString("hh:mm")
             item = QListWidgetItem(blockString)
             self.ui.redTentSchedule.addItem(item)
 
@@ -356,6 +385,13 @@ class MainWindow(QMainWindow):
             yardString = str(self.ui.greenTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
             item = QListWidgetItem(yardString)
             self.ui.greenTentSchedule.addItem(item)
+    
+    def addRedYard(self):
+        if self.ui.redBlockDispatch.currentIndex() == 0:
+            yardTime = self.ui.redArrivalInput.time()
+            yardString = str(self.ui.redTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
+            item = QListWidgetItem(yardString)
+            self.ui.redTentSchedule.addItem(item)
 
     def handleGreenStationClicked(self):
         # Get the button that was clicked
@@ -377,16 +413,24 @@ class MainWindow(QMainWindow):
                 button.setStyleSheet("background-color: white;")
 
         greenStationStates = [
-            self.ui.pioneerStation.property("selected"), self.ui.edgebrookStation.property("selected"), self.ui.whitedStation.property("selected"), 
-            self.ui.southBankStation.property("selected"), self.ui.centralStation.property("selected"), self.ui.inglewoodStation.property("selected"), 
-            self.ui.overbrookStation.property("selected"), self.ui.glenburyStation.property("selected"), self.ui.dormontStation.property("selected"), 
-            self.ui.lebanonStation.property("selected"), self.ui.poplarStation.property("selected"), self.ui.castleShannonStation.property("selected")
+            self.ui.pioneerStation.property("selected")   , self.ui.edgebrookStation.property("selected") , self.ui.whitedStation.property("selected"), 
+            self.ui.southBankStation.property("selected") , self.ui.centralStation.property("selected")   , self.ui.inglewoodStation.property("selected"), 
+            self.ui.overbrookStation.property("selected") , self.ui.glenburyStation.property("selected")  , self.ui.dormontStation.property("selected"), 
+            self.ui.lebanonStation.property("selected")   , self.ui.poplarStation.property("selected")    , self.ui.castleShannonStation.property("selected")
         ]
 
-        print(greenStationStates[0])
-        print(greenStationStates[1])
-        print(greenStationStates[2])
-        print(greenStationStates[3])
+        print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
+        print('Edgebrook Station     : ' + str(greenStationStates[1]))
+        print('Whited Station        : ' + str(greenStationStates[2]))
+        print('South Bank Station    : ' + str(greenStationStates[3]))
+        print('Central Station       : ' + str(greenStationStates[4]))
+        print('Inglewood Station     : ' + str(greenStationStates[5]))
+        print('Overbrook Station     : ' + str(greenStationStates[6]))
+        print('Glenbury Station      : ' + str(greenStationStates[7]))
+        print('Dormont Station       : ' + str(greenStationStates[8]))
+        print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
+        print('Poplar Station        : ' + str(greenStationStates[10]))
+        print('Castle Shannon Station: ' + str(greenStationStates[11]))
 
         #return greenStationStates
 
@@ -408,6 +452,21 @@ class MainWindow(QMainWindow):
                 button.setStyleSheet("background-color: blue;")
             else:
                 button.setStyleSheet("background-color: white;")
+
+        redStationStates = [
+            self.ui.shadysideStation.property("selected")   , self.ui.herronStation.property("selected")     , self.ui.swissvilleStation.property("selected"), 
+            self.ui.pennStation.property("selected")        , self.ui.steelPlazaStaion.property("selected")  , self.ui.firstAveStation.property("selected"), 
+            self.ui.staionSquareStation.property("selected"), self.ui.southHillsStation.property("selected")
+        ]
+
+        print('\n\nShady Side Station     : ' + str(redStationStates[0]))
+        print('Herron Ave Station     : ' + str(redStationStates[1]))
+        print('Swissville Station     : ' + str(redStationStates[2]))
+        print('Penn Station           : ' + str(redStationStates[3]))
+        print('Steel Plaza Station    : ' + str(redStationStates[4]))
+        print('First Ave Station      : ' + str(redStationStates[5]))
+        print('Station Square Station : ' + str(redStationStates[6]))
+        print('South Hills Station    : ' + str(redStationStates[7]))
 
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
