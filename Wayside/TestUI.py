@@ -9,7 +9,7 @@ from blockwidget import Ui_Form
 from pathlib import Path
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-
+    
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -60,11 +60,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         #active trains
         self.aicon.setPixmap(QPixmap('redtrain.png'))
-        counts = 2
-
         #self.activetrains.display(counts)
-        self.occupancybox.currentTextChanged.connect(self.changeIcon)
-        self.occupancybox.currentTextChanged.connect(self.activeTrains)
+        counts = 2
+        self.activetrains.display(counts)
+        #self.occupancybox.currentTextChanged.connect(self.changeIcon)
+        #self.occupancybox.currentTextChanged.connect(self.activeTrains)
 
         #lights
         self.reda.setPixmap(QPixmap('redlight.png'))
@@ -154,17 +154,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         button1.setStyleSheet('background-color: SkyBlue; color: black')
         button2.setStyleSheet('background-color: white; color: gray')
 
-    def changeIcon(self,counts): #laurens
+    def changeIcon(self): #laurens
         section = self.sectionbox.currentText()
         block = self.blockbox.currentText()
         occupation = self.occupancybox.currentText()
         if section == 'A':
             if occupation == 'Occupied':
                 self.aicon.setPixmap(QPixmap('redtrain.png'))
-                counts = counts + 1
+                #counts = counts + 1
             else:
                 self.aicon.setPixmap(QPixmap('tracks.png'))
-                counts = counts - 1
+                #counts = counts - 1
             # if block == '1':
             #     if occupation == "Occupied":
             #         self.aicon.setPixmap("redtrain.png")
@@ -178,17 +178,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif section == 'B':
             if occupation == 'Occupied':
                 self.bicon.setPixmap(QPixmap('redtrain.png'))
-                counts = counts + 1
+                #counts = counts + 1
             else:
                 self.bicon.setPixmap(QPixmap('tracks.png'))
-                counts = counts - 1
+                #counts = counts - 1
         elif section == 'C':
             if occupation == 'Occupied':
                 self.cicon.setPixmap(QPixmap('redtrain.png'))
-                counts = counts + 1
+                #counts = counts + 1
             else:
                 self.cicon.setPixmap(QPixmap('tracks.png'))
-                counts = counts - 1
+                #counts = counts - 1
 
     #function for number of active trains
     #somehow counts the number of times the red train label comes up
@@ -254,7 +254,7 @@ class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
             f = open(fname[0], 'r')
             with f:
                 data = f.read()
-                print("data: ", data)
+                #print("data: ", data)
                 self.plcdisplay.setText(data)
                         
 class Ui_Form(QtWidgets.QMainWindow, Ui_Form):

@@ -36,7 +36,7 @@ class Ui_Form(object):
         self.bicon = QtWidgets.QLabel(parent=self.gridLayoutWidget)
         self.bicon.setMaximumSize(QtCore.QSize(50, 50))
         self.bicon.setText("")
-        self.bicon.setPixmap(QtGui.QPixmap("tracks.png"))
+        self.bicon.setPixmap(QtGui.QPixmap("redtrain.png"))
         self.bicon.setScaledContents(True)
         self.bicon.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.bicon.setObjectName("bicon")

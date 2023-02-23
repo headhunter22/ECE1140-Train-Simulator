@@ -69,7 +69,7 @@ background-color: rgb(221, 221, 221);</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>tracks.png</pixmap>
+       <pixmap>redtrain.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>

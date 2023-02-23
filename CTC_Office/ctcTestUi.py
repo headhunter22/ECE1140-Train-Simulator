@@ -15,8 +15,6 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        trackCSV = pd.read_csv('Track Layout.csv')
-
         for line in track.lines:
             self.ui.lineSelect.addItem(line.lineName)
 
@@ -52,27 +50,22 @@ class MainWindow(QMainWindow):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.clicked.connect(lambda: self.toggleColor(self.ui.green_C2, self.ui.green_C1))
         self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_G1.clicked.connect(lambda: self.toggleColor(self.ui.green_G1, self.ui.green_G2))
         self.ui.green_G1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_G2.clicked.connect(lambda: self.toggleColor(self.ui.green_G2, self.ui.green_G1))
         self.ui.green_G2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_J1_1.clicked.connect(lambda: self.toggleColor(self.ui.green_J1_1, self.ui.green_J1_2))
         self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J1_2.clicked.connect(lambda: self.toggleColor(self.ui.green_J1_2, self.ui.green_J1_1))
         self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_J2_1.clicked.connect(lambda: self.toggleColor(self.ui.green_J2_1, self.ui.green_J2_2))
         self.ui.green_J2_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J2_2.clicked.connect(lambda: self.toggleColor(self.ui.green_J2_2, self.ui.green_J2_1))
         self.ui.green_J2_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_M1.clicked.connect(lambda: self.toggleColor(self.ui.green_M1, self.ui.green_M2))
         self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_M2.clicked.connect(lambda: self.toggleColor(self.ui.green_M2, self.ui.green_M1))
         self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_N1.clicked.connect(lambda: self.toggleColor(self.ui.green_N1, self.ui.green_N2))
         self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_N2.clicked.connect(lambda: self.toggleColor(self.ui.green_N2, self.ui.green_N1))
@@ -83,32 +76,26 @@ class MainWindow(QMainWindow):
         self.ui.red_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_C2.clicked.connect(lambda: self.toggleColor(self.ui.red_C2, self.ui.red_C1))
         self.ui.red_C2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_E1.clicked.connect(lambda: self.toggleColor(self.ui.red_E1, self.ui.red_E2))
         self.ui.red_E1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_E2.clicked.connect(lambda: self.toggleColor(self.ui.red_E2, self.ui.red_E1))
         self.ui.red_E2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_H1_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H1_1, self.ui.red_H1_2))
         self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H1_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H1_2, self.ui.red_H1_1))
         self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_H2_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H2_1, self.ui.red_H2_2))
         self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H2_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H2_2, self.ui.red_H2_1))
         self.ui.red_H2_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_H3_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H3_1, self.ui.red_H3_2))
         self.ui.red_H3_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H3_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H3_2, self.ui.red_H3_1))
         self.ui.red_H3_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_H4_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H4_1, self.ui.red_H4_2))
         self.ui.red_H4_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H4_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H4_2, self.ui.red_H4_1))
         self.ui.red_H4_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.red_J1.clicked.connect(lambda: self.toggleColor(self.ui.red_J1, self.ui.red_J2))
         self.ui.red_J1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_J2.clicked.connect(lambda: self.toggleColor(self.ui.red_J2, self.ui.red_J1))
@@ -128,11 +115,11 @@ class MainWindow(QMainWindow):
             for block in section.blocks:
                 self.ui.enterLocation.addItem(block.blockName)
 
-        # add connection if there is one
-        #self.switchBlockChanged()
-
     def setSuggSpeed(self):
         self.ui.enterSpeed.setMinimum(0)
+        #cathes the case when switching lines and there are no options for line blocks that populate the enterLocation comboBox
+        if self.ui.enterLocation.currentText() == "":
+            return
         self.ui.enterSpeed.setMaximum(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]))
         self.ui.enterSpeed.setValue(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]))
         #speedLimit = int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())])
@@ -152,8 +139,9 @@ class MainWindow(QMainWindow):
 
         for i in range(selectedNum, endIndex):
             #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
-            if 'SWITCH' not in str(trackDict['Infrastructure'][i]):
-                print(int(trackDict['Block Length (m)'][i]))
+            if 'SWITCH' not in str(trackDict['Infrastructure'][i]) or 'CROSSING' not in str(trackDict['Infrastructure'][i]):
+                #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
+                #print(int(trackDict['Block Length (m)'][i]))
                 metricAuthority += int(trackDict['Block Length (m)'][i])
                 
             else:

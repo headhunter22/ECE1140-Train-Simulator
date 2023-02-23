@@ -116,7 +116,7 @@ color: rgb(0, 0, 0);</string>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_27">
          <item>
-          <widget class="QLabel" name="label_35">
+          <widget class="QLabel" name="reda">
            <property name="maximumSize">
             <size>
              <width>21</width>
@@ -135,7 +135,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_32">
+          <widget class="QLabel" name="yellowa">
            <property name="maximumSize">
             <size>
              <width>21</width>
@@ -154,7 +154,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_33">
+          <widget class="QLabel" name="greena">
            <property name="maximumSize">
             <size>
              <width>21</width>
@@ -212,7 +212,7 @@ color: rgb(0, 0, 0);</string>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_29">
          <item>
-          <widget class="QLabel" name="label_36">
+          <widget class="QLabel" name="redb">
            <property name="maximumSize">
             <size>
              <width>21</width>
@@ -231,7 +231,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_39">
+          <widget class="QLabel" name="yellowb">
            <property name="maximumSize">
             <size>
              <width>21</width>
@@ -250,7 +250,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_40">
+          <widget class="QLabel" name="greenb">
            <property name="maximumSize">
             <size>
              <width>21</width>
