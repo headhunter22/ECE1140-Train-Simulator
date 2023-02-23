@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>507</height>
+    <width>796</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_14">
+   <widget class="QLabel" name="dateLabel">
     <property name="geometry">
      <rect>
       <x>590</x>
@@ -64,7 +64,7 @@ padding: 2px;</string>
      <string>EMERGENCY BRAKE</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tempLabel_3">
+   <widget class="QLabel" name="currBlockLabel">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -86,10 +86,10 @@ font: 11pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="headlightLabel">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>176</x>
       <y>170</y>
-      <width>37</width>
-      <height>12</height>
+      <width>51</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -99,10 +99,10 @@ font: 11pt &quot;Segoe UI&quot;;</string>
    <widget class="QPushButton" name="ACIcon">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>290</y>
-      <width>61</width>
-      <height>61</height>
+      <x>180</x>
+      <y>260</y>
+      <width>51</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -112,11 +112,11 @@ font: 11pt &quot;Segoe UI&quot;;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_18">
+   <widget class="QLabel" name="speedLimitLabel">
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>330</y>
+      <y>320</y>
       <width>221</width>
       <height>31</height>
      </rect>
@@ -197,7 +197,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>410</y>
+      <y>380</y>
       <width>231</width>
       <height>31</height>
      </rect>
@@ -241,13 +241,22 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>390</y>
+      <y>360</y>
       <width>231</width>
       <height>23</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QProgressBar {
+     border: 2px solid black;
+     border-radius: 5px;
+     background-color: white;
+ }
+
+ QProgressBar::chunk {
+     background-color: yellow;
+     width: 20px;
+ }</string>
     </property>
     <property name="value">
      <number>24</number>
@@ -257,7 +266,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>300</y>
+      <y>290</y>
       <width>221</width>
       <height>31</height>
      </rect>
@@ -274,10 +283,10 @@ padding: 2px;</string>
    <widget class="QLabel" name="lDoorLabel">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>176</x>
       <y>200</y>
-      <width>37</width>
-      <height>12</height>
+      <width>51</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -290,8 +299,20 @@ padding: 2px;</string>
       <x>20</x>
       <y>300</y>
       <width>151</width>
-      <height>23</height>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+     border: 2px solid black;
+     border-radius: 5px;
+     background-color: white;
+ }
+
+ QProgressBar::chunk {
+     background-color: blue;
+     width: 20px;
+ }</string>
     </property>
     <property name="value">
      <number>24</number>
@@ -334,8 +355,8 @@ padding: 2px;</string>
      <rect>
       <x>20</x>
       <y>320</y>
-      <width>141</width>
-      <height>21</height>
+      <width>211</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -351,10 +372,10 @@ font: 11pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="intLightLabel">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>176</x>
       <y>110</y>
-      <width>37</width>
-      <height>12</height>
+      <width>51</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -364,10 +385,10 @@ font: 11pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="extLightLabel">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>176</x>
       <y>140</y>
-      <width>37</width>
-      <height>12</height>
+      <width>51</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -395,10 +416,10 @@ padding: 2px;</string>
    <widget class="QLabel" name="rDoorLabel">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>176</x>
       <y>230</y>
-      <width>37</width>
-      <height>12</height>
+      <width>51</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -459,8 +480,50 @@ padding: 2px;</string>
       <height>29</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>GREEN LINE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="currentFile">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>420</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Current Schedule:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>280</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Min: 60  Max: 90</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="errorLabel">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>270</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -469,7 +532,7 @@ padding: 2px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>817</width>
+     <width>796</width>
      <height>26</height>
     </rect>
    </property>

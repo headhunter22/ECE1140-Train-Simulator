@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>337</width>
-    <height>526</height>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,12 +74,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
+   <widget class="QDateTimeEdit" name="dateBox">
     <property name="geometry">
      <rect>
       <x>140</x>
       <y>70</y>
-      <width>81</width>
+      <width>141</width>
       <height>22</height>
      </rect>
     </property>
@@ -87,7 +87,7 @@
    <widget class="QLineEdit" name="inputTemp">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>150</x>
       <y>200</y>
       <width>81</width>
       <height>20</height>
@@ -97,7 +97,7 @@
    <widget class="QLineEdit" name="inputPow">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>150</x>
       <y>220</y>
       <width>81</width>
       <height>20</height>
@@ -217,7 +217,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="loadTrainSchedule">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -386,12 +386,12 @@
      <rect>
       <x>20</x>
       <y>200</y>
-      <width>121</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Current Temp:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Internal Temp:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
