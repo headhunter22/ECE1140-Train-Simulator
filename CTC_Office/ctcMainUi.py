@@ -342,7 +342,7 @@ class MainWindow(QMainWindow):
     
     def greenDispatch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.dispatchGreen.isChecked:
+        if self.ui.dispatchGreen.isChecked():
             self.ui.dispatchGreen.setChecked(True)
         
         self.ui.dispatchRed.setChecked(False)
@@ -350,7 +350,7 @@ class MainWindow(QMainWindow):
 
     def redDispacth(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.redDispatch.isChecked:
+        if self.ui.redDispatch.isChecked():
             self.ui.redDispatch.setChecked(True)
         
         self.ui.greenDispatch.setChecked(False)
@@ -358,7 +358,7 @@ class MainWindow(QMainWindow):
 
     def schedTrains(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.scheduledTrains.isChecked:
+        if self.ui.scheduledTrains.isChecked():
             self.ui.scheduledTrains.setChecked(True)
         
         self.ui.dispatchRed.setChecked(False)
