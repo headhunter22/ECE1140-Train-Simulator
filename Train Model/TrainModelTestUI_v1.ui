@@ -66,53 +66,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Comm. Speed:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="clButtonR">
-    <property name="geometry">
-     <rect>
-      <x>640</x>
-      <y>170</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 0, 0);</string>
-    </property>
-    <property name="text">
-     <string>RED</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="clButtonGreen">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>170</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton{
-	background-color: rgb(0, 255, 0);
-}</string>
-    </property>
-    <property name="text">
-     <string>GREEN</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>170</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Current Line: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
@@ -307,19 +260,6 @@ padding: 2px;</string>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>120</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Current Section&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="commSpeedButton">
     <property name="geometry">
      <rect>
@@ -333,111 +273,11 @@ padding: 2px;</string>
      <string>Set</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_Section">
+   <widget class="QComboBox" name="currentBlock">
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>120</y>
-      <width>55</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>A</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>C</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>D</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>E</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>F</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>G</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>H</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>I</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>J</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>K</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>L</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>M</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>N</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>O</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>P</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Q</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>R</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QComboBox" name="comboBox_Block">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>140</y>
+      <y>130</y>
       <width>55</width>
       <height>22</height>
      </rect>
@@ -493,11 +333,11 @@ padding: 2px;</string>
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label_15">
+   <widget class="QLabel" name="currentBlockLabel">
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>140</y>
+      <y>130</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -1026,7 +866,7 @@ border-radius: 4px;
 padding: 2px;</string>
     </property>
     <property name="text">
-     <string>Actual Limit:</string>
+     <string>Actual Speed:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="speedIcon">
@@ -1083,20 +923,20 @@ font: 11pt &quot;Segoe UI&quot;;</string>
      <string>Current Block:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_20">
+   <widget class="QLabel" name="redLabel">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>150</x>
       <y>40</y>
-      <width>71</width>
-      <height>16</height>
+      <width>61</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Red Line&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_21">
+   <widget class="QLabel" name="greenLabel">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -1177,6 +1017,53 @@ font: 11pt &quot;Segoe UI&quot;;</string>
      <string>Load Train Schedule</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="redClickedButton">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>170</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>RED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="greenClickedButton">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>170</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: rgb(0, 255, 0);
+}</string>
+    </property>
+    <property name="text">
+     <string>GREEN</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>170</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Current Line: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1184,7 +1071,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>869</width>
-     <height>17</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTrain_Model_Test_UI">

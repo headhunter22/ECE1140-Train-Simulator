@@ -2,8 +2,10 @@ import sys
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
+import TrackParser
 
 trainArray = []
+track = TrackParser.parseTrack('Track Layout.csv')
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -11,7 +13,14 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("TrainModelTestUI_v1.ui", self)
         self.setWindowTitle('Train Model Test UI')
-        self.trainBox.addItem("Train 0")
+        self.trainBox.addItem("Train 0")  
+        self.currentBlockLabel.setStyleSheet('background-color: black')      
+
+        
+        #Setting the current line
+        self.greenClickedButton.clicked.connect(self.greenclickedButton)
+        self.redClickedButton.clicked.connect(self.redclickedButton)
+
        
         #temperature set
         self.tempButton.clicked.connect(self.tempInputfunc)
@@ -54,6 +63,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #Adding train to map 
         self.addTrain.clicked.connect(self.addingTrainFunc)
+
+
+    #FUNCTIONS FOR CLICKING BUTTONS
+    def greenclickedButton(self):
+            if (self.greenClickedButton.clicked):
+                self.greenLabel.setStyleSheet("background-color: rgb(0, 255, 0)")
+                self.redLabel.setStyleSheet("background-color: gray")
+            self.currentBlockLabel.setStyleSheet('background-color: light gray')
+
+            for x in range(1,151):
+                self.currentBlock.addItem("{0}".format(x))
+        
+    def redclickedButton(self):    
+        if (self.redClickedButton.clicked):
+            self.redLabel.setStyleSheet("background-color: red")
+            self.greenLabel.setStyleSheet("background-color: gray")
+        self.currentBlockLabel.setStyleSheet('background-color: light gray')
+
+        for x in range(1,77):
+                self.currentBlock.addItem("{0}".format(x))
 
 
     #temp set function
