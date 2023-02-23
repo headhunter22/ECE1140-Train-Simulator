@@ -186,9 +186,6 @@ class MainWindow(QMainWindow):
         self.ui.greenLine_2.setStyleSheet("color: black")
         self.ui.redLineText.setStyleSheet("background-color: none")
         self.ui.redLineText.setStyleSheet("color: black")
-        print("\nauto switch state: " + str(self.ui.autoSelect.isChecked()))
-        print("manual switch state: " + str(self.ui.manualSelect.isChecked()))
-        print("maintenance switch state: " + str(self.ui.maintenanceSelect.isChecked()))
 
     def manualSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
@@ -213,9 +210,6 @@ class MainWindow(QMainWindow):
         self.ui.greenLine_2.setStyleSheet("color: green")
         self.ui.redLineText.setStyleSheet("background-color: pink")
         self.ui.redLineText.setStyleSheet("color: red")
-        print("\nauto switch state: " + str(self.ui.autoSelect.isChecked()))
-        print("manual switch state: " + str(self.ui.manualSelect.isChecked()))
-        print("maintenance switch state: " + str(self.ui.maintenanceSelect.isChecked()))
 
     #disables inputs and enables track switches to be changed
     def maintenanceMode(self):
