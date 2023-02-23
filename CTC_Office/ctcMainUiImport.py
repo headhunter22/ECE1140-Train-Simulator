@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'E:\ECE1140-Team-1\CTC_Office\ctcMainUi.ui'
+# Form implementation generated from reading ui file 'D:\ECE_1140\ECE1140-Team-1\CTC_Office\ctcMainUi.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -100,10 +100,8 @@ class Ui_MainWindow(object):
         self.greenAddYard.setStyleSheet("background-color: DodgerBlue; color: Black")
         self.greenAddYard.setObjectName("greenAddYard")
         self.greenTentSchedule = QtWidgets.QListWidget(parent=self.greenLinePage)
-        self.greenTentSchedule.setGeometry(QtCore.QRect(110, 150, 151, 201))
+        self.greenTentSchedule.setGeometry(QtCore.QRect(110, 170, 151, 181))
         self.greenTentSchedule.setObjectName("greenTentSchedule")
-        item = QtWidgets.QListWidgetItem()
-        self.greenTentSchedule.addItem(item)
         self.arrivalLabel = QtWidgets.QLabel(parent=self.greenLinePage)
         self.arrivalLabel.setGeometry(QtCore.QRect(110, 120, 71, 21))
         self.arrivalLabel.setObjectName("arrivalLabel")
@@ -118,6 +116,9 @@ class Ui_MainWindow(object):
         self.greenDispatch.setGeometry(QtCore.QRect(190, 360, 61, 21))
         self.greenDispatch.setStyleSheet("background-color: Green; color: Black")
         self.greenDispatch.setObjectName("greenDispatch")
+        self.arrivalLabel_3 = QtWidgets.QLabel(parent=self.greenLinePage)
+        self.arrivalLabel_3.setGeometry(QtCore.QRect(110, 151, 111, 20))
+        self.arrivalLabel_3.setObjectName("arrivalLabel_3")
         self.stackedWidget.addWidget(self.greenLinePage)
         self.redLinePage = QtWidgets.QWidget()
         self.redLinePage.setObjectName("redLinePage")
@@ -597,14 +598,10 @@ class Ui_MainWindow(object):
         self.greenAddStation.setText(_translate("MainWindow", "Add Station"))
         self.greenAddBlock.setText(_translate("MainWindow", "Add Block"))
         self.greenAddYard.setText(_translate("MainWindow", "Add Yard"))
-        __sortingEnabled = self.greenTentSchedule.isSortingEnabled()
-        self.greenTentSchedule.setSortingEnabled(False)
-        item = self.greenTentSchedule.item(0)
-        item.setText(_translate("MainWindow", "Tentative Schedule:"))
-        self.greenTentSchedule.setSortingEnabled(__sortingEnabled)
         self.arrivalLabel.setText(_translate("MainWindow", "Arrival Time:"))
         self.greenClear.setText(_translate("MainWindow", "Clear"))
         self.greenDispatch.setText(_translate("MainWindow", "Dispatch"))
+        self.arrivalLabel_3.setText(_translate("MainWindow", "Tentative Schedule:"))
         self.blockLabel_3.setText(_translate("MainWindow", "Block Number:"))
         self.redAddYard.setText(_translate("MainWindow", "Add Yard"))
         self.redAddBlock.setText(_translate("MainWindow", "Add Block"))

@@ -2048,17 +2048,30 @@
     </column>
     <item>
      <property name="text">
-      <string>New Item</string>
+      <string>427</string>
+     </property>
+     <property name="text">
+      <string>27mph</string>
+     </property>
+     <property name="text">
+      <string>.31mi</string>
+     </property>
+     <property name="text">
+      <string>Edgebrook Station</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>New Item</string>
+      <string>275</string>
      </property>
-    </item>
-    <item>
      <property name="text">
-      <string>New Item</string>
+      <string>18mph</string>
+     </property>
+     <property name="text">
+      <string>.16mi</string>
+     </property>
+     <property name="text">
+      <string>Overbrook Station</string>
      </property>
     </item>
    </widget>

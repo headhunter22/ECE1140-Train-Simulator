@@ -1,12 +1,13 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QIntValidator
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem, QListWidgetItem
 from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
 
 trackCSV = pd.read_csv('Track Layout.csv')
 trackDict = trackCSV.to_dict()
+greenStationStates = []
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -45,6 +46,7 @@ class MainWindow(QMainWindow):
 
         #connecting the green station buttons
         self.greenStations = []
+        self.greenStaionStates = []
         self.ui.pioneerStation.clicked.connect(self.handleGreenStationClicked)
         self.greenStations.append(self.ui.pioneerStation)
         self.ui.edgebrookStation.clicked.connect(self.handleGreenStationClicked)
@@ -90,6 +92,7 @@ class MainWindow(QMainWindow):
         self.redStations.append(self.ui.southHillsStation)
 
         #add station buttons
+        
         self.ui.greenAddStation.clicked.connect(self.addGreenTentStation)
         self.ui.redAddStation.clicked.connect(self.addRedTentStation)
 
@@ -97,8 +100,11 @@ class MainWindow(QMainWindow):
         self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
         self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
 
+        #add yard buttons
+        self.ui.greenAddYard.clicked.connect(self.addGreenYard)
+
         #dispatch and clear buttons for red and green line
-        #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
+        self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
 
         #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
@@ -229,21 +235,28 @@ class MainWindow(QMainWindow):
     ########DISPATCHING TRAINS FUNCTIONS########
     ############################################
 
-    #def dipatchGreenTrain(self): 
-        
-
-    #def dipatchRedTrain(self): 
-        
-
-    def clearGreenDispatch(self):
-        #clear the station selections
-        # Set the selected property of all buttons to False
+    def dipatchGreenTrain(self):
         for button in self.greenStations:
             button.setProperty("selected", False)
 
         # Update the background color of all buttons to white
         for button in self.greenStations:
             button.setStyleSheet("background-color: white;")
+
+    #def dipatchRedTrain(self): 
+
+    def clearGreenDispatch(self):
+        #clear the station selections
+        # Set the selected property of all buttons to False
+        for button in self.greenStations:
+            button.setProperty("selected", False)
+            self.greenStaionStates.append(button.property("selected"))
+
+        # Update the background color of all buttons to white
+        for button in self.greenStations:
+            button.setStyleSheet("background-color: white;")
+
+        self.ui.greenTentSchedule.clear()
 
         self.ui.greenBlockDispatch.setCurrentIndex(0)
 
@@ -271,6 +284,40 @@ class MainWindow(QMainWindow):
         for button in self.greenStations:
             button.setStyleSheet("background-color: white;")
 
+        pioneer = self.ui.pioneerStation.property("selected")
+        print(pioneer)
+
+        state = self.sender()
+        state.property("selected")
+
+        #if self.ui.pioneerStation.property("selected") == True:
+        #    pioneer = self.findChild(QPushButton, "pioneerStation")
+        #    print('pioneer', pioneer.property("selected"))
+        #    stationString = str(self.ui.greenTentSchedule.count()) + ". Pioneer Station\t"
+        #    item = QListWidgetItem(stationString)
+        #    self.ui.greenTentSchedule.addItem(item)
+        #elif self.ui.edgebrookStation.property("selected") == True:
+
+        #elif self.ui.whitedStation.property("selected") == True:
+        #    
+        #elif self.ui.southBankStation.property("selected") == True:
+
+        #elif self.ui.centralStation.property("selected") == True:
+
+        #elif self.ui.inglewoodStation.property("selected") == True:
+
+        #if self.ui.overbrookStation.property("selected") == True:
+
+        #elif self.ui.glenburyStation.property("selected") == True:
+
+        #elif self.ui.dormontStation.property("selected") == True:
+
+        #elif self.ui.lebanonStation.property("selected") == True:
+
+        #elif self.ui.poplarStation.property("selected") == True:
+
+        #elif self.ui.castleShannonStation.property("selected") == True:
+
     def addRedTentStation(self):
         if self.ui.redBlockDispatch.currentIndex() != 0:
             return
@@ -285,6 +332,14 @@ class MainWindow(QMainWindow):
 
     def addGreenTentBlock(self):
         print(self.ui.greenBlockDispatch.currentIndex())
+
+        if self.ui.greenBlockDispatch.currentIndex() != 0:
+            
+            greenTime = self.ui.greenArrivalInput.time()
+            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Block: ' + str(self.ui.greenBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + greenTime.toString("hh:mm")
+            item = QListWidgetItem(blockString)
+            self.ui.greenTentSchedule.addItem(item)
+
         self.ui.greenBlockDispatch.setCurrentIndex(0)
 
     def addRedTentBlock(self):
@@ -293,6 +348,13 @@ class MainWindow(QMainWindow):
         redTime = self.ui.redArrivalInput.time()
         redTime.toString("hh:mm:ss")
         print('arrival time: ', redTime)
+
+    def addGreenYard(self):
+        if self.ui.greenBlockDispatch.currentIndex() != 0:
+            greenTime = self.ui.greenArrivalInput.time()
+            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + greenTime.toString("hh:mm")
+            item = QListWidgetItem(blockString)
+            self.ui.greenTentSchedule.addItem(item)
 
     def handleGreenStationClicked(self):
         # Get the button that was clicked
@@ -312,6 +374,20 @@ class MainWindow(QMainWindow):
                 button.setStyleSheet("background-color: blue;")
             else:
                 button.setStyleSheet("background-color: white;")
+
+        greenStationStates = [
+            self.ui.pioneerStation.property("selected"), self.ui.edgebrookStation.property("selected"), self.ui.whitedStation.property("selected"), 
+            self.ui.southBankStation.property("selected"), self.ui.centralStation.property("selected"), self.ui.inglewoodStation.property("selected"), 
+            self.ui.overbrookStation.property("selected"), self.ui.glenburyStation.property("selected"), self.ui.dormontStation.property("selected"), 
+            self.ui.lebanonStation.property("selected"), self.ui.poplarStation.property("selected"), self.ui.castleShannonStation.property("selected")
+        ]
+
+        print(greenStationStates[0])
+        print(greenStationStates[1])
+        print(greenStationStates[2])
+        print(greenStationStates[3])
+
+        #return greenStationStates
 
     def handleRedStationClicked(self):
         # Get the button that was clicked
@@ -400,7 +476,7 @@ class MainWindow(QMainWindow):
                     train.setBackground(QColor('green'))
                     self.ui.greenOccupancy.setItem(rowCount, 0, train)
 
-                if (rowCount > 6 and rowCount < 12) or (rowCount > 48 and rowCount < 59):
+                if (rowCount > 6 and rowCount < 12) or (rowCount > 48 and rowCount < 58):
                     authority = QTableWidgetItem('')
                     authority.setBackground(QColor('red'))
                     self.ui.greenOccupancy.setItem(rowCount, 0, authority)
@@ -429,7 +505,6 @@ class MainWindow(QMainWindow):
             button2.setEnabled(True)
             button1.setStyleSheet('background-color: LightCoral; color: Black')
             button2.setStyleSheet('background-color: white; color: gray')
-
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
@@ -550,9 +625,6 @@ class MainWindow(QMainWindow):
         # Do something with the selected file
         print('Selected file:', filePath)
 
-
-
-
     ############################################
     ########OPTIONS / XINGS FUNCTIONS###########
     ############################################
@@ -578,7 +650,6 @@ class MainWindow(QMainWindow):
                 maintenance = QTableWidgetItem('Maintenance')
                 maintenance.setBackground(QColor('Gold'))
                 self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
-    
 
     def clearBlockOptions(self):
         self.ui.lineSelectMaintenance.setCurrentIndex(0)
@@ -594,10 +665,6 @@ class MainWindow(QMainWindow):
         for section in track.getLine(line).sections:
             for block in section.blocks:
                 self.ui.blockSelectMaintenance.addItem(block.blockName)
-
-
-
-
 
     ############################################
     ##############SHARED FUNCITONS##############
