@@ -107,7 +107,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -275,6 +275,11 @@
         <height>21</height>
        </rect>
       </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="blockLabel">
       <property name="geometry">
@@ -298,6 +303,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Station</string>
       </property>
@@ -311,6 +319,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Block</string>
       </property>
@@ -323,6 +334,9 @@
         <width>71</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
       </property>
       <property name="text">
        <string>Add Yard</string>
@@ -375,6 +389,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Red; color: Black</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
@@ -387,6 +404,9 @@
         <width>61</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Green; color: Black</string>
       </property>
       <property name="text">
        <string>Dispatch</string>
@@ -426,6 +446,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Yard</string>
       </property>
@@ -438,6 +461,9 @@
         <width>71</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
       </property>
       <property name="text">
        <string>Add Block</string>
@@ -480,6 +506,11 @@
         <height>21</height>
        </rect>
       </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
      </widget>
      <widget class="QPushButton" name="redAddStation">
       <property name="geometry">
@@ -489,6 +520,9 @@
         <width>71</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
       </property>
       <property name="text">
        <string>Add Station</string>
@@ -607,6 +641,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Red; color: Black</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
@@ -620,6 +657,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Green; color: Black</string>
+      </property>
       <property name="text">
        <string>Dispatch</string>
       </property>
@@ -629,10 +669,10 @@
      <widget class="QListWidget" name="greenScheduledTrains">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>121</width>
-        <height>331</height>
+        <x>0</x>
+        <y>0</y>
+        <width>281</width>
+        <height>181</height>
        </rect>
       </property>
       <item>
@@ -644,10 +684,10 @@
      <widget class="QListWidget" name="redTentSchedule_3">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>10</y>
-        <width>131</width>
-        <height>331</height>
+        <x>0</x>
+        <y>200</y>
+        <width>281</width>
+        <height>181</height>
        </rect>
       </property>
       <item>

@@ -17,6 +17,16 @@ class MainWindow(QMainWindow):
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
 
+        # add green blocks to dispatch page
+        for section in track.getLine("Green").sections:
+            for block in section.blocks:
+                self.ui.greenBlockDispatch.addItem(block.blockName)
+
+        # add red blocks to dispatch page
+        for section in track.getLine("Red").sections:
+            for block in section.blocks:
+                self.ui.redBlockDispatch.addItem(block.blockName)
+
         ##################################
         ########STARTUP FUNCTIONS#########
         ##################################
@@ -32,6 +42,68 @@ class MainWindow(QMainWindow):
         ##################################
         ########DISPATCHING TRAINS########
         ##################################
+
+        #connecting the green station buttons
+        self.greenStations = []
+        self.ui.pioneerStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.pioneerStation)
+        self.ui.edgebrookStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.edgebrookStation)
+        self.ui.whitedStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.whitedStation)
+        self.ui.southBankStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.southBankStation)
+        self.ui.centralStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.centralStation)
+        self.ui.inglewoodStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.inglewoodStation)
+        self.ui.overbrookStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.overbrookStation)
+        self.ui.glenburyStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.glenburyStation)
+        self.ui.dormontStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.dormontStation)
+        self.ui.lebanonStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.lebanonStation)
+        self.ui.poplarStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.poplarStation)
+        self.ui.castleShannonStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.castleShannonStation)
+
+        #connecting the green station buttons
+        self.redStations = []
+        self.ui.shadysideStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.shadysideStation)
+        self.ui.herronStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.herronStation)
+        self.ui.swissvilleStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.swissvilleStation)
+        self.ui.pennStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.pennStation)
+        self.ui.steelPlazaStaion.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.steelPlazaStaion)
+        self.ui.firstAveStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.firstAveStation)
+        self.ui.staionSquareStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.staionSquareStation)
+        self.ui.southHillsStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.southHillsStation)
+
+        #add station buttons
+        self.ui.greenAddStation.clicked.connect(self.addGreenTentStation)
+        self.ui.redAddStation.clicked.connect(self.addRedTentStation)
+
+        #add block buttons
+        self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
+        self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
+
+        #dispatch and clear buttons for red and green line
+        #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
+        self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
+
+        #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
+        self.ui.redClear.clicked.connect(self.clearRedDispatch)
+
 
 
 
@@ -152,6 +224,113 @@ class MainWindow(QMainWindow):
 
 
         self.show()
+
+    ############################################
+    ########DISPATCHING TRAINS FUNCTIONS########
+    ############################################
+
+    #def dipatchGreenTrain(self): 
+        
+
+    #def dipatchRedTrain(self): 
+        
+
+    def clearGreenDispatch(self):
+        #clear the station selections
+        # Set the selected property of all buttons to False
+        for button in self.greenStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.greenStations:
+            button.setStyleSheet("background-color: white;")
+
+        self.ui.greenBlockDispatch.setCurrentIndex(0)
+
+    def clearRedDispatch(self):
+        #clear the station selections
+        # Set the selected property of all buttons to False
+        for button in self.redStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.redStations:
+            button.setStyleSheet("background-color: white;")
+
+        self.ui.redBlockDispatch.setCurrentIndex(0)
+
+    def addGreenTentStation(self):
+        if self.ui.greenBlockDispatch.currentIndex() != 0:
+            return
+
+        # Set the selected property of all buttons to False
+        for button in self.greenStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.greenStations:
+            button.setStyleSheet("background-color: white;")
+
+    def addRedTentStation(self):
+        if self.ui.redBlockDispatch.currentIndex() != 0:
+            return
+
+        # Set the selected property of all buttons to False
+        for button in self.redStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.redStations:
+            button.setStyleSheet("background-color: white;")
+
+    def addGreenTentBlock(self):
+        print(self.ui.greenBlockDispatch.currentIndex())
+        self.ui.greenBlockDispatch.setCurrentIndex(0)
+
+    def addRedTentBlock(self):
+        print(self.ui.redBlockDispatch.currentIndex())
+        self.ui.redBlockDispatch.setCurrentIndex(0)
+        redTime = self.ui.redArrivalInput.time()
+        redTime.toString("hh:mm:ss")
+        print('arrival time: ', redTime)
+
+    def handleGreenStationClicked(self):
+        # Get the button that was clicked
+        clickedButton = self.sender()
+
+        # Set the selected property of the clicked button to True
+        clickedButton.setProperty("selected", True)
+
+        # Set the selected property of all other buttons to False
+        for button in self.greenStations:
+            if button != clickedButton:
+                button.setProperty("selected", False)
+
+        # Update the background color of all buttons based on their selected state
+        for button in self.greenStations:
+            if button.property("selected"):
+                button.setStyleSheet("background-color: blue;")
+            else:
+                button.setStyleSheet("background-color: white;")
+
+    def handleRedStationClicked(self):
+        # Get the button that was clicked
+        clickedButton = self.sender()
+
+        # Set the selected property of the clicked button to True
+        clickedButton.setProperty("selected", True)
+
+        # Set the selected property of all other buttons to False
+        for button in self.redStations:
+            if button != clickedButton:
+                button.setProperty("selected", False)
+
+        # Update the background color of all buttons based on their selected state
+        for button in self.redStations:
+            if button.property("selected"):
+                button.setStyleSheet("background-color: blue;")
+            else:
+                button.setStyleSheet("background-color: white;")
 
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
