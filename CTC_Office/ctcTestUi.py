@@ -120,8 +120,8 @@ class MainWindow(QMainWindow):
         #cathes the case when switching lines and there are no options for line blocks that populate the enterLocation comboBox
         if self.ui.enterLocation.currentText() == "":
             return
-        self.ui.enterSpeed.setMaximum(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]))
-        self.ui.enterSpeed.setValue(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]))
+        self.ui.enterSpeed.setMaximum(int(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]) * 0.621371))
+        self.ui.enterSpeed.setValue(int(int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())]) * 0.621371))
         #speedLimit = int(trackDict['Speed Limit (Km/Hr)'][int(self.ui.enterLocation.currentText())])
     
     def getAuthority(self):
@@ -139,7 +139,8 @@ class MainWindow(QMainWindow):
 
         for i in range(selectedNum, endIndex):
             #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
-            if 'SWITCH' not in str(trackDict['Infrastructure'][i]) or 'CROSSING' not in str(trackDict['Infrastructure'][i]):
+            # or 'CROSSING' not in str(trackDict['Infrastructure'][i])
+            if 'SWITCH' not in str(trackDict['Infrastructure'][i]):
                 #print(trackDict['Line'][i], "    ", trackDict['Infrastructure'][i], "     ", i)
                 #print(int(trackDict['Block Length (m)'][i]))
                 metricAuthority += int(trackDict['Block Length (m)'][i])
