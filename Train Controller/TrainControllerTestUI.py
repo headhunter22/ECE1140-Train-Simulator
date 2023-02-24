@@ -2,12 +2,38 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 from TrainController import *
 
-class TestWindow(QtWidgets.QMainWindow):
+class TestUI(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Train Controller Test UI")
         self.resize(980, 620)
+
+            # Commanded Speed slider init #
+        self.CommSpeedSlider = QtWidgets.QSlider(self)
+        self.CommandedSpeed = QtWidgets.QLabel("Commanded Speed", self)
+        self.CommSpeedSlider.setGeometry(800, 25, 50, 250)
+        self.CommandedSpeed.setGeometry(750, 250, 200, 100)
+        self.CommSpeedSlider.setMinimum(-100)
+        self.CommSpeedSlider.setMaximum(100)
+        self.CommSpeedSlider.setSingleStep(1)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.CommandedSpeed.setFont(font)
+        self.CommSpeedSlider.valueChanged.connect(self.CommandedSpeedChange)
+
+            # Authority Request init # 
+        self.AuthoritySlider = QtWidgets.QSlider(self)
+        self.AuthLabel = QtWidgets.QLabel("Authority", self)
+        self.AuthoritySlider.setGeometry(800, 325, 50, 250)
+        self.AuthLabel.setGeometry(795, 575, 100, 25)
+        self.AuthoritySlider.setMinimum(0)
+        self.AuthoritySlider.setMaximum(10)
+        self.AuthoritySlider.setSingleStep(1)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.AuthLabel.setFont(font)
+        self.AuthoritySlider.valueChanged.connect(self.AuthorityChange)
 
         # Headlight signal Display #
         self.TestHeadlights = QtWidgets.QPushButton(" ", self)
@@ -95,9 +121,11 @@ class TestWindow(QtWidgets.QMainWindow):
         font.setPointSize(18)
         self.TestAutoModeLabel.setFont(font)
 
-    def UpdateTestHeadlights(self):
-        self.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0)}")
-        print("This is coming from TCTUI")
+    def CommandedSpeedChange(self, j):
+         window.CommandedSpeed.setText("Commanded Speed: {0}mph".format(j))
+
+    def AuthorityChange(self, k):
+         window.Authority.setText("Authority: {0}mi".format(k))
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
@@ -105,9 +133,9 @@ class TestWindow(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
-#window = TestWindow()
+window = TestUI()
 # Show window
-#window.show()
+window.show()
 
 # Start the event loop.
 #app.exec()
