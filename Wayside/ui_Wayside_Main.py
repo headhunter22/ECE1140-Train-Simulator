@@ -337,7 +337,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setSortingEnabled(__sortingEnabled)
 
         ___qtablewidgetitem13 = self.tableWidget_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Switch", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Switches", None));
 
         __sortingEnabled1 = self.tableWidget_2.isSortingEnabled()
         self.tableWidget_2.setSortingEnabled(False)
