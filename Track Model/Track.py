@@ -4,6 +4,10 @@ class Track:
     # declare attributes
     def __init__(self):
         self.lines = []
+        self.faults = {'Power': [],
+                    'Broken Rail': [],
+                    'Broken Circuit': []
+                    }
 
     def addLine(self, line):
         self.lines.append(line)
