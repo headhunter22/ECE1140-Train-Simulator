@@ -5,13 +5,12 @@ from PyQt6.QtCore import QSize
 import TrackParser
 from Fault import Fault
 
-sectionDict = {}
-faultDict = {}
-
 # Test UI class
 class TestUI(QtWidgets.QMainWindow):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, track, *args, **kwargs):
+        self.track = track
+
         super().__init__(*args, **kwargs)
         uic.loadUi("TestUI.ui", self)
         self.setWindowTitle('Track Model Test UI')
@@ -238,6 +237,7 @@ class TestUI(QtWidgets.QMainWindow):
             # highlight Broken Circuit orange
             window.BrokenCircuitLabel.setStyleSheet("color: orange")
 
+        ''' THIS NEEDS TO BE ADDED TO A SIGNAL SENT
         # create fault object
         fault = Fault(faultType, faultLabel.text())
 
@@ -246,13 +246,6 @@ class TestUI(QtWidgets.QMainWindow):
             faultDict[faultType] = [fault.location]
         else:
             faultDict[faultType].append(fault.location)
+        '''
 
 #end TestUI class
-
-#defining the app and the window
-# parse the track file
-track = TrackParser.parseTrack('Track Layout.csv')
-app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec()
