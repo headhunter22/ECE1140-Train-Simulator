@@ -1,4 +1,5 @@
 class Fault:
-    def __init__(self, faultType, location):
+    def __init__(self, faultType, block, line):
         self.type = faultType
-        self.location = location
+        self.block = block
+        self.line = line
