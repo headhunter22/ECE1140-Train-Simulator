@@ -1,6 +1,5 @@
 import sys, os
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6 import uic
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtCore import QSize
 
 # Fault Display Class

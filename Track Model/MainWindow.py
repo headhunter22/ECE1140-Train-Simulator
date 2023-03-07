@@ -17,14 +17,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle('Track Model UI')
 
         # create section dictionary to hold sections
-        sectionDict = {}
+        self.sectionDict = {}
 
         # create items in scroll area based on track that was instantiated 
-        self.createLineItem(sectionDict)
+        self.createLineItem(self.sectionDict)
 
         # connect all buttons to block pages
-        for section in sectionDict:
-            sectionDict[section].button.clicked.connect(lambda ch, i=sectionDict[section].section: self.generateBlockInfoPage(i))
+        for section in self.sectionDict:
+            self.sectionDict[section].button.clicked.connect(lambda ch, i=self.sectionDict[section].section: self.generateBlockInfoPage(i))
 
         # connect upload track button to open that page
         self.UploadTrack.clicked.connect(self.openTrackUpload)
@@ -42,6 +42,104 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
         self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
+
+    # update occupancy
+    def updateOccupancy(self, inLine, inBlock):
+        # have to send current line and block through signal !!!
+        line = self.track.getLine(inLine)
+        block = line.getBlock(inBlock)
+        section = block.section
+    
+        # if block is already occupied, do nothing
+        if block.occupied:
+            return    
+
+        block.occupied = True
+
+        # update total train counts
+        if line.lineName == 'Red':
+            self.RedTrainCt.setText(str(int(self.RedTrainCt.text()) + 1))
+        else:
+            self.GreenTrainCt.setText(str(int(self.GreenTrainCt.text()) + 1))
+
+        # create index string to access dict 
+        index = line.lineName + section
+
+        # increment train count on main UI
+        self.sectionDict[index].trainCount.setText(str(int(self.sectionDict[index].trainCount.text()) + 1))
+
+        # edit blocks occupied list
+        currentText = self.sectionDict[index].occupied.text()
+
+        # if text is currently blank, replace with block
+        # if not, append to list
+        if currentText == '-':
+            self.sectionDict[index].occupied.setText(block.blockName)
+        else:
+            currentText += ' ' + block.blockName
+            self.sectionDict[index].occupied.setText(currentText)
+
+    def updateVacancy(self, inLine, inBlock):
+        line = self.track.getLine(inLine)
+        block = line.getBlock(inBlock)
+        section = block.section
+
+        # if block is not occupied, don't do anything
+        if not block.occupied:
+            return    
+
+        block.occupied = False
+
+        # update total line truck count
+        if line.lineName == 'Red':
+            self.RedTrainCt.setText(str(int(self.RedTrainCt.text()) - 1))
+        else:
+            self.GreenTrainCt.setText(str(int(self.GreenTrainCt.text()) - 1))
+
+        # create index string to access dict 
+        index = line.lineName + section
+
+        # decrement train count on main UI
+        self.sectionDict[index].trainCount.setText(str(int(self.sectionDict[index].trainCount.text()) - 1))
+
+        # edit blocks occupied list
+        currentText = self.sectionDict[index].occupied.text()
+
+        # if text is currently only 1 block, replace with blank
+        # if not, append to list
+        if len(currentText.split()) == 1:
+            self.sectionDict[index].occupied.setText('-')
+        elif currentText.split()[0] == block.blockName: 
+            currentText = currentText.replace(block.blockName + ' ', '')
+            self.sectionDict[index].occupied.setText(currentText)
+        else:
+            currentText = currentText.replace(' ' + block.blockName, '')
+            self.sectionDict[index].occupied.setText(currentText)
+
+    def changeSwitch(self, inLine, inBlock):
+        return
+
+    def changeCrossings(self, crossing):
+        if crossing == 1:
+            self.I47Status.setText("Active")
+            self.I47Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+            self.E19Status.setText("Active")
+            self.E19Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+        elif crossing == 2:
+            self.I47Status.setText("Active")
+            self.I47Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+            self.E19Status.setText("Inactive")
+            self.E19Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+        elif crossing == 3:
+            self.I47Status.setText("Inactive")
+            self.I47Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+            self.E19Status.setText("Active")
+            self.E19Status.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+        else:
+            self.I47Status.setText("Inactive")
+            self.I47Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+            self.E19Status.setText("Inactive")
+            self.E19Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
