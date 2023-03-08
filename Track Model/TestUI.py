@@ -10,6 +10,9 @@ class TestUI(QtWidgets.QMainWindow):
     occupancyPressed = pyqtSignal(str, str)
     vacancyPressed = pyqtSignal(str, str)
     crossingChanged = pyqtSignal(int)
+    switchChanged = pyqtSignal(str, str, str)
+    tempSignal = pyqtSignal(int)
+    faultSignal = pyqtSignal(str, str, str)
 
     def __init__(self, track, *args, **kwargs):
         self.track = track
@@ -61,18 +64,7 @@ class TestUI(QtWidgets.QMainWindow):
         if not self.tempEntry.text().isnumeric(): 
             return
 
-        # turn heaters on if temp is lower than 39deg
-        if int(self.tempEntry.text()) >= 39:
-            self.HeaterStatus.setText("Heater Status: OFF")
-            MainWindow.HeaterStatus.setText("Off")
-            MainWindow.HeaterStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
-        else:
-            self.HeaterStatus.setText("Heater Status: ON")
-            MainWindow.HeaterStatus.setText("On")
-            MainWindow.HeaterStatus.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
-
-        # display current temp on mainUI
-        MainWindow.CurrentTempLabel.setText("Current Temp: " + self.tempEntry.text())
+        self.tempSignal.emit(int(self.tempEntry.text()))
 
     # function to get crossing statuses when they change
     def changeCrossingStatuses(self):
@@ -99,6 +91,9 @@ class TestUI(QtWidgets.QMainWindow):
         self.switchBlockChanged()
 
     def switchBlockChanged(self):
+        if self.SwitchBlockSelect.currentText() == '':
+            return 
+
         # update the label for the connection
         infrastructureText = self.track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).infrastructure
 
@@ -119,6 +114,7 @@ class TestUI(QtWidgets.QMainWindow):
         self.SwitchOption1.setText(opt1)
         self.SwitchOption2.setText(opt2)
 
+    # function to change dropdowns for occupancy selection
     def occLineChanged(self, line):
         # clear current options in the dropdowns 
         self.OccBlockSel.clear()
@@ -128,6 +124,7 @@ class TestUI(QtWidgets.QMainWindow):
             for block in section.blocks:
                 self.OccBlockSel.addItem(block.blockName)
 
+    # function to change dropdowns for fault selection
     def faultLineChanged(self, line):
         # clear current options in the dropdowns 
         self.FaultBlockSelect.clear()
@@ -144,32 +141,17 @@ class TestUI(QtWidgets.QMainWindow):
         self.vacancyPressed.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
 
     def changeSwitchOpt1(self):
-        self.track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = self.SwitchOption1.text()
+        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption1.text())
 
     def changeSwitchOpt2(self):
-        self.track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = self.SwitchOption2.text()
+        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
 
     # needs to send signal
     def induceFault(self, faultType):
-        # create label for rail breakages scroll and add to section
-        faultLabel = QtWidgets.QLabel(self.FaultLineSelect.currentText() + ' ' + self.FaultBlockSelect.currentText(), self)
-        faultLabel.setFixedHeight(30)
+        # emit signal
+        self.faultSignal.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)
 
-        if faultType == 'Broken Rail':
-            # highlight Broken Rail orange
-            MainWindow.BrokenRailLabel.setStyleSheet("color: orange")
-
-            # add to broken rails section
-            if self.FaultLineSelect.currentText() == 'Red':
-                MainWindow.RedFaultLayout.addWidget(faultLabel)
-            else:
-                MainWindow.GreenFaultLayout.addWidget(faultLabel)
-        elif faultType == 'Power':
-            # highlight Power orange
-            MainWindow.PowerFaultLabel.setStyleSheet("color: orange")
-        else: 
-            # highlight Broken Circuit orange
-            MainWindow.BrokenCircuitLabel.setStyleSheet("color: orange")
+        
 
         ''' THIS NEEDS TO BE ADDED TO A SIGNAL SENT
         # create fault object

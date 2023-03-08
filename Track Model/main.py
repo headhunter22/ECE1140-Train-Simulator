@@ -11,10 +11,17 @@ class Connected():
         self.window = MainWindow(track)
         self.testWindow = TestUI(track)
 
-        # connect signals
+        # connect signals from test to main
         self.testWindow.occupancyPressed.connect(self.window.updateOccupancy)
         self.testWindow.vacancyPressed.connect(self.window.updateVacancy)
         self.testWindow.crossingChanged.connect(self.window.changeCrossings)
+        self.testWindow.tempSignal.connect(self.window.tempUpdate)
+        self.testWindow.faultSignal.connect(self.window.updateFaults)
+
+        # connect signal from main to block info
+        # connect all buttons to block pages
+        for section in self.window.sectionDict:
+            self.window.sectionDict[section].button.clicked.connect(lambda ch, i=self.window.sectionDict[section].section: self.window.generateBlockInfoPage(i))
 
     def run(self):
         self.window.show()
