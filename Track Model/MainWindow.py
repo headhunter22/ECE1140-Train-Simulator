@@ -4,6 +4,8 @@ from PyQt6 import uic
 from PyQt6.QtCore import QSize
 from BlockInfo import BlockInfo
 from FaultDisplay import FaultDisplay
+from Fault import Fault
+from Section import Section
 import TrackParser 
 
 # Main Window Class
@@ -21,6 +23,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # create items in scroll area based on track that was instantiated 
         self.createLineItem(self.sectionDict)
+
+        # create the file brower object
+        self.fileBrowser = QtWidgets.QFileDialog()
 
         # connect all buttons to block pages
         for section in self.sectionDict:
@@ -79,6 +84,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentText += ' ' + block.blockName
             self.sectionDict[index].occupied.setText(currentText)
 
+    # update vacancy
     def updateVacancy(self, inLine, inBlock):
         line = self.track.getLine(inLine)
         block = line.getBlock(inBlock)
@@ -116,9 +122,39 @@ class MainWindow(QtWidgets.QMainWindow):
             currentText = currentText.replace(' ' + block.blockName, '')
             self.sectionDict[index].occupied.setText(currentText)
 
-    def changeSwitch(self, inLine, inBlock):
-        return
+    # update switch states
+    def changeSwitch(self, inLine, inBlock, switchSelect):
+        self.track.getLine(inLine).getBlock(inBlock).switchConnection = switchSelect
 
+    # update faults from test UI
+    def updateFaults(self, inLine, inBlock, faultType):
+        # create label for rail breakages scroll and add to section
+        faultLabel = QtWidgets.QLabel(inLine + ' ' + inBlock, self)
+        faultLabel.setFixedHeight(30)
+
+        if faultType == 'Broken Rail':
+            # highlight Broken Rail orange
+            self.BrokenRailLabel.setStyleSheet("color: orange")
+
+            # add to broken rails section
+            if inLine == 'Red':
+                self.RedFaultLayout.addWidget(faultLabel)
+            else:
+                self.GreenFaultLayout.addWidget(faultLabel)
+        elif faultType == 'Power':
+            # highlight Power orange
+            self.PowerFaultLabel.setStyleSheet("color: orange")
+        else: 
+            # highlight Broken Circuit orange
+            self.BrokenCircuitLabel.setStyleSheet("color: orange")
+
+        # create a fault in the fault class
+        fault = Fault(faultType, inBlock, inLine)
+
+        # add the fault to the track
+        self.track.addFault(fault)
+
+    # change RR X-ings
     def changeCrossings(self, crossing):
         if crossing == 1:
             self.I47Status.setText("Active")
@@ -140,6 +176,19 @@ class MainWindow(QtWidgets.QMainWindow):
             self.I47Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
             self.E19Status.setText("Inactive")
             self.E19Status.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+
+    # update the heaters based on temp -- add monthly temp
+    def tempUpdate(self, temp):
+        # turn heaters on if temp is lower than monthly temp
+        if temp >= 39:
+            self.HeaterStatus.setText("Off")
+            self.HeaterStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
+        else:
+            self.HeaterStatus.setText("On")
+            self.HeaterStatus.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
+
+        # display current temp on mainUI
+        self.CurrentTempLabel.setText("Current Temp: " + str(temp))
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -199,10 +248,18 @@ class MainWindow(QtWidgets.QMainWindow):
     def openBlockInfo(self):
         self.blockInfo.show()
 
-    # take away middle man window
     def openTrackUpload(self):
-        self.uploadWindow = UploadFile()
-        self.uploadWindow.show()
+        # open the file explorer 
+        response = self.fileBrowser.getOpenFileNames(
+            caption='Select File',
+            directory=os.getcwd(),
+            initialFilter='Data File (*.csv)'
+        )
+
+        self.fileName = str(response[0][0])
+
+        # print filename
+        print(self.fileName)
 
     def showFaultWindow(self):
         self.faultWindow = FaultDisplay(self.track)

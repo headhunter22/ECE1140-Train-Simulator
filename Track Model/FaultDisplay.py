@@ -13,13 +13,13 @@ class FaultDisplay(QtWidgets.QMainWindow):
 
         # connect dropdowns changing to function to pull up locations with that fault type
         self.FaultSelect.currentTextChanged.connect(self.getLocation)
-        self.LocationLabel.setText(', '.join(self.track.faults['Power']))
+        self.LocationLabel.setText(self.track.faultsToString('Power'))
 
     def getLocation(self):
         # line block select
         faultType = self.FaultSelect.currentText()
 
         # search faultDict for faults of that type
-        self.LocationLabel.setText(', '.join(self.track.faults['Power']))
+        self.LocationLabel.setText(self.track.faultsToString(faultType))
 
 # end fault display class
