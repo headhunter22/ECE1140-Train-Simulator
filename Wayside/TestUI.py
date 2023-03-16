@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6 import QtWidgets, uic
 from Wayside_Test import Ui_MainWindow
 from Track_Configuration import Ui_TrackConfig
-from blockwidget import Ui_Form
+from blockwidget import Ui_Section
 from pathlib import Path
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -103,7 +103,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     #function for pop up window for seeing blocks in sections
     def blocksWindow(self):
-        self.bl = Ui_Form()
+        self.bl = Ui_Section()
         #layout = QVBoxLayout()
         self.bl.show()
     
@@ -257,9 +257,9 @@ class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
                 #print("data: ", data)
                 self.plcdisplay.setText(data)
                         
-class Ui_Form(QtWidgets.QMainWindow, Ui_Form):
+class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
     def __init__(self, *args, obj=None, **kwargs):
-        super(Ui_Form, self).__init__(*args, **kwargs)
+        super(Ui_Section, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
         self.setWindowTitle('Block Information')
