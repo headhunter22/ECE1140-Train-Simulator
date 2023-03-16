@@ -9,11 +9,11 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(476, 415)
-        self.gridLayoutWidget = QtWidgets.QWidget(parent=Form)
+class Ui_Section(object):
+    def setupUi(self, Section):
+        Section.setObjectName("Section")
+        Section.resize(476, 415)
+        self.gridLayoutWidget = QtWidgets.QWidget(parent=Section)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 455, 371))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
@@ -120,18 +120,18 @@ class Ui_Form(object):
         self.eicon.setObjectName("eicon")
         self.gridLayout.addWidget(self.eicon, 5, 1, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(Section)
+        QtCore.QMetaObject.connectSlotsByName(Section)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Section):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_8.setText(_translate("Form", "4"))
-        self.label_6.setText(_translate("Form", "2"))
-        self.label_2.setText(_translate("Form", "Occupation"))
-        self.sectionname.setText(_translate("Form", "Section A"))
-        self.label_3.setText(_translate("Form", "Switch"))
-        self.label_4.setText(_translate("Form", "Crossing"))
-        self.label_7.setText(_translate("Form", "3"))
-        self.label_5.setText(_translate("Form", "1"))
-        self.label_9.setText(_translate("Form", "5"))
+        Section.setWindowTitle(_translate("Section", "Form"))
+        self.label_8.setText(_translate("Section", "4"))
+        self.label_6.setText(_translate("Section", "2"))
+        self.label_2.setText(_translate("Section", "Occupation"))
+        self.sectionname.setText(_translate("Section", "Section A"))
+        self.label_3.setText(_translate("Section", "Switch"))
+        self.label_4.setText(_translate("Section", "Crossing"))
+        self.label_7.setText(_translate("Section", "3"))
+        self.label_5.setText(_translate("Section", "1"))
+        self.label_9.setText(_translate("Section", "5"))
