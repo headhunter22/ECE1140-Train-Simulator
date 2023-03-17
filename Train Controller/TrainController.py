@@ -10,7 +10,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
             # Emergency Brake button init #
-        self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
+        self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAK', self)
         self.txt = QtWidgets.QPushButton("Emergency Brake Disengaged", self)
         self.EmerBrake.setGeometry(50, 50, 200, 200)
         self.txt.setGeometry(50, 250, 200, 50)
