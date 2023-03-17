@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1057</width>
-    <height>611</height>
+    <width>1232</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="dataTime">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>562</y>
+      <x>320</x>
+      <y>502</y>
       <width>61</width>
       <height>16</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="time1x">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>560</y>
+      <x>390</x>
+      <y>500</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="time10x">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>560</y>
+      <x>410</x>
+      <y>500</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -107,7 +107,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -275,6 +275,11 @@
         <height>21</height>
        </rect>
       </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="blockLabel">
       <property name="geometry">
@@ -298,6 +303,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Station</string>
       </property>
@@ -310,6 +318,9 @@
         <width>71</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
       </property>
       <property name="text">
        <string>Add Block</string>
@@ -324,6 +335,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Yard</string>
       </property>
@@ -332,16 +346,11 @@
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>150</y>
+        <y>170</y>
         <width>151</width>
-        <height>201</height>
+        <height>181</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Tentative Schedule:</string>
-       </property>
-      </item>
      </widget>
      <widget class="QLabel" name="arrivalLabel">
       <property name="geometry">
@@ -375,6 +384,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Red; color: Black</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
@@ -388,8 +400,24 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Green; color: Black</string>
+      </property>
       <property name="text">
        <string>Dispatch</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_3">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>151</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tentative Schedule:</string>
       </property>
      </widget>
     </widget>
@@ -426,6 +454,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Yard</string>
       </property>
@@ -439,6 +470,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
       <property name="text">
        <string>Add Block</string>
       </property>
@@ -447,16 +481,11 @@
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>150</y>
+        <y>170</y>
         <width>151</width>
-        <height>201</height>
+        <height>181</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Tentative Schedule:</string>
-       </property>
-      </item>
      </widget>
      <widget class="QLabel" name="arrivalLabel_2">
       <property name="geometry">
@@ -480,6 +509,11 @@
         <height>21</height>
        </rect>
       </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
      </widget>
      <widget class="QPushButton" name="redAddStation">
       <property name="geometry">
@@ -489,6 +523,9 @@
         <width>71</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
       </property>
       <property name="text">
        <string>Add Station</string>
@@ -607,6 +644,9 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Red; color: Black</string>
+      </property>
       <property name="text">
        <string>Clear</string>
       </property>
@@ -620,8 +660,24 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: Green; color: Black</string>
+      </property>
       <property name="text">
        <string>Dispatch</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_4">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>151</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tentative Schedule:</string>
       </property>
      </widget>
     </widget>
@@ -629,32 +685,48 @@
      <widget class="QListWidget" name="greenScheduledTrains">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>121</width>
-        <height>331</height>
+        <x>0</x>
+        <y>20</y>
+        <width>281</width>
+        <height>171</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Green Line Trains:</string>
-       </property>
-      </item>
      </widget>
      <widget class="QListWidget" name="redTentSchedule_3">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>10</y>
-        <width>131</width>
-        <height>331</height>
+        <x>0</x>
+        <y>230</y>
+        <width>281</width>
+        <height>171</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>Red Line Trains:</string>
-       </property>
-      </item>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Green Line Scheduled Trains:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_6">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>210</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Red Line Scheduled Trains:</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="trackSwitchStates">
@@ -1235,8 +1307,8 @@
    <widget class="QPushButton" name="uploadSchedule">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>560</y>
+      <x>450</x>
+      <y>500</y>
       <width>101</width>
       <height>24</height>
      </rect>
@@ -1248,8 +1320,8 @@
    <widget class="QCheckBox" name="maintenanceSelect">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>560</y>
+      <x>760</x>
+      <y>500</y>
       <width>91</width>
       <height>22</height>
      </rect>
@@ -1261,8 +1333,8 @@
    <widget class="QLabel" name="modesText">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>560</y>
+      <x>560</x>
+      <y>500</y>
       <width>41</width>
       <height>21</height>
      </rect>
@@ -1274,8 +1346,8 @@
    <widget class="QCheckBox" name="manualSelect">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>560</y>
+      <x>690</x>
+      <y>500</y>
       <width>61</width>
       <height>22</height>
      </rect>
@@ -1287,8 +1359,8 @@
    <widget class="QCheckBox" name="autoSelect">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>560</y>
+      <x>610</x>
+      <y>500</y>
       <width>78</width>
       <height>22</height>
      </rect>
@@ -1300,8 +1372,8 @@
    <widget class="QComboBox" name="lineSelectMaintenance">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>400</y>
+      <x>320</x>
+      <y>370</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -1310,8 +1382,8 @@
    <widget class="QComboBox" name="blockSelectMaintenance">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>400</y>
+      <x>420</x>
+      <y>370</y>
       <width>51</width>
       <height>21</height>
      </rect>
@@ -1320,8 +1392,8 @@
    <widget class="QComboBox" name="modeSelect">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>460</y>
+      <x>320</x>
+      <y>400</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -1337,24 +1409,11 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="blockCurrentState">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>430</y>
-      <width>151</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Current State: Maintenance</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="lineLabel">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>380</y>
+      <x>340</x>
+      <y>350</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -1366,8 +1425,8 @@
    <widget class="QLabel" name="blockLabel_2">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>380</y>
+      <x>430</x>
+      <y>350</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -1379,8 +1438,8 @@
    <widget class="QPushButton" name="xButton">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>490</y>
+      <x>400</x>
+      <y>430</y>
       <width>31</width>
       <height>24</height>
      </rect>
@@ -1392,8 +1451,8 @@
    <widget class="QPushButton" name="checkButton">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>490</y>
+      <x>440</x>
+      <y>430</y>
       <width>31</width>
       <height>24</height>
      </rect>
@@ -1405,8 +1464,8 @@
    <widget class="QFrame" name="Outline2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>360</y>
+      <x>320</x>
+      <y>330</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -1449,8 +1508,8 @@
    <widget class="QFrame" name="Outline3">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>360</y>
+      <x>500</x>
+      <y>330</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -1493,9 +1552,9 @@
    <widget class="QLabel" name="greenLabel">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>380</y>
-      <width>71</width>
+      <x>500</x>
+      <y>350</y>
+      <width>61</width>
       <height>16</height>
      </rect>
     </property>
@@ -1506,9 +1565,9 @@
    <widget class="QLabel" name="redLabel">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>380</y>
-      <width>81</width>
+      <x>590</x>
+      <y>350</y>
+      <width>51</width>
       <height>16</height>
      </rect>
     </property>
@@ -1519,8 +1578,8 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>380</y>
+      <x>560</x>
+      <y>350</y>
       <width>20</width>
       <height>61</height>
      </rect>
@@ -1532,8 +1591,8 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>390</y>
+      <x>500</x>
+      <y>360</y>
       <width>151</width>
       <height>16</height>
      </rect>
@@ -1545,8 +1604,8 @@
    <widget class="QLabel" name="E19">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>400</y>
+      <x>520</x>
+      <y>370</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -1558,8 +1617,8 @@
    <widget class="QLabel" name="I47">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>400</y>
+      <x>600</x>
+      <y>370</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -1571,43 +1630,367 @@
    <widget class="QLabel" name="greenXingStatus">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>420</y>
-      <width>71</width>
+      <x>510</x>
+      <y>390</y>
+      <width>51</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Active</string>
+     <string>  Active</string>
     </property>
    </widget>
    <widget class="QLabel" name="redXingStatus">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>420</y>
-      <width>81</width>
+      <x>580</x>
+      <y>390</y>
+      <width>61</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Inactive</string>
+     <string>   Inactive</string>
     </property>
+   </widget>
+   <widget class="QLabel" name="legendLabel">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>330</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Occupancy Legend</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>320</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>330</y>
+      <width>20</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_5">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>330</y>
+      <width>20</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_6">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>440</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>350</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: green
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>380</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: red
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>410</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: Gold
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legendLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>350</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>- Occupied by train</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legendLabel_3">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>380</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>- Train authority</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="legendLabel_4">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>410</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>- Block under 
+   maintenance</string>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>70</y>
+      <width>361</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QTableWidget" name="greenOccupancy">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>361</width>
+        <height>501</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Occupied</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Infrastructure</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Block Status</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QTableWidget" name="redOccupancy">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>361</width>
+        <height>501</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Occupied</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Infrastructure</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Block Status</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="redOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>30</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightCoral; color: Black</string>
+    </property>
+    <property name="text">
+     <string>Red Line Occupancy</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="greenOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>30</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightGreen; color: Black</string>
+    </property>
+    <property name="text">
+     <string>Green Line Occupancy</string>
+    </property>
+   </widget>
+   <widget class="QTreeWidget" name="treeWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>200</y>
+      <width>511</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Train Tag</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Block</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Speed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Authority</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Next Destination</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>925</string>
+     </property>
+     <property name="text">
+      <string>22</string>
+     </property>
+     <property name="text">
+      <string>34mph</string>
+     </property>
+     <property name="text">
+      <string>.18mi</string>
+     </property>
+     <property name="text">
+      <string>Penn Station</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>429</string>
+     </property>
+     <property name="text">
+      <string>44</string>
+     </property>
+     <property name="text">
+      <string>43mph</string>
+     </property>
+     <property name="text">
+      <string>.12mi</string>
+     </property>
+     <property name="text">
+      <string>First Ave Station</string>
+     </property>
+    </item>
    </widget>
    <widget class="QFrame" name="Outline2_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>30</y>
-      <width>171</width>
-      <height>41</height>
+      <x>320</x>
+      <y>50</y>
+      <width>151</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: LightGreen
+     <string notr="true">background-color: #B8B8B8
 </string>
     </property>
     <property name="frameShape">
@@ -1620,9 +2003,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>10</y>
-       <width>131</width>
-       <height>21</height>
+       <y>1</y>
+       <width>121</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="font">
@@ -1634,109 +2017,24 @@
       <string notr="true">color: black</string>
      </property>
      <property name="text">
-      <string>Green Line Occupancy</string>
+      <string>Green Line Train Info</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>80</y>
-      <width>321</width>
-      <height>261</height>
-     </rect>
-    </property>
-    <row>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>3</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>Block Number</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Occupied</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Infrastructure</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QTableWidget" name="redOccupancy">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>80</y>
-      <width>321</width>
-      <height>261</height>
-     </rect>
-    </property>
-    <row>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>3</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>4</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>Block Number</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Occupied</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Infrastructure</string>
-     </property>
-    </column>
    </widget>
    <widget class="QFrame" name="Outline2_3">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>30</y>
-      <width>171</width>
-      <height>41</height>
+      <x>320</x>
+      <y>180</y>
+      <width>151</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: LightCoral
+     <string notr="true">background-color: #B8B8B8
 </string>
     </property>
     <property name="frameShape">
@@ -1748,10 +2046,10 @@
     <widget class="QLabel" name="optionsLabel_3">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>10</y>
+       <x>20</x>
+       <y>1</y>
        <width>121</width>
-       <height>21</height>
+       <height>16</height>
       </rect>
      </property>
      <property name="font">
@@ -1763,38 +2061,78 @@
       <string notr="true">color: black</string>
      </property>
      <property name="text">
-      <string>Red Line Occupancy</string>
+      <string>Red Line Train Info</string>
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="legendFrame">
+   <widget class="QTreeWidget" name="treeWidget_3">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>450</y>
-      <width>151</width>
-      <height>81</height>
+      <x>320</x>
+      <y>70</y>
+      <width>511</width>
+      <height>101</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="legendLabel">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>0</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
+    <column>
+     <property name="text">
+      <string>Train Tag</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Block</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Speed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Authority</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Next Destination</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>427</string>
      </property>
      <property name="text">
-      <string>Legend</string>
+      <string>7</string>
      </property>
-    </widget>
+     <property name="text">
+      <string>27mph</string>
+     </property>
+     <property name="text">
+      <string>.31mi</string>
+     </property>
+     <property name="text">
+      <string>Edgebrook Station</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>275</string>
+     </property>
+     <property name="text">
+      <string>49</string>
+     </property>
+     <property name="text">
+      <string>18mph</string>
+     </property>
+     <property name="text">
+      <string>.16mi</string>
+     </property>
+     <property name="text">
+      <string>Overbrook Station</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -1802,7 +2140,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1057</width>
+     <width>1232</width>
      <height>21</height>
     </rect>
    </property>

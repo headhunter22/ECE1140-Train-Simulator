@@ -1,23 +1,32 @@
 import sys
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6 import uic
-from PyQt6.QtCore import QSize
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
+from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 import TrackParser
+from Fault import Fault
 
-class MainWindow(QtWidgets.QMainWindow):
+# Test UI class
+class TestUI(QtWidgets.QMainWindow):
+    occupancyPressed = pyqtSignal(str, str)
+    vacancyPressed = pyqtSignal(str, str)
+    crossingChanged = pyqtSignal(int)
+    switchChanged = pyqtSignal(str, str, str)
+    tempSignal = pyqtSignal(int)
+    faultSignal = pyqtSignal(str, str, str)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, track, *args, **kwargs):
+        self.track = track
+
         super().__init__(*args, **kwargs)
         uic.loadUi("TestUI.ui", self)
         self.setWindowTitle('Track Model Test UI')
 
         # add line & block options based on the track object
-        for line in track.lines:
+        for line in self.track.lines:
             self.SwitchLineSelect.addItem(line.lineName)
             self.OccLineSel.addItem(line.lineName)
             self.FaultLineSelect.addItem(line.lineName)
 
-        for section in track.lines[0].sections:
+        for section in self.track.lines[0].sections:
             for block in section.blocks:
                 self.SwitchBlockSelect.addItem(block.blockName)
                 self.OccBlockSel.addItem(block.blockName)
@@ -28,8 +37,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.SwitchOption2.clicked.connect(self.changeSwitchOpt2)
 
         # connect crossing checkboxes
-        self.RedXing.toggled.connect(self.getCrossingStatuses)
-        self.GreenXing.toggled.connect(self.getCrossingStatuses)
+        self.RedXing.toggled.connect(self.changeCrossingStatuses)
+        self.GreenXing.toggled.connect(self.changeCrossingStatuses)
 
         # connect dropdowns to switching functions
         self.SwitchBlockSelect.currentTextChanged.connect(self.switchBlockChanged)
@@ -44,19 +53,28 @@ class MainWindow(QtWidgets.QMainWindow):
         # connect enter temperature button
         self.EnterTemp.clicked.connect(self.tempChanged)
 
+        # link fault go button
+        self.FaultGoButton.clicked.connect(lambda: self.induceFault(self.FaultTypeSelect.currentText()))
+
     # FUNCTIONS
     # function to change the track heater status based on temp input
     def tempChanged(self):
+        # if entry is nonsense, do nothing
         if not self.tempEntry.text().isnumeric(): 
             return
-        if int(self.tempEntry.text()) >= 39:
-            self.HeaterStatus.setText("Heater Status: OFF")
-        else:
-            self.HeaterStatus.setText("Heater Status: ON")
+
+        self.tempSignal.emit(int(self.tempEntry.text()))
 
     # function to get crossing statuses when they change
-    def getCrossingStatuses(self):
-        print([self.RedXing.isChecked(), self.GreenXing.isChecked()])
+    def changeCrossingStatuses(self):
+        if self.RedXing.isChecked() and self.GreenXing.isChecked():
+            self.crossingChanged.emit(1) 
+        elif self.RedXing.isChecked() and not self.GreenXing.isChecked():
+            self.crossingChanged.emit(2)
+        elif not self.RedXing.isChecked() and self.GreenXing.isChecked():
+            self.crossingChanged.emit(3)
+        else:
+            self.crossingChanged.emit(4)
 
     # function to change dropdowns for switch selection
     def switchLineChanged(self, line):
@@ -64,7 +82,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.SwitchBlockSelect.clear()
 
         # add the appropriate blocks
-        for section in track.getLine(line).sections:
+        for section in self.track.getLine(line).sections:
             for block in section.blocks:
                 self.SwitchBlockSelect.addItem(block.blockName)
 
@@ -72,11 +90,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.switchBlockChanged()
 
     def switchBlockChanged(self):
-        # update the label for the connection
         if self.SwitchBlockSelect.currentText() == '':
-            return
- 
-        infrastructureText = track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).infrastructure
+            return 
+
+        # update the label for the connection
+        infrastructureText = self.track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).infrastructure
 
         # if its not a switch, don't display
         if 'SWITCH' not in infrastructureText or 'YARD' in infrastructureText:
@@ -95,42 +113,40 @@ class MainWindow(QtWidgets.QMainWindow):
         self.SwitchOption1.setText(opt1)
         self.SwitchOption2.setText(opt2)
 
+    # function to change dropdowns for occupancy selection
     def occLineChanged(self, line):
         # clear current options in the dropdowns 
         self.OccBlockSel.clear()
 
         # add the appropriate blocks
-        for section in track.getLine(line).sections:
+        for section in self.track.getLine(line).sections:
             for block in section.blocks:
                 self.OccBlockSel.addItem(block.blockName)
 
+    # function to change dropdowns for fault selection
     def faultLineChanged(self, line):
         # clear current options in the dropdowns 
         self.FaultBlockSelect.clear()
 
         # add the appropriate blocks
-        for section in track.getLine(line).sections:
+        for section in self.track.getLine(line).sections:
             for block in section.blocks:
                 self.FaultBlockSelect.addItem(block.blockName)
 
     def setOcc(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = True        
-
+        self.occupancyPressed.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
+        
     def setVac(self):
-        track.getLine(self.OccLineSel.currentText()).getBlock(self.OccBlockSel.currentText()).occupied = False
+        self.vacancyPressed.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
 
     def changeSwitchOpt1(self):
-        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = True
+        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption1.text())
 
     def changeSwitchOpt2(self):
-        track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).switchConnection = False
+        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
 
-#end class definition
+    def induceFault(self, faultType):
+        # emit signal
+        self.faultSignal.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)
 
-#defining the app and the window
-# parse the track file
-track = TrackParser.parseTrack('Track Layout.csv')
-app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec()
+#end TestUI class
