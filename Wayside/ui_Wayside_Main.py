@@ -16,277 +16,441 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QHeaderView,
-    QLCDNumber, QLabel, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QRadioButton, QSizePolicy,
-    QStatusBar, QTableWidget, QTableWidgetItem, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
+    QLabel, QMainWindow, QMenu, QMenuBar,
+    QPushButton, QSizePolicy, QStatusBar, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(562, 581)
+        MainWindow.resize(718, 610)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.maintenancemode = QPushButton(self.centralwidget)
         self.maintenancemode.setObjectName(u"maintenancemode")
-        self.maintenancemode.setGeometry(QRect(160, 500, 391, 29))
+        self.maintenancemode.setGeometry(QRect(250, 520, 451, 29))
         self.trackconfiguration = QPushButton(self.centralwidget)
         self.trackconfiguration.setObjectName(u"trackconfiguration")
-        self.trackconfiguration.setGeometry(QRect(160, 460, 391, 29))
-        self.tableWidget = QTableWidget(self.centralwidget)
-        if (self.tableWidget.columnCount() < 1):
-            self.tableWidget.setColumnCount(1)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        if (self.tableWidget.rowCount() < 12):
-            self.tableWidget.setRowCount(12)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(2, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(3, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem5)
-        __qtablewidgetitem6 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(5, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(6, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(7, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(8, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(9, __qtablewidgetitem10)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(10, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(11, __qtablewidgetitem12)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        self.tableWidget.setItem(0, 0, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        self.tableWidget.setItem(1, 0, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        self.tableWidget.setItem(2, 0, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        self.tableWidget.setItem(3, 0, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        self.tableWidget.setItem(4, 0, __qtablewidgetitem17)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        self.tableWidget.setItem(5, 0, __qtablewidgetitem18)
-        __qtablewidgetitem19 = QTableWidgetItem()
-        self.tableWidget.setItem(6, 0, __qtablewidgetitem19)
-        __qtablewidgetitem20 = QTableWidgetItem()
-        self.tableWidget.setItem(7, 0, __qtablewidgetitem20)
-        __qtablewidgetitem21 = QTableWidgetItem()
-        self.tableWidget.setItem(8, 0, __qtablewidgetitem21)
-        __qtablewidgetitem22 = QTableWidgetItem()
-        self.tableWidget.setItem(9, 0, __qtablewidgetitem22)
-        __qtablewidgetitem23 = QTableWidgetItem()
-        self.tableWidget.setItem(10, 0, __qtablewidgetitem23)
-        __qtablewidgetitem24 = QTableWidgetItem()
-        self.tableWidget.setItem(11, 0, __qtablewidgetitem24)
-        self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setGeometry(QRect(10, 20, 141, 511))
-        self.tableWidget.setLineWidth(1)
-        self.tableWidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.tableWidget.horizontalHeader().setDefaultSectionSize(137)
-        self.tableWidget.verticalHeader().setDefaultSectionSize(40)
-        self.tableWidget_2 = QTableWidget(self.centralwidget)
-        if (self.tableWidget_2.columnCount() < 1):
-            self.tableWidget_2.setColumnCount(1)
-        __qtablewidgetitem25 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem25)
-        if (self.tableWidget_2.rowCount() < 4):
-            self.tableWidget_2.setRowCount(4)
-        __qtablewidgetitem26 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(0, __qtablewidgetitem26)
-        __qtablewidgetitem27 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(1, __qtablewidgetitem27)
-        __qtablewidgetitem28 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(2, __qtablewidgetitem28)
-        __qtablewidgetitem29 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(3, __qtablewidgetitem29)
-        __qtablewidgetitem30 = QTableWidgetItem()
-        self.tableWidget_2.setItem(0, 0, __qtablewidgetitem30)
-        __qtablewidgetitem31 = QTableWidgetItem()
-        self.tableWidget_2.setItem(1, 0, __qtablewidgetitem31)
-        __qtablewidgetitem32 = QTableWidgetItem()
-        self.tableWidget_2.setItem(2, 0, __qtablewidgetitem32)
-        __qtablewidgetitem33 = QTableWidgetItem()
-        self.tableWidget_2.setItem(3, 0, __qtablewidgetitem33)
-        self.tableWidget_2.setObjectName(u"tableWidget_2")
-        self.tableWidget_2.setGeometry(QRect(160, 150, 391, 181))
-        self.tableWidget_2.horizontalHeader().setCascadingSectionResizes(False)
-        self.tableWidget_2.horizontalHeader().setMinimumSectionSize(49)
-        self.tableWidget_2.horizontalHeader().setDefaultSectionSize(387)
-        self.tableWidget_2.verticalHeader().setDefaultSectionSize(38)
-        self.tableWidget_2.verticalHeader().setStretchLastSection(True)
-        self.tableWidget_3 = QTableWidget(self.centralwidget)
-        if (self.tableWidget_3.columnCount() < 3):
-            self.tableWidget_3.setColumnCount(3)
-        __qtablewidgetitem34 = QTableWidgetItem()
-        self.tableWidget_3.setHorizontalHeaderItem(0, __qtablewidgetitem34)
-        __qtablewidgetitem35 = QTableWidgetItem()
-        self.tableWidget_3.setHorizontalHeaderItem(1, __qtablewidgetitem35)
-        __qtablewidgetitem36 = QTableWidgetItem()
-        self.tableWidget_3.setHorizontalHeaderItem(2, __qtablewidgetitem36)
-        if (self.tableWidget_3.rowCount() < 2):
-            self.tableWidget_3.setRowCount(2)
-        __qtablewidgetitem37 = QTableWidgetItem()
-        self.tableWidget_3.setVerticalHeaderItem(0, __qtablewidgetitem37)
-        __qtablewidgetitem38 = QTableWidgetItem()
-        self.tableWidget_3.setVerticalHeaderItem(1, __qtablewidgetitem38)
-        __qtablewidgetitem39 = QTableWidgetItem()
-        self.tableWidget_3.setItem(0, 0, __qtablewidgetitem39)
-        __qtablewidgetitem40 = QTableWidgetItem()
-        self.tableWidget_3.setItem(0, 1, __qtablewidgetitem40)
-        __qtablewidgetitem41 = QTableWidgetItem()
-        self.tableWidget_3.setItem(1, 0, __qtablewidgetitem41)
-        __qtablewidgetitem42 = QTableWidgetItem()
-        self.tableWidget_3.setItem(1, 1, __qtablewidgetitem42)
-        self.tableWidget_3.setObjectName(u"tableWidget_3")
-        self.tableWidget_3.setGeometry(QRect(160, 340, 391, 111))
-        self.tableWidget_3.horizontalHeader().setDefaultSectionSize(128)
-        self.tableWidget_3.verticalHeader().setDefaultSectionSize(42)
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(220, 60, 161, 20))
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(220, 20, 141, 20))
-        self.label_3 = QLabel(self.centralwidget)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(220, 100, 141, 20))
-        self.SAuthority = QLCDNumber(self.centralwidget)
-        self.SAuthority.setObjectName(u"SAuthority")
-        self.SAuthority.setGeometry(QRect(410, 20, 64, 23))
-        self.CAuthority = QLCDNumber(self.centralwidget)
-        self.CAuthority.setObjectName(u"CAuthority")
-        self.CAuthority.setGeometry(QRect(410, 60, 64, 23))
-        self.SSpeed = QLCDNumber(self.centralwidget)
-        self.SSpeed.setObjectName(u"SSpeed")
-        self.SSpeed.setGeometry(QRect(410, 100, 64, 23))
-        self.radioButton_2 = QRadioButton(self.centralwidget)
-        self.radioButton_2.setObjectName(u"radioButton_2")
-        self.radioButton_2.setGeometry(QRect(470, 370, 21, 26))
-        self.radioButton_3 = QRadioButton(self.centralwidget)
-        self.radioButton_3.setObjectName(u"radioButton_3")
-        self.radioButton_3.setGeometry(QRect(510, 370, 21, 26))
-        self.radioButton_4 = QRadioButton(self.centralwidget)
-        self.radioButton_4.setObjectName(u"radioButton_4")
-        self.radioButton_4.setGeometry(QRect(430, 420, 21, 26))
-        self.radioButton_5 = QRadioButton(self.centralwidget)
-        self.radioButton_5.setObjectName(u"radioButton_5")
-        self.radioButton_5.setGeometry(QRect(470, 420, 21, 26))
-        self.radioButton_6 = QRadioButton(self.centralwidget)
-        self.radioButton_6.setObjectName(u"radioButton_6")
-        self.radioButton_6.setGeometry(QRect(510, 420, 21, 26))
+        self.trackconfiguration.setGeometry(QRect(250, 470, 451, 29))
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(10, 0, 141, 20))
-        self.label_5 = QLabel(self.centralwidget)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(290, 180, 63, 20))
-        self.label_5.setFrameShadow(QFrame.Plain)
-        self.label_6 = QLabel(self.centralwidget)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(420, 180, 63, 20))
-        self.label_6.setFrameShadow(QFrame.Plain)
-        self.label_7 = QLabel(self.centralwidget)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(290, 220, 63, 20))
-        self.label_7.setFrameShadow(QFrame.Plain)
-        self.label_8 = QLabel(self.centralwidget)
-        self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(420, 220, 63, 20))
-        self.label_8.setFrameShadow(QFrame.Plain)
-        self.label_9 = QLabel(self.centralwidget)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(290, 260, 63, 20))
-        self.label_9.setFrameShadow(QFrame.Plain)
-        self.label_10 = QLabel(self.centralwidget)
-        self.label_10.setObjectName(u"label_10")
-        self.label_10.setGeometry(QRect(420, 260, 63, 20))
-        self.label_10.setFrameShadow(QFrame.Plain)
-        self.label_11 = QLabel(self.centralwidget)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(290, 300, 63, 20))
-        self.label_11.setFrameShadow(QFrame.Plain)
-        self.label_12 = QLabel(self.centralwidget)
-        self.label_12.setObjectName(u"label_12")
-        self.label_12.setGeometry(QRect(420, 300, 63, 20))
-        self.label_12.setFrameShadow(QFrame.Plain)
-        self.label_14 = QLabel(self.centralwidget)
-        self.label_14.setObjectName(u"label_14")
-        self.label_14.setGeometry(QRect(90, 90, 31, 31))
-        self.label_14.setPixmap(QPixmap(u"tracks.png"))
-        self.label_14.setScaledContents(True)
-        self.label_15 = QLabel(self.centralwidget)
-        self.label_15.setObjectName(u"label_15")
-        self.label_15.setGeometry(QRect(90, 370, 31, 31))
-        self.label_15.setPixmap(QPixmap(u"redtrain.png"))
-        self.label_15.setScaledContents(True)
-        self.label_16 = QLabel(self.centralwidget)
-        self.label_16.setObjectName(u"label_16")
-        self.label_16.setGeometry(QRect(90, 490, 31, 31))
-        self.label_16.setPixmap(QPixmap(u"tracks.png"))
-        self.label_16.setScaledContents(True)
-        self.label_17 = QLabel(self.centralwidget)
+        self.gridLayoutWidget = QWidget(self.centralwidget)
+        self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
+        self.gridLayoutWidget.setGeometry(QRect(10, 30, 221, 521))
+        self.gridLayout_2 = QGridLayout(self.gridLayoutWidget)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setHorizontalSpacing(20)
+        self.gridLayout_2.setContentsMargins(0, 0, 9, 0)
+        self.sectiontitle = QLabel(self.gridLayoutWidget)
+        self.sectiontitle.setObjectName(u"sectiontitle")
+        self.sectiontitle.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);\n"
+"background-color: rgb(221, 221, 221);")
+        self.sectiontitle.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.sectiontitle, 1, 0, 1, 1)
+
+        self.pushc_7 = QPushButton(self.gridLayoutWidget)
+        self.pushc_7.setObjectName(u"pushc_7")
+
+        self.gridLayout_2.addWidget(self.pushc_7, 10, 0, 1, 1)
+
+        self.pushc_4 = QPushButton(self.gridLayoutWidget)
+        self.pushc_4.setObjectName(u"pushc_4")
+
+        self.gridLayout_2.addWidget(self.pushc_4, 7, 0, 1, 1)
+
+        self.pushc_2 = QPushButton(self.gridLayoutWidget)
+        self.pushc_2.setObjectName(u"pushc_2")
+
+        self.gridLayout_2.addWidget(self.pushc_2, 5, 0, 1, 1)
+
+        self.bicon = QLabel(self.gridLayoutWidget)
+        self.bicon.setObjectName(u"bicon")
+        self.bicon.setMaximumSize(QSize(50, 50))
+        self.bicon.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon.setScaledContents(True)
+        self.bicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon, 4, 1, 1, 1)
+
+        self.pushc_3 = QPushButton(self.gridLayoutWidget)
+        self.pushc_3.setObjectName(u"pushc_3")
+
+        self.gridLayout_2.addWidget(self.pushc_3, 6, 0, 1, 1)
+
+        self.cicon = QLabel(self.gridLayoutWidget)
+        self.cicon.setObjectName(u"cicon")
+        self.cicon.setMaximumSize(QSize(50, 50))
+        self.cicon.setPixmap(QPixmap(u"redtrain.png"))
+        self.cicon.setScaledContents(True)
+        self.cicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.cicon, 5, 1, 1, 1)
+
+        self.pushc = QPushButton(self.gridLayoutWidget)
+        self.pushc.setObjectName(u"pushc")
+
+        self.gridLayout_2.addWidget(self.pushc, 4, 0, 1, 1)
+
+        self.pusha = QPushButton(self.gridLayoutWidget)
+        self.pusha.setObjectName(u"pusha")
+
+        self.gridLayout_2.addWidget(self.pusha, 2, 0, 1, 1)
+
+        self.bicon_3 = QLabel(self.gridLayoutWidget)
+        self.bicon_3.setObjectName(u"bicon_3")
+        self.bicon_3.setMaximumSize(QSize(50, 50))
+        self.bicon_3.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon_3.setScaledContents(True)
+        self.bicon_3.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon_3, 9, 1, 1, 1)
+
+        self.pushc_5 = QPushButton(self.gridLayoutWidget)
+        self.pushc_5.setObjectName(u"pushc_5")
+
+        self.gridLayout_2.addWidget(self.pushc_5, 8, 0, 1, 1)
+
+        self.occupancylabel = QLabel(self.gridLayoutWidget)
+        self.occupancylabel.setObjectName(u"occupancylabel")
+        self.occupancylabel.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
+"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+
+        self.gridLayout_2.addWidget(self.occupancylabel, 1, 1, 1, 1)
+
+        self.bicon_2 = QLabel(self.gridLayoutWidget)
+        self.bicon_2.setObjectName(u"bicon_2")
+        self.bicon_2.setMaximumSize(QSize(50, 50))
+        self.bicon_2.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon_2.setScaledContents(True)
+        self.bicon_2.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon_2, 6, 1, 1, 1)
+
+        self.bicon_4 = QLabel(self.gridLayoutWidget)
+        self.bicon_4.setObjectName(u"bicon_4")
+        self.bicon_4.setMaximumSize(QSize(50, 50))
+        self.bicon_4.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon_4.setScaledContents(True)
+        self.bicon_4.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon_4, 7, 1, 1, 1)
+
+        self.bicon_6 = QLabel(self.gridLayoutWidget)
+        self.bicon_6.setObjectName(u"bicon_6")
+        self.bicon_6.setMaximumSize(QSize(50, 50))
+        self.bicon_6.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon_6.setScaledContents(True)
+        self.bicon_6.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon_6, 10, 1, 1, 1)
+
+        self.aicon_2 = QLabel(self.gridLayoutWidget)
+        self.aicon_2.setObjectName(u"aicon_2")
+        self.aicon_2.setMaximumSize(QSize(50, 50))
+        self.aicon_2.setPixmap(QPixmap(u"tracks.png"))
+        self.aicon_2.setScaledContents(True)
+        self.aicon_2.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.aicon_2, 3, 1, 1, 1)
+
+        self.pushc_8 = QPushButton(self.gridLayoutWidget)
+        self.pushc_8.setObjectName(u"pushc_8")
+
+        self.gridLayout_2.addWidget(self.pushc_8, 11, 0, 1, 1)
+
+        self.pushb = QPushButton(self.gridLayoutWidget)
+        self.pushb.setObjectName(u"pushb")
+
+        self.gridLayout_2.addWidget(self.pushb, 3, 0, 1, 1)
+
+        self.pushc_6 = QPushButton(self.gridLayoutWidget)
+        self.pushc_6.setObjectName(u"pushc_6")
+
+        self.gridLayout_2.addWidget(self.pushc_6, 9, 0, 1, 1)
+
+        self.cicon_2 = QLabel(self.gridLayoutWidget)
+        self.cicon_2.setObjectName(u"cicon_2")
+        self.cicon_2.setMaximumSize(QSize(50, 50))
+        self.cicon_2.setPixmap(QPixmap(u"redtrain.png"))
+        self.cicon_2.setScaledContents(True)
+        self.cicon_2.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.cicon_2, 11, 1, 1, 1)
+
+        self.aicon = QLabel(self.gridLayoutWidget)
+        self.aicon.setObjectName(u"aicon")
+        self.aicon.setMaximumSize(QSize(50, 50))
+        self.aicon.setPixmap(QPixmap(u"tracks.png"))
+        self.aicon.setScaledContents(True)
+        self.aicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.aicon, 2, 1, 1, 1)
+
+        self.bicon_5 = QLabel(self.gridLayoutWidget)
+        self.bicon_5.setObjectName(u"bicon_5")
+        self.bicon_5.setMaximumSize(QSize(50, 50))
+        self.bicon_5.setPixmap(QPixmap(u"tracks.png"))
+        self.bicon_5.setScaledContents(True)
+        self.bicon_5.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bicon_5, 8, 1, 1, 1)
+
+        self.verticalLayoutWidget_5 = QWidget(self.centralwidget)
+        self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
+        self.verticalLayoutWidget_5.setGeometry(QRect(250, 150, 451, 149))
+        self.verticalLayout_6 = QVBoxLayout(self.verticalLayoutWidget_5)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.line = QFrame(self.verticalLayoutWidget_5)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_6.addWidget(self.line)
+
+        self.label_17 = QLabel(self.verticalLayoutWidget_5)
         self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(90, 450, 31, 31))
-        self.label_17.setPixmap(QPixmap(u"tracks.png"))
-        self.label_17.setScaledContents(True)
-        self.label_18 = QLabel(self.centralwidget)
-        self.label_18.setObjectName(u"label_18")
-        self.label_18.setGeometry(QRect(90, 410, 31, 31))
-        self.label_18.setPixmap(QPixmap(u"tracks.png"))
-        self.label_18.setScaledContents(True)
-        self.label_19 = QLabel(self.centralwidget)
-        self.label_19.setObjectName(u"label_19")
-        self.label_19.setGeometry(QRect(90, 330, 31, 31))
-        self.label_19.setPixmap(QPixmap(u"tracks.png"))
-        self.label_19.setScaledContents(True)
-        self.label_20 = QLabel(self.centralwidget)
-        self.label_20.setObjectName(u"label_20")
-        self.label_20.setGeometry(QRect(90, 290, 31, 31))
-        self.label_20.setPixmap(QPixmap(u"tracks.png"))
-        self.label_20.setScaledContents(True)
-        self.label_21 = QLabel(self.centralwidget)
-        self.label_21.setObjectName(u"label_21")
-        self.label_21.setGeometry(QRect(90, 250, 31, 31))
-        self.label_21.setPixmap(QPixmap(u"tracks.png"))
-        self.label_21.setScaledContents(True)
-        self.label_22 = QLabel(self.centralwidget)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setGeometry(QRect(90, 210, 31, 31))
-        self.label_22.setPixmap(QPixmap(u"tracks.png"))
-        self.label_22.setScaledContents(True)
-        self.label_23 = QLabel(self.centralwidget)
-        self.label_23.setObjectName(u"label_23")
-        self.label_23.setGeometry(QRect(90, 170, 31, 31))
-        self.label_23.setPixmap(QPixmap(u"tracks.png"))
-        self.label_23.setScaledContents(True)
-        self.label_24 = QLabel(self.centralwidget)
-        self.label_24.setObjectName(u"label_24")
-        self.label_24.setGeometry(QRect(90, 130, 31, 31))
-        self.label_24.setPixmap(QPixmap(u"redtrain.png"))
-        self.label_24.setScaledContents(True)
-        self.label_25 = QLabel(self.centralwidget)
-        self.label_25.setObjectName(u"label_25")
-        self.label_25.setGeometry(QRect(90, 50, 31, 31))
-        self.label_25.setPixmap(QPixmap(u"tracks.png"))
-        self.label_25.setScaledContents(True)
-        self.radioButton_7 = QRadioButton(self.centralwidget)
-        self.radioButton_7.setObjectName(u"radioButton_7")
-        self.radioButton_7.setGeometry(QRect(430, 370, 21, 26))
+        self.label_17.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
+"font: 700 12pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_17.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_6.addWidget(self.label_17)
+
+        self.horizontalLayout_10 = QHBoxLayout()
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.label_13 = QLabel(self.verticalLayoutWidget_5)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_13.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_10.addWidget(self.label_13)
+
+        self.ca = QPushButton(self.verticalLayoutWidget_5)
+        self.ca.setObjectName(u"ca")
+        self.ca.setCheckable(False)
+
+        self.horizontalLayout_10.addWidget(self.ca)
+
+        self.cb = QPushButton(self.verticalLayoutWidget_5)
+        self.cb.setObjectName(u"cb")
+
+        self.horizontalLayout_10.addWidget(self.cb)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_10)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.label_14 = QLabel(self.verticalLayoutWidget_5)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_14.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout.addWidget(self.label_14)
+
+        self.ca_2 = QPushButton(self.verticalLayoutWidget_5)
+        self.ca_2.setObjectName(u"ca_2")
+        self.ca_2.setCheckable(False)
+
+        self.horizontalLayout.addWidget(self.ca_2)
+
+        self.cb_2 = QPushButton(self.verticalLayoutWidget_5)
+        self.cb_2.setObjectName(u"cb_2")
+
+        self.horizontalLayout.addWidget(self.cb_2)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout)
+
+        self.verticalLayoutWidget_8 = QWidget(self.centralwidget)
+        self.verticalLayoutWidget_8.setObjectName(u"verticalLayoutWidget_8")
+        self.verticalLayoutWidget_8.setGeometry(QRect(250, 320, 451, 131))
+        self.verticalLayout_9 = QVBoxLayout(self.verticalLayoutWidget_8)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.line_2 = QFrame(self.verticalLayoutWidget_8)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.HLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_9.addWidget(self.line_2)
+
+        self.horizontalLayout_26 = QHBoxLayout()
+        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
+        self.label_50 = QLabel(self.verticalLayoutWidget_8)
+        self.label_50.setObjectName(u"label_50")
+        self.label_50.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
+"font: 700 12pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_50.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_26.addWidget(self.label_50)
+
+        self.label_51 = QLabel(self.verticalLayoutWidget_8)
+        self.label_51.setObjectName(u"label_51")
+        self.label_51.setStyleSheet(u"font: 700 12pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);\n"
+"background-color: rgb(221, 221, 221);")
+        self.label_51.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_26.addWidget(self.label_51)
+
+        self.label_52 = QLabel(self.verticalLayoutWidget_8)
+        self.label_52.setObjectName(u"label_52")
+        self.label_52.setStyleSheet(u"font: 700 12pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);\n"
+"background-color: rgb(221, 221, 221);")
+        self.label_52.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_26.addWidget(self.label_52)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_26)
+
+        self.horizontalLayout_20 = QHBoxLayout()
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
+        self.label_53 = QLabel(self.verticalLayoutWidget_8)
+        self.label_53.setObjectName(u"label_53")
+        self.label_53.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_53.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_20.addWidget(self.label_53)
+
+        self.label_54 = QLabel(self.verticalLayoutWidget_8)
+        self.label_54.setObjectName(u"label_54")
+        self.label_54.setStyleSheet(u"font: 9pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_54.setFrameShadow(QFrame.Plain)
+        self.label_54.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_20.addWidget(self.label_54)
+
+        self.horizontalLayout_27 = QHBoxLayout()
+        self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
+        self.reda = QLabel(self.verticalLayoutWidget_8)
+        self.reda.setObjectName(u"reda")
+        self.reda.setMaximumSize(QSize(21, 21))
+        self.reda.setPixmap(QPixmap(u"offlight.png"))
+        self.reda.setScaledContents(True)
+
+        self.horizontalLayout_27.addWidget(self.reda)
+
+        self.yellowa = QLabel(self.verticalLayoutWidget_8)
+        self.yellowa.setObjectName(u"yellowa")
+        self.yellowa.setMaximumSize(QSize(21, 21))
+        self.yellowa.setPixmap(QPixmap(u"offlight.png"))
+        self.yellowa.setScaledContents(True)
+
+        self.horizontalLayout_27.addWidget(self.yellowa)
+
+        self.greena = QLabel(self.verticalLayoutWidget_8)
+        self.greena.setObjectName(u"greena")
+        self.greena.setMaximumSize(QSize(21, 21))
+        self.greena.setPixmap(QPixmap(u"offlight.png"))
+        self.greena.setScaledContents(True)
+
+        self.horizontalLayout_27.addWidget(self.greena)
+
+
+        self.horizontalLayout_20.addLayout(self.horizontalLayout_27)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_20)
+
+        self.horizontalLayout_21 = QHBoxLayout()
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.label_55 = QLabel(self.verticalLayoutWidget_8)
+        self.label_55.setObjectName(u"label_55")
+        self.label_55.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_55.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_21.addWidget(self.label_55)
+
+        self.label_56 = QLabel(self.verticalLayoutWidget_8)
+        self.label_56.setObjectName(u"label_56")
+        self.label_56.setStyleSheet(u"font: 9pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.label_56.setFrameShadow(QFrame.Plain)
+        self.label_56.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_21.addWidget(self.label_56)
+
+        self.horizontalLayout_29 = QHBoxLayout()
+        self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
+        self.redb = QLabel(self.verticalLayoutWidget_8)
+        self.redb.setObjectName(u"redb")
+        self.redb.setMaximumSize(QSize(21, 21))
+        self.redb.setPixmap(QPixmap(u"offlight.png"))
+        self.redb.setScaledContents(True)
+
+        self.horizontalLayout_29.addWidget(self.redb)
+
+        self.yellowb = QLabel(self.verticalLayoutWidget_8)
+        self.yellowb.setObjectName(u"yellowb")
+        self.yellowb.setMaximumSize(QSize(21, 21))
+        self.yellowb.setPixmap(QPixmap(u"offlight.png"))
+        self.yellowb.setScaledContents(True)
+
+        self.horizontalLayout_29.addWidget(self.yellowb)
+
+        self.greenb = QLabel(self.verticalLayoutWidget_8)
+        self.greenb.setObjectName(u"greenb")
+        self.greenb.setMaximumSize(QSize(21, 21))
+        self.greenb.setPixmap(QPixmap(u"offlight.png"))
+        self.greenb.setScaledContents(True)
+
+        self.horizontalLayout_29.addWidget(self.greenb)
+
+
+        self.horizontalLayout_21.addLayout(self.horizontalLayout_29)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_21)
+
+        self.line_5 = QFrame(self.verticalLayoutWidget_8)
+        self.line_5.setObjectName(u"line_5")
+        self.line_5.setFrameShape(QFrame.HLine)
+        self.line_5.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_9.addWidget(self.line_5)
+
+        self.verticalLayoutWidget_4 = QWidget(self.centralwidget)
+        self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
+        self.verticalLayoutWidget_4.setGeometry(QRect(250, 30, 151, 101))
+        self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.time = QLabel(self.verticalLayoutWidget_4)
+        self.time.setObjectName(u"time")
+        self.time.setStyleSheet(u"font: 700 12pt \"Segoe UI\";\n"
+"color: rgb(0, 0, 0);")
+        self.time.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_5.addWidget(self.time)
+
+        self.date = QLabel(self.verticalLayoutWidget_4)
+        self.date.setObjectName(u"date")
+        self.date.setStyleSheet(u"font: 700 12pt \"Segoe UI\";\n"
+"color: rgb(0, 0, 0);")
+        self.date.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_5.addWidget(self.date)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 562, 25))
+        self.menubar.setGeometry(QRect(0, 0, 718, 25))
         self.menuWayside_UI = QMenu(self.menubar)
         self.menuWayside_UI.setObjectName(u"menuWayside_UI")
         MainWindow.setMenuBar(self.menubar)
@@ -305,101 +469,51 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.maintenancemode.setText(QCoreApplication.translate("MainWindow", u"Maintenance Mode", None))
         self.trackconfiguration.setText(QCoreApplication.translate("MainWindow", u"Track Configuration", None))
-        ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Section", None));
-
-        __sortingEnabled = self.tableWidget.isSortingEnabled()
-        self.tableWidget.setSortingEnabled(False)
-        ___qtablewidgetitem1 = self.tableWidget.item(0, 0)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u" A", None));
-        ___qtablewidgetitem2 = self.tableWidget.item(1, 0)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u" B", None));
-        ___qtablewidgetitem3 = self.tableWidget.item(2, 0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u" C", None));
-        ___qtablewidgetitem4 = self.tableWidget.item(3, 0)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u" D", None));
-        ___qtablewidgetitem5 = self.tableWidget.item(4, 0)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u" E", None));
-        ___qtablewidgetitem6 = self.tableWidget.item(5, 0)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u" F", None));
-        ___qtablewidgetitem7 = self.tableWidget.item(6, 0)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u" G", None));
-        ___qtablewidgetitem8 = self.tableWidget.item(7, 0)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u" H", None));
-        ___qtablewidgetitem9 = self.tableWidget.item(8, 0)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u" I", None));
-        ___qtablewidgetitem10 = self.tableWidget.item(9, 0)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u" J", None));
-        ___qtablewidgetitem11 = self.tableWidget.item(10, 0)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u" K", None));
-        ___qtablewidgetitem12 = self.tableWidget.item(11, 0)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u" L", None));
-        self.tableWidget.setSortingEnabled(__sortingEnabled)
-
-        ___qtablewidgetitem13 = self.tableWidget_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Switches", None));
-
-        __sortingEnabled1 = self.tableWidget_2.isSortingEnabled()
-        self.tableWidget_2.setSortingEnabled(False)
-        ___qtablewidgetitem14 = self.tableWidget_2.item(0, 0)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"C", None));
-        ___qtablewidgetitem15 = self.tableWidget_2.item(1, 0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"G", None));
-        ___qtablewidgetitem16 = self.tableWidget_2.item(2, 0)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"J", None));
-        ___qtablewidgetitem17 = self.tableWidget_2.item(3, 0)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"J", None));
-        self.tableWidget_2.setSortingEnabled(__sortingEnabled1)
-
-        ___qtablewidgetitem18 = self.tableWidget_3.horizontalHeaderItem(0)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Gates", None));
-        ___qtablewidgetitem19 = self.tableWidget_3.horizontalHeaderItem(1)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Position", None));
-        ___qtablewidgetitem20 = self.tableWidget_3.horizontalHeaderItem(2)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"Lights", None));
-
-        __sortingEnabled2 = self.tableWidget_3.isSortingEnabled()
-        self.tableWidget_3.setSortingEnabled(False)
-        ___qtablewidgetitem21 = self.tableWidget_3.item(0, 0)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"1", None));
-        ___qtablewidgetitem22 = self.tableWidget_3.item(0, 1)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"Active", None));
-        ___qtablewidgetitem23 = self.tableWidget_3.item(1, 0)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("MainWindow", u"2", None));
-        ___qtablewidgetitem24 = self.tableWidget_3.item(1, 1)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"Inactive", None));
-        self.tableWidget_3.setSortingEnabled(__sortingEnabled2)
-
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Commanded Authority", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Suggested Authority", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Suggested Speed", None))
-        self.radioButton_2.setText("")
-        self.radioButton_3.setText("")
-        self.radioButton_4.setText("")
-        self.radioButton_5.setText("")
-        self.radioButton_6.setText("")
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"2/19/2023 11:44 PM", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"12 - 13", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"1 - 13", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"29 - 30", None))
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"29 - 150", None))
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"57 - Yard", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"57 - 58", None))
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Yard - 63", None))
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"62 - 63", None))
-        self.label_14.setText("")
-        self.label_15.setText("")
-        self.label_16.setText("")
-        self.label_17.setText("")
-        self.label_18.setText("")
-        self.label_19.setText("")
-        self.label_20.setText("")
-        self.label_21.setText("")
-        self.label_22.setText("")
-        self.label_23.setText("")
-        self.label_24.setText("")
-        self.label_25.setText("")
-        self.radioButton_7.setText("")
+        self.sectiontitle.setText(QCoreApplication.translate("MainWindow", u"Section", None))
+        self.pushc_7.setText(QCoreApplication.translate("MainWindow", u"I", None))
+        self.pushc_4.setText(QCoreApplication.translate("MainWindow", u"F", None))
+        self.pushc_2.setText(QCoreApplication.translate("MainWindow", u"D", None))
+        self.bicon.setText("")
+        self.pushc_3.setText(QCoreApplication.translate("MainWindow", u"E", None))
+        self.cicon.setText("")
+        self.pushc.setText(QCoreApplication.translate("MainWindow", u"C", None))
+        self.pusha.setText(QCoreApplication.translate("MainWindow", u"A", None))
+        self.bicon_3.setText("")
+        self.pushc_5.setText(QCoreApplication.translate("MainWindow", u"G", None))
+        self.occupancylabel.setText(QCoreApplication.translate("MainWindow", u"Occupancy", None))
+        self.bicon_2.setText("")
+        self.bicon_4.setText("")
+        self.bicon_6.setText("")
+        self.aicon_2.setText("")
+        self.pushc_8.setText(QCoreApplication.translate("MainWindow", u"J", None))
+        self.pushb.setText(QCoreApplication.translate("MainWindow", u"B", None))
+        self.pushc_6.setText(QCoreApplication.translate("MainWindow", u"H", None))
+        self.cicon_2.setText("")
+        self.aicon.setText("")
+        self.bicon_5.setText("")
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"Switches", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"C", None))
+        self.ca.setText(QCoreApplication.translate("MainWindow", u"12-13", None))
+        self.cb.setText(QCoreApplication.translate("MainWindow", u"1-13", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindow", u"G", None))
+        self.ca_2.setText(QCoreApplication.translate("MainWindow", u"29-30", None))
+        self.cb_2.setText(QCoreApplication.translate("MainWindow", u"29-150", None))
+        self.label_50.setText(QCoreApplication.translate("MainWindow", u"Crossing", None))
+        self.label_51.setText(QCoreApplication.translate("MainWindow", u"Position", None))
+        self.label_52.setText(QCoreApplication.translate("MainWindow", u"Lights", None))
+        self.label_53.setText(QCoreApplication.translate("MainWindow", u"1", None))
+        self.label_54.setText(QCoreApplication.translate("MainWindow", u"Active", None))
+        self.reda.setText("")
+        self.yellowa.setText("")
+        self.greena.setText("")
+        self.label_55.setText(QCoreApplication.translate("MainWindow", u"2", None))
+        self.label_56.setText(QCoreApplication.translate("MainWindow", u"Inactive", None))
+        self.redb.setText("")
+        self.yellowb.setText("")
+        self.greenb.setText("")
+        self.time.setText(QCoreApplication.translate("MainWindow", u"11:44 PM", None))
+        self.date.setText(QCoreApplication.translate("MainWindow", u"2/19/2023", None))
         self.menuWayside_UI.setTitle(QCoreApplication.translate("MainWindow", u"Wayside UI", None))
     # retranslateUi
 

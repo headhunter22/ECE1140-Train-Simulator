@@ -18,12 +18,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QSizePolicy,
     QWidget)
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(476, 415)
-        self.gridLayoutWidget = QWidget(Form)
+class Ui_Section(object):
+    def setupUi(self, Section):
+        if not Section.objectName():
+            Section.setObjectName(u"Section")
+        Section.resize(476, 415)
+        self.gridLayoutWidget = QWidget(Section)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
         self.gridLayoutWidget.setGeometry(QRect(10, 10, 455, 371))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
@@ -153,25 +153,25 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.eicon, 5, 1, 1, 1)
 
 
-        self.retranslateUi(Form)
+        self.retranslateUi(Section)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(Section)
     # setupUi
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+    def retranslateUi(self, Section):
+        Section.setWindowTitle(QCoreApplication.translate("Section", u"Form", None))
         self.aicon.setText("")
-        self.label_8.setText(QCoreApplication.translate("Form", u"4", None))
+        self.label_8.setText(QCoreApplication.translate("Section", u"4", None))
         self.bicon.setText("")
-        self.label_6.setText(QCoreApplication.translate("Form", u"2", None))
+        self.label_6.setText(QCoreApplication.translate("Section", u"2", None))
         self.cicon.setText("")
-        self.label_2.setText(QCoreApplication.translate("Form", u"Occupation", None))
-        self.sectionname.setText(QCoreApplication.translate("Form", u"Section A", None))
-        self.label_3.setText(QCoreApplication.translate("Form", u"Switch", None))
-        self.label_4.setText(QCoreApplication.translate("Form", u"Crossing", None))
-        self.label_7.setText(QCoreApplication.translate("Form", u"3", None))
-        self.label_5.setText(QCoreApplication.translate("Form", u"1", None))
-        self.label_9.setText(QCoreApplication.translate("Form", u"5", None))
+        self.label_2.setText(QCoreApplication.translate("Section", u"Occupation", None))
+        self.sectionname.setText(QCoreApplication.translate("Section", u"Section A", None))
+        self.label_3.setText(QCoreApplication.translate("Section", u"Switch", None))
+        self.label_4.setText(QCoreApplication.translate("Section", u"Crossing", None))
+        self.label_7.setText(QCoreApplication.translate("Section", u"3", None))
+        self.label_5.setText(QCoreApplication.translate("Section", u"1", None))
+        self.label_9.setText(QCoreApplication.translate("Section", u"5", None))
         self.dicon.setText("")
         self.eicon.setText("")
     # retranslateUi
