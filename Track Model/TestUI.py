@@ -2,7 +2,6 @@ import sys
 from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 import TrackParser
-from MainWindow import MainWindow
 from Fault import Fault
 
 # Test UI class
@@ -146,22 +145,8 @@ class TestUI(QtWidgets.QMainWindow):
     def changeSwitchOpt2(self):
         self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
 
-    # needs to send signal
     def induceFault(self, faultType):
         # emit signal
         self.faultSignal.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)
-
-        
-
-        ''' THIS NEEDS TO BE ADDED TO A SIGNAL SENT
-        # create fault object
-        fault = Fault(faultType, faultLabel.text())
-
-        # add to faultDict
-        if faultType not in faultDict:
-            faultDict[faultType] = [fault.location]
-        else:
-            faultDict[faultType].append(fault.location)
-        '''
 
 #end TestUI class
