@@ -1,6 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from TrainController import *
 
 class TestUI(QtWidgets.QMainWindow):
     def __init__(self):
