@@ -7,8 +7,7 @@ class TrackModel(QObject):
     def __init__(self, waysideController):
         super().__init__()
         self.wayside = waysideController
-        self.suggSpeed = 0
+        self.wayside.suggSpeedWaysideToTrackModel.connect(self.suggSpeedReceived)
 
-    def suggSpeedReceived(self, suggSpeed):
-        self.suggSpeed = suggSpeed
-        print("suggested speed from Wayside to Track Model " + str(self.suggSpeed)) 
+    def suggSpeedReceived(self, train):
+        print("suggested speed from Wayside to Track Model " + str(train.suggSpeed)) 

@@ -2,23 +2,31 @@ import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
-from PyQt6.QtCore import QSize
+from Train import Train
 
-class Wayside:
+class Wayside(QObject):
+
+    suggSpeedWaysideToTrackModel = pyqtSignal(Train)
+
     def __init__(self, ctcOffice):
+        super().__init__()
         self.CTC = ctcOffice
         self.CTC.authorityToWayside.connect(self.authorityReceived)
-        self.authority = 0
+        self.CTC.suggSpeedToWayside.connect(self.suggSpeedReceived)
+        #self.switchStatesToWayside.connect(self.switchStateReceived)
+        
 
     def authorityReceived(self, a):
         self.authority = a
         print("authority from CTC to Wayside: " + str(self.authority))
+        
 
-    def suggSpeedReceived(self, s):
-        self.authority = s
-        print("authority from CTC to Wayside: " + str(self.authority))
+    def suggSpeedReceived(self, train):
+        print("speed from CTC to Wayside: " + str(train.suggSpeed))
+        print("authority from CTC to Wayside: " + str(train.authority))
+        self.suggSpeedWaysideToTrackModel.emit(train)
 
-    def switchStateReceived(self, sw):
-        self.authority = sw
-        print("authority from CTC to Wayside: " + str(self.authority))
+    # def switchStateReceived(self, bl, updw):
+    #     self.switch = sw
+    #     print("authority from CTC to Wayside: " + str(self.authority))
         
