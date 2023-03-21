@@ -11,6 +11,8 @@ class Wayside(QObject):
     def __init__(self, ctcOffice):
         super().__init__()
         self.CTC = ctcOffice
+        self.trackModel = 0
+
         self.CTC.authorityToWayside.connect(self.authorityReceived)
         self.CTC.suggSpeedToWayside.connect(self.suggSpeedReceived)
         #self.switchStatesToWayside.connect(self.switchStateReceived)
@@ -25,6 +27,13 @@ class Wayside(QObject):
         print("speed from CTC to Wayside: " + str(train.suggSpeed))
         print("authority from CTC to Wayside: " + str(train.authority))
         self.suggSpeedWaysideToTrackModel.emit(train)
+
+    def blockOccupancyReceived(self, Block):
+        print("block occupancy from track model")
+
+    def addTrackModel(self, trackModel):
+        self.trackModel = trackModel
+        self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
 
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw
