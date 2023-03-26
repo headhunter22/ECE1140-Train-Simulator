@@ -24,10 +24,6 @@ ctcOffice = CTC(track)
 waysideController = Wayside(ctcOffice)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel(trackModel)
-<<<<<<< HEAD
-trainContoller = TrainController(trainModel)
-=======
->>>>>>> 2bbdde8f835d8897a06d8fba955040a8e627fe75
 
 # propagate track model
 ctcOffice.propagateTrack()
