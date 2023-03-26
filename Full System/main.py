@@ -7,6 +7,8 @@ from Wayside import Wayside
 from TrackModel import TrackModel
 from Train import Train
 from Track import Track
+#from TrainModel import TrainModel
+#from TrainController import TrainController
 import TrackParser
 import random
 
@@ -19,6 +21,8 @@ track = TrackParser.parseTrack("TrackLayout.csv")
 ctcOffice = CTC()
 waysideController = Wayside(ctcOffice)
 trackModel = TrackModel(waysideController)
+trainModel = TrainModel(trackModel)
+trainContoller = TrainController(trainModel)
 
 # add track model to the Wayside Controller
 waysideController.addTrackModel(trackModel)
