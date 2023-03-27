@@ -10,4 +10,4 @@ class TrackModel(QObject):
         self.wayside.suggSpeedWaysideToTrackModel.connect(self.suggSpeedReceived)
 
     def suggSpeedReceived(self, train):
-        print("suggested speed from Wayside to Track Model " + str(train.suggSpeed)) 
+        print("suggested speed from Wayside to Track Model " + str(train.suggSpeed) + "\n\n") 

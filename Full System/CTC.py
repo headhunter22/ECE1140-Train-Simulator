@@ -12,13 +12,9 @@ class CTC (QObject):
     def __init__(self):
         super().__init__()
 
-    def receive(self):
-        self.Rx.pullInfo()
-
     def send(self, a, s):
         self.authorityToWayside.emit(a)
         self.suggSpeedToWayside.emit(s)
-        #self.switchStates.emit(sw)
 
     def dispatch(self, a, s, id):
         train = Train(a, s, id)
