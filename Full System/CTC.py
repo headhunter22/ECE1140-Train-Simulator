@@ -15,7 +15,7 @@ class CTC(QObject):
     def __init__(self, track):
         super().__init__()
         self.track = track
-
+        
     def dispatch(self, a, s, id, line):
         train = Train(a, s, id, line)
         self.authorityToWayside.emit(train)

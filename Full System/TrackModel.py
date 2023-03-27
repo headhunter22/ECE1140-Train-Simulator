@@ -35,4 +35,3 @@ class TrackModel(QObject):
 
         # pass track onto train model
         self.trackTrackModelToTrainModel.emit(track)
-        
