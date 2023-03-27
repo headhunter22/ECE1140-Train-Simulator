@@ -14,10 +14,13 @@ from Track import Track
 import TrackParser
 import random
 
-# create the track before the program starts
-# - do we pass track into each module in constructor? - for now, just in track model, later maybe start in CTC and propagate
+# notes:
+# timer
+# train physics
+# beacons (switch created)
+# parse line into linked list that models the track connections??
+
 # - or do we have an addTrack function that can be called each time we reparse?
-# - reparsing will be needed when a new layout is uploaded to track model
 track = TrackParser.parseTrack("TrackLayout.csv")
 
 ctcOffice = CTC(track)
