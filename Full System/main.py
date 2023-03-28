@@ -6,7 +6,7 @@ from CTC import CTC
 from Wayside import Wayside
 from TrackModel import TrackModel
 from TrainModel import TrainModel
-# from TrainController import TrainController
+from TrainController import TrainController
 from Train import Train
 from Track import Track
 #from TrainModel import TrainModel
@@ -15,7 +15,6 @@ import TrackParser
 import random
 
 # notes:
-# timer
 # train physics
 # beacons (switch created)
 # parse line into linked list that models the track connections??
@@ -30,5 +29,4 @@ trainModel = TrainModel(trackModel)
 
 # propagate track model
 ctcOffice.propagateTrack()
-
 ctcOffice.dispatch(10, 50, 1, 'Green')

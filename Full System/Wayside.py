@@ -24,14 +24,11 @@ class Wayside(QObject):
         #self.switchStatesToWayside.connect(self.switchStateReceived)
         
 
-    def authorityReceived(self, a):
-        self.authority = a
-        print("authority from CTC to Wayside: " + str(self.authority))
+    def authorityReceived(self, train):
+        print("authority from CTC to Wayside: " + str(train.authority))
         
     def suggSpeedReceived(self, train):
         print("speed from CTC to Wayside: " + str(train.suggSpeed))
-        print("authority from CTC to Wayside: " + str(train.authority))
-        self.suggSpeedWaysideToTrackModel.emit(train)
 
     def trainReceived(self, train):
         # pass train onto track model

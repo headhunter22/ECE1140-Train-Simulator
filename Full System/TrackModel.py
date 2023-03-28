@@ -28,7 +28,6 @@ class TrackModel(QObject):
     def trainReceived(self, train):
         # pass train to train model
         self.trainTrackModelToTrainModel.emit(train)
-        print('track model train received')
 
     def trackReceived(self, track):
         self.track = track

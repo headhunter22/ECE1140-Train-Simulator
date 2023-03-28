@@ -2,11 +2,19 @@ import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
-from Train import Train
 from Track import Track
-from TrainModel import TrainModel
+import time
 
 class TrainController(QObject):
-    
-    def __init__(self, trainModel):
+
+    powerToTrain = pyqtSignal(int)
+
+    def __init__(self): 
         super().__init__()
+
+    def getSpeed(self, actualSpeed, commandedSpeed):
+        self.actualSpeed = actualSpeed
+        print('actual speed: ' + str(self.actualSpeed))
+        print('power: power')
+        time.sleep(10e-8)
+        self.powerToTrain.emit(120)
