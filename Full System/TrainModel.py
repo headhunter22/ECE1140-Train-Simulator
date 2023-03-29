@@ -8,7 +8,7 @@ from Train import Train
 from TrainController import TrainController
 
 class TrainModel(QObject):
-    
+
     def __init__(self, trackModel):
         super().__init__()
         
@@ -22,7 +22,10 @@ class TrainModel(QObject):
     def trainReceived(self, train):
         # set train speed to speed limit
         train.commandedSpeed = self.track.getLine(train.line).getBlock('63').speedLimit
-        train.sendActualSpeed()
+        train.sendSpeeds()
+
+        # send authority to controller
+        train.trainController.authority = train.authority
 
     def trackReceived(self, track):
         self.track = track
