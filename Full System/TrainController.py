@@ -16,5 +16,4 @@ class TrainController(QObject):
         self.actualSpeed = actualSpeed
         print('actual speed: ' + str(self.actualSpeed))
         print('power: power')
-        time.sleep(10e-8)
         self.powerToTrain.emit(120)
