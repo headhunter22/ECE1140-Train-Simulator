@@ -1,6 +1,18 @@
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from TrainController import TrainController
 import threading
+import time
+
+class Worker(QObject):
+    def __init__(self, train):
+        super(Worker, self).__init__()
+        self.train = train
+
+    def sendSpeeds(self):
+        while True:
+            print('actual speed: ' + str(self.train.actSpeed) + ' commanded speed: ' + str(self.train.commandedSpeed))
+            self.train.trainController.getSpeed(self.train.actSpeed, self.train.commandedSpeed)
+            time.sleep(1)
 
 class Train(QObject):
     trainCounter = 0
@@ -30,18 +42,16 @@ class Train(QObject):
         # mass info
         self.baseMass = 81950 * .453 # kgs 
 
-        # train controller calculations thread
-        #self.thread = threading.Thread(target=self.sendSpeeds)
-        #self.thread.start()
+        self.sendSpeeds()
 
     def sendSpeeds(self):
-        # when the train enters a new block, track model should send signal with new commanded speed
-        # and new authority, which triggers the train controller to get new speeds
-        # and then this starts a recalculation
-        while True:
-            #print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
-            self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
-
+        # attach infinite while loop to worker
+        self.thread = QThread()
+        self.worker = Worker(self)
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.sendSpeeds())
+        self.thread.start()
+        
     def getPower(self, power):
         self.commandedPower = power
         #print('got power: ' + str(power))
