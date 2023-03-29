@@ -24,6 +24,7 @@ track = TrackParser.parseTrack("TrackLayout.csv")
 
 ctcOffice = CTC(track)
 waysideController = Wayside(ctcOffice)
+ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel(trackModel)
 

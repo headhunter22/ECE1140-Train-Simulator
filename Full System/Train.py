@@ -25,26 +25,26 @@ class Train(QObject):
 
         # location attributes
         self.line = line
-        self.location = 63
+        self.location = 3
 
         # mass info
         self.baseMass = 81950 * .453 # kgs 
 
         # train controller calculations thread
-        self.thread = threading.Thread(target=self.sendSpeeds)
-        self.thread.start()
+        #self.thread = threading.Thread(target=self.sendSpeeds)
+        #self.thread.start()
 
     def sendSpeeds(self):
         # when the train enters a new block, track model should send signal with new commanded speed
         # and new authority, which triggers the train controller to get new speeds
         # and then this starts a recalculation
         while True:
-            print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
+            #print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
             self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
 
     def getPower(self, power):
         self.commandedPower = power
-        print('got power: ' + str(power))
+        #print('got power: ' + str(power))
 
         # calculate mass
 
