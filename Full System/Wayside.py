@@ -7,6 +7,7 @@ from Track import Track
 
 class Wayside(QObject):
 
+    # signals to track model
     suggSpeedWaysideToTrackModel = pyqtSignal(Train)
     trainObjectWaysideToTrackModel = pyqtSignal(Train)
     commandedSpeedWaysideToTrackModel = pyqtSignal(int)
@@ -14,6 +15,9 @@ class Wayside(QObject):
     greenLineSwitches = pyqtSignal(int)
 
     
+
+    # signals to CTC
+    passengersToCTC = pyqtSignal(int)
 
     def __init__(self, ctcOffice):
         super().__init__()
@@ -47,9 +51,14 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, Block):
         print("block occupancy from track model")
 
+    def passengersReceived(self, passengers):
+        self.passengers = passengers
+        self.passengersToCTC.emit(passengers)
+
     def addTrackModel(self, trackModel):
         self.trackModel = trackModel
         self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
+        self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
 
     def changeRoute(self, train):
 
