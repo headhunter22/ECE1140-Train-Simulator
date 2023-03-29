@@ -22,7 +22,7 @@ class TrainModel(QObject):
     def trainReceived(self, train):
         # set train speed to speed limit
         train.commandedSpeed = self.track.getLine(train.line).getBlock('63').speedLimit
-        train.sendSpeeds()
+        #train.sendSpeeds()
 
         # send authority to controller
         train.trainController.authority = train.authority

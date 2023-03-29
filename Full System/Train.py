@@ -37,7 +37,7 @@ class Train(QObject):
 
         # location attributes
         self.line = line
-        self.location = 63
+        self.location = 3
 
         # mass info
         self.baseMass = 81950 * .453 # kgs 
@@ -54,7 +54,7 @@ class Train(QObject):
         
     def getPower(self, power):
         self.commandedPower = power
-        print('got power: ' + str(power))
+        #print('got power: ' + str(power))
 
         # calculate mass
 

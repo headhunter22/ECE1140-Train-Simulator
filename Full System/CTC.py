@@ -18,13 +18,17 @@ class CTC(QObject):
     def __init__(self, track):
         super().__init__()
         self.track = track
+        self.wayside = None
         
     def dispatch(self, a, s, id, line):
-        train = Train(a, s, id, line, 120, 0,TrainController())
-        print("tests")
+        train = Train(a, s, id, line, 120, 0, TrainController())
         self.authorityToWayside.emit(train)
         self.suggSpeedToWayside.emit(train)
         self.trainObjectToWayside.emit(train)
+        self.wayside.changeRoute(train)
 
     def propagateTrack(self):
         self.trackCTCToWayside.emit(self.track)
+
+    def addWayside(self, Wayside):
+        self.wayside = Wayside
