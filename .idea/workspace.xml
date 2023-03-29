@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da28f2c0-f624-4e55-b92d-823028edd011" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CTC_Office/ctcMainUi/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CTC_Office/ctcMainUi/ctcMainUi.pyproject" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CTC_Office/ctcMainUi/mainwindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CTC_Office/ctcMainUi/form.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CTC_Office/ctcTestUi.py" beforeDir="false" afterPath="$PROJECT_DIR$/CTC_Office/ctcTestUi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CTC_Office/testing_py_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/CTC_Office/testing_py_code.py" afterDir="false" />
-    </list>
+    <list default="true" id="da28f2c0-f624-4e55-b92d-823028edd011" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

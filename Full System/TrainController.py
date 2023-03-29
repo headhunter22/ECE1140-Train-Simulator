@@ -23,8 +23,8 @@ class TrainController(QObject):
     def getSpeed(self, actualSpeed, commandedSpeed):
         self.actualSpeed = actualSpeed
         self.commandedSpeed = commandedSpeed
-        self.sendPower()
-        print('actual speed: ' + str(self.actualSpeed))
+        #self.sendPower()
+        #print('actual speed: ' + str(self.actualSpeed))
         
     """ def sendPower(self):  
         ek = self.commandedSpeed - self.actualSpeed
