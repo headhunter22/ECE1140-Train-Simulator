@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1693</width>
+    <width>1232</width>
     <height>600</height>
    </rect>
   </property>
@@ -24,13 +24,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>07:00:00</string>
+     <string>DATE/TIME</string>
     </property>
    </widget>
    <widget class="QPushButton" name="time1x">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>390</x>
       <y>500</y>
       <width>21</width>
       <height>21</height>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="time10x">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>520</y>
+      <x>410</x>
+      <y>500</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -107,7 +107,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -326,6 +326,22 @@
        <string>Add Block</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="greenAddYard">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>80</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Yard</string>
+      </property>
+     </widget>
      <widget class="QListWidget" name="greenTentSchedule">
       <property name="geometry">
        <rect>
@@ -427,6 +443,22 @@
       </property>
       <property name="text">
        <string>Block Number:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="redAddYard">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>80</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Yard</string>
       </property>
      </widget>
      <widget class="QPushButton" name="redAddBlock">
@@ -1777,6 +1809,105 @@
    maintenance</string>
     </property>
    </widget>
+   <widget class="QStackedWidget" name="stackedWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>70</y>
+      <width>361</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QTableWidget" name="greenOccupancy">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>361</width>
+        <height>501</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Occupied</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Infrastructure</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Block Status</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QTableWidget" name="redOccupancy">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>361</width>
+        <height>501</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>Occupied</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Infrastructure</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Block Status</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="redOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>30</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightCoral; color: Black</string>
+    </property>
+    <property name="text">
+     <string>Red Line Occupancy</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="greenOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>30</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightGreen; color: Black</string>
+    </property>
+    <property name="text">
+     <string>Green Line Occupancy</string>
+    </property>
+   </widget>
    <widget class="QTreeWidget" name="treeWidget_2">
     <property name="geometry">
      <rect>
@@ -2003,121 +2134,13 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="timePause">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>500</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1x</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="time50x">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>520</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>50x</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="redOccupancy">
-    <property name="geometry">
-     <rect>
-      <x>1260</x>
-      <y>70</y>
-      <width>401</width>
-      <height>501</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Occupied</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Infrastructure</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Block Status</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QTableWidget" name="greenOccupancy">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>70</y>
-      <width>401</width>
-      <height>501</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Occupied</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Infrastructure</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Block Status</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="greenOccupancyView">
-    <property name="geometry">
-     <rect>
-      <x>990</x>
-      <y>20</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: LightGreen; color: Black</string>
-    </property>
-    <property name="text">
-     <string>          Green Line Occupancy</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="redOccupancyView">
-    <property name="geometry">
-     <rect>
-      <x>1390</x>
-      <y>20</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: LightCoral; color: Black</string>
-    </property>
-    <property name="text">
-     <string>            Red Line Occupancy</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1693</width>
+     <width>1232</width>
      <height>21</height>
     </rect>
    </property>

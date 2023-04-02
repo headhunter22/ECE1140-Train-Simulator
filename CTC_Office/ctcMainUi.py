@@ -4,8 +4,9 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog,
 from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
+from Clock import Clock
 
-trackCSV = pd.read_csv('Track Layout.csv')
+trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
 
@@ -14,6 +15,10 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.sysClock = Clock()
+        self.sysClock.start()
+        self.sysClock.clock.timeout.connect(self.changeLabel)
 
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
@@ -194,6 +199,9 @@ class MainWindow(QMainWindow):
         self.ui.time1x.setStyleSheet('background-color: SkyBlue; color: gray')
         self.ui.time10x.clicked.connect(lambda: self.toggleColor(self.ui.time10x, self.ui.time1x))
         self.ui.time10x.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.time1x.clicked.connect(self.oneTimeSpeed)
+        self.ui.time10x.clicked.connect(self.tenTimesSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -536,6 +544,22 @@ class MainWindow(QMainWindow):
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
+
+    def changeLabel(self):
+        self.sysClock.time += 1
+
+        hrs = self.sysClock.time / 3600
+        mins = (hrs - int(hrs)) * 60
+        secs = (mins - int(mins)) * 60
+
+        self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+
+    def oneTimeSpeed(self):
+        self.sysClock.start()
+        
+        
+    def tenTimesSpeed(self):
+        self.sysClock.tenTimesSpeed()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
