@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1593</width>
+    <width>1693</width>
     <height>600</height>
    </rect>
   </property>
@@ -1777,38 +1777,6 @@
    maintenance</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="redOccupancyView">
-    <property name="geometry">
-     <rect>
-      <x>1320</x>
-      <y>30</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: LightCoral; color: Black</string>
-    </property>
-    <property name="text">
-     <string>Red Line Occupancy</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="greenOccupancyView">
-    <property name="geometry">
-     <rect>
-      <x>960</x>
-      <y>30</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: LightGreen; color: Black</string>
-    </property>
-    <property name="text">
-     <string>Green Line Occupancy</string>
-    </property>
-   </widget>
    <widget class="QTreeWidget" name="treeWidget_2">
     <property name="geometry">
      <rect>
@@ -2064,9 +2032,9 @@
    <widget class="QTableWidget" name="redOccupancy">
     <property name="geometry">
      <rect>
-      <x>1220</x>
+      <x>1260</x>
       <y>70</y>
-      <width>361</width>
+      <width>401</width>
       <height>501</height>
      </rect>
     </property>
@@ -2091,7 +2059,7 @@
      <rect>
       <x>860</x>
       <y>70</y>
-      <width>361</width>
+      <width>401</width>
       <height>501</height>
      </rect>
     </property>
@@ -2111,13 +2079,45 @@
      </property>
     </column>
    </widget>
+   <widget class="QLabel" name="greenOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>20</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightGreen; color: Black</string>
+    </property>
+    <property name="text">
+     <string>          Green Line Occupancy</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="redOccupancyView">
+    <property name="geometry">
+     <rect>
+      <x>1390</x>
+      <y>20</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: LightCoral; color: Black</string>
+    </property>
+    <property name="text">
+     <string>            Red Line Occupancy</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1593</width>
+     <width>1693</width>
      <height>21</height>
     </rect>
    </property>
