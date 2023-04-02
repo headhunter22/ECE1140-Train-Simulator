@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         self.ui.autoSelect.setChecked(True)
         self.fillOccupancy("Green")
         self.fillOccupancy("Red")
-        self.greenView()
+        self.uneditable()
 
 
         ##################################
@@ -99,19 +99,12 @@ class MainWindow(QMainWindow):
         self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
         self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
 
-        #add yard buttons
-        self.ui.greenAddYard.clicked.connect(self.addGreenYard)
-        self.ui.redAddYard.clicked.connect(self.addRedYard)
-
         #dispatch and clear buttons for red and green line
         self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
 
         self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
         self.ui.redClear.clicked.connect(self.clearRedDispatch)
-
-
-
 
         ##################################
         ########OCCUPANCY WINDOWS#########
@@ -178,15 +171,6 @@ class MainWindow(QMainWindow):
         ##################################
         ########UTILITY BUTTONS###########
         ##################################
-
-        #occupancy buttons
-        self.ui.greenOccupancyView.clicked.connect(lambda: self.toggleView(self.ui.greenOccupancyView, self.ui.redOccupancyView))
-        self.ui.greenOccupancyView.setStyleSheet('background-color: LightGreen; color: black')
-        self.ui.redOccupancyView.clicked.connect(lambda: self.toggleView(self.ui.redOccupancyView, self.ui.greenOccupancyView))
-        self.ui.redOccupancyView.setStyleSheet('background-color: white; color: gray')
-
-        self.ui.greenOccupancyView.clicked.connect(self.greenView)
-        self.ui.redOccupancyView.clicked.connect(self.redView)
 
         #mode buttons
         self.ui.autoSelect.clicked.connect(self.autoSwitch)
@@ -379,14 +363,7 @@ class MainWindow(QMainWindow):
 
         self.ui.redBlockDispatch.setCurrentIndex(0)
 
-    def addGreenYard(self):
-        if self.ui.greenBlockDispatch.currentIndex() == 0:
-            yardTime = self.ui.greenArrivalInput.time()
-            yardString = str(self.ui.greenTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
-            item = QListWidgetItem(yardString)
-            self.ui.greenTentSchedule.addItem(item)
     
-    def addRedYard(self):
         if self.ui.redBlockDispatch.currentIndex() == 0:
             yardTime = self.ui.redArrivalInput.time()
             yardString = str(self.ui.redTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
@@ -541,11 +518,13 @@ class MainWindow(QMainWindow):
                     authority.setBackground(QColor('red'))
                     self.ui.greenOccupancy.setItem(rowCount, 0, authority)
 
-    def greenView(self):
-        self.ui.stackedWidget_2.setCurrentIndex(0)
-
-    def redView(self):
-        self.ui.stackedWidget_2.setCurrentIndex(1)
+    def uneditable(self):
+        self.ui.greenOccupancy.setColumnWidth(0,65)
+        self.ui.greenOccupancy.setColumnWidth(1,195)
+        self.ui.greenOccupancy.setColumnWidth(2,85)
+        self.ui.redOccupancy.setColumnWidth(0,65)
+        self.ui.redOccupancy.setColumnWidth(1,195)
+        self.ui.redOccupancy.setColumnWidth(2,85)
 
     #toggles the color and boolean value of buttons in maintenance mode
     def toggleColor(self, button1, button2):
@@ -553,18 +532,6 @@ class MainWindow(QMainWindow):
         button2.setEnabled(True)
         button1.setStyleSheet('background-color: SkyBlue')
         button2.setStyleSheet('background-color: white; color: gray')
-
-    def toggleView(self, button1, button2):
-        if button1 == self.ui.greenOccupancyView:
-            button1.setEnabled(False)
-            button2.setEnabled(True)
-            button1.setStyleSheet('background-color: LightGreen; color: black')
-            button2.setStyleSheet('background-color: white; color: gray')
-        else:
-            button1.setEnabled(False)
-            button2.setEnabled(True)
-            button1.setStyleSheet('background-color: LightCoral; color: Black')
-            button2.setStyleSheet('background-color: white; color: gray')
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
