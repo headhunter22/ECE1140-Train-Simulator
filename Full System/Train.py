@@ -15,8 +15,7 @@ class Train(QObject):
 
         self.track = track
 
-        #self.clock = clock
-        #self.clock.clock.timeout.connect(self.sendSpeeds)
+        self.clock = clock
 
         # id
         self.ID = ID
