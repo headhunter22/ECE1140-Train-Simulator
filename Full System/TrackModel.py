@@ -29,6 +29,9 @@ class TrackModel(QObject):
         
         # connect wayside signals
         signals.trackModelDispatchTrain.connect(self.dispatchTrain)
+    
+        # connect train model signals
+        signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
@@ -37,17 +40,10 @@ class TrackModel(QObject):
     def dispatchTrain(self, train):
         # increment trains on system
         self.numTrains += 1
+        train.route = deepcopy(greenRouteArr)
 
         # dispatch train with route to train model
         signals.trainModelDispatchTrain.emit(train)
-
-    def trainReceived(self, train):
-        # pass train to train model
-        train.route = deepcopy(greenRouteArr)
-        self.trainTrackModelToTrainModel.emit(train)
-
-        # put the train in the first block out of yard
-        #self.mainWindow.updateOccupancy('Green', 63)
 
     def trackReceived(self, track):
         self.track = track
@@ -56,7 +52,6 @@ class TrackModel(QObject):
         # pass track onto train model
         self.trackTrackModelToTrainModel.emit(track)
         
-    #def occupancyReceived(self, block):
-
-    #def showModel(self):
-    #    self.mainWindow.show()
+    def updateOccupancy(self, block):
+        # send signal to gui to update
+        # 

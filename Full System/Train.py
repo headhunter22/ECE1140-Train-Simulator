@@ -10,13 +10,7 @@ class Train(QObject):
     def __init__(self, id, line, destBlock):
         super().__init__()
 
-        self.trainController = trainController
-        self.trainController.powerToTrain.connect(self.getPower)
-
-        self.track = track
         self.route = []
-
-        self.clock = clock
 
         # id
         self.ID = ID
@@ -27,12 +21,12 @@ class Train(QObject):
         self.position = 0.0
 
         # authority and speeds
-        self.authority = auth
+        self.authority = 3
         self.currentSpeed = 0
-        self.suggSpeed = speed
+        self.suggSpeed = 70
         self.commandedSpeed = self.track.getLine(self.line).getBlock('63').speedLimit
-        self.commandedPower = power
-        self.actSpeed = actSpeed
+        self.commandedPower = 0
+        self.actSpeed = 0
         self.numPassengers = 0
         self.serviceBrake = 0
         self.emBrake = 0
@@ -41,6 +35,7 @@ class Train(QObject):
         self.An_1 = .5
         self.An = 0
         self.actSpeed_1 = track.getLine(self.line).getBlock(str(self.location)).speedLimit
+        self.T = 1
 
         # mass info
         self.baseMass = 81950 * .453 # kgs
