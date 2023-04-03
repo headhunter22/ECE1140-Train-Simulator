@@ -12,30 +12,35 @@ from Track import Track
 import TrackParser
 import random
 from threading import Thread
-from Clock import Clock
+#from Clock import Clock
+from ClockThreaded import clock
 
-def threadRunner():
-    track = TrackParser.parseTrack("TrackLayout.csv")
-    clock = Clock()
-    clock.start()
+# import UIs
+import ctcMainUi
 
-    ctcOffice = CTC(track, clock)
-    waysideController = Wayside(ctcOffice)
-    ctcOffice.addWayside(waysideController)
-    trackModel = TrackModel(waysideController)
-    trainModel = TrainModel(trackModel)
+track = TrackParser.parseTrack("TrackLayout.csv")
+clock.startTimer()
 
-    # propagate track model
-    ctcOffice.propagateTrack()
+ctcOffice = CTC(track, clock)
+waysideController = Wayside(ctcOffice)
+ctcOffice.addWayside(waysideController)
+trackModel = TrackModel(waysideController)
+trainModel = TrainModel(trackModel)
 
-    ctcOffice.dispatch(10, 50, 1, 'Green', track, clock)
+# propagate track model
+ctcOffice.propagateTrack()
+
+# dispatch a test train
+ctcOffice.dispatch(10, 50, 1, 'Green', track, clock)
+
+# show CTC window
+ctcApp = QtWidgets.QApplication(sys.argv)
+window = ctcMainUi.MainWindow(track)
+window.show()
+ctcApp.exec()
 
 # notes:
 # train physics
 # beacons (switch created)
 # parse line into linked list that models the track connections??
-
 # - or do we have an addTrack function that can be called each time we reparse?
-
-mainThread = QThread(target=threadRunner)
-mainThread.start()

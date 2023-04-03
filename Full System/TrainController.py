@@ -259,11 +259,7 @@ class TrainController(QtWidgets.QMainWindow):
         else:
             powerOut = 0
         
-        currTime = self.clock.time
-        while (self.clock.time - currTime < 1):
-            ()
-        self.emitPower(powerOut)
-            
+        emitPower(powerOut)
 
     def emitPower(self, powerOut):
         print('power out: ' + str(powerOut))
