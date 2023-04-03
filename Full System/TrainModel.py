@@ -48,7 +48,25 @@ class TrainModel(QObject):
         blockSpeedLimit *= 0.27777
         commSpeed = train.commandedSpeed * 0.27777
 
-        prevBlock = currBlock
+        prevPos = train.prevPos
+
+        currPos = 0
+        currPos = prevPos + (movement * samplePeriod)
+
+        if currPos > currBlockSize:
+            currPos = currPos - currBlockSize
+            train.prevPos = currPos
+            train.route.pop(0)
+
+        #if len(train.route) == 0:
+            # update train speed to 0 and delete train
+
+        # update track model occupancy to unoccupied for currBlock
+        signals.trackModelUpdateOccupancy(train.trainID, train.line, currBlock, False)
+
+        # update track model occupancy to occupied for next block in route
+        signals.trackModelUpdateOccupancy(train.trainID, train.line, train.route[0], True)
+        
 
     def trainReceived(self, train):
         # set train speed to speed limit

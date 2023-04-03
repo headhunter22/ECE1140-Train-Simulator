@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, copy
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
@@ -43,6 +43,7 @@ class TrackModel(QObject):
 
     def trainReceived(self, train):
         # pass train to train model
+        train.route = deepcopy(greenRouteArr)
         self.trainTrackModelToTrainModel.emit(train)
 
         # put the train in the first block out of yard

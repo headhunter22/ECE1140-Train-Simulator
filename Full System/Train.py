@@ -14,6 +14,7 @@ class Train(QObject):
         self.trainController.powerToTrain.connect(self.getPower)
 
         self.track = track
+        self.route = []
 
         self.clock = clock
 
@@ -23,6 +24,7 @@ class Train(QObject):
         # location attributes
         self.line = line
         self.block = 63
+        self.position = 0.0
 
         # authority and speeds
         self.authority = auth
