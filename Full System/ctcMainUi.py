@@ -731,6 +731,7 @@ class MainWindow(QMainWindow):
         elif self.ui.maintenanceSelect.isChecked():
             self.ui.stackedWidget.setCurrentIndex(3)
         elif self.ui.manualSelect.isChecked():
+            self.ui.dispatchGreen.setChecked()
             self.ui.stackedWidget.setCurrentIndex(0)
 
 if __name__ == '__main__':
