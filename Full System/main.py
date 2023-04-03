@@ -16,6 +16,8 @@ import random
 from threading import Thread
 
 def threadRunner():
+    track = TrackParser.parseTrack("TrackLayout.csv")
+
     ctcOffice = CTC(track)
     waysideController = Wayside(ctcOffice)
     ctcOffice.addWayside(waysideController)
@@ -25,7 +27,7 @@ def threadRunner():
     # propagate track model
     ctcOffice.propagateTrack()
 
-    ctcOffice.dispatch(10, 50, 1, 'Green')
+    ctcOffice.dispatch(10, 50, 1, 'Green', track)
 
 # notes:
 # train physics
@@ -33,7 +35,6 @@ def threadRunner():
 # parse line into linked list that models the track connections??
 
 # - or do we have an addTrack function that can be called each time we reparse?
-track = TrackParser.parseTrack("TrackLayout.csv")
 
 mainThread = Thread(target=threadRunner)
 mainThread.start()
