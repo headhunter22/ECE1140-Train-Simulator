@@ -37,5 +37,5 @@ def threadRunner():
 
 # - or do we have an addTrack function that can be called each time we reparse?
 
-mainThread = Thread(target=threadRunner)
+mainThread = QThread(target=threadRunner)
 mainThread.start()
