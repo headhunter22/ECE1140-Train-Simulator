@@ -13,6 +13,19 @@ from Track import Track
 #from TrainController import TrainController
 import TrackParser
 import random
+from threading import Thread
+
+def threadRunner():
+    ctcOffice = CTC(track)
+    waysideController = Wayside(ctcOffice)
+    ctcOffice.addWayside(waysideController)
+    trackModel = TrackModel(waysideController)
+    trainModel = TrainModel(trackModel)
+
+    # propagate track model
+    ctcOffice.propagateTrack()
+
+    ctcOffice.dispatch(10, 50, 1, 'Green')
 
 # notes:
 # train physics
@@ -22,12 +35,5 @@ import random
 # - or do we have an addTrack function that can be called each time we reparse?
 track = TrackParser.parseTrack("TrackLayout.csv")
 
-ctcOffice = CTC(track)
-waysideController = Wayside(ctcOffice)
-ctcOffice.addWayside(waysideController)
-trackModel = TrackModel(waysideController)
-trainModel = TrainModel(trackModel)
-
-# propagate track model
-ctcOffice.propagateTrack()
-ctcOffice.dispatch(10, 50, 1, 'Green')
+mainThread = Thread(target=threadRunner)
+mainThread.start()

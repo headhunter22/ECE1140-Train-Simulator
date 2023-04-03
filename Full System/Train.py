@@ -1,18 +1,7 @@
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from TrainController import TrainController
-import threading
+from threading import Thread
 import time
-
-class Worker(QObject):
-    def __init__(self, train):
-        super(Worker, self).__init__()
-        self.train = train
-
-    def sendSpeeds(self):
-        while True:
-            print('actual speed: ' + str(self.train.actSpeed) + ' commanded speed: ' + str(self.train.commandedSpeed))
-            self.train.trainController.getSpeed(self.train.actSpeed, self.train.commandedSpeed)
-            time.sleep(1)
 
 class Train(QObject):
     trainCounter = 0
@@ -42,15 +31,15 @@ class Train(QObject):
         # mass info
         self.baseMass = 81950 * .453 # kgs 
 
-        self.sendSpeeds()
+        trainThread = Thread(target=self.sendSpeeds)
+        trainThread.start()
+        trainThread.join()
 
     def sendSpeeds(self):
-        # attach infinite while loop to worker
-        self.thread = QThread()
-        self.worker = Worker(self)
-        self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.sendSpeeds())
-        self.thread.start()
+        while True:
+            print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
+            self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
+            time.sleep(1)
         
     def getPower(self, power):
         self.commandedPower = power

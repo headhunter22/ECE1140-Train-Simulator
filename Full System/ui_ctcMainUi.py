@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1593, 600)
+        MainWindow.resize(1232, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.dataTime = QLabel(self.centralwidget)
@@ -34,10 +34,10 @@ class Ui_MainWindow(object):
         self.dataTime.setGeometry(QRect(320, 502, 61, 16))
         self.time1x = QPushButton(self.centralwidget)
         self.time1x.setObjectName(u"time1x")
-        self.time1x.setGeometry(QRect(410, 500, 21, 21))
+        self.time1x.setGeometry(QRect(390, 500, 21, 21))
         self.time10x = QPushButton(self.centralwidget)
         self.time10x.setObjectName(u"time10x")
-        self.time10x.setGeometry(QRect(390, 520, 21, 21))
+        self.time10x.setGeometry(QRect(410, 500, 21, 21))
         self.Outline = QFrame(self.centralwidget)
         self.Outline.setObjectName(u"Outline")
         self.Outline.setGeometry(QRect(20, 20, 281, 51))
@@ -109,6 +109,10 @@ class Ui_MainWindow(object):
         self.greenAddBlock.setObjectName(u"greenAddBlock")
         self.greenAddBlock.setGeometry(QRect(150, 40, 71, 21))
         self.greenAddBlock.setStyleSheet(u"background-color: DodgerBlue; color: Black")
+        self.greenAddYard = QPushButton(self.greenLinePage)
+        self.greenAddYard.setObjectName(u"greenAddYard")
+        self.greenAddYard.setGeometry(QRect(150, 80, 71, 21))
+        self.greenAddYard.setStyleSheet(u"background-color: DodgerBlue; color: Black")
         self.greenTentSchedule = QListWidget(self.greenLinePage)
         self.greenTentSchedule.setObjectName(u"greenTentSchedule")
         self.greenTentSchedule.setGeometry(QRect(110, 170, 151, 181))
@@ -138,6 +142,10 @@ class Ui_MainWindow(object):
         self.blockLabel_3 = QLabel(self.redLinePage)
         self.blockLabel_3.setObjectName(u"blockLabel_3")
         self.blockLabel_3.setGeometry(QRect(110, 10, 81, 21))
+        self.redAddYard = QPushButton(self.redLinePage)
+        self.redAddYard.setObjectName(u"redAddYard")
+        self.redAddYard.setGeometry(QRect(150, 80, 71, 21))
+        self.redAddYard.setStyleSheet(u"background-color: DodgerBlue; color: Black")
         self.redAddBlock = QPushButton(self.redLinePage)
         self.redAddBlock.setObjectName(u"redAddBlock")
         self.redAddBlock.setGeometry(QRect(150, 40, 71, 21))
@@ -483,13 +491,44 @@ class Ui_MainWindow(object):
         self.legendLabel_4 = QLabel(self.centralwidget)
         self.legendLabel_4.setObjectName(u"legendLabel_4")
         self.legendLabel_4.setGeometry(QRect(720, 410, 81, 31))
+        self.stackedWidget_2 = QStackedWidget(self.centralwidget)
+        self.stackedWidget_2.setObjectName(u"stackedWidget_2")
+        self.stackedWidget_2.setGeometry(QRect(860, 70, 361, 501))
+        self.page = QWidget()
+        self.page.setObjectName(u"page")
+        self.greenOccupancy = QTableWidget(self.page)
+        if (self.greenOccupancy.columnCount() < 3):
+            self.greenOccupancy.setColumnCount(3)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.greenOccupancy.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.greenOccupancy.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.greenOccupancy.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        self.greenOccupancy.setObjectName(u"greenOccupancy")
+        self.greenOccupancy.setGeometry(QRect(0, 0, 361, 501))
+        self.stackedWidget_2.addWidget(self.page)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        self.redOccupancy = QTableWidget(self.page_2)
+        if (self.redOccupancy.columnCount() < 3):
+            self.redOccupancy.setColumnCount(3)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.redOccupancy.setHorizontalHeaderItem(0, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.redOccupancy.setHorizontalHeaderItem(1, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.redOccupancy.setHorizontalHeaderItem(2, __qtablewidgetitem5)
+        self.redOccupancy.setObjectName(u"redOccupancy")
+        self.redOccupancy.setGeometry(QRect(0, 0, 361, 501))
+        self.stackedWidget_2.addWidget(self.page_2)
         self.redOccupancyView = QPushButton(self.centralwidget)
         self.redOccupancyView.setObjectName(u"redOccupancyView")
-        self.redOccupancyView.setGeometry(QRect(1320, 30, 181, 41))
+        self.redOccupancyView.setGeometry(QRect(1040, 30, 181, 41))
         self.redOccupancyView.setStyleSheet(u"background-color: LightCoral; color: Black")
         self.greenOccupancyView = QPushButton(self.centralwidget)
         self.greenOccupancyView.setObjectName(u"greenOccupancyView")
-        self.greenOccupancyView.setGeometry(QRect(960, 30, 181, 41))
+        self.greenOccupancyView.setGeometry(QRect(860, 30, 181, 41))
         self.greenOccupancyView.setStyleSheet(u"background-color: LightGreen; color: Black")
         self.treeWidget_2 = QTreeWidget(self.centralwidget)
         QTreeWidgetItem(self.treeWidget_2)
@@ -527,38 +566,10 @@ class Ui_MainWindow(object):
         QTreeWidgetItem(self.treeWidget_3)
         self.treeWidget_3.setObjectName(u"treeWidget_3")
         self.treeWidget_3.setGeometry(QRect(320, 70, 511, 101))
-        self.timePause = QPushButton(self.centralwidget)
-        self.timePause.setObjectName(u"timePause")
-        self.timePause.setGeometry(QRect(390, 500, 21, 21))
-        self.time50x = QPushButton(self.centralwidget)
-        self.time50x.setObjectName(u"time50x")
-        self.time50x.setGeometry(QRect(410, 520, 21, 21))
-        self.redOccupancy = QTableWidget(self.centralwidget)
-        if (self.redOccupancy.columnCount() < 3):
-            self.redOccupancy.setColumnCount(3)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.redOccupancy.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.redOccupancy.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.redOccupancy.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        self.redOccupancy.setObjectName(u"redOccupancy")
-        self.redOccupancy.setGeometry(QRect(1220, 70, 361, 501))
-        self.greenOccupancy = QTableWidget(self.centralwidget)
-        if (self.greenOccupancy.columnCount() < 3):
-            self.greenOccupancy.setColumnCount(3)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.greenOccupancy.setHorizontalHeaderItem(0, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.greenOccupancy.setHorizontalHeaderItem(1, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.greenOccupancy.setHorizontalHeaderItem(2, __qtablewidgetitem5)
-        self.greenOccupancy.setObjectName(u"greenOccupancy")
-        self.greenOccupancy.setGeometry(QRect(860, 70, 361, 501))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1593, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1232, 21))
         self.menuCTC_Main_UI = QMenu(self.menubar)
         self.menuCTC_Main_UI.setObjectName(u"menuCTC_Main_UI")
         MainWindow.setMenuBar(self.menubar)
@@ -567,7 +578,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget_2.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -575,7 +587,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.dataTime.setText(QCoreApplication.translate("MainWindow", u"07:00:00", None))
+        self.dataTime.setText(QCoreApplication.translate("MainWindow", u"DATE/TIME", None))
         self.time1x.setText(QCoreApplication.translate("MainWindow", u"1x", None))
         self.time10x.setText(QCoreApplication.translate("MainWindow", u"10x", None))
         self.DispatchTrain.setText(QCoreApplication.translate("MainWindow", u"Dispatch Train", None))
@@ -596,11 +608,13 @@ class Ui_MainWindow(object):
         self.blockLabel.setText(QCoreApplication.translate("MainWindow", u"Block Number:", None))
         self.greenAddStation.setText(QCoreApplication.translate("MainWindow", u"Add Station", None))
         self.greenAddBlock.setText(QCoreApplication.translate("MainWindow", u"Add Block", None))
+        self.greenAddYard.setText(QCoreApplication.translate("MainWindow", u"Add Yard", None))
         self.arrivalLabel.setText(QCoreApplication.translate("MainWindow", u"Arrival Time:", None))
         self.greenClear.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
         self.greenDispatch.setText(QCoreApplication.translate("MainWindow", u"Dispatch", None))
         self.arrivalLabel_3.setText(QCoreApplication.translate("MainWindow", u"Tentative Schedule:", None))
         self.blockLabel_3.setText(QCoreApplication.translate("MainWindow", u"Block Number:", None))
+        self.redAddYard.setText(QCoreApplication.translate("MainWindow", u"Add Yard", None))
         self.redAddBlock.setText(QCoreApplication.translate("MainWindow", u"Add Block", None))
         self.arrivalLabel_2.setText(QCoreApplication.translate("MainWindow", u"Arrival Time:", None))
         self.redBlockDispatch.setItemText(0, QCoreApplication.translate("MainWindow", u"N/A", None))
@@ -691,6 +705,18 @@ class Ui_MainWindow(object):
         self.legendLabel_3.setText(QCoreApplication.translate("MainWindow", u"- Train authority", None))
         self.legendLabel_4.setText(QCoreApplication.translate("MainWindow", u"- Block under \n"
 "   maintenance", None))
+        ___qtablewidgetitem = self.greenOccupancy.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Occupied", None));
+        ___qtablewidgetitem1 = self.greenOccupancy.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Infrastructure", None));
+        ___qtablewidgetitem2 = self.greenOccupancy.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Block Status", None));
+        ___qtablewidgetitem3 = self.redOccupancy.horizontalHeaderItem(0)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Occupied", None));
+        ___qtablewidgetitem4 = self.redOccupancy.horizontalHeaderItem(1)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Infrastructure", None));
+        ___qtablewidgetitem5 = self.redOccupancy.horizontalHeaderItem(2)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Block Status", None));
         self.redOccupancyView.setText(QCoreApplication.translate("MainWindow", u"Red Line Occupancy", None))
         self.greenOccupancyView.setText(QCoreApplication.translate("MainWindow", u"Green Line Occupancy", None))
         ___qtreewidgetitem = self.treeWidget_2.headerItem()
@@ -741,20 +767,6 @@ class Ui_MainWindow(object):
         ___qtreewidgetitem5.setText(0, QCoreApplication.translate("MainWindow", u"275", None));
         self.treeWidget_3.setSortingEnabled(__sortingEnabled1)
 
-        self.timePause.setText(QCoreApplication.translate("MainWindow", u"1x", None))
-        self.time50x.setText(QCoreApplication.translate("MainWindow", u"50x", None))
-        ___qtablewidgetitem = self.redOccupancy.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Occupied", None));
-        ___qtablewidgetitem1 = self.redOccupancy.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Infrastructure", None));
-        ___qtablewidgetitem2 = self.redOccupancy.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Block Status", None));
-        ___qtablewidgetitem3 = self.greenOccupancy.horizontalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Occupied", None));
-        ___qtablewidgetitem4 = self.greenOccupancy.horizontalHeaderItem(1)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Infrastructure", None));
-        ___qtablewidgetitem5 = self.greenOccupancy.horizontalHeaderItem(2)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Block Status", None));
         self.menuCTC_Main_UI.setTitle(QCoreApplication.translate("MainWindow", u"CTC Main UI", None))
     # retranslateUi
 

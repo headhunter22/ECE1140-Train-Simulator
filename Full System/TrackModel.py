@@ -6,6 +6,7 @@ from Block import Block
 from Track import Track
 from Train import Train
 from TicketSystem import TicketSystem
+from MainTrackModelUI import MainWindow
 
 class TrackModel(QObject):
 
@@ -34,10 +35,17 @@ class TrackModel(QObject):
         # pass train to train model
         self.trainTrackModelToTrainModel.emit(train)
 
+        # put the train in the first block out of yard
+        #self.mainWindow.updateOccupancy('Green', 63)
+
     def trackReceived(self, track):
         self.track = track
+        #self.mainWindow = MainWindow(track)
 
         # pass track onto train model
         self.trackTrackModelToTrainModel.emit(track)
+        
+    #def occupancyReceived(self, block):
 
-
+    #def showModel(self):
+    #    self.mainWindow.show()

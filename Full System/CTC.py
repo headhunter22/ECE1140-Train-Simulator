@@ -6,8 +6,6 @@ from Train import Train
 from Track import Track
 from TrainController import TrainController
 
-#to commit
-
 class CTC(QObject):
     trackCTCToWayside = pyqtSignal(Track)
     authorityToWayside = pyqtSignal(Train)
