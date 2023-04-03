@@ -12,7 +12,7 @@ class Clock:
         self.tickFactor = 1
         self.currSecs = 0
         self.currMins = 0
-        self.currHrs = 0
+        self.currHrs = 7
 
         # attributes of thread
         self.lock = threading.Lock()
