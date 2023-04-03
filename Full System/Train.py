@@ -7,7 +7,7 @@ import math
 class Train(QObject):
     trainCounter = 0
 
-    def __init__(self, auth, speed, ID, line, power, actSpeed, trainController, track, clock):
+    def __init__(self, id, line, destBlock):
         super().__init__()
 
         self.trainController = trainController
@@ -22,7 +22,7 @@ class Train(QObject):
 
         # location attributes
         self.line = line
-        self.location = 63
+        self.block = 63
 
         # authority and speeds
         self.authority = auth

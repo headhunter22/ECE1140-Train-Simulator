@@ -15,9 +15,40 @@ class TrainModel(QObject):
         #self.TrainController = trainController        
         # connect track model
         self.trackModel = trackModel
+        
+        # array to hold trains
+        self.trainList = []
 
-        self.trackModel.trackTrackModelToTrainModel.connect(self.trackReceived)
-        self.trackModel.trainTrackModelToTrainModel.connect(self.trainReceived)
+        # connect signals
+        signals.trainModelDispatchTrain.connect(self.dispatchTrain)
+        signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
+        signals.trainModelGetPower.connect(self.updatedPower)
+
+    # function to dispatch a train
+    def dispatchTrain(self, train):
+        # add train to current trains list
+        self.trainList.append(train)
+
+        # update occupancy of block 
+        signals.trackModelUpdateOccupancy.emit(trainID, train.line, 0, True)
+
+    # function to update commanded speed
+    #def updateCommandedSpeed(self, trainID, commandedSpeed):
+    #
+
+    def updatedPower(self, train, power):
+        # get current line, block and the associated length, speed limit
+        currLine = train.line
+        currBlock = train.block
+
+        currBlockSize = currLine.getBlock(currBlock).length
+        blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
+
+        # convert speed limit, commSpeed to m/s
+        blockSpeedLimit *= 0.27777
+        commSpeed = train.commandedSpeed * 0.27777
+
+        prevBlock = currBlock
 
     def trainReceived(self, train):
         # set train speed to speed limit
