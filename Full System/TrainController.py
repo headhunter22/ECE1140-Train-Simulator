@@ -45,9 +45,8 @@ class TrainController(QObject):
         else:
             powerOut = 0
         
-        self.clock.clock.timeout.connect(lambda: self.emitPower(powerOut))
+        emitPower(powerOut)
             
-
     def emitPower(self,powerOut):
         print('power out: ' + str(powerOut))
         self.powerToTrain.emit(powerOut)

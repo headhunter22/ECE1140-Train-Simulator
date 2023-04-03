@@ -5,20 +5,23 @@ from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
 from Clock import Clock
+from signals import signals
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, track):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.sysClock = Clock()
-        self.sysClock.start()
-        self.sysClock.clock.timeout.connect(self.changeLabel)
+        # self.sysClock = Clock()
+        # self.sysClock.start()
+        # self.sysClock.clock.timeout.connect(self.changeLabel)
+
+        signals.timerTicked.connect(self.changeLabel)
 
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
@@ -545,13 +548,12 @@ class MainWindow(QMainWindow):
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
 
-    def changeLabel(self):
-        self.sysClock.time += 1
+    def changeLabel(self, hrs, mins, secs):
+        # self.sysClock.time += 1
 
-        hrs = self.sysClock.time / 3600
-        mins = (hrs - int(hrs)) * 60
-        secs = (mins - int(mins)) * 60
-
+        # hrs = self.sysClock.time / 3600
+        # mins = (hrs - int(hrs)) * 60
+        # secs = (mins - int(mins)) * 60
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     def oneTimeSpeed(self):
@@ -734,8 +736,8 @@ class MainWindow(QMainWindow):
             self.ui.dispatchGreen.setChecked()
             self.ui.stackedWidget.setCurrentIndex(0)
 
-if __name__ == '__main__':
-    track = TrackParser.parseTrack('TrackLayout.csv')
-    app = QApplication([])
-    window = MainWindow()
-    app.exec()
+# if __name__ == '__main__':
+#     track = TrackParser.parseTrack('TrackLayout.csv')
+#     app = QApplication([])
+#     window = MainWindow()
+#     app.exec()
