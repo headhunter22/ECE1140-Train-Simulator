@@ -4,20 +4,9 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
 from Train import Train
 from Track import Track
+from Block import Block
 
 class Wayside(QObject):
-
-    # signals to track model
-    suggSpeedWaysideToTrackModel = pyqtSignal(Train)
-    trainObjectWaysideToTrackModel = pyqtSignal(Train)
-    commandedSpeedWaysideToTrackModel = pyqtSignal(int)
-    trackWaysideToTrackModel = pyqtSignal(Track)
-    greenLineSwitches = pyqtSignal(int)
-
-    
-
-    # signals to CTC
-    passengersToCTC = pyqtSignal(int)
 
     def __init__(self, ctcOffice):
         super().__init__()
@@ -25,12 +14,28 @@ class Wayside(QObject):
         self.trackModel = 0
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
-        self.CTC.authorityToWayside.connect(self.authorityReceived)
-        self.CTC.suggSpeedToWayside.connect(self.suggSpeedReceived)
-        self.CTC.trainObjectToWayside.connect(self.trainReceived)
-        self.CTC.trackCTCToWayside.connect(self.trackReceived)
-        #self.switchStatesToWayside.connect(self.switchStateReceived)
+        # connect signals
+        signals.waysideDispatchTrain.connect(self.dispatchTrain)
         
+    # function to dispatch a train
+    # hard coded for green line for the time being
+    def dispatchTrain(self, train):
+        # set occupancy of first block
+        #self.setOccupancy(train.line, 63, 1)
+
+        # compare suggSpeed to commandedSpeed
+        speedLimit = train.line.getBlock(63).speedLimit
+        if (train.suggSpeed > speedLimit):
+            commSpeed = speedLimit
+        else:
+            commSpeed = suggSpeed
+
+        # emit dispatched train to track model
+        signals.trackModelDispatchTrain.emit(train)
+
+    # function to set block occupancies
+    #def setOccupancy(self, line, blockNumber, occupied):
+        #line.getBlock(blockNumber).occupancy = occupied
 
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))

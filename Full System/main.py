@@ -31,13 +31,9 @@ trainModel = TrainModel(trackModel)
 ctcOffice.propagateTrack()
 
 # dispatch a test train
-ctcOffice.dispatch(10, 50, 1, 'Green', track, clock)
+ctcOffice.dispatch('Green', 1)
 
 # show CTC window
-ctcApp = QtWidgets.QApplication(sys.argv)
-window = ctcMainUi.MainWindow(track)
-window.show()
-ctcApp.exec()
 
 # notes:
 # train physics
