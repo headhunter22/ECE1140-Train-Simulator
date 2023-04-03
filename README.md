@@ -6,5 +6,5 @@
 =======
 # Jason Head
 # Lauren Duffitt
-# Mikayla Bernhard
->>>>>>> 8825d29b15c10f122ef484da3bc98c961adf4228
+# Mikayla Bernhard2
+>>>>>>>
