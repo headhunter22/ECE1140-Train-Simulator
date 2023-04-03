@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="section">
+   <widget class="QComboBox" name="sectionbox">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -107,7 +107,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QComboBox" name="block">
+   <widget class="QComboBox" name="blockbox">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -149,6 +149,26 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QComboBox" name="occupancybox">
+    <property name="geometry">
+     <rect>
+      <x>301</x>
+      <y>200</y>
+      <width>111</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Occupied</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Unoccupied</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

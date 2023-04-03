@@ -5,12 +5,13 @@ Block:
 	ID bluea1 #ID boolean
 	ST 0 #Station 1- has a station 0- does not have a station
 	RX 0 #Railroad Crossing 1- has a crossing 0- does not have a crossing
-	RXS 0 #Railroad Crossing State 1- active 0- inactive 
-	CL 0 #Crossing Lights 1- green 0- red
+	RS 0 #Railroad Crossing State 1- active 0- inactive 
+	RL 0 #Crossing Lights 1- green 0- red
 	OC 0 #Occupancy 1- occupied 0- unoccupied
 	AU 0 #Authority 1- a train has authority on that block 0- no authority given
 	SW 0 #Switch 1- has a switch 0- does not have a switch
-	SWS 0 #Switch State 1- facing the higher number track 0- facing the lower number track
+	SS 0 #Switch State 1- facing the higher number track 0- facing the lower number track
+	SL 0 #Switch Lights 1- green 0- red
 	FT 0 #Fault 1- no fault 0- fault
 	END BLK #end job
 
@@ -29,3 +30,4 @@ Tasks:
 	Put Block into Maintenance
 	Check for Faults
 	Update Authority 
+

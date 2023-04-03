@@ -8,6 +8,7 @@ from blockwidget import Ui_Section
 from pathlib import Path
 from Wayside_Main_B import Ui_MainWindow
 from test2 import Ui_testpopup
+import PLCParser as PLCParser
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
@@ -89,6 +90,42 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         button1.setStyleSheet('background-color: SkyBlue; color: black')
         button2.setStyleSheet('background-color: white; color: gray')
 
+    def changeIcon(self): #laurens
+        section = self.sectionbox.currentText()
+        block = self.blockbox.currentText()
+        occupation = self.occupancybox.currentText()
+        if section == 'A':
+            if occupation == 'Occupied':
+                self.aicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                self.aicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+            # if block == '1':
+            #     if occupation == "Occupied":
+            #         self.aicon.setPixmap("redtrain.png")
+            #     else:
+            #         self.aicon.setPixmap("tracks.png")
+            # elif block == '2':
+            #     if occupation == "Occupied":
+            #         self.aicon.setPixmap("redtrain.png")
+            #     else:
+            #         self.aicon.setPixmap("tracks.png")
+        elif section == 'B':
+            if occupation == 'Occupied':
+                self.bicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                self.bicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+        elif section == 'C':
+            if occupation == 'Occupied':
+                self.cicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                self.cicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+
     #function for number of active trains
     #somehow counts the number of times the red train label comes up
     def activeTrains(self, counts):
@@ -100,9 +137,12 @@ class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
         self.setupUi(self)
         self.setWindowTitle('Track Configuration')
 
-        self.uploadplc.clicked.connect(self.readplc)
-
+        #self.uploadplc.clicked.connect(self.readplc)
+        self.uploadplc.clicked.connect(self.runParser)
         self.ladderlogic.setDown(True)
+
+    def runParser(self):
+        PLCParser.parse(self)
 
     def readplc(self):
         home_dir = str(Path.home())
@@ -129,8 +169,8 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
         self.setWindowTitle('Block Information')
 
         #set up drop down menus
-        self.section.currentTextChanged.connect(self.setBlockOptions)
-
+        self.sectionbox.currentTextChanged.connect(self.setBlockOptions)
+        
         #toggle lights
         self.reda.toggled.connect(self.changeLights)
         self.yellowa.toggled.connect(self.changeLights)
@@ -139,38 +179,46 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
         self.yellowb.toggled.connect(self.changeLights)
         self.greenb.toggled.connect(self.changeLights)
 
+        #start with reda greenb
+        self.reda.setDown(True)
+        self.greenb.setDown(True)
+
+        #set up change icon
+        self.sectionbox.currentTextChanged.connect(self.setBlockOptions)
+        self.occupancybox.currentTextChanged.connect(self.changeIcon)
+
     def setBlockOptions(self):
-        content = self.section.currentText()
+        content = self.sectionbox.currentText()
         if content == 'A':
-            self.block.clear()
-            self.block.addItems(['1' , '2', '3'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['1' , '2', '3'])
         elif content == 'B':
-            self.block.clear()
-            self.block.addItems(['4', '5', '6'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['4', '5', '6'])
         elif content == 'C':
-            self.block.clear()
-            self.block.addItems(['7', '8', '9'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['7', '8', '9'])
         elif content == 'D':
-            self.block.clear()
-            self.block.addItems(['10', '11', '12'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['10', '11', '12'])
         elif content == 'E':
-            self.block.clear()
-            self.block.addItems(['13', '14', '15'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['13', '14', '15'])
         elif content == 'F':
-            self.block.clear()
-            self.block.addItems(['16', '17', '18', '19', '20'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['16', '17', '18', '19', '20'])
         elif content == 'G':
-            self.block.clear()
-            self.block.addItems(['21', '22', '23'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['21', '22', '23'])
         elif content == 'H':
-            self.block.clear()
-            self.block.addItems(['24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45'])
         elif content == 'I':
-            self.block.clear()
-            self.block.addItems(['46', '47', '48'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['46', '47', '48'])
         elif content == 'J':
-            self.block.clear()
-            self.block.addItems(['49', '50', '51', '52', '53', '54'])
+            self.blockbox.clear()
+            self.blockbox.addItems(['49', '50', '51', '52', '53', '54'])
 
     def changeLights(self):
         #gate = self.crossingbox.currentText()
@@ -187,21 +235,25 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
             window.greena.setPixmap(QPixmap('offlight.png'))
             window.gatepositiona.setText('Active')
         elif yellowbuttona == True:
+            self.reda.setDown(False)
             window.reda.setPixmap(QPixmap('offlight.png'))
             window.yellowa.setPixmap(QPixmap('yellowlight.png'))
             window.greena.setPixmap(QPixmap('offlight.png'))
             window.gatepositiona.setText('Active')
         elif greenbuttona == True:
+            self.reda.setDown(False)
             window.reda.setPixmap(QPixmap('offlight.png'))
             window.yellowa.setPixmap(QPixmap('offlight.png'))
             window.greena.setPixmap(QPixmap('greenlight.png'))
             window.gatepositiona.setText('Inactive')
         if redbuttonb == True:
+            self.greenb.setDown(False)
             window.redb.setPixmap(QPixmap('redlight.png'))
             window.yellowb.setPixmap(QPixmap('offlight.png'))
             window.greenb.setPixmap(QPixmap('offlight.png'))
             window.gatepositionb.setText('Active')
         elif yellowbuttonb == True:
+            self.greenb.setDown(False)
             window.redb.setPixmap(QPixmap('offlight.png'))
             window.yellowb.setPixmap(QPixmap('yellowlight.png'))
             window.greenb.setPixmap(QPixmap('offlight.png'))
@@ -212,6 +264,54 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
             window.greenb.setPixmap(QPixmap('greenlight.png'))
             window.gatepositionb.setText('Inactive')
 
+    def changeIcon(self): #laurens
+        section = self.sectionbox.currentText()
+        block = self.blockbox.currentText()
+        occupation = self.occupancybox.currentText()
+        if section == 'A':
+            if occupation == 'Occupied':
+                window.aicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                window.aicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+            # if block == '1':
+            #     if occupation == "Occupied":
+            #         self.aicon.setPixmap("redtrain.png")
+            #     else:
+            #         self.aicon.setPixmap("tracks.png")
+            # elif block == '2':
+            #     if occupation == "Occupied":
+            #         self.aicon.setPixmap("redtrain.png")
+            #     else:
+            #         self.aicon.setPixmap("tracks.png")
+        elif section == 'B':
+            if occupation == 'Occupied':
+                window.bicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                window.bicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+        elif section == 'C':
+            if occupation == 'Occupied':
+                window.cicon.setPixmap(QPixmap('redtrain.png'))
+                #counts = counts + 1
+            else:
+                window.cicon.setPixmap(QPixmap('tracks.png'))
+                #counts = counts - 1
+
+class Communications():
+    print("communicating")
+    # get suggest speed
+    #get authority
+    #get switch state in maintenance mode
+
+    #send suggested speed
+    #send authority
+    #send block occupancy
+    #send rr crossings
+    #send switches
+    
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()
 test = Ui_testpopup()
