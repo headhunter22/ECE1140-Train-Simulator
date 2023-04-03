@@ -23,7 +23,7 @@ class TrainController(QObject):
     def getSpeed(self, actualSpeed, commandedSpeed):
         self.actualSpeed = actualSpeed
         self.commandedSpeed = commandedSpeed
-        #self.sendPower()
+        self.sendPower()
         #print('actual speed: ' + str(self.actualSpeed))
         
     """ def sendPower(self):  
@@ -43,4 +43,5 @@ class TrainController(QObject):
         else:
             powerOut = 0
             
+        print('power out: ' + str(powerOut))
         self.powerToTrain.emit(powerOut)
