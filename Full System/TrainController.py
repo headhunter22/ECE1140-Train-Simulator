@@ -50,16 +50,16 @@ class TrainController(QtWidgets.QMainWindow):
         self.RateReq.setGeometry(800, 50, 50, 250)
         self.CommandedSpeed.setGeometry(750, 300, 200, 100)
         self.Authority.setGeometry(750, 325, 100, 100)
-        self.RateReq.setMinimum(-100)
-        self.RateReq.setMaximum(100)
+        self.RateReq.setMinimum(0)
+        self.RateReq.setMaximum(45)
         self.RateReq.setSingleStep(1)
 
         # Slider increment labels # 
-        self.HundredLabel = QtWidgets.QLabel("100 Mph", self)
-        self.FiftyLabel = QtWidgets.QLabel("50 Mph", self)
-        self.ZeroLabel = QtWidgets.QLabel("0 Mph", self)
-        self.NegFiftyLabel = QtWidgets.QLabel("-50 Mph", self)
-        self.NegHundredLabel = QtWidgets.QLabel("-100 Mph", self)
+        self.HundredLabel = QtWidgets.QLabel("45 Mph", self)
+        self.FiftyLabel = QtWidgets.QLabel("35 Mph", self)
+        self.ZeroLabel = QtWidgets.QLabel("25 Mph", self)
+        self.NegFiftyLabel = QtWidgets.QLabel("15 Mph", self)
+        self.NegHundredLabel = QtWidgets.QLabel("0 Mph", self)
 
         self.HundredLabel.setGeometry(850, 30, 50, 50)
         self.FiftyLabel.setGeometry(850, 90, 50, 50)
