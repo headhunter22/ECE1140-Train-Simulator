@@ -14,7 +14,6 @@ class Train(QObject):
         self.trainController.powerToTrain.connect(self.getPower)
 
         self.track = track
-
         self.clock = clock
 
         # id
