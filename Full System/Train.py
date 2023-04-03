@@ -2,6 +2,7 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from TrainController import TrainController
 from threading import Thread
 import time
+import math
 
 class Train(QObject):
     trainCounter = 0
@@ -29,6 +30,7 @@ class Train(QObject):
         self.commandedPower = power
         self.actSpeed = actSpeed
         self.acc = 0.5
+        self.numPassengers = 0
 
         # mass info
         self.baseMass = 81950 * .453 # kgs 
@@ -47,7 +49,9 @@ class Train(QObject):
         self.commandedPower = power
         #print('got power: ' + str(power))
 
-        # calculate mass
+        # calculate mass -> each passenger weighs 150  + train weight in grams
+        M = (self.numPassengers*150) + self.baseMass
+        theta = math.degrees(math.atan(track.getLine('Green').getBlock(str(self.location)).elevation))
 
         # calculate force
         force = 0.5 * self.baseMass
