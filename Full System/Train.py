@@ -7,13 +7,15 @@ import math
 class Train(QObject):
     trainCounter = 0
 
-    def __init__(self, auth, speed, ID, line, power, actSpeed, trainController, track):
+    def __init__(self, auth, speed, ID, line, power, actSpeed, trainController, track, clock):
         super().__init__()
 
         self.trainController = trainController
         self.trainController.powerToTrain.connect(self.getPower)
 
         self.track = track
+
+        self.clock = clock
 
         # id
         self.ID = ID

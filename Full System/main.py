@@ -14,11 +14,13 @@ from Track import Track
 import TrackParser
 import random
 from threading import Thread
+from Clock import Clock
 
 def threadRunner():
     track = TrackParser.parseTrack("TrackLayout.csv")
+    clock = Clock()
 
-    ctcOffice = CTC(track)
+    ctcOffice = CTC(track, clock)
     waysideController = Wayside(ctcOffice)
     ctcOffice.addWayside(waysideController)
     trackModel = TrackModel(waysideController)
@@ -27,7 +29,7 @@ def threadRunner():
     # propagate track model
     ctcOffice.propagateTrack()
 
-    ctcOffice.dispatch(10, 50, 1, 'Green', track)
+    ctcOffice.dispatch(10, 50, 1, 'Green', track, clock)
 
 # notes:
 # train physics
