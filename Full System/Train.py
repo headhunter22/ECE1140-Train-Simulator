@@ -32,6 +32,8 @@ class Train(QObject):
         self.commandedPower = power
         self.actSpeed = actSpeed
         self.numPassengers = 0
+        self.serviceBrake = 0
+        self.emBrake = 0
 
         #power calculation vars
         self.An_1 = .5
@@ -54,7 +56,18 @@ class Train(QObject):
         theta = math.degrees(math.atan(self.track.getLine('Green').getBlock(str(self.location)).elevation))
         g = 9.8 #  m/s^2
         friction = .006
+        #calculating the braking force
+        if self.emBrake == 1:
+            F_b = -2.73
+        elif self.serviceBrake == 1:
+            F_b = -1.2
+        else:
+            F_b = 0
+
         self.An = ((M*g*math.cos(theta)*friction) + (M*g*math.cos(theta)) + F_b + (self.commandedPower/self.actSpeed_1) )/M
+        self.actSpeed = self.actSpeed_1 + self.T/2 *(self.An - self.An_1)
+        self.An_1 = self.An
+        self.actSpeed_1 = self.actSpeed
 
         # calculate force
         force = 0.5 * self.baseMass
