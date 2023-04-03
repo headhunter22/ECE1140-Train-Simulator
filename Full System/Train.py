@@ -39,16 +39,11 @@ class Train(QObject):
         self.actSpeed_1 = track.getLine(self.line).getBlock(str(self.location)).speedLimit
 
         # mass info
-        self.baseMass = 81950 * .453 # kgs 
-
-        trainThread = QThread(target=self.sendSpeeds)
-        trainThread.start()
-        trainThread.join()
+        self.baseMass = 81950 * .453 # kgs
 
     def sendSpeeds(self):
-        while True:
-            print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
-            self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
+        print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
+        self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
         
     def getPower(self, power):
         self.commandedPower = power
