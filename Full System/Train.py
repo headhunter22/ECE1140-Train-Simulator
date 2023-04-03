@@ -29,8 +29,12 @@ class Train(QObject):
         self.commandedSpeed = self.track.getLine(self.line).getBlock('63').speedLimit
         self.commandedPower = power
         self.actSpeed = actSpeed
-        self.acc = 0.5
         self.numPassengers = 0
+
+        #power calculation vars
+        self.An_1 = .5
+        self.An = 0
+        self.actSpeed_1 = track.getLine(self.line).getBlock(str(self.location)).speedLimit
 
         # mass info
         self.baseMass = 81950 * .453 # kgs 
@@ -51,7 +55,10 @@ class Train(QObject):
 
         # calculate mass -> each passenger weighs 150  + train weight in grams
         M = (self.numPassengers*150) + self.baseMass
-        theta = math.degrees(math.atan(track.getLine('Green').getBlock(str(self.location)).elevation))
+        theta = math.degrees(math.atan(self.track.getLine('Green').getBlock(str(self.location)).elevation))
+        g = 9.8 #  m/s^2
+        friction = .006
+        self.An = ((M*g*math.cos(theta)*friction) + (M*g*math.cos(theta)) + F_b + (self.commandedPower/self.actSpeed_1) )/M
 
         # calculate force
         force = 0.5 * self.baseMass
