@@ -4,6 +4,7 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
 from Track import Track
 import time
+from Clock import Clock
 
 class TrainController(QObject):
 
@@ -45,7 +46,10 @@ class TrainController(QObject):
         else:
             powerOut = 0
         
-        self.clock.clock.timeout.connect(lambda: self.emitPower(powerOut))
+        currTime = self.clock.time
+        while (self.clock.time - currTime < 1):
+            ()
+        self.emitPower(powerOut)
             
 
     def emitPower(self,powerOut):

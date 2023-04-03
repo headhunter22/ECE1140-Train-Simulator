@@ -41,7 +41,7 @@ class Train(QObject):
         # mass info
         self.baseMass = 81950 * .453 # kgs 
 
-        trainThread = Thread(target=self.sendSpeeds)
+        trainThread = QThread(target=self.sendSpeeds)
         trainThread.start()
         trainThread.join()
 
