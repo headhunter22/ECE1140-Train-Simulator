@@ -9,9 +9,11 @@ class TrainController(QObject):
 
     powerToTrain = pyqtSignal(float)
 
-    def __init__(self): 
+    def __init__(self, clock): 
         super().__init__()
         self.authority = 0
+
+        self.clock = clock
 
         self.Ki = 0.4
         self.Kp = 0.14
@@ -42,6 +44,10 @@ class TrainController(QObject):
             powerOut = 120000
         else:
             powerOut = 0
+        
+        self.clock.clock.timeout.connect(lambda: self.emitPower(powerOut))
             
+
+    def emitPower(self,powerOut):
         print('power out: ' + str(powerOut))
         self.powerToTrain.emit(powerOut)

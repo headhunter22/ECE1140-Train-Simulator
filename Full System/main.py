@@ -19,6 +19,7 @@ from Clock import Clock
 def threadRunner():
     track = TrackParser.parseTrack("TrackLayout.csv")
     clock = Clock()
+    clock.start()
 
     ctcOffice = CTC(track, clock)
     waysideController = Wayside(ctcOffice)

@@ -20,7 +20,7 @@ class CTC(QObject):
         self.clock = clock
         
     def dispatch(self, a, s, id, line, track, clock):
-        train = Train(a, s, id, line, 120, 0, TrainController(), track, clock)
+        train = Train(a, s, id, line, 120, 0, TrainController(clock), track, clock)
         self.authorityToWayside.emit(train)
         self.suggSpeedToWayside.emit(train)
         self.trainObjectToWayside.emit(train)

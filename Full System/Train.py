@@ -49,7 +49,6 @@ class Train(QObject):
         while True:
             print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
             self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
-            time.sleep(1)
         
     def getPower(self, power):
         self.commandedPower = power
