@@ -6,27 +6,29 @@ import time
 class Train(QObject):
     trainCounter = 0
 
-    def __init__(self, auth, speed, ID, line, power, actSpeed, trainController):
+    def __init__(self, auth, speed, ID, line, power, actSpeed, trainController, track):
         super().__init__()
 
         self.trainController = trainController
         self.trainController.powerToTrain.connect(self.getPower)
 
+        self.track = track
+
         # id
         self.ID = ID
+
+        # location attributes
+        self.line = line
+        self.location = 63
 
         # authority and speeds
         self.authority = auth
         self.currentSpeed = 0
         self.suggSpeed = speed
-        self.commandedSpeed = 0
+        self.commandedSpeed = self.track.getLine(self.line).getBlock('63').speedLimit
         self.commandedPower = power
         self.actSpeed = actSpeed
         self.acc = 0.5
-
-        # location attributes
-        self.line = line
-        self.location = 3
 
         # mass info
         self.baseMass = 81950 * .453 # kgs 
