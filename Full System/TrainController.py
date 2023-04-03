@@ -21,6 +21,7 @@ class TrainController(QtWidgets.QMainWindow):
         self.EkPrev = 50 # change to actual speed limit
         self.T = 1e-8
         self.power = 0
+        self.currentSpeed = 0
 
         self.setWindowTitle("Train Controller")
         self.resize(980, 620)
@@ -259,7 +260,11 @@ class TrainController(QtWidgets.QMainWindow):
         else:
             powerOut = 0
         
-        emitPower(powerOut)
+        currTime = self.clock.time
+        while (self.clock.time - currTime < 1):
+            ()
+        self.emitPower(powerOut)
+            
 
     def emitPower(self, powerOut):
         print('power out: ' + str(powerOut))
