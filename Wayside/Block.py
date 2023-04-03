@@ -1,6 +1,8 @@
 class Block:
     def __init__(self):
         self.ID = ""
+        self.section = ""
+        self.blockNumber = 0
         self.station = 0
         self.crossing = 0
         self.crossingState = 0
