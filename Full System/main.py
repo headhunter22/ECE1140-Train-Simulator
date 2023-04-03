@@ -43,5 +43,4 @@ ctcApp.exec()
 # train physics
 # beacons (switch created)
 # parse line into linked list that models the track connections??
-
 # - or do we have an addTrack function that can be called each time we reparse?

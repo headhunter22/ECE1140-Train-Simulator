@@ -4,6 +4,7 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
 from Track import Track
 import time
+from Clock import Clock
 
 class TrainController(QObject):
 
