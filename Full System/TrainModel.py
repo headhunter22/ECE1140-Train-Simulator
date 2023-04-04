@@ -7,6 +7,7 @@ from Track import Track
 from Train import Train
 from TrainController import TrainController
 from signals import signals
+import math
 
 class TrainModel(QObject):
 
