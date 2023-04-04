@@ -1,12 +1,11 @@
-import threading
 import time
 from signals import signals
-from PyQt6.QtCore import QCoreApplication
+from PyQt6.QtCore import QThread, QTimer
 
 # keeps system time
-class Clock:
+class Clock(QThread):
     def __init__(self):
-        self.thread = threading.Thread(target=self.timerFunc)
+        super().__init__()
 
         # attributes of clock
         self.period = 0.2
@@ -16,13 +15,14 @@ class Clock:
         self.currHrs = 7
 
         # attributes of thread
-        self.lock = threading.Lock()
         self.running = True
         self.pasued = False
 
         # threaded timer
-        self.timer = threading.Timer(self.period * self.tickFactor, self.triggered)
-
+        self.timer = QTimer()
+        self.timer.setInterval(self.period * self.tickFactor * 1000)
+        self.timer.timeout.connect(self.triggered)
+        print('timer created')
     # function to be called every interval
     def timerFunc(self):
         print('timer starting')
@@ -44,7 +44,6 @@ class Clock:
 
                 # emit signal of timer ticking that CTC will received to keep time
                 signals.timerTicked.emit(self.currHrs, self.currMins, self.currSecs)
-                print(f'{int(self.currHrs):02d}' + ':' + f'{int(self.currMins):02d}' + ':' + f'{int(self.currSecs):02d}')
 
         # cancel the timer
         try:
@@ -56,21 +55,17 @@ class Clock:
 
     # function called when timer thread ends
     def triggered(self):
+        print('entered triggered function')
         # emit triggered signal
         try:
             signals.trainControllerTimeTrigger.emit()
+            print('emitted')
         except:
             print('system ended')
             pass
 
-        self.timer = threading.Timer(self.period * self.tickFactor, self.triggered)
-
-        with self.lock:
-            self.timer.start()
-
     # start thread
     def startTimer(self):
-        self.thread.start()
         self.timer.start()
 
     # stop thread

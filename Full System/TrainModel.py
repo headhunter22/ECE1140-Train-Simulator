@@ -55,14 +55,14 @@ class TrainModel(QObject):
         commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
-        theta = math.degrees(math.atan(train.track.getLine('Green').getBlock(str(train.location)).elevation))
+        theta = math.degrees(math.atan(int(self.track.getLine('Green').getBlock(train.block).elevation)))
         g = 9.8 # m/s^2
         friction = .006
 
         # calculating the braking force
-        if self.emBrake == 1:
+        if train.emBrake == 1:
             F_b = -2.73
-        elif self.serviceBrake == 1:
+        elif train.serviceBrake == 1:
             F_b = -1.2
         else:
             F_b = 0
@@ -80,15 +80,15 @@ class TrainModel(QObject):
 
         train.actualSpeed = train.commandedPower / force
 
-        prevPos = train.prevPos
+        prevPos = train.position
 
         currPos = 0
         currPos = prevPos + (train.actualSpeed * 0.2)
 
         # we have traversed more than the current block length
-        if currPos > currBlockSize:
-            currPos = currPos - currBlockSize
-            train.prevPos = currPos
+        if currPos > int(currBlockSize):
+            currPos = currPos - int(currBlockSize)
+            train.position = currPos
             train.route.pop(0)
 
             #if len(train.route) == 0:
