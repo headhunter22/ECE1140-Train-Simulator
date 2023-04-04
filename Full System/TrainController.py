@@ -5,29 +5,32 @@ from PyQt6 import uic
 from Track import Track
 import time
 from Clock import Clock
+from signals import signals
 
-class TrainController(QtWidgets.QMainWindow):
-    powerToTrain = pyqtSignal(float)    
+class TrainController(QtWidgets.QMainWindow):  
 
     def __init__(self):
         super().__init__()
 
-        self.authority = 0
+        # connect signals
+        signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
+        signals.trainControllerTimeTrigger.connect(self.sendPower)
 
         self.Ki = 0.4
         self.Kp = 0.14
 
         self.UkPrev = 120
         self.EkPrev = 50 # change to actual speed limit
-        self.T = 1e-8
-        self.power = 0
+        self.T = 0.2
+        self.commandedPower = 0
         self.currentSpeed = 0
+        self.train = None
 
         self.setWindowTitle("Train Controller")
         self.resize(980, 620)
 
 
-            # Emergency Brake button init #
+        # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
         self.txt = QtWidgets.QPushButton("Emergency Brake Disengaged", self)
         self.EmerBrake.setGeometry(50, 50, 200, 200)
@@ -42,7 +45,7 @@ class TrainController(QtWidgets.QMainWindow):
         self.EmerBrake.clicked.connect(self.EBText)
 
 
-            # Slide Request init #
+        # Slide Request init #
         self.RateReq = QtWidgets.QSlider(self)
         self.RateText = QtWidgets.QLabel("Requested Speed: 0mph", self)
         self.CommandedSpeed = QtWidgets.QLabel("Commanded Speed: 0mph", self)
@@ -101,7 +104,7 @@ class TrainController(QtWidgets.QMainWindow):
 
         # Showing Power Output #
         self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setText("{0} Watts".format(self.power))
+        self.PowerShown.setText("{0} Watts".format(self.commandedPower))
         self.PowerShown.setGeometry(425, 50, 200, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
@@ -141,7 +144,7 @@ class TrainController(QtWidgets.QMainWindow):
         window3.show()
     
     def CloseGains(self):
-         window3.close()
+        window3.close()
 
         # Calling the clicked-on EmerBrake functions #
     def EBClick(self):
@@ -167,7 +170,6 @@ class TrainController(QtWidgets.QMainWindow):
     def SliderMoved(self, i):
         self.RateText.setText("Requested Speed: {0}mph".format(i))
 
-        
         # Calling headlights clicked function #
     def HeadlightsClick(self):
         if self.Headlights.isChecked() == True:
@@ -236,41 +238,26 @@ class TrainController(QtWidgets.QMainWindow):
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
               #window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
-
-    def getSpeed(self, actualSpeed, commandedSpeed):
-        self.actualSpeed = actualSpeed
-        self.commandedSpeed = commandedSpeed
-        self.sendPower()
-        #print('actual speed: ' + str(self.actualSpeed))
         
-    """ def sendPower(self):  
-        ek = self.commandedSpeed - self.actualSpeed
-        uk = self.UkPrev + ((self.T/2) * (ek + self.EkPrev))
+    def updateCurrSpeed(self, train, currSpeed):
+        self.currentSpeed = currSpeed
+        self.train = train
 
-        powerOut = (self.Kp * ek) + (self.Ki * uk)
+    def sendPower(self, power):
+        print('sending power...')
+        # velocity error calcuation
+        self.ek = self.train.commandedSpeed - self.train.actualSpeed
 
-        self.powerToTrain.emit(powerOut)
+        # calculate uk
+        self.uk = self.UkPrev + ((self.T/2) * (ek + self.EkPrev))
+
+        self.commandedPower = (self.Kp * ek) + (self.Ki * uk)
 
         self.UkPrev = uk
-        self.EkPrev = ek """
+        self.EkPrev = ek
 
-    def sendPower(self):
-        if self.actualSpeed < self.commandedSpeed:
-            powerOut = 120000
-        else:
-            powerOut = 0
-        
-        currTime = self.clock.time
-        while (self.clock.time - currTime < 1):
-            ()
-        self.emitPower(powerOut)
-            
-
-    def emitPower(self, powerOut):
-        print('power out: ' + str(powerOut))
-        self.powerToTrain.emit(powerOut)
-        self.power = powerOut
-
+        signals.trainModelGetPower.emit(self.commandedPower)
+        print('power sent.')
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -301,13 +288,13 @@ class GainWindow(QtWidgets.QMainWindow):
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
 # If you know you won't use command line arguments QApplication([]) works too.
-app = QtWidgets.QApplication(sys.argv)
+# app = QtWidgets.QApplication(sys.argv)
 
-# Create a Qt widget, which will be our window.
-window = TrainController()
-window3 = GainWindow()
-# Show window
-window.show()
+# # Create a Qt widget, which will be our window.
+# window = TrainController()
+# window3 = GainWindow()
+# # Show window
+# window.show()
 
-# Start the event loop.
-app.exec()
+# # Start the event loop.
+# app.exec()

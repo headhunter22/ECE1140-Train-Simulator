@@ -11,7 +11,7 @@ from Train import Train
 from Track import Track
 import TrackParser
 import random
-from threading import Thread
+import threading
 #from Clock import Clock
 from ClockThreaded import clock
 
@@ -21,17 +21,18 @@ import ctcMainUi
 track = TrackParser.parseTrack("TrackLayout.csv")
 clock.startTimer()
 
-ctcOffice = CTC(track, clock)
+ctcOffice = CTC(track)
 waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
-trainModel = TrainModel(trackModel)
+trainModel = TrainModel()
 
 # propagate track model
 ctcOffice.propagateTrack()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
+clock.lock.release()
 
 # show CTC window
 

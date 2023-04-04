@@ -4,21 +4,20 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
 from Train import Train
 from Track import Track
-from TrainController import TrainController
+from Line import Line
 from signals import signals
 
 class CTC(QObject):
-    def __init__(self, track, clock):
+    def __init__(self, track):
         super().__init__()
         self.track = track
         self.wayside = None
-        self.clock = clock
         self.nextID = 1
         
     # function to dispatch the train
     def dispatch(self, line, destBlock):
         # create a new track object and emit to wayside
-        train = Train(self.nextID, line, destBlock)
+        train = Train(self.nextID, Line(line), destBlock)
         train.authority = 3
         train.suggSpeed = 70
 
@@ -28,7 +27,7 @@ class CTC(QObject):
         self.nextID += 1
 
     def propagateTrack(self):
-        self.trackCTCToWayside.emit(self.track)
+        signals.trackCTCToWayside.emit(self.track)
 
     def addWayside(self, Wayside):
         self.wayside = Wayside
