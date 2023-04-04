@@ -19,6 +19,7 @@ from ClockThreaded import clock
 import ctcMainUi
 
 track = TrackParser.parseTrack("TrackLayout.csv")
+app = QtCore.QCoreApplication([])
 clock.startTimer()
 
 ctcOffice = CTC(track)
@@ -33,6 +34,7 @@ ctcOffice.propagateTrack()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
+app.exec()
 
 # show CTC window
 
