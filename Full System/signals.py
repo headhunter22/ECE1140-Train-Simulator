@@ -57,6 +57,7 @@ class Signals(QObject):
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
 
+
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
 

@@ -69,6 +69,7 @@ class TrainModel(QObject):
             F_b = 0
 
         # calculating acceleration
+
         # if starting off at 0m/s, set acceleration to medium
         if train.actSpeed_1 == 0:
             print('not moving')
