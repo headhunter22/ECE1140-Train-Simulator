@@ -11,7 +11,6 @@ class TrainController(QObject):
 
     def __init__(self):
         super().__init__()
-        print('train controller created')
 
         # connect signals
         signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
@@ -31,17 +30,16 @@ class TrainController(QObject):
         self.currentSpeed = currSpeed
         self.train = train
 
-    def sendPower(self, power):
-        print('sending power')
+    def sendPower(self):
         # velocity error calcuation
-        self.ek = self.train.commandedSpeed - self.train.actualSpeed
+        self.ek = self.train.commandedSpeed - self.train.actSpeed
 
         # calculate uk
-        self.uk = self.UkPrev + ((self.T/2) * (ek + self.EkPrev))
+        self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
 
-        self.commandedPower = (self.Kp * ek) + (self.Ki * uk)
+        self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
 
-        self.UkPrev = uk
-        self.EkPrev = ek
+        self.UkPrev = self.uk
+        self.EkPrev = self.ek
 
-        signals.trainModelGetPower.emit(self.commandedPower)
+        signals.trainModelGetPower.emit(self.train, self.commandedPower)

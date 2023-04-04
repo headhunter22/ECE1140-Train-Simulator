@@ -13,11 +13,13 @@ class CTC(QObject):
         self.track = track
         self.wayside = None
         self.nextID = 1
+
+        signals.timerTicked.connect(self.printTime)
         
     # function to dispatch the train
     def dispatch(self, line, destBlock):
         # create a new track object and emit to wayside
-        train = Train(self.nextID, Line(line), destBlock)
+        train = Train(self.nextID, self.track.getLine(line), destBlock)
         train.authority = 3
         train.suggSpeed = 70
         print('ctc dispatched')
@@ -27,6 +29,8 @@ class CTC(QObject):
         # update the next ID of the next train
         self.nextID += 1
 
+    def printTime(self):
+        print(f'{int(self.currHrs):02d}' + ':' + f'{int(self.currMins):02d}' + ':' + f'{int(self.currSecs):02d}')
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)
