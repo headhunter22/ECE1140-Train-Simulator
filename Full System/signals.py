@@ -1,13 +1,14 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
+from Track import Track
 
 class Signals(QObject):
     # timer signal
     timerTicked = pyqtSignal(int, int, int) # hrs, mins, secs to send to CTC
     
     # ctc signals
-    # trackCTCToWayside = pyqtSignal(Track)
+    trackCTCToWayside = pyqtSignal(Track)
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
@@ -15,12 +16,13 @@ class Signals(QObject):
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
+    trackWaysideToTrackModel = pyqtSignal(Track)
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
     # trainObjectWaysideToTrackModel = pyqtSignal(Train)
     # commandedSpeedWaysideToTrackModel = pyqtSignal(int)
-    # trackWaysideToTrackModel = pyqtSignal(Track)
+
     # greenLineSwitches = pyqtSignal(int)
     # signals to CTC
     # passengersToCTC = pyqtSignal(int)
@@ -39,6 +41,7 @@ class Signals(QObject):
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
     trainModelGetPower = pyqtSignal(Train, float) # trainID, commandedPower
     trainModelUpdateCommandedSpeed = pyqtSignal(Train, float) # trainID, commandedSpeed
+    trainModelGetTrack = pyqtSignal(Track)
     #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
  
     # train controller signals
@@ -46,5 +49,7 @@ class Signals(QObject):
     trainControllerUpdateCurrSpeed = pyqtSignal(Train, float) # train, currSpeed
     trainControllerUpdateCommSpeed = pyqtSignal(int, float) # trainID, commandedSpeed
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
+    trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
+    trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
 
 signals = Signals()

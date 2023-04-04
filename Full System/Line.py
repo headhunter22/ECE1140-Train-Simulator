@@ -37,5 +37,5 @@ class Line:
 
     def getBlock(self, blockID):
         for b in self.blocks:
-            if b.blockName == blockID:
+            if b.blockName == str(blockID):
                 return b

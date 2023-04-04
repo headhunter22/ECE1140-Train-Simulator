@@ -5,17 +5,18 @@ from PyQt6 import uic
 from Train import Train
 from Track import Track
 from Block import Block
+from signals import signals
 
 class Wayside(QObject):
 
     def __init__(self, ctcOffice):
         super().__init__()
         self.CTC = ctcOffice
-        self.trackModel = 0
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
+        signals.trackCTCToWayside.connect(self.trackReceived)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -24,11 +25,11 @@ class Wayside(QObject):
         #self.setOccupancy(train.line, 63, 1)
 
         # compare suggSpeed to commandedSpeed
-        speedLimit = train.line.getBlock(63).speedLimit
+        speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
         if (train.suggSpeed > speedLimit):
             commSpeed = speedLimit
         else:
-            commSpeed = suggSpeed
+            commSpeed = train.suggSpeed
 
         # emit dispatched train to track model
         signals.trackModelDispatchTrain.emit(train)
@@ -51,7 +52,7 @@ class Wayside(QObject):
         self.track = track
 
         # pass track onto track model
-        self.trackWaysideToTrackModel.emit(track)
+        signals.trackWaysideToTrackModel.emit(track)
 
     def blockOccupancyReceived(self, Block):
         print("block occupancy from track model")

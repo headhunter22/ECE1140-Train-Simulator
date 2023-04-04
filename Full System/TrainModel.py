@@ -6,31 +6,34 @@ from Block import Block
 from Track import Track
 from Train import Train
 from TrainController import TrainController
+from signals import signals
 
 class TrainModel(QObject):
 
-    def __init__(self, trackModel):
+    def __init__(self):
         super().__init__()
-        
-        #self.TrainController = trainController        
-        # connect track model
-        self.trackModel = trackModel
         
         # array to hold trains
         self.trainList = []
 
         # connect signals
         signals.trainModelDispatchTrain.connect(self.dispatchTrain)
-        signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
+        #signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelGetPower.connect(self.updatedPower)
+        signals.trainModelGetTrack.connect(self.trackReceived)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
         # add train to current trains list
         self.trainList.append(train)
+        train.commandedSpeed = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit
+        train.actSpeed_1 = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit
 
         # update occupancy of block 
-        signals.trackModelUpdateOccupancy.emit(trainID, train.line, 0, True)
+        signals.trackModelUpdateOccupancy.emit(train.ID, train.line, 0, True)
+        
+        # emit dispatched signal to train controller
+        signals.trainControllerDispatchedSignal.emit(train)
 
     # function to update commanded speed
     #def updateCommandedSpeed(self, trainID, commandedSpeed):
@@ -99,5 +102,10 @@ class TrainModel(QObject):
             # still in current block, update train position
             train.position = currPos
 
+        print(train.actSpeed)
+
         # emit current speed back to train controller
-        signals.trainControllerUpdateCurrSpeed.emit(train, train.actualSpeed)
+        #signals.trainControllerUpdateCurrSpeed.emit(train, train.actualSpeed)
+    
+    def trackReceived(self, track):
+        self.track = track
