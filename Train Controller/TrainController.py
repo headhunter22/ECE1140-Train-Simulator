@@ -9,7 +9,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.resize(980, 620)
 
 
-            # Emergency Brake button init #
+        # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
         self.txt = QtWidgets.QPushButton("Emergency Brake Disengaged", self)
         self.EmerBrake.setGeometry(50, 50, 200, 200)
@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.EmerBrake.clicked.connect(self.EBText)
 
 
-            # Slide Request init #
+        # Slide Request init #
         self.RateReq = QtWidgets.QSlider(self)
         self.RateText = QtWidgets.QLabel("Requested Speed: 0mph", self)
         self.CommandedSpeed = QtWidgets.QLabel("Commanded Speed: 0mph", self)
@@ -33,16 +33,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.RateReq.setGeometry(800, 50, 50, 250)
         self.CommandedSpeed.setGeometry(750, 300, 200, 100)
         self.Authority.setGeometry(750, 325, 100, 100)
-        self.RateReq.setMinimum(-100)
-        self.RateReq.setMaximum(100)
+        self.RateReq.setMinimum(0)
+        self.RateReq.setMaximum(45)
         self.RateReq.setSingleStep(1)
 
         # Slider increment labels # 
-        self.HundredLabel = QtWidgets.QLabel("100 Mph", self)
-        self.FiftyLabel = QtWidgets.QLabel("50 Mph", self)
-        self.ZeroLabel = QtWidgets.QLabel("0 Mph", self)
-        self.NegFiftyLabel = QtWidgets.QLabel("-50 Mph", self)
-        self.NegHundredLabel = QtWidgets.QLabel("-100 Mph", self)
+        self.HundredLabel = QtWidgets.QLabel("45 Mph", self)
+        self.FiftyLabel = QtWidgets.QLabel("35 Mph", self)
+        self.ZeroLabel = QtWidgets.QLabel("25 Mph", self)
+        self.NegFiftyLabel = QtWidgets.QLabel("15 Mph", self)
+        self.NegHundredLabel = QtWidgets.QLabel("0 Mph", self)
 
         self.HundredLabel.setGeometry(850, 30, 50, 50)
         self.FiftyLabel.setGeometry(850, 90, 50, 50)
@@ -122,7 +122,7 @@ class MainWindow(QtWidgets.QMainWindow):
         window3.show()
     
     def CloseGains(self):
-         window3.close()
+        window3.close()
 
         # Calling the clicked-on EmerBrake functions #
     def EBClick(self):
@@ -148,7 +148,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def SliderMoved(self, i):
         self.RateText.setText("Requested Speed: {0}mph".format(i))
 
-        
         # Calling headlights clicked function #
     def HeadlightsClick(self):
         if self.Headlights.isChecked() == True:
@@ -217,7 +216,6 @@ class MainWindow(QtWidgets.QMainWindow):
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
               #window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
-
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
