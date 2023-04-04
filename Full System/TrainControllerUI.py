@@ -1,5 +1,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
+from signals import signals
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -143,8 +144,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
             if self.EmerBrake.isChecked() == True:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+                 signals.trainControllerEmerBrake.emit(True)
                  print("Emergency Brake Engaged")
-                 #window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+                 
     
     def EBText(self):
             if self.EmerBrake.isChecked() == True:
