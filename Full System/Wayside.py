@@ -58,7 +58,7 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, Block):
         print("block occupancy from track model")
 
-    def passengersReceived(self, passengers):
+    def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
         self.passengersToCTC.emit(passengers)
 
@@ -113,13 +113,7 @@ class Wayside(QObject):
         print("sw 3: " + str(self.greenSwitchStates[2]))
         print("sw 4: " + str(self.greenSwitchStates[3]))
         print("sw 5: " + str(self.greenSwitchStates[4]))
-        print("sw 6: " + str(self.greenSwitchStates[5]))
-
-
-
-
-
-        
+        print("sw 6: " + str(self.greenSwitchStates[5]))  
 
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw

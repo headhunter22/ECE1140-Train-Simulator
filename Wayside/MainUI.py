@@ -55,12 +55,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.aicon.setPixmap(QPixmap('greentrain.png'))
         self.bicon.setPixmap(QPixmap('redtracks.png'))
         self.cicon.setPixmap(QPixmap('redtracks.png'))
-
         self.dicon.setPixmap(QPixmap('tracks.png'))
         #self.eicon.setPixmap(QPixmap('redtracks.png'))
         #self.ficon.setPixmap(QPixmap('redtracks.png'))
-
         self.jicon.setPixmap(QPixmap('tracks.png'))
+        
         counts = 2
         self.activetrains.display(counts)
 
