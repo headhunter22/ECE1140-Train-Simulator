@@ -14,6 +14,7 @@ class TrainController(QObject):
 
         # connect signals
         signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
+        signals.trainControllerEmerBrake.connect(self.EmerBrake)
 
         self.Ki = 0.4
         self.Kp = 0.14
@@ -43,3 +44,9 @@ class TrainController(QObject):
         self.EkPrev = self.ek
 
         signals.trainModelGetPower.emit(self.train, self.commandedPower)
+
+    def EmerBrake(self):
+        if signals.trainControllerEmerBrake == True:
+            self.commandedPower = 0
+            signals.trainModelGetPower.emit( self.train, self.commandedPower)
+            print("Emergency Brake applied, power set to 0")
