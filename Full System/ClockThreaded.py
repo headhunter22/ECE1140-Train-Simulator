@@ -8,7 +8,7 @@ class Clock(QThread):
         super().__init__()
 
         # attributes of clock
-        self.period = 0.2
+        self.period = 1
         self.tickFactor = 1
         self.currSecs = 0
         self.currMins = 0
@@ -55,11 +55,9 @@ class Clock(QThread):
 
     # function called when timer thread ends
     def triggered(self):
-        print('entered triggered function')
         # emit triggered signal
         try:
             signals.trainControllerTimeTrigger.emit()
-            print('emitted')
         except:
             print('system ended')
             pass
