@@ -24,6 +24,8 @@ class TrainModel(QObject):
 
     # function to dispatch a train
     def dispatchTrain(self, train):
+        print('train model dispatched')
+
         # add train to current trains list
         self.trainList.append(train)
         train.commandedSpeed = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit
@@ -34,7 +36,7 @@ class TrainModel(QObject):
         
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
-        
+
     # function to update commanded speed
     #def updateCommandedSpeed(self, trainID, commandedSpeed):
     #

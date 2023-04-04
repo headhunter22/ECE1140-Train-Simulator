@@ -7,14 +7,14 @@ import time
 from Clock import Clock
 from signals import signals
 
-class TrainController(QtWidgets.QMainWindow):  
+class TrainController(QObject):  
 
     def __init__(self):
         super().__init__()
+        print('train controller created')
 
         # connect signals
         signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
-        signals.trainControllerTimeTrigger.connect(self.sendPower)
 
         self.Ki = 0.4
         self.Kp = 0.14
@@ -25,8 +25,9 @@ class TrainController(QtWidgets.QMainWindow):
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
-        
+
     def updateCurrSpeed(self, train, currSpeed):
+        print('current speed updated')
         self.currentSpeed = currSpeed
         self.train = train
 
@@ -42,7 +43,5 @@ class TrainController(QtWidgets.QMainWindow):
 
         self.UkPrev = uk
         self.EkPrev = ek
-
-        self.PowerShown.setText(str(self.commandedPower))
 
         signals.trainModelGetPower.emit(self.commandedPower)

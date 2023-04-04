@@ -23,6 +23,7 @@ class Wayside(QObject):
     def dispatchTrain(self, train):
         # set occupancy of first block
         #self.setOccupancy(train.line, 63, 1)
+        print('wayside dispatched')
 
         # compare suggSpeed to commandedSpeed
         speedLimit = self.track.getLine('Green').getBlock(63).speedLimit

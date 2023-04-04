@@ -5,7 +5,15 @@ from signals import signals
 class SWTrainController(QObject):
     def __init__(self):
         super().__init__()
+        self.trainControllers = []
         signals.trainControllerDispatchedSignal.connect(self.dispatchTrain)
+        signals.trainControllerTimeTrigger.connect(self.calculatePower)
 
     def dispatchTrain(self, train):
+        print('train controlled dispatched')
         trainController = TrainController()
+        self.trainControllers.append(trainController)
+
+    def calculatePower(self):
+        print('calculating power')
+        self.trainControllers[0].sendPower()
