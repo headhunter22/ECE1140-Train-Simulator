@@ -57,8 +57,10 @@ class TrackModel(QObject):
         # pass track onto train model
         signals.trainModelGetTrack.emit(track)
         
-    def updateOccupancy(self, block):
-        return
+    def updateOccupancy(self, train, line, block, occupied):
+        # send new commanded speed
+        speedLimit = self.track.getLine(line.lineName).getBlock(block).speedLimit
+        signals.trainModelUpdateCommandedSpeed.emit(train, speedLimit)
         #print(block)
         # send signal to gui to update
         # 
