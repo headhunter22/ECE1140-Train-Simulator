@@ -70,6 +70,8 @@ class TrainModel(QObject):
         # calculating acceleration
         train.An = ((M*g*math.cos(theta)*friction) + (M*g*math.cos(theta)) + F_b + (power/train.actSpeed_1))/M
         train.actSpeed = train.actSpeed_1 + train.T/2 *(train.An - train.An_1)
+        
+        signals.actSpeedtoTrainModelUI.emit(train.actSpeed) #send to UI
 
         # set previous variables
         train.An_1 = train.An

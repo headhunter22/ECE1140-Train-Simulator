@@ -52,4 +52,6 @@ class Signals(QObject):
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
 
+    actSpeedtoTrainModelUI = pyqtSignal(int) #when the actual speed is calculated it is sent to the UI
+
 signals = Signals()
