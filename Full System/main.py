@@ -6,7 +6,7 @@ from CTC import CTC
 from Wayside import Wayside
 from TrackModel import TrackModel
 from TrainModel import TrainModel
-from TrainController import TrainController
+from SWTrainController import SWTrainController
 from Train import Train
 from Track import Track
 import TrackParser
@@ -26,13 +26,13 @@ waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel()
+tc = SWTrainController()
 
 # propagate track model
 ctcOffice.propagateTrack()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
-clock.lock.release()
 
 # show CTC window
 

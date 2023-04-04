@@ -1,5 +1,6 @@
 from TrainController import TrainController
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
+from signals import signals
 
 class SWTrainController(QObject):
     def __init__(self):
