@@ -17,9 +17,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # self.sysClock = Clock()
-        # self.sysClock.start()
-        # self.sysClock.clock.timeout.connect(self.changeLabel)
+        self.sysClock = Clock()
+        self.sysClock.start()
+        self.sysClock.clock.timeout.connect(self.changeLabel)
 
         signals.timerTicked.connect(self.changeLabel)
 
@@ -216,9 +216,6 @@ class MainWindow(QMainWindow):
         ########OPTIONS / XINGS###########
         ##################################
 
-        self.ui.greenXingStatus.setStyleSheet("border: 2px solid rgb(0, 221, 109); color: rgb(15, 125, 0); background-color: rgb(159, 255, 157)")
-        self.ui.redXingStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119); Text-Align: center")
-
         self.ui.lineSelectMaintenance.currentTextChanged.connect(self.switchLineChanged)
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
@@ -313,34 +310,6 @@ class MainWindow(QMainWindow):
 
         state = self.sender()
         state.property("selected")
-
-        #if self.ui.pioneerStation.property("selected") == True:
-        #    pioneer = self.findChild(QPushButton, "pioneerStation")
-        #    print('pioneer', pioneer.property("selected"))
-        #    stationString = str(self.ui.greenTentSchedule.count()) + ". Pioneer Station\t"
-        #    item = QListWidgetItem(stationString)
-        #    self.ui.greenTentSchedule.addItem(item)
-        #elif self.ui.edgebrookStation.property("selected") == True:
-
-        #elif self.ui.whitedStation.property("selected") == True:
-        #    
-        #elif self.ui.southBankStation.property("selected") == True:
-
-        #elif self.ui.centralStation.property("selected") == True:
-
-        #elif self.ui.inglewoodStation.property("selected") == True:
-
-        #if self.ui.overbrookStation.property("selected") == True:
-
-        #elif self.ui.glenburyStation.property("selected") == True:
-
-        #elif self.ui.dormontStation.property("selected") == True:
-
-        #elif self.ui.lebanonStation.property("selected") == True:
-
-        #elif self.ui.poplarStation.property("selected") == True:
-
-        #elif self.ui.castleShannonStation.property("selected") == True:
 
     def addRedTentStation(self):
         if self.ui.redBlockDispatch.currentIndex() != 0:
@@ -736,8 +705,8 @@ class MainWindow(QMainWindow):
             self.ui.dispatchGreen.setChecked()
             self.ui.stackedWidget.setCurrentIndex(0)
 
-# if __name__ == '__main__':
-#     track = TrackParser.parseTrack('TrackLayout.csv')
-#     app = QApplication([])
-#     window = MainWindow()
-#     app.exec()
+if __name__ == '__main__':
+    track = TrackParser.parseTrack('TrackLayout.csv')
+    app = QApplication([])
+    window = MainWindow(track)
+    app.exec()

@@ -7,8 +7,6 @@ from Track import Track
 from Line import Line
 from signals import signals
 
-#test
-
 class CTC(QObject):
     def __init__(self, track):
         super().__init__()
