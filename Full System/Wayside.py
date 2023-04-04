@@ -23,6 +23,7 @@ class Wayside(QObject):
     def dispatchTrain(self, train):
         # set occupancy of first block
         #self.setOccupancy(train.line, 63, 1)
+        print('wayside dispatched')
 
         # compare suggSpeed to commandedSpeed
         speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
@@ -57,7 +58,7 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, Block):
         print("block occupancy from track model")
 
-    def passengersReceived(self, passengers):
+    def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
         self.passengersToCTC.emit(passengers)
 
@@ -112,13 +113,7 @@ class Wayside(QObject):
         print("sw 3: " + str(self.greenSwitchStates[2]))
         print("sw 4: " + str(self.greenSwitchStates[3]))
         print("sw 5: " + str(self.greenSwitchStates[4]))
-        print("sw 6: " + str(self.greenSwitchStates[5]))
-
-
-
-
-
-        
+        print("sw 6: " + str(self.greenSwitchStates[5]))  
 
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw

@@ -52,7 +52,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.automaticmode.toggled.connect(self.automaticMode)
 
         #active trains
-        self.aicon.setPixmap(QPixmap('redtrain.png'))
+        self.aicon.setPixmap(QPixmap('greentrain.png'))
+        self.bicon.setPixmap(QPixmap('redtracks.png'))
+        self.cicon.setPixmap(QPixmap('redtracks.png'))
+        self.dicon.setPixmap(QPixmap('tracks.png'))
+        #self.eicon.setPixmap(QPixmap('redtracks.png'))
+        #self.ficon.setPixmap(QPixmap('redtracks.png'))
+        self.jicon.setPixmap(QPixmap('tracks.png'))
+        
         counts = 2
         self.activetrains.display(counts)
 
@@ -66,12 +73,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cb.setEnabled(True)
         self.ga.setEnabled(True)
         self.gb.setEnabled(True)
+        test.autoC0.setEnabled(True)
+        test.autoC1.setEnabled(True)
+        test.autoG0.setEnabled(True)
+        test.autoG1.setEnabled(True)
 
     def automaticMode(self):
         self.ca.setEnabled(False)
         self.cb.setEnabled(False)
         self.ga.setEnabled(False)
         self.gb.setEnabled(False)
+        test.autoC0.setEnabled(False)
+        test.autoC1.setEnabled(False)
+        test.autoG0.setEnabled(False)
+        test.autoG1.setEnabled(False)
 
     #function for pop up window for track configuration
     def configurationWindow(self):
@@ -90,41 +105,84 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         button1.setStyleSheet('background-color: SkyBlue; color: black')
         button2.setStyleSheet('background-color: white; color: gray')
 
+    #occupation 2 blocks ahead for now
+    def changeOccupation(self):
+        if self.aicon.Pixmap() == 'greentrain.png':
+            self.bicon.setPixmap('redtracks.png')
+
+
+
+    #change train icons
     def changeIcon(self): #laurens
         section = self.sectionbox.currentText()
         block = self.blockbox.currentText()
         occupation = self.occupancybox.currentText()
         if section == 'A':
             if occupation == 'Occupied':
-                self.aicon.setPixmap(QPixmap('redtrain.png'))
+                self.aicon.setPixmap(QPixmap('greentrain.png'))
                 #counts = counts + 1
             else:
                 self.aicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
             # if block == '1':
             #     if occupation == "Occupied":
-            #         self.aicon.setPixmap("redtrain.png")
+            #         self.aicon.setPixmap("greentrain.png")
             #     else:
             #         self.aicon.setPixmap("tracks.png")
             # elif block == '2':
             #     if occupation == "Occupied":
-            #         self.aicon.setPixmap("redtrain.png")
+            #         self.aicon.setPixmap("greentrain.png")
             #     else:
             #         self.aicon.setPixmap("tracks.png")
         elif section == 'B':
             if occupation == 'Occupied':
-                self.bicon.setPixmap(QPixmap('redtrain.png'))
+                self.bicon.setPixmap(QPixmap('greentrain.png'))
                 #counts = counts + 1
             else:
                 self.bicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
         elif section == 'C':
             if occupation == 'Occupied':
-                self.cicon.setPixmap(QPixmap('redtrain.png'))
+                self.cicon.setPixmap(QPixmap('greentrain.png'))
                 #counts = counts + 1
             else:
                 self.cicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
+        elif section == 'D':
+            if occupation == 'Occupied':
+                self.dicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.dicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'E':
+            if occupation == 'Occupied':
+                self.eicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.eicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'F':
+            if occupation == 'Occupied':
+                self.ficon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.ficon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'G':
+            if occupation == 'Occupied':
+                self.gicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.gicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'H':
+            if occupation == 'Occupied':
+                self.hicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.hicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'I':
+            if occupation == 'Occupied':
+                self.iicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.iicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'J':
+            if occupation == 'Occupied':
+                self.jicon.setPixmap(QPixmap('greentrain.png'))
+            else:
+                self.jicon.setPixmap(QPixmap('tracks.png'))
 
     #function for number of active trains
     #somehow counts the number of times the red train label comes up
@@ -186,6 +244,9 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
         #set up change icon
         self.sectionbox.currentTextChanged.connect(self.setBlockOptions)
         self.occupancybox.currentTextChanged.connect(self.changeIcon)
+
+        #change gates in auto
+        #self.autoC0.toggled.
 
     def setBlockOptions(self):
         content = self.sectionbox.currentText()
@@ -270,35 +331,87 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
         occupation = self.occupancybox.currentText()
         if section == 'A':
             if occupation == 'Occupied':
-                window.aicon.setPixmap(QPixmap('redtrain.png'))
+                window.aicon.setPixmap(QPixmap('greentrain.png'))
+                window.bicon.setPixmap(QPixmap('redtracks.png'))
+                window.cicon.setPixmap(QPixmap('redtracks.png'))
                 #counts = counts + 1
             else:
                 window.aicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
             # if block == '1':
             #     if occupation == "Occupied":
-            #         self.aicon.setPixmap("redtrain.png")
+            #         self.aicon.setPixmap("greentrain.png")
             #     else:
             #         self.aicon.setPixmap("tracks.png")
             # elif block == '2':
             #     if occupation == "Occupied":
-            #         self.aicon.setPixmap("redtrain.png")
+            #         self.aicon.setPixmap("greentrain.png")
             #     else:
             #         self.aicon.setPixmap("tracks.png")
         elif section == 'B':
             if occupation == 'Occupied':
-                window.bicon.setPixmap(QPixmap('redtrain.png'))
+                window.bicon.setPixmap(QPixmap('greentrain.png'))
+                window.cicon.setPixmap(QPixmap('redtracks.png'))
+                window.dicon.setPixmap(QPixmap('redtracks.png'))
                 #counts = counts + 1
-            else:
+            if occupation == 'Unoccupied':
                 window.bicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
         elif section == 'C':
             if occupation == 'Occupied':
-                window.cicon.setPixmap(QPixmap('redtrain.png'))
+                window.cicon.setPixmap(QPixmap('greentrain.png'))
+                window.dicon.setPixmap(QPixmap('redtracks.png'))
+                window.eicon.setPixmap(QPixmap('redtracks.png'))
                 #counts = counts + 1
-            else:
+            if occupation == 'Unoccupied':
                 window.cicon.setPixmap(QPixmap('tracks.png'))
                 #counts = counts - 1
+        elif section == 'D':
+            if occupation == 'Occupied':
+                window.dicon.setPixmap(QPixmap('greentrain.png'))
+                window.eicon.setPixmap(QPixmap('redtracks.png'))
+                window.ficon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.dicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'E':
+            if occupation == 'Occupied':
+                window.eicon.setPixmap(QPixmap('greentrain.png'))
+                window.ficon.setPixmap(QPixmap('redtracks.png'))
+                window.gicon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.eicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'F':
+            if occupation == 'Occupied':
+                window.ficon.setPixmap(QPixmap('greentrain.png'))
+                window.gicon.setPixmap(QPixmap('redtracks.png'))
+                window.hicon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.ficon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'G':
+            if occupation == 'Occupied':
+                window.gicon.setPixmap(QPixmap('greentrain.png'))
+                window.hicon.setPixmap(QPixmap('redtracks.png'))
+                window.iicon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.gicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'H':
+            if occupation == 'Occupied':
+                window.hicon.setPixmap(QPixmap('greentrain.png'))
+                window.iicon.setPixmap(QPixmap('redtracks.png'))
+                window.jicon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.hicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'I':
+            if occupation == 'Occupied':
+                window.iicon.setPixmap(QPixmap('greentrain.png'))
+                window.jicon.setPixmap(QPixmap('redtracks.png'))
+            if occupation == 'Unoccupied':
+                window.iicon.setPixmap(QPixmap('tracks.png'))
+        elif section == 'J':
+            if occupation == 'Occupied':
+                window.jicon.setPixmap(QPixmap('greentrain.png'))
+            if occupation == 'Unoccupied':
+                window.jicon.setPixmap(QPixmap('tracks.png'))
 
 class Communications():
     print("communicating")
