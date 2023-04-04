@@ -34,7 +34,7 @@ class TrainModel(QObject):
         
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
-
+        
     # function to update commanded speed
     #def updateCommandedSpeed(self, trainID, commandedSpeed):
     #
