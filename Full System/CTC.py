@@ -20,11 +20,13 @@ class CTC(QObject):
         train = Train(self.nextID, Line(line), destBlock)
         train.authority = 3
         train.suggSpeed = 70
+        print('ctc dispatched')
 
         signals.waysideDispatchTrain.emit(train)
 
         # update the next ID of the next train
         self.nextID += 1
+
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)
