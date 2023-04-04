@@ -41,6 +41,8 @@ class TrackModel(QObject):
 
     # function to dispatch train
     def dispatchTrain(self, train):
+        print('track model dispatched')
+        
         # increment trains on system
         self.numTrains += 1
         train.route = deepcopy(greenRouteArr)
