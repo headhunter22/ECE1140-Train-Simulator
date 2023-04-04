@@ -38,7 +38,7 @@ class Signals(QObject):
     # trackTrackModelToTrainModel = pyqtSignal(Track)
     # trainTrackModelToTrainModel = pyqtSignal(Train)
     # totalPassengersToWayside = pyqtSignal(int)
-    trackModelUpdateOccupancy = pyqtSignal(int, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
+    trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
 
