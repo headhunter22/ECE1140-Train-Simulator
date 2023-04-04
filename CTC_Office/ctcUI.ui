@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1663</width>
-    <height>621</height>
+    <height>788</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,41 +27,6 @@
      <string>Scheduled Trains</string>
     </property>
    </widget>
-   <widget class="QTreeWidget" name="treeWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>60</y>
-      <width>511</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Train Tag</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Current Block</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Current Speed</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Authority</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Next Destination</string>
-     </property>
-    </column>
-   </widget>
    <widget class="QLabel" name="legendLabel_3">
     <property name="geometry">
      <rect>
@@ -74,41 +39,6 @@
     <property name="text">
      <string>- Train authority</string>
     </property>
-   </widget>
-   <widget class="QTreeWidget" name="treeWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>190</y>
-      <width>511</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>Train Tag</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Current Block</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Current Speed</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Authority</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Next Destination</string>
-     </property>
-    </column>
    </widget>
    <widget class="QLabel" name="legendLabel">
     <property name="geometry">
@@ -330,7 +260,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -1894,6 +1824,76 @@
     <property name="text">
      <string>             Red Line Occupancy</string>
     </property>
+   </widget>
+   <widget class="QTableWidget" name="greenTrainInfoTable">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>60</y>
+      <width>511</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Train Tag</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Block</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Speed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Authority</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Next Destination</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTableWidget" name="redTrainInfoTable">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>190</y>
+      <width>511</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Train Tag</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Block</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Current Speed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Authority</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Next Destination</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
