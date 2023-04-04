@@ -83,7 +83,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Showing Power Output #
         self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setGeometry(425, 50, 200, 100)
+        self.PowerShown.setGeometry(325, 50, 200, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.PowerShown.setFont(font)
@@ -92,12 +92,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Showing Actual speed #
         self.SpeedShown = QtWidgets.QPushButton("0 mph", self)
-        self.SpeedShown.setGeometry(425, 155, 200, 100)
+        self.SpeedShown.setGeometry(325, 155, 200, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.SpeedShown.setFont(font)
         self.SpeedShown.setCheckable(False)
         self.SpeedShown.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+
+        # Init Service Brake Button #
+        self.ServiceBrake = QtWidgets.QPushButton("Service Brake", self)
+        self.ServiceBrake.setGeometry(600, 125, 200, 100)
+        self.ServiceBrake.setFont(font)
+        self.ServiceBrake.setCheckable(True)
+        self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.ServiceBrake.clicked.connect(self.ServiceBrakeClick)
 
         # Init Manual/Automatic Buttons #
         self.ManualMode = QtWidgets.QPushButton("Manual Mode", self)
@@ -105,9 +113,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
         self.ManualMode.setCheckable(True)
         self.AutoMode = QtWidgets.QPushButton("Automatic Mode", self)
-        self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
         self.AutoMode.setGeometry(775, 505, 100, 100)
         self.AutoMode.setCheckable(True)
+        self.AutoMode.setChecked(True)
+        self.AutoModeClick()
 
         #Connections #
         self.ManualMode.clicked.connect(self.ManualModeClick)
@@ -211,11 +221,34 @@ class MainWindow(QtWidgets.QMainWindow):
     def AutoModeClick(self):
          if self.AutoMode.isChecked() == True:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-              #window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.ManualMode.setCheckable(False)
+              self.EmerBrake.setCheckable(False)
+              self.RightDoors.setCheckable(False)
+              self.LeftDoors.setCheckable(False)
+              self.Headlights.setCheckable(False)
+              self.InteriorLights.setCheckable(False)
+              self.RateReq.setDisabled(True)
+              self.ServiceBrake.setCheckable(False)
 
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-              #window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.ManualMode.setCheckable(True)
+              self.EmerBrake.setCheckable(True)
+              self.RightDoors.setCheckable(True)
+              self.LeftDoors.setCheckable(True)
+              self.Headlights.setCheckable(True)
+              self.InteriorLights.setCheckable(True)
+              self.RateReq.setDisabled(False)
+              self.ServiceBrake.setCheckable(True)
+
+    def ServiceBrakeClick(self):
+         if self.ServiceBrake.isChecked() == True:
+              self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
+              print("Service Brake engaged")
+
+         if self.ServiceBrake.isChecked() == False:
+              self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
+              print("Service Brake Disengaged")
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
