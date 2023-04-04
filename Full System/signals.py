@@ -7,12 +7,17 @@ class Signals(QObject):
     # timer signal
     timerTicked = pyqtSignal(int, int, int) # hrs, mins, secs to send to CTC
     
-    # ctc signals
+    # ctc backend signals
     trackCTCToWayside = pyqtSignal(Track)
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
     # switchStates = pyqtSignal(int, bool)
+
+    # ctc frontend emission signals
+    greenLineTrainDispatch = pyqtSignal(Train)
+    redLineTrainDispatch = pyqtSignal(Train)
+    blockMaintenanceOption = pyqtSignal(Track)
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -52,6 +57,8 @@ class Signals(QObject):
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
 
-    actSpeedtoTrainModelUI = pyqtSignal(int) #when the actual speed is calculated it is sent to the UI
+
+    # Train Controller UI Signals #
+    trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
 
 signals = Signals()

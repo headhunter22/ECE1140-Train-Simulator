@@ -13,7 +13,7 @@ class SWTrainController(QObject):
         print('train controlled dispatched')
         trainController = TrainController()
         self.trainControllers.append(trainController)
+        signals.trainControllerUpdateCurrSpeed.emit(train, 0)
 
     def calculatePower(self):
-        print('calculating power')
         self.trainControllers[0].sendPower()

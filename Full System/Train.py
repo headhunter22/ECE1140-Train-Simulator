@@ -31,7 +31,7 @@ class Train(QObject):
         self.emBrake = 0
 
         #power calculation vars
-        self.An_1 = .5
+        self.An_1 = 0
         self.An = 0
         self.actSpeed_1 = 0
         self.T = 1
