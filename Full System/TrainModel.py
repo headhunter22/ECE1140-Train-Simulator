@@ -92,6 +92,7 @@ class TrainModel(QObject):
 
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
+            train.block = train.route[1]
             currPos = currPos - int(currBlockSize)
             train.position = currPos
             train.route.pop(0)
@@ -100,10 +101,10 @@ class TrainModel(QObject):
                 # update train speed to 0 and delete train
 
             # update track model occupancy to unoccupied for currBlock
-            signals.trackModelUpdateOccupancy(train.trainID, train.line, currBlock, False)
+            signals.trackModelUpdateOccupancy.emit(train.ID, train.line, currBlock, False)
 
             # update track model occupancy to occupied for next block in route
-            signals.trackModelUpdateOccupancy(train.trainID, train.line, train.route[0], True)
+            signals.trackModelUpdateOccupancy.emit(train.ID, train.line, train.route[0], True)
 
         # we have not traversed more than the current block length
         else:
@@ -112,6 +113,7 @@ class TrainModel(QObject):
 
         print('speed: ' + str(train.actSpeed))
         print('position: ' + str(train.position))
+        print('block number: ' + str(train.block))
 
         # set previous variables
         train.An_1 = train.An
