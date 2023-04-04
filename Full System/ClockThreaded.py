@@ -48,6 +48,9 @@ class Clock:
 
     # function called when timer thread ends
     def triggered(self):
+        # emit triggered signal
+        signals.trainControllerTimeTrigger.emit()
+
         self.timer = threading.Timer(self.period * self.tickFactor, self.triggered)
 
         with self.lock:

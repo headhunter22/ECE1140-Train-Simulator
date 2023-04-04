@@ -6,12 +6,12 @@ from CTC import CTC
 from Wayside import Wayside
 from TrackModel import TrackModel
 from TrainModel import TrainModel
-from TrainController import TrainController
+from SWTrainController import SWTrainController
 from Train import Train
 from Track import Track
 import TrackParser
 import random
-from threading import Thread
+import threading
 #from Clock import Clock
 from ClockThreaded import clock
 
@@ -21,23 +21,20 @@ import ctcMainUi
 track = TrackParser.parseTrack("TrackLayout.csv")
 clock.startTimer()
 
-ctcOffice = CTC(track, clock)
+ctcOffice = CTC(track)
 waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
-trainModel = TrainModel(trackModel)
+trainModel = TrainModel()
+tc = SWTrainController()
 
 # propagate track model
 ctcOffice.propagateTrack()
 
 # dispatch a test train
-ctcOffice.dispatch(10, 50, 1, 'Green', track, clock)
+ctcOffice.dispatch('Green', 1)
 
 # show CTC window
-ctcApp = QtWidgets.QApplication(sys.argv)
-window = ctcMainUi.MainWindow(track)
-window.show()
-ctcApp.exec()
 
 # notes:
 # train physics
