@@ -17,9 +17,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.sysClock = Clock()
-        self.sysClock.start()
-        self.sysClock.clock.timeout.connect(self.changeLabel)
+        #self.sysClock = Clock()
+        #self.sysClock.start()
+        #self.sysClock.clock.timeout.connect(self.changeLabel)
 
         signals.timerTicked.connect(self.changeLabel)
 
@@ -183,6 +183,7 @@ class MainWindow(QMainWindow):
         #mode buttons
         self.ui.autoSelect.clicked.connect(self.autoSwitch)
         self.ui.manualSelect.clicked.connect(self.manualSwitch)
+        self.ui.manualSelect.clicked.connect(self.showPages)
         self.ui.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
         self.ui.maintenanceSelect.clicked.connect(self.showPages)
 
@@ -198,13 +199,20 @@ class MainWindow(QMainWindow):
         self.ui.uploadSchedule.clicked.connect(self.openFile)
         
         #time speed buttons
-        self.ui.time1x.clicked.connect(lambda: self.toggleColor(self.ui.time1x, self.ui.time10x))
-        self.ui.time1x.setStyleSheet('background-color: SkyBlue; color: gray')
-        self.ui.time10x.clicked.connect(lambda: self.toggleColor(self.ui.time10x, self.ui.time1x))
-        self.ui.time10x.setStyleSheet('background-color: white; color: gray')
+        self.timeButtons = [self.ui.timePause, self.ui.time1x, self.ui.time10x, self.ui.time50x]
 
-        self.ui.time1x.clicked.connect(self.oneTimeSpeed)
-        self.ui.time10x.clicked.connect(self.tenTimesSpeed)
+        self.ui.time1x.clicked.connect(self.timeSelect)
+        self.ui.time1x.setStyleSheet('background-color: SkyBlue; color: gray')
+        self.ui.time10x.clicked.connect(self.timeSelect)
+        self.ui.time10x.setStyleSheet('background-color: white; color: gray')
+        self.ui.timePause.clicked.connect(self.timeSelect)
+        self.ui.timePause.setStyleSheet('background-color: white; color: gray')
+        self.ui.time50x.clicked.connect(self.timeSelect)
+        self.ui.time50x.setStyleSheet('background-color: white; color: gray')
+        
+
+        #self.ui.time1x.clicked.connect(self.oneTimeSpeed)
+        #self.ui.time10x.clicked.connect(self.tenTimesSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -517,6 +525,34 @@ class MainWindow(QMainWindow):
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
 
+    def timeSelect(self):
+        # Get the button that was clicked
+        clickedButton = self.sender()
+
+        # Set the selected property of the clicked button to True
+        clickedButton.setProperty("selected", True)
+
+        # Set the selected property of all other buttons to False
+        for button in self.timeButtons:
+            if button != clickedButton:
+                button.setProperty("selected", False)
+
+        # Update the background color of all buttons based on their selected state
+        for button in self.timeButtons:
+            if button.property("selected"):
+                button.setStyleSheet("background-color: SkyBlue;")
+            else:
+                button.setStyleSheet("background-color: white;")
+
+        #if clickedButton == self.timeButtons[0]:
+        #    self.oneTimeSpeed()
+        #elif clickedButton == self.timeButtons[1]:
+        #    self.oneTimeSpeed()
+        #elif clickedButton == self.timeButtons[2]:
+        #    self.tenTimesSpeed()
+        #elif clickedButton == self.timeButtons[3]:
+        #    self.oneTimeSpeed()
+        
     def changeLabel(self, hrs, mins, secs):
         # self.sysClock.time += 1
 
@@ -546,6 +582,7 @@ class MainWindow(QMainWindow):
         self.ui.scheduledTrains.setEnabled(False)
         self.ui.scheduledTrains.setChecked(True)
 
+        
         self.ui.stackedWidget.setCurrentIndex(2)
 
         #disabling track block options
@@ -575,6 +612,11 @@ class MainWindow(QMainWindow):
         self.ui.dispatchGreen.setEnabled(True)
         self.ui.dispatchRed.setEnabled(True)
         self.ui.scheduledTrains.setEnabled(True)
+
+        self.ui.dispatchGreen.setChecked(True)
+        self.ui.dispatchRed.setChecked(False)
+        self.ui.dispatchGreen.setChecked(False)
+        self.ui.stackedWidget.setCurrentIndex(0)
 
         #disabling track block options
         self.ui.lineSelectMaintenance.setEnabled(False)
@@ -701,9 +743,6 @@ class MainWindow(QMainWindow):
             self.ui.stackedWidget.setCurrentIndex(2)
         elif self.ui.maintenanceSelect.isChecked():
             self.ui.stackedWidget.setCurrentIndex(3)
-        elif self.ui.manualSelect.isChecked():
-            self.ui.dispatchGreen.setChecked()
-            self.ui.stackedWidget.setCurrentIndex(0)
 
 if __name__ == '__main__':
     track = TrackParser.parseTrack('TrackLayout.csv')
