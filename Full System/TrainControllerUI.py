@@ -1,30 +1,9 @@
-import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
-from PyQt6 import uic
-from Track import Track
-import time
-from Clock import Clock
-from signals import signals
+import sys
 
-class TrainControllerUI(QtWidgets.QMainWindow):  
-
+class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-
-        # connect signals
-        signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
-        signals.trainControllerTimeTrigger.connect(self.sendPower)
-
-        self.Ki = 0.4
-        self.Kp = 0.14
-
-        self.UkPrev = 120
-        self.EkPrev = 50 # change to actual speed limit
-        self.T = 0.2
-        self.commandedPower = 0
-        self.currentSpeed = 0
-        self.train = None
 
         self.setWindowTitle("Train Controller")
         self.resize(980, 620)
@@ -104,7 +83,6 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         # Showing Power Output #
         self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setText("{0} Watts".format(self.commandedPower))
         self.PowerShown.setGeometry(425, 50, 200, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
@@ -238,27 +216,6 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
               #window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
-        
-    def updateCurrSpeed(self, train, currSpeed):
-        self.currentSpeed = currSpeed
-        self.train = train
-
-    def sendPower(self, power):
-        print('sending power')
-        # velocity error calcuation
-        self.ek = self.train.commandedSpeed - self.train.actualSpeed
-
-        # calculate uk
-        self.uk = self.UkPrev + ((self.T/2) * (ek + self.EkPrev))
-
-        self.commandedPower = (self.Kp * ek) + (self.Ki * uk)
-
-        self.UkPrev = uk
-        self.EkPrev = ek
-
-        self.PowerShown.setText(str(self.commandedPower))
-
-        signals.trainModelGetPower.emit(self.commandedPower)
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -292,7 +249,7 @@ class GainWindow(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
-window = TrainControllerUI()
+window = MainWindow()
 window3 = GainWindow()
 # Show window
 window.show()
