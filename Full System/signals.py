@@ -23,6 +23,8 @@ class Signals(QObject):
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
+    waysideUpdateOccupancy = pyqtSignal(int)
+    waysideUpdateVacancy = pyqtSignal(int)
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
