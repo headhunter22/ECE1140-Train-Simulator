@@ -15,7 +15,7 @@ class Signals(QObject):
     # switchStates = pyqtSignal(int, bool)
 
     # ctc frontend emission signals
-    greenLineTrainDispatch = pyqtSignal(Train)
+    greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
 
