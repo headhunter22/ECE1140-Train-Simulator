@@ -14,27 +14,28 @@ class TrainModelUI(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("trainModel_fullsys.ui", self)
 
+        #Connecting the received signals to their display functions
         signals.trainModelUpdateGUISpeed.connect(self.displaySpeed)
         signals.trainModelGUIBlock.connect(self.displayBlock)
         signals.trainModelGUIcommandedSpeed.connect(self.displayCommSpeed)
         signals.trainModelGUIpower.connect(self.displayPower)
 
     def displaySpeed(self, train):
-        self.actSpeed.setText("Speed: {0} mi/h".format(train)) #actSpeed is the qt creator object
+        speedMpH = float(train)*2.237
+        self.actSpeed.setText("Speed: {0} mi/h".format(speedMpH)) #actSpeed is the qt creator object
     
     def displayBlock(self, train):
-        self.commSpeedLabel.setText("Current Block = {0}".format(train)) #actSpeed is the qt creator object
+        self.commSpeedLabel.setText("Current Block = {0}".format(train)) #commSpeedLabel is the qt creator object
         
     def displayCommSpeed(self, train):
-        self.currBlockLabel.setText("Commanded Speed = {0}".format(train)) #actSpeed is the qt creator object
+        commSpeedMpH = float(train)*.621
+        self.currBlockLabel.setText("Commanded Speed = {0} mi/h".format(commSpeedMpH)) #currBlockLabel is the qt creator object
+        self.speedLimitLabel.setText("Speed Limit = {0} mi/h".format(commSpeedMpH)) #speedLimitLabel is the qt creator object
     
     def displayPower(self,train):
         self.powLabel.setText("Power Input: {0} Watts".format(train))
         self.powProgressBar.setMinimum(0)
         self.powProgressBar.setMaximum(120001)
         self.powProgressBar.setTextVisible(0)
-        
-#app = QtWidgets.QApplication(sys.argv)
-#window = MainWindow()
-#window.show()
-#app.exec()
+        roundTrain = round(float(train))
+        self.powProgressBar.setValue(int(roundTrain))

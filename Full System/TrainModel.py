@@ -37,10 +37,6 @@ class TrainModel(QObject):
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
 
-    # function to update commanded speed
-    #def updateCommandedSpeed(self, trainID, commandedSpeed):
-    #
-
     def updatedPower(self, train, power):
         # get current line, block and the associated length, speed limit
         currLine = train.line
