@@ -48,14 +48,14 @@ class TrainModel(QObject):
 
         print('power received: ' + str(power))
 
-        currBlockSize = int(currLine.getBlock(currBlock).length)
+        currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
 
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
-        theta = math.degrees(math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize))
+        theta = math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize)
         g = 9.8 # m/s^2
         friction = .006
 

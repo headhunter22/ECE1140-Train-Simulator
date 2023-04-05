@@ -354,7 +354,7 @@
      <rect>
       <x>880</x>
       <y>60</y>
-      <width>171</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -802,6 +802,19 @@ background-color: rgb(255, 135, 119)</string>
      <string>View</string>
     </property>
    </widget>
+   <widget class="QLabel" name="time">
+    <property name="geometry">
+     <rect>
+      <x>957</x>
+      <y>60</y>
+      <width>181</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>GeneralInfoSpacer</zorder>
    <zorder>RedLineScrollArea</zorder>
    <zorder>RedLineLabel</zorder>
@@ -837,6 +850,7 @@ background-color: rgb(255, 135, 119)</string>
    <zorder>BrokenRailLabel</zorder>
    <zorder>BrokenCircuitLabel</zorder>
    <zorder>FaultWindowButton</zorder>
+   <zorder>time</zorder>
   </widget>
  </widget>
  <resources/>
