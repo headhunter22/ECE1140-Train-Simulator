@@ -6,6 +6,9 @@ from Train import Train
 from Track import Track
 from Line import Line
 from signals import signals
+sys.dont_write_bytecode = True
+
+#please work please pretty pleasse
 
 class CTC(QObject):
     def __init__(self, track):
@@ -13,8 +16,6 @@ class CTC(QObject):
         self.track = track
         self.wayside = None
         self.nextID = 1
-
-        signals.timerTicked.connect(self.printTime)
 
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
@@ -44,9 +45,6 @@ class CTC(QObject):
 
         # update the next ID of the next train
         self.nextID += 1
-
-    def printTime(self):
-        print(f'{int(self.currHrs):02d}' + ':' + f'{int(self.currMins):02d}' + ':' + f'{int(self.currSecs):02d}')
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)

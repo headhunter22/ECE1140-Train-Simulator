@@ -11,8 +11,8 @@ import math
 
 class TrainModel(QObject):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, obj=None, **kwargs):
+        super().__init__(*args, **kwargs)
         
         # array to hold trains
         self.trainList = []
@@ -117,17 +117,17 @@ class TrainModel(QObject):
             # still in current block, update train position
             train.position = currPos
 
-        print('speed: ' + str(train.actSpeed * 3.6))
-        print('position: ' + str(train.position))
-        print('block number: ' + str(train.block))
-        print('commanded speed: ' + str(train.commandedSpeed))
+        # print('speed: ' + str(train.actSpeed * 3.6))
+        # print('position: ' + str(train.position))
+        # print('block number: ' + str(train.block))
+        # print('commanded speed: ' + str(train.commandedSpeed))
 
         # set previous variables
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
 
-        # emit current speed back to train controller
-        #signals.trainControllerUpdateCurrSpeed.emit(train, train.actualSpeed)
+        signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
+        #signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
     
     def trackReceived(self, track):
         self.track = track

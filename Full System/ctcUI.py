@@ -5,6 +5,8 @@ from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
 from signals import signals
+import sys
+sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
@@ -15,6 +17,13 @@ class ctcMainUI(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        ###################################
+        ########SIGNAL CONNECTIONS#########
+        ###################################
+
+        signals.timerTicked.connect(self.changeLabel)
+        signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -204,8 +213,8 @@ class ctcMainUI(QMainWindow):
         self.ui.time50x.setStyleSheet('background-color: white; color: gray')
         
 
-        #self.ui.time1x.clicked.connect(self.oneTimeSpeed)
-        #self.ui.time10x.clicked.connect(self.tenTimesSpeed)
+        self.ui.time1x.clicked.connect(self.oneTimeSpeed)
+        self.ui.time10x.clicked.connect(self.tenTimeSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -430,6 +439,26 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
+    def updateOccupancy(self, train):
+        if train.line == 'Green':
+            startIndex = 76
+            endIndex = 226
+
+            for rows in range(startIndex, endIndex):
+                if rows == train.block:
+                    #creating table objects to update occupancy window
+                    newTrainLocation, oldTrainLocation = QTableWidgetItem('')
+                    #new train location
+                    newTrainLocation.setBackground(QColor('green'))
+                    self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+                    #old train location
+                    oldTrainLocation.setBackground(QColor('white'))
+                    self.ui.greenOccupancy.setItem(rows-1, 0, oldTrainLocation)
+        elif train.line == "Red":
+            return
+        else:
+            print("error")
+
     def fillOccupancy(self, line):
 
         #self.ui.greenOccupancy.setVerticalHeader().setVisible(False)
@@ -457,6 +486,8 @@ class ctcMainUI(QMainWindow):
                 self.ui.redOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.redOccupancy.setItem(rowCount, 2, blockStatus)
 
+                #hardcoding train occupancy
+                """ 
                 if rowCount == 21 or rowCount == 43:
                     train = QTableWidgetItem('')
                     train.setBackground(QColor('green'))
@@ -466,6 +497,7 @@ class ctcMainUI(QMainWindow):
                     authority = QTableWidgetItem('')
                     authority.setBackground(QColor('red'))
                     self.ui.redOccupancy.setItem(rowCount, 0, authority)
+                """
         else:
             startIndex = 76
             endIndex = 226
@@ -489,6 +521,8 @@ class ctcMainUI(QMainWindow):
                 self.ui.greenOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.greenOccupancy.setItem(rowCount, 2, blockStatus)
 
+                #hardcoding train occupancy
+                """ 
                 if rowCount == 6 or rowCount == 48:
                     train = QTableWidgetItem('')
                     train.setBackground(QColor('green'))
@@ -498,6 +532,7 @@ class ctcMainUI(QMainWindow):
                     authority = QTableWidgetItem('')
                     authority.setBackground(QColor('red'))
                     self.ui.greenOccupancy.setItem(rowCount, 0, authority)
+                """
 
     def uneditable(self):
         self.ui.greenOccupancy.setColumnWidth(0,65)
@@ -561,19 +596,19 @@ class ctcMainUI(QMainWindow):
         #    self.oneTimeSpeed()
         
     def changeLabel(self, hrs, mins, secs):
-        # self.sysClock.time += 1
-
-        # hrs = self.sysClock.time / 3600
-        # mins = (hrs - int(hrs)) * 60
-        # secs = (mins - int(mins)) * 60
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
+    def timePause(self):
+        signals.CTCOneTimesSpeed.emit()
+    
     def oneTimeSpeed(self):
-        self.sysClock.start()
-        
-        
-    def tenTimesSpeed(self):
-        self.sysClock.tenTimesSpeed()
+        signals.CTCOneTimesSpeed.emit()
+
+    def tenTimeSpeed(self):
+        signals.CTCTenTimesSpeed.emit()
+
+    def fiftyTimeSpeed(self):
+        signals.CTCOneTimesSpeed.emit()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected

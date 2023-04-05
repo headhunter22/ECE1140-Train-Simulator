@@ -9,6 +9,8 @@ from Section import Section
 import TrackParser 
 from signals import signals
 
+sys.dont_write_bytecode = True
+
 # Main Window Class
 class TrackModelUI(QtWidgets.QMainWindow):
     def __init__(self, track, *args, **kwargs):
@@ -18,6 +20,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("MainTrackModel.ui", self)
         self.setWindowTitle('Track Model UI')
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.GreenLineGenInfo.setFont(font)
+        self.RedLineGenInfo.setFont(font)
 
         # create section dictionary to hold sections
         self.sectionDict = {}

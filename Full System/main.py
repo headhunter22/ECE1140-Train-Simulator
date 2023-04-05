@@ -19,9 +19,11 @@ from ClockThreaded import clock
 import TrackParser
 
 # import UIs
+from TrainModelUI import MainWindow
 from ctcUI import ctcMainUI
 from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
+from WaysideUI import WMainWindow
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
@@ -38,14 +40,22 @@ tc = SWTrainController()
 ctcOffice.propagateTrack()
 
 # instantiate UIs
+ctcUI = ctcMainUI(track)
 trackUI = TrackModelUI(track)
+
+trainUI = MainWindow()
 trainUI = TrainControllerUI()
 
-# dispatch a test train
-ctcOffice.dispatch('Green', 1)
+waysideUI = WMainWindow()
 
+
+# dispatch a test train
+#ctcOffice.dispatch('Green', 1)
+
+ctcUI.show()
 trackUI.show()
 trainUI.show()
+waysideUI.show()
 app.exec()
 
 # show CTC window

@@ -2,6 +2,8 @@ from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from threading import Thread
 import time
 import math
+import sys
+sys.dont_write_bytecode = True
 
 class Train(QObject):
     trainCounter = 0
