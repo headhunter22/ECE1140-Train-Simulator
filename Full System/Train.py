@@ -21,6 +21,7 @@ class Train(QObject):
         self.block = 63
         self.position = 0.0
         self.destBlock = destBlock
+        self.reachedDest = False
 
         # authority and speeds
         self.authority = 0
