@@ -38,6 +38,7 @@ class TrainController(QObject):
         else:
             # velocity error calcuation
             self.ek = self.train.commandedSpeed - self.train.actSpeed
+            print('ek: ' + str(self.ek))
 
             # calculate uk
             self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
