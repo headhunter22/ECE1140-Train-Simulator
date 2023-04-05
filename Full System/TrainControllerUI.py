@@ -9,6 +9,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle("Train Controller")
         self.resize(980, 620)
 
+        # Connect Signals #
+        signals.trainControllerPower.connect(self.updatePower)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -251,6 +253,15 @@ class MainWindow(QtWidgets.QMainWindow):
          if self.ServiceBrake.isChecked() == False:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
               print("Service Brake Disengaged")
+
+    def updatePower(self, power):
+         self.power = power
+         self.PowerShown.setText("{0} Watts".format(power))
+
+    def updatePower(self, speed):
+         self.speed = speed
+         self.SpeedShown.setText("{0} Mph".format(speed))
+
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):

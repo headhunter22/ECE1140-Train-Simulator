@@ -6,6 +6,7 @@ import TrackParser
 import pandas as pd
 from Clock import Clock
 from signals import signals
+from CTC import CTC
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
@@ -16,12 +17,13 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        ctcOffice = CTC()
 
         #self.sysClock = Clock()
         #self.sysClock.start()
         #self.sysClock.clock.timeout.connect(self.changeLabel)
 
-        signals.timerTicked.connect(self.changeLabel)
+        signals.timerTicked.connect(self.changeLabel(ctcOffice))
 
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
@@ -51,6 +53,9 @@ class MainWindow(QMainWindow):
         ##################################
         ########DISPATCHING TRAINS########
         ##################################
+
+        #iteration 3 button
+        self.ui.dormontDispatch.clicked.connect(self.iterDispatch)
 
         #connecting the green station buttons
         self.greenStations = []
@@ -234,6 +239,9 @@ class MainWindow(QMainWindow):
     ############################################
     ########DISPATCHING TRAINS FUNCTIONS########
     ############################################
+
+    def iterDispatch(self, ctc):
+        ctc.dispatch('Green', 105)
 
     def dipatchGreenTrain(self):
         if self.ui.greenTentSchedule.item(0).text() == '':
@@ -520,6 +528,20 @@ class MainWindow(QMainWindow):
         button2.setEnabled(True)
         button1.setStyleSheet('background-color: SkyBlue')
         button2.setStyleSheet('background-color: white; color: gray')
+
+
+    ############################################
+    ########TRAINS INFO FUNCTIONS###############
+    ############################################
+
+    def addTrainInfo(self, train):
+        if train.line == 'Green':
+            self.ui.greenTrainInfoTable.insertRow()
+        elif train.line == 'Red':
+            self.ui.redTrainInfoTable.insertRow()
+        else:
+            print("error")
+
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########

@@ -10,6 +10,7 @@ from Wayside import Wayside
 from TrackModel import TrackModel
 from TrainModel import TrainModel
 from SWTrainController import SWTrainController
+from TrainController import TrainController
 
 # general classes and functions
 from Train import Train
@@ -30,6 +31,7 @@ waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel()
+#trainController = TrainController()
 tc = SWTrainController()
 
 # propagate track model
@@ -37,11 +39,13 @@ ctcOffice.propagateTrack()
 
 # instantiate UIs
 trackUI = TrackModelUI(track)
+#trainUI = TrainControllerUI()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
 
 trackUI.show()
+#trainUI.show()
 app.exec()
 
 # show CTC window
