@@ -93,10 +93,13 @@ class TrainModel(QObject):
 
         currPos = prevPos + (train.actSpeed)
 <<<<<<< HEAD
+<<<<<<< HEAD
         signals.actSpeedtoTrainModelUI.emit(train.actSpeed)
         print(train.actSpeed)
 =======
 >>>>>>> 260158c1e0c7c177719ed42244dd8e64b293797b
+=======
+>>>>>>> 659de10cdb683b31e56097de14428525b571806f
 
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
