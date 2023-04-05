@@ -42,15 +42,9 @@ ctcOffice.propagateTrack()
 # instantiate UIs
 ctcUI = ctcMainUI(track)
 trackUI = TrackModelUI(track)
-
 trainUI = MainWindow()
 trainUI = TrainControllerUI()
-
 waysideUI = WMainWindow()
-
-
-# dispatch a test train
-#ctcOffice.dispatch('Green', 1)
 
 ctcUI.show()
 trackUI.show()
