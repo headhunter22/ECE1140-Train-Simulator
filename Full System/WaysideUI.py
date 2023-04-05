@@ -13,9 +13,9 @@ from Wayside_Main_B import Ui_MainWindow
 from test2 import Ui_testpopup
 import PLCParser as PLCParser
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        super(WMainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
         self.setWindowTitle('Wayside Main UI')
@@ -395,8 +395,8 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
             if occupation == 'Unoccupied':
                 window.jicon.setPixmap(QPixmap('tracks.png'))
 
-class Communications():
-    print("communicating from wayside.py")
+#class Communications():
+    #print("communicating from wayside.py")
     #get suggest speed
         #signal emits from .py
         #not actually needed for UI
@@ -413,11 +413,11 @@ class Communications():
     #send switches
     
 app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
+window = WMainWindow()
 test = Ui_testpopup()
-window.show()
-test.show()
-app.exec()
+#window.show()
+#test.show()
+#app.exec()
 
 
 
