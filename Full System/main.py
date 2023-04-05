@@ -20,7 +20,7 @@ import TrackParser
 
 # import UIs
 from ctcUI import ctcMainUI
-from MainTrackModelUI import TrackModelUI
+from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
