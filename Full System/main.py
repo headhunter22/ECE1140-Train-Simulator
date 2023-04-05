@@ -19,8 +19,8 @@ from ClockThreaded import clock
 import TrackParser
 
 # import UIs
-import ctcMainUi
-from TrackModelUI import TrackModelUI
+from ctcUI import ctcMainUI
+from MainTrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
