@@ -527,6 +527,9 @@ class Ui_MainWindow(object):
         self.redTrainInfoTable.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.redTrainInfoTable.setHorizontalHeaderItem(4, item)
+        self.dormontDispatch = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.dormontDispatch.setGeometry(QtCore.QRect(670, 320, 141, 24))
+        self.dormontDispatch.setObjectName("dormontDispatch")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1663, 21))
@@ -687,6 +690,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Authority"))
         item = self.redTrainInfoTable.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "Next Destination"))
+        self.dormontDispatch.setText(_translate("MainWindow", "Dispatch a single train"))
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(_translate("MainWindow", "North Shore Extension - CTC Window"))
 
 
