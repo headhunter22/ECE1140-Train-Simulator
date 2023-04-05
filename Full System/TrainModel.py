@@ -48,7 +48,7 @@ class TrainModel(QObject):
 
         print('power received: ' + str(power))
 
-        currBlockSize = int(currLine.getBlock(currBlock).length)
+        currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
 
         # convert speed limit, commSpeed to m/s
@@ -127,8 +127,11 @@ class TrainModel(QObject):
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
 
+        #sending all signals to the display
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
-        #signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
+        signals.trainModelGUIBlock.emit(str(train.block))
+        signals.trainModelGUIcommandedSpeed.emit(str(train.commandedSpeed))
+        signals.trainModelGUIpower.emit(str(power))
     
     def trackReceived(self, track):
         self.track = track
