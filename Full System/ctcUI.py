@@ -18,11 +18,16 @@ class ctcMainUI(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        ###################################
+        ########SIGNAL CONNECTIONS#########
+        ###################################
+
+        signals.timerTicked.connect(self.changeLabel)
+        signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
+
         ##################################
         ########STARTUP FUNCTIONS#########
         ##################################
-
-        signals.timerTicked.connect(self.changeLabel)
 
         #main ui starts up in auto mode
         self.autoMode()
@@ -434,17 +439,23 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
-    def updateOccupancy(self, train):
-        if train.line == 'Green':
-            startIndex = 76
-            endIndex = 226
+    def updateOccupancy(self, line, block):
+        if line == 'Green':
+            startIndex = 0
+            endIndex = 149
 
             for rows in range(startIndex, endIndex):
-                if rows == train.block:
-                    trainItem = QTableWidgetItem('')
-                    trainItem.setBackground(QColor('green'))
-                    self.ui.greenOccupancy.setItem(rows, 0, trainItem)
-        elif train.line == "Red":
+                if rows == block:
+                    #creating table objects to update occupancy window
+                    newTrainLocation = QTableWidgetItem('')
+                    oldTrainLocation = QTableWidgetItem('')
+                    #new train location
+                    newTrainLocation.setBackground(QColor('green'))
+                    self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+                    #old train location
+                    oldTrainLocation.setBackground(QColor('white'))
+                    self.ui.greenOccupancy.setItem(rows-1, 0, oldTrainLocation)
+        elif line == "Red":
             return
         else:
             print("error")
@@ -476,6 +487,8 @@ class ctcMainUI(QMainWindow):
                 self.ui.redOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.redOccupancy.setItem(rowCount, 2, blockStatus)
 
+                #hardcoding train occupancy
+                """ 
                 if rowCount == 21 or rowCount == 43:
                     train = QTableWidgetItem('')
                     train.setBackground(QColor('green'))
@@ -485,6 +498,7 @@ class ctcMainUI(QMainWindow):
                     authority = QTableWidgetItem('')
                     authority.setBackground(QColor('red'))
                     self.ui.redOccupancy.setItem(rowCount, 0, authority)
+                """
         else:
             startIndex = 76
             endIndex = 226
@@ -508,6 +522,8 @@ class ctcMainUI(QMainWindow):
                 self.ui.greenOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.greenOccupancy.setItem(rowCount, 2, blockStatus)
 
+                #hardcoding train occupancy
+                """ 
                 if rowCount == 6 or rowCount == 48:
                     train = QTableWidgetItem('')
                     train.setBackground(QColor('green'))
@@ -517,6 +533,7 @@ class ctcMainUI(QMainWindow):
                     authority = QTableWidgetItem('')
                     authority.setBackground(QColor('red'))
                     self.ui.greenOccupancy.setItem(rowCount, 0, authority)
+                """
 
     def uneditable(self):
         self.ui.greenOccupancy.setColumnWidth(0,65)
@@ -582,11 +599,17 @@ class ctcMainUI(QMainWindow):
     def changeLabel(self, hrs, mins, secs):
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
+    def timePause(self):
+        signals.CTCOneTimesSpeed.emit()
+    
     def oneTimeSpeed(self):
         signals.CTCOneTimesSpeed.emit()
 
     def tenTimeSpeed(self):
         signals.CTCTenTimesSpeed.emit()
+
+    def fiftyTimeSpeed(self):
+        signals.CTCOneTimesSpeed.emit()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected

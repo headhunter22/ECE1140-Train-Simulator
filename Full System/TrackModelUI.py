@@ -20,6 +20,8 @@ class TrackModelUI(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("MainTrackModel.ui", self)
         self.setWindowTitle('Track Model UI')
+        self.GreenLineGenInfo.setStyleSheet('font-size: 16')
+        self.RedLineGenInfo.setStyleSheet('font-size: 16')
 
         # create section dictionary to hold sections
         self.sectionDict = {}
@@ -55,6 +57,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
+        signals.timerTicked.connect(self.updateTime)
+
+    def updateTime(self, hrs, mins, secs):
+        self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     # update occupancy
     def updateOccupancy(self, inLine, inBlock):

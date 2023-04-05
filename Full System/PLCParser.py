@@ -1,4 +1,4 @@
-from Block import Block
+from WBlock import WBlock
 
 #ID = ID
 #ST = Station
@@ -17,7 +17,7 @@ def parse(self):
     with open(fname, 'r+') as f: #newline='',    
         for count, x in enumerate(f): #for count, line in enumerate(fp):
             if x[:3] == "BLK":
-                newblock = Block()
+                newblock = WBlock()
                 print("this is a block")
                 print("x ",x)
                 #for i in range(12):

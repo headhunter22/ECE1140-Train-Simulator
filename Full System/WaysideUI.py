@@ -5,18 +5,17 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from PyQt6 import QtWidgets, uic
 
-sys.path.append('/Users/Public/Documents/VSCode/ECE1140-Team-1/Wayside')
-print(sys.path)
-
-from Track_Configuration import Ui_TrackConfig 
+#sys.path.append('/Users/Public/Documents/VSCode/ECE1140-Team-1/Wayside')
+#print(sys.path)
+#from Track_Configuration import Ui_TrackConfig 
 from blockwidget import Ui_Section
 from Wayside_Main_B import Ui_MainWindow
 from test2 import Ui_testpopup
 import PLCParser as PLCParser
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        super(WMainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
         self.setWindowTitle('Wayside Main UI')
@@ -94,8 +93,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     #function for pop up window for track configuration
     def configurationWindow(self):
-        self.tc = TrackConfig()
-        self.tc.show()
+        #self.tc = TrackConfig()
+        self.trackconfiguration.clicked.connect(self.runParser)
+        #self.tc.show()
+
+    def runParser(self):
+        PLCParser.parse(self)
 
     #function for pop up window for seeing blocks in sections
     def blocksWindow(self):
@@ -191,30 +194,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #somehow counts the number of times the red train label comes up
     def activeTrains(self, counts):
         self.activetrains.display(counts)
-
-class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
-    def __init__(self, *args, obj=None, **kwargs):
-        super(TrackConfig, self).__init__(*args, **kwargs)
-        self.setupUi(self)
-        self.setWindowTitle('Track Configuration')
-
-        #self.uploadplc.clicked.connect(self.readplc)
-        self.uploadplc.clicked.connect(self.runParser)
-        self.ladderlogic.setDown(True)
-
-    def runParser(self):
-        PLCParser.parse(self)
-
-    def readplc(self):
-        home_dir = str(Path.home())
-        fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)
-
-        if fname[0]:
-            f = open(fname[0], 'r')
-            with f:
-                data = f.read()
-                #print("data: ", data)
-                self.plcdisplay.setText(data)
 
 class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
     def __init__(self, *args, obj=None, **kwargs):
@@ -416,8 +395,8 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
             if occupation == 'Unoccupied':
                 window.jicon.setPixmap(QPixmap('tracks.png'))
 
-class Communications():
-    print("communicating from wayside.py")
+#class Communications():
+    #print("communicating from wayside.py")
     #get suggest speed
         #signal emits from .py
         #not actually needed for UI
@@ -434,8 +413,36 @@ class Communications():
     #send switches
     
 app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
+window = WMainWindow()
 test = Ui_testpopup()
-window.show()
-test.show()
-app.exec()
+#window.show()
+#test.show()
+#app.exec()
+
+
+
+
+#track configuration pop up so hold a funeral
+
+# class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
+#     def __init__(self, *args, obj=None, **kwargs):
+#         super(TrackConfig, self).__init__(*args, **kwargs)
+#         self.setupUi(self)
+#         self.setWindowTitle('Track Configuration')
+
+#         #self.uploadplc.clicked.connect(self.readplc)
+#         self.uploadplc.clicked.connect(self.runParser)
+#         self.ladderlogic.setDown(True)
+
+
+
+#     def readplc(self):
+#         home_dir = str(Path.home())
+#         fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)
+
+#         if fname[0]:
+#             f = open(fname[0], 'r')
+#             with f:
+#                 data = f.read()
+#                 #print("data: ", data)
+#                 self.plcdisplay.setText(data)
