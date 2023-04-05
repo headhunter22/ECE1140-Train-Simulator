@@ -41,6 +41,8 @@ class TrainModel(QObject):
         # get current line, block and the associated length, speed limit
         currLine = train.line
         currBlock = train.block
+        if currBlock == train.destBlock:
+            train.reachedDest = True
 
         print('power received: ' + str(power))
 
@@ -51,7 +53,7 @@ class TrainModel(QObject):
         distToStop = 0
         tempBlock = currBlock
         offset = 1
-        while tempBlock != train.destBlock:
+        while tempBlock != train.destBlock and not train.reachedDest:
             distToStop += float(currLine.getBlock(tempBlock).length)
             tempBlock = train.route[offset]
             offset += 1
