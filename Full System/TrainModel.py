@@ -80,7 +80,7 @@ class TrainModel(QObject):
                 train.An = 0
             else:
                 trainForce = power / train.actSpeed_1
-                train.An = ((-M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (power/train.actSpeed_1))/M
+                train.An = ((-M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:

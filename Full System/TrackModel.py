@@ -7,7 +7,6 @@ from Block import Block
 from Track import Track
 from Train import Train
 from TicketSystem import TicketSystem
-from MainTrackModelUI import MainWindow
 from signals import signals
 
 # green route array
@@ -47,6 +46,9 @@ class TrackModel(QObject):
         self.numTrains += 1
         train.route = deepcopy(greenRouteArr)
 
+        # update occupancy in gui
+        signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
+
         # dispatch train with route to train model
         signals.trainModelDispatchTrain.emit(train)
 
@@ -61,6 +63,9 @@ class TrackModel(QObject):
         # send new commanded speed
         speedLimit = self.track.getLine(line.lineName).getBlock(block).speedLimit
         signals.trainModelUpdateCommandedSpeed.emit(train, speedLimit)
-        #print(block)
+
         # send signal to gui to update
-        # 
+        if occupied:
+            signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
+        else:
+            signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
