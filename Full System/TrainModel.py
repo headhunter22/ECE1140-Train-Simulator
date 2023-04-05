@@ -17,11 +17,14 @@ class TrainModel(QObject):
         # array to hold trains
         self.trainList = []
 
+        self.serviceBrake = False
+
         # connect signals
         signals.trainModelDispatchTrain.connect(self.dispatchTrain)
         signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelGetPower.connect(self.updatedPower)
         signals.trainModelGetTrack.connect(self.trackReceived)
+        signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -91,6 +94,9 @@ class TrainModel(QObject):
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:
             train.An = 0.5
+        
+        if self.serviceBrake == True: #TRAIN CONTROLLER: DONT FORGET TO CHANGE THIS SIGNAL BACK TO FALSE
+            train.An = -1.2 
 
         print('An: ' + str(train.An))
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
@@ -140,3 +146,7 @@ class TrainModel(QObject):
 
     def updateCommandedSpeed(self, train, speed):
         train.commandedSpeed = speed
+    
+    def serviceBrakeActive(self, serviceBrake):
+        self.serviceBrake = serviceBrake
+        print(int(self.serviceBrake))
