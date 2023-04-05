@@ -693,7 +693,6 @@ class Ui_MainWindow(object):
         self.dormontDispatch.setText(_translate("MainWindow", "Dispatch a single train"))
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(_translate("MainWindow", "North Shore Extension - CTC Window"))
 
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

@@ -24,6 +24,7 @@ class ctcMainUI(QMainWindow):
 
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
+        #signals.ctcUpdateGUIOccupancy.connect(self.updateVacancy)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -452,9 +453,12 @@ class ctcMainUI(QMainWindow):
                     #new train location
                     newTrainLocation.setBackground(QColor('green'))
                     self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+                else:
+                    #creating table objects to update occupancy window
+                    oldTrainLocation = QTableWidgetItem('')
                     #old train location
                     oldTrainLocation.setBackground(QColor('white'))
-                    self.ui.greenOccupancy.setItem(rows-1, 0, oldTrainLocation)
+                    self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
         elif line == "Red":
             return
         else:
@@ -486,19 +490,6 @@ class ctcMainUI(QMainWindow):
                 
                 self.ui.redOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.redOccupancy.setItem(rowCount, 2, blockStatus)
-
-                #hardcoding train occupancy
-                """ 
-                if rowCount == 21 or rowCount == 43:
-                    train = QTableWidgetItem('')
-                    train.setBackground(QColor('green'))
-                    self.ui.redOccupancy.setItem(rowCount, 0, train)
-
-                if (rowCount > 21 and rowCount < 27) or (rowCount > 43 and rowCount < 47):
-                    authority = QTableWidgetItem('')
-                    authority.setBackground(QColor('red'))
-                    self.ui.redOccupancy.setItem(rowCount, 0, authority)
-                """
         else:
             startIndex = 76
             endIndex = 226
@@ -521,19 +512,6 @@ class ctcMainUI(QMainWindow):
                 
                 self.ui.greenOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.greenOccupancy.setItem(rowCount, 2, blockStatus)
-
-                #hardcoding train occupancy
-                """ 
-                if rowCount == 6 or rowCount == 48:
-                    train = QTableWidgetItem('')
-                    train.setBackground(QColor('green'))
-                    self.ui.greenOccupancy.setItem(rowCount, 0, train)
-
-                if (rowCount > 6 and rowCount < 12) or (rowCount > 48 and rowCount < 58):
-                    authority = QTableWidgetItem('')
-                    authority.setBackground(QColor('red'))
-                    self.ui.greenOccupancy.setItem(rowCount, 0, authority)
-                """
 
     def uneditable(self):
         self.ui.greenOccupancy.setColumnWidth(0,65)
