@@ -45,6 +45,7 @@ trackUI = TrackModelUI(track)
 
 trainModUI = TrainModelUI()
 trainConUI = TrainControllerUI()
+waysideUI = WMainWindow()
 
 # dispatch a test train
 #ctcOffice.dispatch('Green', 1)
@@ -53,14 +54,6 @@ ctcUI.show()
 trackUI.show()
 trainConUI.show()
 trainModUI.show()
-
-trainUI = MainWindow()
-trainUI = TrainControllerUI()
-waysideUI = WMainWindow()
-
-ctcUI.show()
-trackUI.show()
-trainUI.show()
 waysideUI.show()
 
 app.exec()
