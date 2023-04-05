@@ -48,7 +48,7 @@ class TrainController(QObject):
             self.EkPrev = self.ek
 
             # send actual speed #
-            x = self.train.actSpeed
+            x = self.train.actSpeed * 2.237
             txt = f"{x:.2f}"
             self.y = float(txt)
             signals.trainControllerSpeed.emit(self.y)
