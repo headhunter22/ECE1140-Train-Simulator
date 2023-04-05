@@ -1,4 +1,4 @@
-class Block:
+class WBlock:
     def __init__(self):
         self.ID = ""
         self.section = ""
