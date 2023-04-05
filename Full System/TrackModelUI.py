@@ -20,10 +20,8 @@ class TrackModelUI(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("MainTrackModel.ui", self)
         self.setWindowTitle('Track Model UI')
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.GreenLineGenInfo.setFont(font)
-        self.RedLineGenInfo.setFont(font)
+        self.GreenLineGenInfo.setStyleSheet('font-size: 16')
+        self.RedLineGenInfo.setStyleSheet('font-size: 16')
 
         # create section dictionary to hold sections
         self.sectionDict = {}
