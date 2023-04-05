@@ -32,6 +32,10 @@ class Signals(QObject):
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
 
+    # wayside UI signals
+    wtowOccupancy = pyqtSignal(int)
+    wtowVacancy = pyqtSignal(int)
+
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
     # trainObjectWaysideToTrackModel = pyqtSignal(Train)
