@@ -51,6 +51,19 @@ class TrainModel(QObject):
         currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
 
+        # calculate dist to stop
+        distToStop = 0
+        tempBlock = currBlock
+        offset = 1
+        while tempBlock != train.destBlock:
+            dist += currBlockSize
+            tempBlock = route[offset]
+            offset += 1
+
+        train.authority = distToStop - currPos
+
+        print('dist to stop: ' + str(train.distToStop))
+
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
 
@@ -59,31 +72,25 @@ class TrainModel(QObject):
         g = 9.8 # m/s^2
         friction = .006
 
-        # calculating the braking force
-        if train.emBrake == 1:
-            F_b = -2.73
-        elif train.serviceBrake == 1:
-            F_b = -1.2
-        else:
-            F_b = 0
-
-
         print('speed limit: ' + str(blockSpeedLimit))
-        # calculating acceleration
 
+        # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
         if train.actSpeed_1 == 0:
             print('not moving')
             train.An = 0.5
-
+        elif train.emBrake == 1:
+            train.An = -2.73
+        elif train.serviceBrake == 1:
+            train.An = -1.2
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > blockSpeedLimit:
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b)/M
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:
