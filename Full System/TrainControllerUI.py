@@ -12,6 +12,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Connect Signals #
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
+        signals.trainControllerAuthority.connect(self.updateAuthority)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -32,11 +33,11 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.RateReq = QtWidgets.QSlider(self)
         self.RateText = QtWidgets.QLabel("Requested Speed: 0mph", self)
         self.CommandedSpeed = QtWidgets.QLabel("Commanded Speed: 0mph", self)
-        self.Authority = QtWidgets.QLabel("Authority: 0mi", self)
+        self.Authority = QtWidgets.QLabel("Authority: 0 meters", self)
         self.RateText.setGeometry(750, 275, 200, 100)
         self.RateReq.setGeometry(800, 50, 50, 250)
         self.CommandedSpeed.setGeometry(750, 300, 200, 100)
-        self.Authority.setGeometry(750, 325, 100, 100)
+        self.Authority.setGeometry(750, 325, 200, 100)
         self.RateReq.setMinimum(0)
         self.RateReq.setMaximum(45)
         self.RateReq.setSingleStep(1)
@@ -268,6 +269,12 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def OpenGainWindow(self):
          self.GW = GainWindow()
          self.GW.show()
+
+    def updateAuthority(self, auth):
+         x = auth
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.Authority.setText("Authority: {0} meters".format(self.y))
 
 
 class GainWindow(QtWidgets.QMainWindow):
