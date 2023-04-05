@@ -38,6 +38,8 @@ class Signals(QObject):
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
+    trackModelUpdateGUICrossings = pyqtSignal(int)
+    trackModelUpateGUISwitches = pyqtSignal()
 
     # train model signals
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
