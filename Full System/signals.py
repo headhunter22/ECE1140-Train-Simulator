@@ -57,5 +57,8 @@ class Signals(QObject):
 
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
+    trainControllerPower = pyqtSignal(float)
+    trainControllerSpeed = pyqtSignal(float)
+    trainControllerAuthority = pyqtSignal(float)
 
 signals = Signals()
