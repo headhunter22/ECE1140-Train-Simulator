@@ -12,6 +12,7 @@ class BlockInfo(QtWidgets.QMainWindow):
 
         # set the header
         self.Header.setText("Section " + section.sectionName + " Info")
+        self.ID = section.sectionName
 
         # fill the rest of the window with appropriate info
         self.widget = QtWidgets.QWidget()
