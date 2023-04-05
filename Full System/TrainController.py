@@ -54,8 +54,6 @@ class TrainController(QObject):
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
-            print(self.Kp)
-            print(self.Ki)
 
             # send actual speed #
             x = self.train.actSpeed * 2.237

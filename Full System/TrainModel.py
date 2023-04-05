@@ -56,13 +56,13 @@ class TrainModel(QObject):
         tempBlock = currBlock
         offset = 1
         while tempBlock != train.destBlock:
-            dist += currBlockSize
-            tempBlock = route[offset]
+            distToStop += float(currLine.getBlock(tempBlock).length)
+            tempBlock = train.route[offset]
             offset += 1
 
-        train.authority = distToStop - currPos
+        train.authority = distToStop - train.position
 
-        print('dist to stop: ' + str(train.distToStop))
+        print('dist to stop: ' + str(train.authority))
 
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
