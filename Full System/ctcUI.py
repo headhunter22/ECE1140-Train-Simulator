@@ -5,6 +5,8 @@ from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
 from signals import signals
+import sys
+sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
@@ -206,8 +208,8 @@ class ctcMainUI(QMainWindow):
         self.ui.time50x.setStyleSheet('background-color: white; color: gray')
         
 
-        #self.ui.time1x.clicked.connect(self.oneTimeSpeed)
-        #self.ui.time10x.clicked.connect(self.tenTimesSpeed)
+        self.ui.time1x.clicked.connect(self.oneTimeSpeed)
+        self.ui.time10x.clicked.connect(self.tenTimeSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -432,6 +434,21 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
+    def updateOccupancy(self, train):
+        if train.line == 'Green':
+            startIndex = 76
+            endIndex = 226
+
+            for rows in range(startIndex, endIndex):
+                if rows == train.block:
+                    trainItem = QTableWidgetItem('')
+                    trainItem.setBackground(QColor('green'))
+                    self.ui.greenOccupancy.setItem(rows, 0, trainItem)
+        elif train.line == "Red":
+            return
+        else:
+            print("error")
+
     def fillOccupancy(self, line):
 
         #self.ui.greenOccupancy.setVerticalHeader().setVisible(False)
@@ -563,18 +580,13 @@ class ctcMainUI(QMainWindow):
         #    self.oneTimeSpeed()
         
     def changeLabel(self, hrs, mins, secs):
-        # self.sysClock.time += 1
-
-        # hrs = self.sysClock.time / 3600
-        # mins = (hrs - int(hrs)) * 60
-        # secs = (mins - int(mins)) * 60
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     def oneTimeSpeed(self):
-        self.sysClock.start()
-                
-    def tenTimesSpeed(self):
-        self.sysClock.tenTimesSpeed()
+        signals.CTCOneTimesSpeed.emit()
+
+    def tenTimeSpeed(self):
+        signals.CTCTenTimesSpeed.emit()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected

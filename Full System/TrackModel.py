@@ -67,5 +67,7 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
+            signals.waysideUpdateOccupancy.emit(block)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
+            signals.waysideUpdateVacancy.emit(block)

@@ -16,12 +16,16 @@ class Clock(QThread):
 
         # attributes of thread
         self.running = True
-        self.pasued = False
+        self.paused = False
 
         # threaded timer
         self.timer = QTimer()
         self.timer.setInterval(self.period * self.tickFactor * 1000)
         self.timer.timeout.connect(self.triggered)
+
+        # connect signals
+        signals.CTCOneTimesSpeed.connect(self.oneTimes)
+        signals.CTCTenTimesSpeed.connect(self.tenTimes)
 
     # function called when timer thread ends
     def triggered(self):
@@ -49,6 +53,15 @@ class Clock(QThread):
     # start thread
     def startTimer(self):
         self.timer.start()
+
+    def oneTimes(self):
+        self.timer.setInterval(1000)
+
+    def tenTimes(self):
+        self.timer.setInterval(100)
+
+    def fiftyTimes(self):
+        self.timer.setInterval(20)
 
     # stop thread
     def stopTimer(self):

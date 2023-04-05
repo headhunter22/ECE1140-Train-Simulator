@@ -2,6 +2,8 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+import sys
+sys.dont_write_bytecode = True
 
 class Signals(QObject):
     # timer signal
@@ -9,6 +11,8 @@ class Signals(QObject):
     
     # ctc backend signals
     trackCTCToWayside = pyqtSignal(Track)
+    CTCOneTimesSpeed = pyqtSignal()
+    CTCTenTimesSpeed = pyqtSignal()
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
@@ -22,6 +26,8 @@ class Signals(QObject):
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
+    waysideUpdateOccupancy = pyqtSignal(int)
+    waysideUpdateVacancy = pyqtSignal(int)
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
