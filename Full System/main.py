@@ -19,7 +19,7 @@ import TrackParser
 
 # import UIs
 import ctcMainUi
-from MainTrackModelUI import TrackModelUI
+from TrackModelUI import TrackModelUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)

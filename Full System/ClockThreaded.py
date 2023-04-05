@@ -8,7 +8,7 @@ class Clock(QThread):
         super().__init__()
 
         # attributes of clock
-        self.period = 1
+        self.period = 0.2
         self.tickFactor = 1
         self.currSecs = 0
         self.currMins = 0
