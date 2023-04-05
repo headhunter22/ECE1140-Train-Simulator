@@ -18,10 +18,10 @@ class TrainModelUI(QObject, MainWindow):
         signals.actSpeedtoTrainModelUI.connect(self.displaySpeed)
         
     def displayPower(self):
-        self.powLabel.setText("Power Input: {0} Watts".format(SIGNALNAME))
+        self.powLabel.setText("Power Input: {0} Watts".format(POWERVARIABLE))
 
     def displaySpeed(self):
-        self.actSpeed.setText("Power Input: {0} Watts".format(signals.actSpeedtoTrainModelUI)) #actSpeed is the qt creator object
+        self.actSpeed.setText("Speed: {0} mi/h".format(SPEEDVARIABLE)) #actSpeed is the qt creator object
         
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()

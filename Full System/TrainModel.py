@@ -89,6 +89,7 @@ class TrainModel(QObject):
         prevPos = train.position
 
         currPos = prevPos + (train.actSpeed)
+        signals.actSpeedtoTrainModelUI.emit(train.actSpeed)
         print(train.actSpeed)
 
         # we have traversed more than the current block length
