@@ -154,13 +154,15 @@ class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
-    def changeOccupancy(self, int):
-        if self.aicon.Pixmap() == 'greentrain.png':
-            self.bicon.setPixmap('redtracks.png')
+    def changeOccupancy(self, block):
+        #if self.aicon.Pixmap() == 'greentrain.png':
+            #self.bicon.setPixmap('redtracks.png')
+        print("UI block", block, "is occupied")
 
-    def changeVacancy(self, int):
-        if self.aicon.Pixmap() == 'greentrain.png':
-            self.bicon.setPixmap('redtracks.png')
+    def changeVacancy(self, block):
+        #f self.aicon.Pixmap() == 'greentrain.png':
+            #self.bicon.setPixmap('redtracks.png')
+        print("UI block", block, "is vacant")
 
     #change train icons
     def changeIcon(self): #laurens
