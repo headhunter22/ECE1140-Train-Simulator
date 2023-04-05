@@ -11,8 +11,10 @@ class Signals(QObject):
     
     # ctc backend signals
     trackCTCToWayside = pyqtSignal(Track)
+    CTCTimePause = pyqtSignal()
     CTCOneTimesSpeed = pyqtSignal()
     CTCTenTimesSpeed = pyqtSignal()
+    CTCFiftyTimesSpeed = pyqtSignal()
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
@@ -22,6 +24,7 @@ class Signals(QObject):
     greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
+    ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -57,6 +60,9 @@ class Signals(QObject):
     trainModelUpdateCommandedSpeed = pyqtSignal(Train, float) # trainID, commandedSpeed
     trainModelGetTrack = pyqtSignal(Track)
     trainModelUpdateGUISpeed = pyqtSignal(str)
+    trainModelGUIcommandedSpeed = pyqtSignal(str)
+    trainModelGUIBlock = pyqtSignal(str)
+    trainModelGUIpower = pyqtSignal(str)
     #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
  
     # train controller signals
@@ -72,6 +78,10 @@ class Signals(QObject):
     trainControllerPower = pyqtSignal(float)
     trainControllerSpeed = pyqtSignal(float)
     trainControllerAuthority = pyqtSignal(float)
+    trainControllerKP = pyqtSignal(float)
+    trainControllerKI = pyqtSignal(float)
+    trainControllerUIKP = pyqtSignal(float)
+    trainControllerUIKI = pyqtSignal(float)
 
 
 

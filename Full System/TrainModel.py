@@ -48,14 +48,14 @@ class TrainModel(QObject):
 
         print('power received: ' + str(power))
 
-        currBlockSize = int(currLine.getBlock(currBlock).length)
+        currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
 
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
-        theta = math.degrees(math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize))
+        theta = math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize)
         g = 9.8 # m/s^2
         friction = .006
 
@@ -96,7 +96,6 @@ class TrainModel(QObject):
 
         currPos = prevPos + (train.actSpeed)
 
-
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
             train.block = train.route[1]
@@ -118,17 +117,20 @@ class TrainModel(QObject):
             # still in current block, update train position
             train.position = currPos
 
-        print('speed: ' + str(train.actSpeed * 3.6))
-        print('position: ' + str(train.position))
-        print('block number: ' + str(train.block))
-        print('commanded speed: ' + str(train.commandedSpeed))
+        # print('speed: ' + str(train.actSpeed * 3.6))
+        # print('position: ' + str(train.position))
+        # print('block number: ' + str(train.block))
+        # print('commanded speed: ' + str(train.commandedSpeed))
 
         # set previous variables
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
 
+        #sending all signals to the display
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
-        #signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
+        signals.trainModelGUIBlock.emit(str(train.block))
+        signals.trainModelGUIcommandedSpeed.emit(str(train.commandedSpeed))
+        signals.trainModelGUIpower.emit(str(power))
     
     def trackReceived(self, track):
         self.track = track

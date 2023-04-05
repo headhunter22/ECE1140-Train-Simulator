@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
         self.GeneralInfoLabel.setAlignment(Qt.AlignCenter)
         self.DateTimeLabel = QLabel(self.centralwidget)
         self.DateTimeLabel.setObjectName(u"DateTimeLabel")
-        self.DateTimeLabel.setGeometry(QRect(880, 60, 171, 20))
+        self.DateTimeLabel.setGeometry(QRect(880, 60, 71, 20))
         self.GreenLineGenInfo = QLabel(self.centralwidget)
         self.GreenLineGenInfo.setObjectName(u"GreenLineGenInfo")
         self.GreenLineGenInfo.setGeometry(QRect(1020, 90, 120, 50))
@@ -295,6 +295,9 @@ class Ui_MainWindow(object):
         self.FaultWindowButton = QPushButton(self.centralwidget)
         self.FaultWindowButton.setObjectName(u"FaultWindowButton")
         self.FaultWindowButton.setGeometry(QRect(1110, 550, 41, 32))
+        self.time = QLabel(self.centralwidget)
+        self.time.setObjectName(u"time")
+        self.time.setGeometry(QRect(957, 60, 181, 20))
         MainWindow.setCentralWidget(self.centralwidget)
         self.GeneralInfoSpacer.raise_()
         self.RedLineScrollArea.raise_()
@@ -331,6 +334,7 @@ class Ui_MainWindow(object):
         self.BrokenRailLabel.raise_()
         self.BrokenCircuitLabel.raise_()
         self.FaultWindowButton.raise_()
+        self.time.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -371,5 +375,6 @@ class Ui_MainWindow(object):
         self.BrokenRailLabel.setText(QCoreApplication.translate("MainWindow", u"Broken Rail", None))
         self.BrokenCircuitLabel.setText(QCoreApplication.translate("MainWindow", u"Broken Circuit", None))
         self.FaultWindowButton.setText(QCoreApplication.translate("MainWindow", u"View", None))
+        self.time.setText("")
     # retranslateUi
 

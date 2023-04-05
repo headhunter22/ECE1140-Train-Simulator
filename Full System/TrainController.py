@@ -15,6 +15,8 @@ class TrainController(QObject):
         # connect signals
         signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
+        signals.trainControllerUIKP.connect(self.updateKP)
+        signals.trainControllerUIKI.connect(self.updateKI)
 
         self.Ki = 1000
         self.Kp = 1000
@@ -25,6 +27,9 @@ class TrainController(QObject):
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
+
+        signals.trainControllerKP.emit(self.Kp)
+        signals.trainControllerKI.emit(self.Ki)
 
     def updateCurrSpeed(self, train, currSpeed):
         print('current speed updated')
@@ -37,7 +42,10 @@ class TrainController(QObject):
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
             # velocity error calcuation
-            self.ek = self.train.commandedSpeed - self.train.actSpeed
+            self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
+            print('commanded speed: ' + str(self.train.commandedSpeed))
+            print('actual speed: ' + str(self.train.actSpeed * 3.6))
+            print('ek: ' + str(self.ek))
 
             # calculate uk
             self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
@@ -46,6 +54,8 @@ class TrainController(QObject):
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
+            print(self.Kp)
+            print(self.Ki)
 
             # send actual speed #
             x = self.train.actSpeed * 2.237
@@ -64,3 +74,9 @@ class TrainController(QObject):
             self.commandedPower = 0
             signals.trainModelGetPower.emit( self.train, self.commandedPower)
             print("Emergency Brake applied, power set to 0")
+
+    def updateKP(self, kp):
+        self.Kp = kp
+
+    def updateKI(self, ki):
+        self.Ki = ki
