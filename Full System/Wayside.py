@@ -19,6 +19,8 @@ class Wayside(QObject):
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
         signals.trackCTCToWayside.connect(self.trackReceived)
+        signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
+        signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -57,8 +59,15 @@ class Wayside(QObject):
         # pass track onto track model
         signals.trackWaysideToTrackModel.emit(track)
 
-    def blockOccupancyReceived(self, Block):
+    def blockOccupancyReceived(self, block):
         print("block occupancy from track model")
+        print("block", block, "is occupied")
+        signals.wtowOccupancy.emit(int)
+    
+    def blockVacancyReceived(self, block):
+        print("block vacancy from track model")
+        print("block", block, "is vacant")
+        signals.wtowVacancy.emit(int)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
