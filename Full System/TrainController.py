@@ -30,6 +30,7 @@ class TrainController(QObject):
         print('current speed updated')
         self.currentSpeed = currSpeed
         self.train = train
+        signals.trainControllerSpeed.emit(self.currentSpeed)
 
     def sendPower(self):
         if self.train.actSpeed == 0:
@@ -50,6 +51,7 @@ class TrainController(QObject):
             self.commandedPower = 120000
 
         signals.trainModelGetPower.emit(self.train, self.commandedPower)
+        signals.trainControllerPower.emit(self.commandedPower)
 
     def EmerBrake(self):
         if signals.trainControllerEmerBrake == True:
