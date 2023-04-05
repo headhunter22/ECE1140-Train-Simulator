@@ -9,6 +9,8 @@ from Section import Section
 import TrackParser 
 from signals import signals
 
+sys.dont_write_bytecode = True
+
 # Main Window Class
 class TrackModelUI(QtWidgets.QMainWindow):
     def __init__(self, track, *args, **kwargs):
