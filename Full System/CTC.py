@@ -16,8 +16,6 @@ class CTC(QObject):
         self.wayside = None
         self.nextID = 1
 
-        signals.timerTicked.connect(self.printTime)
-
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
         
@@ -46,9 +44,6 @@ class CTC(QObject):
 
         # update the next ID of the next train
         self.nextID += 1
-
-    def printTime(self):
-        print(f'{int(self.currHrs):02d}' + ':' + f'{int(self.currMins):02d}' + ':' + f'{int(self.currSecs):02d}')
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)

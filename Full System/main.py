@@ -38,12 +38,14 @@ tc = SWTrainController()
 ctcOffice.propagateTrack()
 
 # instantiate UIs
+ctcUI = ctcMainUI(track)
 trackUI = TrackModelUI(track)
 trainUI = TrainControllerUI()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
 
+ctcUI.show()
 trackUI.show()
 trainUI.show()
 app.exec()

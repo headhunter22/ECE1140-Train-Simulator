@@ -50,6 +50,12 @@ class Clock(QThread):
     def startTimer(self):
         self.timer.start()
 
+    def tenTimes(self):
+        self.tickFactor = .1
+
+    def fiftyTimes(self):
+        self.tickFactor = .02
+
     # stop thread
     def stopTimer(self):
         self.running = False
