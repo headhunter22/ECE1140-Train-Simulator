@@ -16,12 +16,12 @@ class TrainController(QObject):
         signals.trainControllerUpdateCurrSpeed.connect(self.updateCurrSpeed)
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
 
-        self.Ki = 0.4
-        self.Kp = 0.14
+        self.Ki = 1000
+        self.Kp = 1000
 
-        self.UkPrev = 120
-        self.EkPrev = 50 # change to actual speed limit
-        self.T = 0.2
+        self.UkPrev = 0
+        self.EkPrev = 0
+        self.T = 1
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
@@ -32,16 +32,22 @@ class TrainController(QObject):
         self.train = train
 
     def sendPower(self):
-        # velocity error calcuation
-        self.ek = self.train.commandedSpeed - self.train.actSpeed
+        if self.train.actSpeed == 0:
+            self.commandedPower = 120000
+        else:
+            # velocity error calcuation
+            self.ek = self.train.commandedSpeed - self.train.actSpeed
 
-        # calculate uk
-        self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
+            # calculate uk
+            self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
 
-        self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
+            self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
 
-        self.UkPrev = self.uk
-        self.EkPrev = self.ek
+            self.UkPrev = self.uk
+            self.EkPrev = self.ek
+
+        if self.commandedPower > 120000:
+            self.commandedPower = 120000
 
         signals.trainModelGetPower.emit(self.train, self.commandedPower)
 

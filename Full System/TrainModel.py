@@ -19,7 +19,7 @@ class TrainModel(QObject):
 
         # connect signals
         signals.trainModelDispatchTrain.connect(self.dispatchTrain)
-        #signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
+        signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelGetPower.connect(self.updatedPower)
         signals.trainModelGetTrack.connect(self.trackReceived)
 
@@ -29,11 +29,10 @@ class TrainModel(QObject):
 
         # add train to current trains list
         self.trainList.append(train)
-        train.commandedSpeed = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit
-        train.actSpeed_1 = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit
+        train.commandedSpeed = self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit * .27777
 
         # update occupancy of block 
-        signals.trackModelUpdateOccupancy.emit(train.ID, train.line, 0, True)
+        signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
         
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
@@ -47,16 +46,17 @@ class TrainModel(QObject):
         currLine = train.line
         currBlock = train.block
 
-        currBlockSize = currLine.getBlock(currBlock).length
+        print('power received: ' + str(power))
+
+        currBlockSize = int(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
 
         # convert speed limit, commSpeed to m/s
-        blockSpeedLimit *= 0.27777
         commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
-        theta = math.degrees(math.atan(int(self.track.getLine('Green').getBlock(train.block).elevation)))
-        g = 9.8 # m/s^2
+        theta = math.degrees(math.atan(int(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize))
+        g = -9.8 # m/s^2
         friction = .006
 
         # calculating the braking force
@@ -68,25 +68,34 @@ class TrainModel(QObject):
             F_b = 0
 
         # calculating acceleration
-        train.An = ((M*g*math.cos(theta)*friction) + (M*g*math.cos(theta)) + F_b + (power/train.actSpeed_1))/M
-        train.actSpeed = train.actSpeed_1 + train.T/2 *(train.An - train.An_1)
 
-        # set previous variables
-        train.An_1 = train.An
-        train.actSpeed_1 = train.actSpeed
+        # if starting off at 0m/s, set acceleration to medium
+        if train.actSpeed_1 == 0:
+            print('not moving')
+            train.An = 0.5
 
-        # calculate force
-        force = 0.5 * train.baseMass
+        # if moving, calculate acceleration
+        else:
+            if train.actSpeed > blockSpeedLimit:
+                train.An = 0
+            else:
+                trainForce = power / train.actSpeed_1
+                train.An = ((-M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
+        
+        # if acceleration is too high, cap at 0.5
+        if train.An > 0.5:
+            train.An = 0.5
 
-        train.actualSpeed = train.commandedPower / force
+        print('An: ' + str(train.An))
+        train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
 
         prevPos = train.position
 
-        currPos = 0
-        currPos = prevPos + (train.actualSpeed * 0.2)
+        currPos = prevPos + (train.actSpeed)
 
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
+            train.block = train.route[1]
             currPos = currPos - int(currBlockSize)
             train.position = currPos
             train.route.pop(0)
@@ -95,20 +104,30 @@ class TrainModel(QObject):
                 # update train speed to 0 and delete train
 
             # update track model occupancy to unoccupied for currBlock
-            signals.trackModelUpdateOccupancy(train.trainID, train.line, currBlock, False)
+            signals.trackModelUpdateOccupancy.emit(train, train.line, currBlock, False)
 
             # update track model occupancy to occupied for next block in route
-            signals.trackModelUpdateOccupancy(train.trainID, train.line, train.route[0], True)
+            signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
 
         # we have not traversed more than the current block length
         else:
             # still in current block, update train position
             train.position = currPos
 
-        print(train.actSpeed)
+        print('speed: ' + str(train.actSpeed * 3.6))
+        print('position: ' + str(train.position))
+        print('block number: ' + str(train.block))
+        print('commanded speed: ' + str(train.commandedSpeed))
+
+        # set previous variables
+        train.An_1 = train.An
+        train.actSpeed_1 = train.actSpeed
 
         # emit current speed back to train controller
         #signals.trainControllerUpdateCurrSpeed.emit(train, train.actualSpeed)
     
     def trackReceived(self, track):
         self.track = track
+
+    def updateCommandedSpeed(self, train, speed):
+        train.commandedSpeed = speed
