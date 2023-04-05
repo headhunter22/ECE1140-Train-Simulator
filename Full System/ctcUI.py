@@ -572,8 +572,7 @@ class ctcMainUI(QMainWindow):
 
     def oneTimeSpeed(self):
         self.sysClock.start()
-        
-        
+                
     def tenTimesSpeed(self):
         self.sysClock.tenTimesSpeed()
 
