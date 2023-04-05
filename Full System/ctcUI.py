@@ -208,8 +208,8 @@ class ctcMainUI(QMainWindow):
         self.ui.time50x.setStyleSheet('background-color: white; color: gray')
         
 
-        #self.ui.time1x.clicked.connect(self.oneTimeSpeed)
-        #self.ui.time10x.clicked.connect(self.tenTimesSpeed)
+        self.ui.time1x.clicked.connect(self.oneTimeSpeed)
+        self.ui.time10x.clicked.connect(self.tenTimeSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -581,6 +581,12 @@ class ctcMainUI(QMainWindow):
         
     def changeLabel(self, hrs, mins, secs):
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+
+    def oneTimeSpeed(self):
+        signals.CTCOneTimesSpeed.emit()
+
+    def tenTimeSpeed(self):
+        signals.CTCTenTimesSpeed.emit()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
