@@ -9,6 +9,7 @@ class Signals(QObject):
     
     # ctc backend signals
     trackCTCToWayside = pyqtSignal(Track)
+    CTCTenTimesSpeed = pyqtSignal()
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
