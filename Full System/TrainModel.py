@@ -96,7 +96,6 @@ class TrainModel(QObject):
 
         currPos = prevPos + (train.actSpeed)
 
-
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
             train.block = train.route[1]
@@ -118,10 +117,10 @@ class TrainModel(QObject):
             # still in current block, update train position
             train.position = currPos
 
-        print('speed: ' + str(train.actSpeed * 3.6))
-        print('position: ' + str(train.position))
-        print('block number: ' + str(train.block))
-        print('commanded speed: ' + str(train.commandedSpeed))
+        # print('speed: ' + str(train.actSpeed * 3.6))
+        # print('position: ' + str(train.position))
+        # print('block number: ' + str(train.block))
+        # print('commanded speed: ' + str(train.commandedSpeed))
 
         # set previous variables
         train.An_1 = train.An
