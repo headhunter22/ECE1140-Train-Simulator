@@ -114,7 +114,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Init Manual/Automatic Buttons #
         self.ManualMode = QtWidgets.QPushButton("Manual Mode", self)
         self.ManualMode.setGeometry(775, 400, 100, 100)
-        self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
         self.ManualMode.setCheckable(True)
         self.AutoMode = QtWidgets.QPushButton("Automatic Mode", self)
         self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
@@ -131,12 +131,9 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.GainChange = QtWidgets.QPushButton("Edit Gain Values", self)
         self.GainChange.setGeometry(25, 550, 100, 50)
         self.GainChange.clicked.connect(self.OpenGainWindow)
-
-    def OpenGainWindow(self):  
-        window3.show()
     
-    def CloseGains(self):
-        window3.close()
+    def CloseGainWindow(self):
+        self.GW.close()
 
         # Calling the clicked-on EmerBrake functions #
     def EBClick(self):
@@ -220,7 +217,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         if self.ManualMode.isChecked() == False:
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-              #window2.TestManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.AutoMode.AutoModeClick(self)
 
        # Calling Auto button function #
     def AutoModeClick(self):
@@ -234,6 +231,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.InteriorLights.setCheckable(False)
               self.RateReq.setDisabled(True)
               self.ServiceBrake.setCheckable(False)
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
@@ -245,6 +243,8 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.InteriorLights.setCheckable(True)
               self.RateReq.setDisabled(False)
               self.ServiceBrake.setCheckable(True)
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
     def ServiceBrakeClick(self):
          if self.ServiceBrake.isChecked() == True:
@@ -264,10 +264,17 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          self.speed = speed
          self.SpeedShown.setText("{0} Mph".format(speed))
 
+    def OpenGainWindow(self):
+         self.GW = GainWindow()
+         self.GW.show()
+
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(GainWindow, self).__init__()
+
+        # Connect KP/KI #
+        signals.trainControllerKP.connect(self.updateKP)
 
         self.setWindowTitle("Edit Gain")
         self.resize(490, 310)
@@ -285,22 +292,20 @@ class GainWindow(QtWidgets.QMainWindow):
         font.setPointSize(24)
         self.KILabel.setFont(font)
 
-         # init confirm button # 
-        self.Confirm = QtWidgets.QPushButton("Confirm", self)
-        self.Confirm.setGeometry(375, 250, 100, 50)
-        self.Confirm.clicked.connect(window.CloseGains)
+         # init KP/PI Edits # 
+        self.KIChange = QtWidgets.QLineEdit("1000", self)
+        self.KIChange.setGeometry(225, 92, 50, 25)
+        self.KPChange = QtWidgets.QLineEdit("1000", self)
+        self.KPChange.setGeometry(225, 192, 50, 25)
+        
+    def updateKP(self):
+        textkp = self.KIChange.textfield.text()
+        INPUT2 = float(textkp)
+        signals.trainControllerUIKP.emit(INPUT2)
+        self.KIChange.setText(textkp)
 
-
-# You need one (and only one) QApplication instance per application.
-# Pass in sys.argv to allow command line arguments for your app.
-# If you know you won't use command line arguments QApplication([]) works too.
-#app = QtWidgets.QApplication(sys.argv)
-
-# Create a Qt widget, which will be our window.
-#window = TrainControllerUI()
-#window3 = GainWindow()
-# Show window
-#window.show()
-
-# Start the event loop.
-#app.exec()
+    def updateKP(self):
+        textki = self.KIChange.textfield.text()
+        INPUT2 = float(textki)
+        signals.trainControllerUIKI.emit(INPUT2)
+        self.KIChange.setText(textki)
