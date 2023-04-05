@@ -20,6 +20,8 @@ class ctcMainUI(QMainWindow):
         ########STARTUP FUNCTIONS#########
         ##################################
 
+        signals.timerTicked.connect(self.changeLabel)
+
         #main ui starts up in auto mode
         self.autoMode()
         self.ui.autoSelect.setChecked(True)
