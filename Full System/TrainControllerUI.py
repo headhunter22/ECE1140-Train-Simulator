@@ -86,8 +86,8 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.RightDoors.clicked.connect(self.RightDoorsClick)
 
         # Showing Power Output #
-        self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setGeometry(325, 50, 200, 100)
+        self.PowerShown = QtWidgets.QPushButton("0 KWatts", self)
+        self.PowerShown.setGeometry(325, 50, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.PowerShown.setFont(font)
@@ -96,7 +96,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         # Showing Actual speed #
         self.SpeedShown = QtWidgets.QPushButton("0 mph", self)
-        self.SpeedShown.setGeometry(325, 155, 200, 100)
+        self.SpeedShown.setGeometry(325, 155, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.SpeedShown.setFont(font)
@@ -258,7 +258,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def updatePower(self, power):
          self.power = power
          power = power/1000
-         self.PowerShown.setText("{0} Watts".format(power))
+         self.PowerShown.setText("{0} KWatts".format(power))
 
     def updateSpeed(self, speed):
          self.speed = speed
