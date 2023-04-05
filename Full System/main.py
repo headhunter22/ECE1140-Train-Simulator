@@ -55,7 +55,6 @@ trackUI.show()
 trainConUI.show()
 trainModUI.show()
 waysideUI.show()
-
 app.exec()
 
 # show CTC window
