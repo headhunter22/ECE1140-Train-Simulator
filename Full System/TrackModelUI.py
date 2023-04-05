@@ -7,9 +7,10 @@ from FaultDisplay import FaultDisplay
 from Fault import Fault
 from Section import Section
 import TrackParser 
+from signals import signals
 
 # Main Window Class
-class MainWindow(QtWidgets.QMainWindow):
+class TrackModelUI(QtWidgets.QMainWindow):
     def __init__(self, track, *args, **kwargs):
         # instantiate the original track
         self.track = track
@@ -20,6 +21,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # create section dictionary to hold sections
         self.sectionDict = {}
+        self.pageDict = {}
 
         # create items in scroll area based on track that was instantiated 
         self.createLineItem(self.sectionDict)
@@ -48,9 +50,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
         self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
 
+        # connect signals
+        signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
+        signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
+
     # update occupancy
     def updateOccupancy(self, inLine, inBlock):
-        # have to send current line and block through signal !!!
+
         line = self.track.getLine(inLine)
         block = line.getBlock(inBlock)
         section = block.section
@@ -243,6 +249,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def generateBlockInfoPage(self, section):
         self.blockInfo = BlockInfo(section)
+        if self.blockInfo.ID not in self.pageDict:
+            self.pageDict[self.blockInfo.ID] = self.blockInfo
+
         self.openBlockInfo()
 
     def openBlockInfo(self):

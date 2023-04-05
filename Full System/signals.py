@@ -7,12 +7,17 @@ class Signals(QObject):
     # timer signal
     timerTicked = pyqtSignal(int, int, int) # hrs, mins, secs to send to CTC
     
-    # ctc signals
+    # ctc backend signals
     trackCTCToWayside = pyqtSignal(Track)
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
     # switchStates = pyqtSignal(int, bool)
+
+    # ctc frontend emission signals
+    greenLineTrainDispatch = pyqtSignal(Train)
+    redLineTrainDispatch = pyqtSignal(Train)
+    blockMaintenanceOption = pyqtSignal(Track)
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -28,14 +33,11 @@ class Signals(QObject):
     # passengersToCTC = pyqtSignal(int)
 
     # track model signals
-    # # signals to be sent
-    # blockOccupancyToWayside = pyqtSignal(Block)
-    # trackTrackModelToTrainModel = pyqtSignal(Track)
-    # trainTrackModelToTrainModel = pyqtSignal(Train)
-    # totalPassengersToWayside = pyqtSignal(int)
-    trackModelUpdateOccupancy = pyqtSignal(int, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
+    trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
+    trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
+    trackModelUpdateGUIVacancy = pyqtSignal(str, str)
 
     # train model signals
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
@@ -51,5 +53,12 @@ class Signals(QObject):
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
+
+
+    # Train Controller UI Signals #
+    trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
+    trainControllerPower = pyqtSignal(float)
+    trainControllerSpeed = pyqtSignal(float)
+    trainControllerAuthority = pyqtSignal(float)
 
 signals = Signals()

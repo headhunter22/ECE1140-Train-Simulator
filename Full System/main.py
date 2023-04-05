@@ -1,24 +1,29 @@
+# modules to make code run
 import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
+
+# train system module imports
 from CTC import CTC
 from Wayside import Wayside
 from TrackModel import TrackModel
 from TrainModel import TrainModel
 from SWTrainController import SWTrainController
+from TrainController import TrainController
+
+# general classes and functions
 from Train import Train
 from Track import Track
-import TrackParser
-import random
-import threading
-#from Clock import Clock
 from ClockThreaded import clock
+import TrackParser
 
 # import UIs
 import ctcMainUi
+from TrackModelUI import TrackModelUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
+app = QtWidgets.QApplication(sys.argv)
 clock.startTimer()
 
 ctcOffice = CTC(track)
@@ -26,13 +31,22 @@ waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel()
+#trainController = TrainController()
 tc = SWTrainController()
 
 # propagate track model
 ctcOffice.propagateTrack()
 
+# instantiate UIs
+trackUI = TrackModelUI(track)
+#trainUI = TrainControllerUI()
+
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
+
+trackUI.show()
+#trainUI.show()
+app.exec()
 
 # show CTC window
 
