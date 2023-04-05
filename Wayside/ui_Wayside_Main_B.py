@@ -547,7 +547,7 @@ class Ui_MainWindow(object):
         self.redb.setText("")
         self.yellowb.setText("")
         self.greenb.setText("")
-        self.trackconfiguration.setText(QCoreApplication.translate("MainWindow", u"Track Configuration", None))
+        self.trackconfiguration.setText(QCoreApplication.translate("MainWindow", u"Upload PLC", None))
         self.automaticmode.setText(QCoreApplication.translate("MainWindow", u"Automatic Mode", None))
         self.maintenancemode.setText(QCoreApplication.translate("MainWindow", u"Maintenance Mode", None))
         self.activetrainlabel.setText(QCoreApplication.translate("MainWindow", u"Active Trains  ", None))
