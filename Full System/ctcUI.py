@@ -439,22 +439,23 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
-    def updateOccupancy(self, train):
-        if train.line == 'Green':
-            startIndex = 76
-            endIndex = 226
+    def updateOccupancy(self, line, block):
+        if line == 'Green':
+            startIndex = 0
+            endIndex = 149
 
             for rows in range(startIndex, endIndex):
-                if rows == train.block:
+                if rows == block:
                     #creating table objects to update occupancy window
-                    newTrainLocation, oldTrainLocation = QTableWidgetItem('')
+                    newTrainLocation = QTableWidgetItem('')
+                    oldTrainLocation = QTableWidgetItem('')
                     #new train location
                     newTrainLocation.setBackground(QColor('green'))
                     self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
                     #old train location
                     oldTrainLocation.setBackground(QColor('white'))
                     self.ui.greenOccupancy.setItem(rows-1, 0, oldTrainLocation)
-        elif train.line == "Red":
+        elif line == "Red":
             return
         else:
             print("error")
