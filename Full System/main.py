@@ -20,7 +20,8 @@ import TrackParser
 
 # import UIs
 from ctcUI import ctcMainUI
-from MainTrackModelUI import TrackModelUI
+from TrackModelUI import TrackModelUI
+from TrainControllerUI import TrainControllerUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
@@ -31,7 +32,6 @@ waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel(waysideController)
 trainModel = TrainModel()
-#trainController = TrainController()
 tc = SWTrainController()
 
 # propagate track model
@@ -39,14 +39,13 @@ ctcOffice.propagateTrack()
 
 # instantiate UIs
 trackUI = TrackModelUI(track)
-ctcUI = ctcMainUI(track)
-#trainUI = TrainControllerUI()
+trainUI = TrainControllerUI()
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)
 
 trackUI.show()
-#trainUI.show()
+trainUI.show()
 app.exec()
 
 # show CTC window

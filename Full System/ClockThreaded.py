@@ -8,7 +8,7 @@ class Clock(QThread):
         super().__init__()
 
         # attributes of clock
-        self.period = 0.2
+        self.period = 1
         self.tickFactor = 1
         self.currSecs = 0
         self.currMins = 0
@@ -22,42 +22,26 @@ class Clock(QThread):
         self.timer = QTimer()
         self.timer.setInterval(self.period * self.tickFactor * 1000)
         self.timer.timeout.connect(self.triggered)
-        print('timer created')
-    # function to be called every interval
-    def timerFunc(self):
-        print('timer starting')
-        while self.running:
-            time.sleep(self.tickFactor)
-
-            # lock the thread for important code
-            with self.lock:
-                # increment seconds
-                self.currSecs += 1
-                if self.currSecs == 60: # reset secs after 60
-                    self.currMins += 1
-                    self.currSecs = 0
-                if self.currMins == 60: # reset mins after 60
-                    self.currHrs += 1
-                    self.curMins = 0
-                if self.currHrs == 24: # reset hrs after 24
-                    self.currHrs = 0
-
-                # emit signal of timer ticking that CTC will received to keep time
-                signals.timerTicked.emit(self.currHrs, self.currMins, self.currSecs)
-
-        # cancel the timer
-        try:
-            self.timer.join()
-        except:
-            print('app closing')
-
-        self.timer.cancel()
 
     # function called when timer thread ends
     def triggered(self):
         # emit triggered signal
         try:
             signals.trainControllerTimeTrigger.emit()
+
+            # increment seconds
+            self.currSecs += 1
+            if self.currSecs == 60: # reset secs after 60
+                self.currMins += 1
+                self.currSecs = 0
+            if self.currMins == 60: # reset mins after 60
+                self.currHrs += 1
+                self.curMins = 0
+            if self.currHrs == 24: # reset hrs after 24
+                self.currHrs = 0
+
+            # emit signal of timer ticking that CTC will received to keep time
+            signals.timerTicked.emit(self.currHrs, self.currMins, self.currSecs)
         except:
             print('system ended')
             pass
