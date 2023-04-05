@@ -37,7 +37,7 @@ class Train(QObject):
         self.T = 1
 
         # mass info
-        self.baseMass = 81950 * .453 # kgs
+        self.baseMass = 81950 # kgs
 
     # def sendSpeeds(self):
     #     print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))

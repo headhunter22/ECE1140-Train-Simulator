@@ -248,9 +248,9 @@ class TrackModelUI(QtWidgets.QMainWindow):
             i+=1
 
     def generateBlockInfoPage(self, section):
-        blockInfo = BlockInfo(section)
-        if blockInfo.ID not in self.pageDict:
-            self.pageDict[blockInfo.ID] = blockInfo
+        self.blockInfo = BlockInfo(section)
+        if self.blockInfo.ID not in self.pageDict:
+            self.pageDict[self.blockInfo.ID] = self.blockInfo
 
         self.openBlockInfo()
 
