@@ -57,6 +57,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
+        signals.timerTicked.connect(self.updateTime)
+
+    def updateTime(self, hrs, mins, secs):
+        self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     # update occupancy
     def updateOccupancy(self, inLine, inBlock):
