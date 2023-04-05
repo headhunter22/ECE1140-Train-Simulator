@@ -4,27 +4,31 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog,
 from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
-from Clock import Clock
 from signals import signals
-from CTC import CTC
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
 
-class MainWindow(QMainWindow):
+class ctcMainUI(QMainWindow):
     def __init__(self, track):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        ctcOffice = CTC()
 
-        #self.sysClock = Clock()
-        #self.sysClock.start()
-        #self.sysClock.clock.timeout.connect(self.changeLabel)
+        ##################################
+        ########STARTUP FUNCTIONS#########
+        ##################################
 
-        signals.timerTicked.connect(self.changeLabel(ctcOffice))
+        signals.timerTicked.connect(self.changeLabel)
 
+        #main ui starts up in auto mode
+        self.autoMode()
+        self.ui.autoSelect.setChecked(True)
+        self.fillOccupancy("Green")
+        self.fillOccupancy("Red")
+        self.uneditable()
+        
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
 
@@ -37,18 +41,6 @@ class MainWindow(QMainWindow):
         for section in track.getLine("Red").sections:
             for block in section.blocks:
                 self.ui.redBlockDispatch.addItem(block.blockName)
-
-        ##################################
-        ########STARTUP FUNCTIONS#########
-        ##################################
-
-        #main ui starts up in auto mode
-        self.autoMode()
-        self.ui.autoSelect.setChecked(True)
-        self.fillOccupancy("Green")
-        self.fillOccupancy("Red")
-        self.uneditable()
-
 
         ##################################
         ########DISPATCHING TRAINS########
@@ -179,8 +171,6 @@ class MainWindow(QMainWindow):
         self.ui.red_J2.clicked.connect(lambda: self.toggleColor(self.ui.red_J2, self.ui.red_J1))
         self.ui.red_J2.setStyleSheet('background-color: white; color: gray')
 
-
-
         ##################################
         ########UTILITY BUTTONS###########
         ##################################
@@ -223,8 +213,6 @@ class MainWindow(QMainWindow):
         ########TRAINS INFO###############
         ##################################
 
-
-
         ##################################
         ########OPTIONS / XINGS###########
         ##################################
@@ -233,15 +221,14 @@ class MainWindow(QMainWindow):
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
 
-
         self.show()
 
     ############################################
     ########DISPATCHING TRAINS FUNCTIONS########
     ############################################
 
-    def iterDispatch(self, ctc):
-        ctc.dispatch('Green', 105)
+    def iterDispatch(self):
+        signals.greenLineTrainDispatchFromCtcUI.emit(73)
 
     def dipatchGreenTrain(self):
         if self.ui.greenTentSchedule.item(0).text() == '':
@@ -585,8 +572,7 @@ class MainWindow(QMainWindow):
 
     def oneTimeSpeed(self):
         self.sysClock.start()
-        
-        
+                
     def tenTimesSpeed(self):
         self.sysClock.tenTimesSpeed()
 
@@ -769,5 +755,5 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     track = TrackParser.parseTrack('TrackLayout.csv')
     app = QApplication([])
-    window = MainWindow(track)
+    window = ctcMainUI(track)
     app.exec()

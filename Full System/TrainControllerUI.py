@@ -2,7 +2,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 from signals import signals
 
-class MainWindow(QtWidgets.QMainWindow):
+class TrainControllerUI(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -11,6 +11,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Connect Signals #
         signals.trainControllerPower.connect(self.updatePower)
+        signals.trainControllerSpeed.connect(self.updateSpeed)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -85,8 +86,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.RightDoors.clicked.connect(self.RightDoorsClick)
 
         # Showing Power Output #
-        self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setGeometry(325, 50, 200, 100)
+        self.PowerShown = QtWidgets.QPushButton("0 KWatts", self)
+        self.PowerShown.setGeometry(325, 50, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.PowerShown.setFont(font)
@@ -95,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Showing Actual speed #
         self.SpeedShown = QtWidgets.QPushButton("0 mph", self)
-        self.SpeedShown.setGeometry(325, 155, 200, 100)
+        self.SpeedShown.setGeometry(325, 155, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.SpeedShown.setFont(font)
@@ -256,9 +257,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def updatePower(self, power):
          self.power = power
-         self.PowerShown.setText("{0} Watts".format(power))
+         power = power/1000
+         self.PowerShown.setText("{0} KWatts".format(power))
 
-    def updatePower(self, speed):
+    def updateSpeed(self, speed):
          self.speed = speed
          self.SpeedShown.setText("{0} Mph".format(speed))
 
@@ -292,13 +294,13 @@ class GainWindow(QtWidgets.QMainWindow):
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
 # If you know you won't use command line arguments QApplication([]) works too.
-app = QtWidgets.QApplication(sys.argv)
+#app = QtWidgets.QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
-window = MainWindow()
-window3 = GainWindow()
+#window = TrainControllerUI()
+#window3 = GainWindow()
 # Show window
-window.show()
+#window.show()
 
 # Start the event loop.
-app.exec()
+#app.exec()

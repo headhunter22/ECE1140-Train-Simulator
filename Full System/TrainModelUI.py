@@ -7,23 +7,20 @@ from Track import Track
 from Train import Train
 from TrainController import TrainController
 from signals import signals
-from trainModel_fullsys import MainWindow
 
-class TrainModelUI(QObject, MainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setUp(self)
 
-        signals.SIGNALNAME.connect(self.displayPower)
-        signals.actSpeedtoTrainModelUI.connect(self.displaySpeed)
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("trainModel_fullsys.ui", self)
+
+        signals.trainModelUpdateGUISpeed.connect(self.displaySpeed)
+
+
+    def displaySpeed(self, train):
+        self.actSpeed.setText("Speed: {0} mi/h".format(train)) #actSpeed is the qt creator object
         
-    def displayPower(self):
-        self.powLabel.setText("Power Input: {0} Watts".format(POWERVARIABLE))
-
-    def displaySpeed(self):
-        self.actSpeed.setText("Speed: {0} mi/h".format(SPEEDVARIABLE)) #actSpeed is the qt creator object
-        
-app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec()
+#app = QtWidgets.QApplication(sys.argv)
+#window = MainWindow()
+#window.show()
+#app.exec()

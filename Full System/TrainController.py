@@ -30,11 +30,11 @@ class TrainController(QObject):
         print('current speed updated')
         self.currentSpeed = currSpeed
         self.train = train
-        signals.trainControllerSpeed.emit(self.currentSpeed)
 
     def sendPower(self):
         if self.train.actSpeed == 0:
             self.commandedPower = 120000
+            signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
             # velocity error calcuation
             self.ek = self.train.commandedSpeed - self.train.actSpeed
@@ -46,6 +46,12 @@ class TrainController(QObject):
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
+
+            # send actual speed #
+            x = self.train.actSpeed * 2.237
+            txt = f"{x:.2f}"
+            self.y = float(txt)
+            signals.trainControllerSpeed.emit(self.y)
 
         if self.commandedPower > 120000:
             self.commandedPower = 120000
