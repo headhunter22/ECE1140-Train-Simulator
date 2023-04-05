@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
 from PyQt6 import QtWidgets, uic
+from signals import signals
 
 #sys.path.append('/Users/Public/Documents/VSCode/ECE1140-Team-1/Wayside')
 #print(sys.path)
@@ -13,6 +14,8 @@ from Wayside_Main_B import Ui_MainWindow
 from test2 import Ui_testpopup
 import PLCParser as PLCParser
 
+#whichsection = ""
+
 class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(WMainWindow, self).__init__(*args, **kwargs)
@@ -20,6 +23,10 @@ class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setWindowTitle('Wayside Main UI')
 
+        #signals
+        signals.wtowOccupancy.connect(self.changeOccupancy)
+        signals.wtowVacancy.connect(self.changeVacancy)
+        
         #set all switch buttons to disabled
         self.ca.setEnabled(False)
         self.cb.setEnabled(False)
@@ -39,16 +46,16 @@ class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         #pop up windows
         self.trackconfiguration.clicked.connect(self.configurationWindow)
-        self.pusha.clicked.connect(self.blocksWindow)
-        self.pushb.clicked.connect(self.blocksWindow)
-        self.pushc.clicked.connect(self.blocksWindow)
-        self.pushd.clicked.connect(self.blocksWindow)
-        self.pushe.clicked.connect(self.blocksWindow)
-        self.pushf.clicked.connect(self.blocksWindow)
-        self.pushg.clicked.connect(self.blocksWindow)
-        self.pushh.clicked.connect(self.blocksWindow)
-        self.pushi.clicked.connect(self.blocksWindow)
-        self.pushj.clicked.connect(self.blocksWindow)
+        self.pusha.clicked.connect(lambda ch, i= 'A': self.makeSectionWindow(i))
+        self.pushb.clicked.connect(lambda ch, i= 'B': self.makeSectionWindow(i))
+        self.pushc.clicked.connect(lambda ch, i= 'C': self.makeSectionWindow(i))
+        self.pushd.clicked.connect(lambda ch, i= 'D': self.makeSectionWindow(i))
+        self.pushe.clicked.connect(lambda ch, i= 'E': self.makeSectionWindow(i))
+        self.pushf.clicked.connect(lambda ch, i= 'F': self.makeSectionWindow(i))
+        self.pushg.clicked.connect(lambda ch, i= 'G': self.makeSectionWindow(i))
+        self.pushh.clicked.connect(lambda ch, i= 'H': self.makeSectionWindow(i))
+        self.pushi.clicked.connect(lambda ch, i= 'I': self.makeSectionWindow(i))
+        self.pushj.clicked.connect(lambda ch, i= 'J': self.makeSectionWindow(i))
 
         #set up gate buttons
         self.maintenancemode.toggled.connect(self.maintenanceMode)
@@ -101,8 +108,41 @@ class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         PLCParser.parse(self)
 
     #function for pop up window for seeing blocks in sections
-    def blocksWindow(self):
+    def makeSectionWindow(self, whichsection):
         self.bl = Ui_Section()
+        self.bl.sectionname.setText(whichsection)
+
+        if whichsection == 'A':
+            self.blockbox.clear()
+            self.blockbox.addItems(['1' , '2', '3'])
+        elif whichsection == 'B':
+            self.blockbox.clear()
+            self.blockbox.addItems(['4', '5', '6'])
+        elif whichsection == 'C':
+            self.blockbox.clear()
+            self.blockbox.addItems(['7', '8', '9'])
+        elif whichsection == 'D':
+            self.blockbox.clear()
+            self.blockbox.addItems(['10', '11', '12'])
+        elif whichsection == 'E':
+            self.blockbox.clear()
+            self.blockbox.addItems(['13', '14', '15'])
+        elif whichsection == 'F':
+            self.blockbox.clear()
+            self.blockbox.addItems(['16', '17', '18', '19', '20'])
+        elif whichsection == 'G':
+            self.blockbox.clear()
+            self.blockbox.addItems(['21', '22', '23'])
+        elif whichsection == 'H':
+            self.blockbox.clear()
+            self.blockbox.addItems(['24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45'])
+        elif whichsection == 'I':
+            self.blockbox.clear()
+            self.blockbox.addItems(['46', '47', '48'])
+        elif whichsection == 'J':
+            self.blockbox.clear()
+            self.blockbox.addItems(['49', '50', '51', '52', '53', '54'])
+
         self.bl.show()
 
     #function for toggle switch colors but see if you can do labels instead of buttons??
@@ -114,9 +154,15 @@ class WMainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
-    def changeOccupation(self):
-        if self.aicon.Pixmap() == 'greentrain.png':
-            self.bicon.setPixmap('redtracks.png')
+    def changeOccupancy(self, block):
+        #if self.aicon.Pixmap() == 'greentrain.png':
+            #self.bicon.setPixmap('redtracks.png')
+        print("UI block", block, "is occupied")
+
+    def changeVacancy(self, block):
+        #f self.aicon.Pixmap() == 'greentrain.png':
+            #self.bicon.setPixmap('redtracks.png')
+        print("UI block", block, "is vacant")
 
     #change train icons
     def changeIcon(self): #laurens
@@ -199,7 +245,6 @@ class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
     def __init__(self, *args, obj=None, **kwargs):
         super(Ui_Section, self).__init__(*args, **kwargs)
         self.setupUi(self)
-
         self.setWindowTitle('Block Information')
 
 class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
@@ -417,7 +462,7 @@ window = WMainWindow()
 test = Ui_testpopup()
 #window.show()
 #test.show()
-#app.exec()
+#papp.exec()
 
 
 

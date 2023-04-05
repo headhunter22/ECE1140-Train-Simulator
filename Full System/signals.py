@@ -32,6 +32,10 @@ class Signals(QObject):
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
 
+    # wayside UI signals
+    wtowOccupancy = pyqtSignal(int)
+    wtowVacancy = pyqtSignal(int)
+
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
     # trainObjectWaysideToTrackModel = pyqtSignal(Train)
@@ -56,6 +60,9 @@ class Signals(QObject):
     trainModelUpdateCommandedSpeed = pyqtSignal(Train, float) # trainID, commandedSpeed
     trainModelGetTrack = pyqtSignal(Track)
     trainModelUpdateGUISpeed = pyqtSignal(str)
+    trainModelGUIcommandedSpeed = pyqtSignal(str)
+    trainModelGUIBlock = pyqtSignal(str)
+    trainModelGUIpower = pyqtSignal(str)
     #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
  
     # train controller signals
