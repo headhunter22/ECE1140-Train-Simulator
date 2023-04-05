@@ -6,6 +6,8 @@ from Train import Train
 from Track import Track
 from Block import Block
 from signals import signals
+import sys
+sys.dont_write_bytecode = True
 
 class Wayside(QObject):
 

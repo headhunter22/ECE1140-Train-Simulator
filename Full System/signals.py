@@ -2,6 +2,8 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+import sys
+sys.dont_write_bytecode = True
 
 class Signals(QObject):
     # timer signal

@@ -5,6 +5,8 @@ from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
 from signals import signals
+import sys
+sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
