@@ -22,7 +22,7 @@ class Clock(QThread):
         self.timer = QTimer()
         self.timer.setInterval(self.period * self.tickFactor * 1000)
         self.timer.timeout.connect(self.triggered)
-        print('timer created')
+
     # function to be called every interval
     def timerFunc(self):
         print('timer starting')
@@ -58,6 +58,20 @@ class Clock(QThread):
         # emit triggered signal
         try:
             signals.trainControllerTimeTrigger.emit()
+
+            # increment seconds
+            self.currSecs += 1
+            if self.currSecs == 60: # reset secs after 60
+                self.currMins += 1
+                self.currSecs = 0
+            if self.currMins == 60: # reset mins after 60
+                self.currHrs += 1
+                self.curMins = 0
+            if self.currHrs == 24: # reset hrs after 24
+                self.currHrs = 0
+
+            # emit signal of timer ticking that CTC will received to keep time
+            signals.timerTicked.emit(self.currHrs, self.currMins, self.currSecs)
         except:
             print('system ended')
             pass
