@@ -213,11 +213,12 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def ManualModeClick(self):
         if self.ManualMode.isChecked() == True:
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-              #window2.TestManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.AutoMode.setChecked(True)
+              self.AutoModeClick()
 
         if self.ManualMode.isChecked() == False:
-              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-              self.AutoMode.AutoModeClick(self)
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.AutoModeClick()
 
        # Calling Auto button function #
     def AutoModeClick(self):
