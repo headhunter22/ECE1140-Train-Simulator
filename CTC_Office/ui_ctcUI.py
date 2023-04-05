@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1663, 788)
+        MainWindow.resize(1663, 615)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.scheduledTrains = QCheckBox(self.centralwidget)
@@ -534,6 +534,9 @@ class Ui_MainWindow(object):
         self.redTrainInfoTable.setHorizontalHeaderItem(4, __qtablewidgetitem15)
         self.redTrainInfoTable.setObjectName(u"redTrainInfoTable")
         self.redTrainInfoTable.setGeometry(QRect(310, 190, 511, 101))
+        self.dormontDispatch = QPushButton(self.centralwidget)
+        self.dormontDispatch.setObjectName(u"dormontDispatch")
+        self.dormontDispatch.setGeometry(QRect(670, 320, 141, 24))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -704,6 +707,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Authority", None));
         ___qtablewidgetitem15 = self.redTrainInfoTable.horizontalHeaderItem(4)
         ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Next Destination", None));
+        self.dormontDispatch.setText(QCoreApplication.translate("MainWindow", u"Dispatch a single train", None))
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(QCoreApplication.translate("MainWindow", u"North Shore Extension - CTC Window", None))
     # retranslateUi
 

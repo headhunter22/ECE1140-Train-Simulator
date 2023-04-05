@@ -55,8 +55,8 @@ class TrainModel(QObject):
         commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
-        theta = math.degrees(math.atan(int(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize))
-        g = -9.8 # m/s^2
+        theta = math.degrees(math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize))
+        g = 9.8 # m/s^2
         friction = .006
 
         # calculating the braking force
@@ -67,6 +67,8 @@ class TrainModel(QObject):
         else:
             F_b = 0
 
+
+        print('speed limit: ' + str(blockSpeedLimit))
         # calculating acceleration
 
         # if starting off at 0m/s, set acceleration to medium
@@ -76,11 +78,12 @@ class TrainModel(QObject):
 
         # if moving, calculate acceleration
         else:
-            if train.actSpeed > blockSpeedLimit:
-                train.An = 0
+            if (train.actSpeed*3.6) > blockSpeedLimit:
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b)/M
+                print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
-                train.An = ((-M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:

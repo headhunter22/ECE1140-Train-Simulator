@@ -12,7 +12,6 @@ from Block import Block
 #SL = Switch Lights
 #FT = Fault
 
-
 def parse(self):
     fname = "plcLogic"
     with open(fname, 'r+') as f: #newline='',    

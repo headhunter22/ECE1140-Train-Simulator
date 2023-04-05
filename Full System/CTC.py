@@ -7,6 +7,8 @@ from Track import Track
 from Line import Line
 from signals import signals
 
+#trying to push
+
 class CTC(QObject):
     def __init__(self, track):
         super().__init__()
@@ -15,11 +17,27 @@ class CTC(QObject):
         self.nextID = 1
 
         signals.timerTicked.connect(self.printTime)
+
+        # signals from ctc UI
+        signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
         
     # function to dispatch the train
     def dispatch(self, line, destBlock):
         # create a new track object and emit to wayside
         train = Train(self.nextID, self.track.getLine(line), destBlock)
+        train.authority = 3
+        train.suggSpeed = 70
+        print('ctc dispatched')
+
+        signals.waysideDispatchTrain.emit(train)
+
+        # update the next ID of the next train
+        self.nextID += 1
+
+    # function to dispatch the train
+    def greenDispatch(self, destBlock):
+        # create a new track object and emit to wayside
+        train = Train(self.nextID, self.track.getLine('Green'), destBlock)
         train.authority = 3
         train.suggSpeed = 70
         print('ctc dispatched')
