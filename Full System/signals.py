@@ -46,6 +46,7 @@ class Signals(QObject):
     trainModelGetPower = pyqtSignal(Train, float) # trainID, commandedPower
     trainModelUpdateCommandedSpeed = pyqtSignal(Train, float) # trainID, commandedSpeed
     trainModelGetTrack = pyqtSignal(Track)
+    trainModelUpdateGUISpeed = pyqtSignal(str)
     #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
  
     # train controller signals
@@ -56,11 +57,12 @@ class Signals(QObject):
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
 
-
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
     trainControllerPower = pyqtSignal(float)
     trainControllerSpeed = pyqtSignal(float)
     trainControllerAuthority = pyqtSignal(float)
+
+
 
 signals = Signals()

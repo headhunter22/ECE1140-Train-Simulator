@@ -19,6 +19,11 @@ from ClockThreaded import clock
 import TrackParser
 
 # import UIs
+
+import ctcMainUi
+from MainTrackModelUI import TrackModelUI
+from TrainModelUI import MainWindow
+
 from ctcUI import ctcMainUI
 from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
@@ -39,7 +44,10 @@ ctcOffice.propagateTrack()
 
 # instantiate UIs
 trackUI = TrackModelUI(track)
+
+trainUI = MainWindow()
 trainUI = TrainControllerUI()
+
 
 # dispatch a test train
 ctcOffice.dispatch('Green', 1)

@@ -11,8 +11,8 @@ import math
 
 class TrainModel(QObject):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, obj=None, **kwargs):
+        super().__init__(*args, **kwargs)
         
         # array to hold trains
         self.trainList = []
@@ -96,6 +96,7 @@ class TrainModel(QObject):
 
         currPos = prevPos + (train.actSpeed)
 
+
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
             train.block = train.route[1]
@@ -126,8 +127,8 @@ class TrainModel(QObject):
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
 
-        # emit current speed back to train controller
-        #signals.trainControllerUpdateCurrSpeed.emit(train, train.actualSpeed)
+        signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
+        #signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
     
     def trackReceived(self, track):
         self.track = track
