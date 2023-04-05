@@ -71,6 +71,10 @@ class Signals(QObject):
     trainControllerPower = pyqtSignal(float)
     trainControllerSpeed = pyqtSignal(float)
     trainControllerAuthority = pyqtSignal(float)
+    trainControllerKP = pyqtSignal(float)
+    trainControllerKI = pyqtSignal(float)
+    trainControllerUIKP = pyqtSignal(float)
+    trainControllerUIKI = pyqtSignal(float)
 
 
 
