@@ -8,7 +8,7 @@ from Line import Line
 from signals import signals
 sys.dont_write_bytecode = True
 
-#please work
+#please work please
 
 class CTC(QObject):
     def __init__(self, track):
