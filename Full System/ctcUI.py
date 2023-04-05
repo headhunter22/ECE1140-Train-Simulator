@@ -20,6 +20,8 @@ class ctcMainUI(QMainWindow):
         ########STARTUP FUNCTIONS#########
         ##################################
 
+        signals.timerTicked.connect(self.changeLabel)
+
         #main ui starts up in auto mode
         self.autoMode()
         self.ui.autoSelect.setChecked(True)
@@ -570,8 +572,7 @@ class ctcMainUI(QMainWindow):
 
     def oneTimeSpeed(self):
         self.sysClock.start()
-        
-        
+                
     def tenTimesSpeed(self):
         self.sysClock.tenTimesSpeed()
 
