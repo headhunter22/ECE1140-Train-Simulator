@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindowB(object):
     def setupUi(self, MainWindowB):
         MainWindowB.setObjectName("MainWindowB")
-        MainWindowB.resize(724, 801)
+        MainWindowB.resize(724, 777)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindowB)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget_8 = QtWidgets.QWidget(parent=self.centralwidget)

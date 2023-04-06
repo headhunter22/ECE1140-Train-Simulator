@@ -30,6 +30,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.wtowOccupancy.connect(self.changeOccupancy)
         signals.wtowVacancy.connect(self.changeVacancy)
         signals.timerTicked.connect(self.ticka)
+        signals.wtowTrainCount.connect(self.activeTrains)
         
         #set all switch buttons to disabled
         self.gate20.setEnabled(False)
@@ -83,7 +84,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         # #self.eicon.setPixmap(QPixmap('redtracks.png'))
         # #self.ficon.setPixmap(QPixmap('redtracks.png'))
         # self.jicon.setPixmap(QPixmap('tracks.png'))
-        counts = 2
+        counts = 0
         self.activetrains.display(counts)
 
         #lights
@@ -478,6 +479,7 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         signals.wtowVacancy.connect(self.changeVacancy)
         signals.wtowOccupancy.connect(self.changeOccupancy)
         signals.timerTicked.connect(self.tickb)
+        signals.wtowTrainCount.connect(self.activeTrains)
         
         #set all switch buttons to disabled
         self.gate10.setEnabled(False)
@@ -550,7 +552,7 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         #self.ficon.setPixmap(QPixmap('redtracks.png'))
         self.jicon.setPixmap(QPixmap('tracks.png'))
         
-        counts = 2
+        counts = 0
         self.activetrains.display(counts)
 
         #lights

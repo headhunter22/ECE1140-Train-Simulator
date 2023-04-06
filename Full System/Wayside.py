@@ -38,6 +38,8 @@ class Wayside(QObject):
 
         # emit dispatched train to track model
         signals.trackModelDispatchTrain.emit(train)
+        signals.count = signals.count + 1
+        signals.wtowTrainCount.emit(signals.count)
 
     # function to set block occupancies
     #def setOccupancy(self, line, blockNumber, occupied):
