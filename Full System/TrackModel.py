@@ -49,7 +49,6 @@ class TrackModel(QObject):
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
         signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
-        signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
         #signals.waysideUpdateOccupancy.emit(train.block)
 
         # dispatch train with route to train model
