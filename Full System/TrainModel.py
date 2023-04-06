@@ -18,6 +18,7 @@ class TrainModel(QObject):
         self.trainList = []
 
         self.serviceBrake = False
+        self.timeWaiting = 0
 
         # connect signals
         signals.trainModelDispatchTrain.connect(self.dispatchTrain)
@@ -77,6 +78,7 @@ class TrainModel(QObject):
 
         # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
+
         if train.actSpeed_1 == 0:
             print('not moving')
             train.An = 0.5
@@ -100,8 +102,19 @@ class TrainModel(QObject):
         if self.serviceBrake == True: #TRAIN CONTROLLER: DONT FORGET TO CHANGE THIS SIGNAL BACK TO FALSE
             train.An = -1.2 
 
+
         print('An: ' + str(train.An))
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
+
+        if (train.actSpeed < 0):
+            train.actSpeed = 0
+            #print(" done waiting")
+            
+            #train.An = 0.5
+            self.serviceBrake = False
+            #train.actSpeed = 1
+            
+            
 
         prevPos = train.position
 
@@ -152,3 +165,12 @@ class TrainModel(QObject):
     def serviceBrakeActive(self, serviceBrake):
         self.serviceBrake = serviceBrake
         print(int(self.serviceBrake))
+    
+    def stopped30Sec(self,hrs,min,sec):
+        self.timeWaiting = self.timeWaiting + 1
+        print('timewaiting = ' + str(self.timeWaiting))
+        if self.timeWaiting == 30:
+            print("train waited 30 seconds")
+            return True
+        else:
+            return False
