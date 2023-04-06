@@ -25,6 +25,8 @@ class ctcMainUI(QMainWindow):
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
+        signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
+        signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
         #signals.ctcUpdateGUIOccupancy.connect(self.updateVacancy)
 
         ##################################
@@ -441,12 +443,12 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
+    def updateAuthority(self):
+        return
+
     def updateOccupancy(self, line, block):
         if line == 'Green':
-            startIndex = 0
-            endIndex = 149
-
-            for rows in range(startIndex, endIndex):
+            for rows in range(0, 149):
                 if rows == block:
                     #creating table objects to update occupancy window
                     newTrainLocation = QTableWidgetItem('')
@@ -533,23 +535,43 @@ class ctcMainUI(QMainWindow):
     ########TRAINS INFO FUNCTIONS###############
     ############################################
 
-    def addTrainInfo(self, train):
-        if train.line == 'Green':
-            self.ui.greenTrainInfoTable.insertRow()
-        elif train.line == 'Red':
+    def addTrainInfoLine(self, line, id, block, commSpeed, auth, dest):
+        if line == 'Green':
+            rowCount = self.ui.greenTrainInfoTable.rowCount()
+
+            self.ui.greenTrainInfoTable.insertRow(rowCount)
+
+            greenTrainID = QTableWidgetItem(str(id))
+            greenTrainBlock = QTableWidgetItem(str(block))
+            greenTrainCommSpeed = QTableWidgetItem(str(commSpeed))
+            greenTrainAuth = QTableWidgetItem(str(auth))
+            greenTrainDest = QTableWidgetItem(str(dest))
+
+            self.ui.greenTrainInfoTable.setItem(rowCount, 0, greenTrainID)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 1, greenTrainBlock)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 2, greenTrainCommSpeed)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 3, greenTrainAuth)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 4, greenTrainDest)
+
+        elif line == 'Red':
             self.ui.redTrainInfoTable.insertRow()
         else:
             print("error")
 
     def updateTrainInfo(self, line, id, block, commSpeed, auth, dest):
         if line == 'Green':
-
             for rows in range(len(self.ui.greenTrainInfoTable.rowCount())):
                 if self.ui.greenTrainInfoTable.item(rows, 0) == id:
-                    self.ui.greenTrainInfoTable.setItem(rows, 1, QTableWidgetItem(str(block)))
-                    self.ui.greenTrainInfoTable.setItem(rows, 2, QTableWidgetItem(str(commSpeed)))
-                    self.ui.greenTrainInfoTable.setItem(rows, 3, QTableWidgetItem(str(auth)))
-                    self.ui.greenTrainInfoTable.setItem(rows, 4, QTableWidgetItem(str(dest)))
+
+                    greenTrainBlock = QTableWidgetItem(str(block))
+                    greenTrainCommSpeed = QTableWidgetItem(str(commSpeed))
+                    greenTrainAuth = QTableWidgetItem(str(auth))
+                    greenTrainDest = QTableWidgetItem(str(dest))
+
+                    self.ui.greenTrainInfoTable.setItem(rows, 1, greenTrainBlock)
+                    self.ui.greenTrainInfoTable.setItem(rows, 2, greenTrainCommSpeed)
+                    self.ui.greenTrainInfoTable.setItem(rows, 3, greenTrainAuth)
+                    self.ui.greenTrainInfoTable.setItem(rows, 4, greenTrainDest)
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
