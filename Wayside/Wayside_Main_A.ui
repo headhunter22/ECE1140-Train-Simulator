@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindowB</class>
- <widget class="QMainWindow" name="MainWindowB">
+ <class>MainWindowA</class>
+ <widget class="QMainWindow" name="MainWindowA">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -450,7 +450,7 @@ color: rgb(0, 0, 0);</string>
 color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
-        <string>A- M</string>
+        <string>N - Z</string>
        </property>
       </widget>
      </item>
@@ -482,52 +482,48 @@ color: rgb(0, 0, 0);</string>
      <property name="horizontalSpacing">
       <number>20</number>
      </property>
-     <item row="9" column="1">
-      <widget class="QLabel" name="hicon">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="pushp">
+       <property name="text">
+        <string>P</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="pusht">
+       <property name="text">
+        <string>T</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QPushButton" name="pushs">
+       <property name="text">
+        <string>S</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QPushButton" name="pushq">
+       <property name="text">
+        <string>Q</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="occupancylabel_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(221, 221, 221);
+font: 700 10pt &quot;Georgia&quot;;
+color: rgb(0, 0, 0);</string>
        </property>
        <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>tracks.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <string>Occupancy</string>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QLabel" name="gicon">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>tracks.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLabel" name="eicon">
+      <widget class="QLabel" name="ticon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -549,156 +545,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLabel" name="bicon">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>tracks.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="sectiontitle_2">
-       <property name="styleSheet">
-        <string notr="true">font: 700 10pt &quot;Georgia&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(221, 221, 221);</string>
-       </property>
-       <property name="text">
-        <string>Section</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QPushButton" name="pushf">
-       <property name="text">
-        <string>F</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="0">
-      <widget class="QPushButton" name="pushj">
-       <property name="text">
-        <string>J</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0">
-      <widget class="QPushButton" name="pushi">
-       <property name="text">
-        <string>I</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QPushButton" name="pushd">
-       <property name="text">
-        <string>D</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QPushButton" name="pushe">
-       <property name="text">
-        <string>E</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="occupancylabel_2">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(221, 221, 221);
-font: 700 10pt &quot;Georgia&quot;;
-color: rgb(0, 0, 0);</string>
-       </property>
-       <property name="text">
-        <string>Occupancy</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="cicon">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>tracks.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="pushc">
-       <property name="text">
-        <string>C</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="0">
-      <widget class="QPushButton" name="pushk">
-       <property name="text">
-        <string>K</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QPushButton" name="pushg">
-       <property name="text">
-        <string>G</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLabel" name="ficon">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>tracks.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="1">
-      <widget class="QLabel" name="iicon">
+      <widget class="QLabel" name="oicon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -720,7 +567,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLabel" name="dicon">
+      <widget class="QLabel" name="qicon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -741,8 +588,30 @@ color: rgb(0, 0, 0);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="aicon">
+     <item row="11" column="1">
+      <widget class="QLabel" name="wicon">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>redtrain.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="picon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -763,15 +632,37 @@ color: rgb(0, 0, 0);</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QPushButton" name="pushh">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="pusho">
        <property name="text">
-        <string>H</string>
+        <string>O</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
-      <widget class="QLabel" name="jicon">
+     <item row="9" column="0">
+      <widget class="QPushButton" name="pushu">
+       <property name="text">
+        <string>U</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="sectiontitle_2">
+       <property name="styleSheet">
+        <string notr="true">font: 700 10pt &quot;Georgia&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(221, 221, 221);</string>
+       </property>
+       <property name="text">
+        <string>Section</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLabel" name="sicon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -782,7 +673,7 @@ color: rgb(0, 0, 0);</string>
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>redtrain.png</pixmap>
+        <pixmap>tracks.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -792,36 +683,145 @@ color: rgb(0, 0, 0);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="pusha">
+     <item row="2" column="1">
+      <widget class="QLabel" name="nicon">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="text">
-        <string>A</string>
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>tracks.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QPushButton" name="pushv">
+       <property name="text">
+        <string>V</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="pushn">
+       <property name="text">
+        <string>N</string>
        </property>
       </widget>
      </item>
      <item row="13" column="0">
-      <widget class="QPushButton" name="pushl">
+      <widget class="QPushButton" name="pushy">
        <property name="text">
-        <string>L</string>
+        <string>Y</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="pushb">
+     <item row="6" column="0">
+      <widget class="QPushButton" name="pushr">
        <property name="text">
-        <string>B</string>
+        <string>R</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="ricon">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>tracks.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QLabel" name="vicon">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>tracks.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
+      <widget class="QPushButton" name="pushw">
+       <property name="text">
+        <string>W</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLabel" name="uicon">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>tracks.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="0">
+      <widget class="QPushButton" name="pushx">
+       <property name="text">
+        <string>X</string>
        </property>
       </widget>
      </item>
      <item row="14" column="0">
-      <widget class="QPushButton" name="pushm">
+      <widget class="QPushButton" name="pushz">
        <property name="text">
-        <string>M</string>
+        <string>Z</string>
        </property>
       </widget>
      </item>
      <item row="12" column="1">
-      <widget class="QLabel" name="kicon">
+      <widget class="QLabel" name="xicon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -843,7 +843,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item row="13" column="1">
-      <widget class="QLabel" name="licon">
+      <widget class="QLabel" name="yicon">
        <property name="maximumSize">
         <size>
          <width>50</width>
@@ -865,7 +865,7 @@ color: rgb(0, 0, 0);</string>
       </widget>
      </item>
      <item row="14" column="1">
-      <widget class="QLabel" name="micon">
+      <widget class="QLabel" name="zicon">
        <property name="maximumSize">
         <size>
          <width>50</width>

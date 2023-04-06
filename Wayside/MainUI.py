@@ -6,11 +6,11 @@ from PyQt6 import QtWidgets, uic
 from Track_Configuration import Ui_TrackConfig
 from blockwidget import Ui_Section
 from pathlib import Path
-from Wayside_Main_B import Ui_MainWindow
+from Wayside_Main_B import Ui_MainWindowB
 from test2 import Ui_testpopup
 import PLCParser as PLCParser
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindowB):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -73,20 +73,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cb.setEnabled(True)
         self.ga.setEnabled(True)
         self.gb.setEnabled(True)
-        test.autoC0.setEnabled(True)
-        test.autoC1.setEnabled(True)
-        test.autoG0.setEnabled(True)
-        test.autoG1.setEnabled(True)
 
     def automaticMode(self):
         self.ca.setEnabled(False)
         self.cb.setEnabled(False)
         self.ga.setEnabled(False)
         self.gb.setEnabled(False)
-        test.autoC0.setEnabled(False)
-        test.autoC1.setEnabled(False)
-        test.autoG0.setEnabled(False)
-        test.autoG1.setEnabled(False)
 
     #function for pop up window for track configuration
     def configurationWindow(self):
@@ -109,8 +101,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def changeOccupation(self):
         if self.aicon.Pixmap() == 'greentrain.png':
             self.bicon.setPixmap('redtracks.png')
-
-
 
     #change train icons
     def changeIcon(self): #laurens
@@ -246,7 +236,22 @@ class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
         self.occupancybox.currentTextChanged.connect(self.changeIcon)
 
         #change gates in auto
-        #self.autoC0.toggled.
+        self.autoC0.clicked.connect(lambda: window.toggleColor(window.ca, window.cb))
+        window.ca.setStyleSheet('background-color: SkyBlue')
+        self.autoC0.clicked.connect(lambda: window.toggleColor(window.cb, window.ca))
+        window.cb.setStyleSheet('background-color: white; color: gray')
+        window.ca.setEnabled(False)
+        window.cb.setEnabled(False)
+
+
+        # self.ca.clicked.connect(lambda: self.toggleColor(self.ca, self.cb))
+        
+        # self.cb.clicked.connect(lambda: self.toggleColor(self.cb, self.ca))
+        # self.cb.setStyleSheet('background-color: white; color: gray')
+        # self.ga.clicked.connect(lambda: self.toggleColor(self.ga, self.gb))
+        # self.ga.setStyleSheet('background-color: SkyBlue')
+        # self.gb.clicked.connect(lambda: self.toggleColor(self.gb, self.ga))
+        # self.gb.setStyleSheet('background-color: white; color: gray')
 
     def setBlockOptions(self):
         content = self.sectionbox.currentText()
