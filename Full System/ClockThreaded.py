@@ -24,6 +24,7 @@ class Clock(QThread):
         self.timer.timeout.connect(self.triggered)
 
         # connect signals
+        signals.CTCTimePause.connect(self.stopTimer)
         signals.CTCOneTimesSpeed.connect(self.oneTimes)
         signals.CTCTenTimesSpeed.connect(self.tenTimes)
 

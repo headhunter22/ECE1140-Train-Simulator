@@ -443,8 +443,29 @@ class ctcMainUI(QMainWindow):
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
 
-    def updateAuthority(self):
-        return
+    def updateAuthority(self, line, block, authority):
+        blockAuth = int(authority / 50)
+
+        if line == 'Green':
+            for rows in range(0, 149):
+                if (rows > block) and (rows < block + blockAuth):
+                    #creating table objects to update occupancy window
+                    newTrainLocation = QTableWidgetItem('')
+                    #new train location
+                    newTrainLocation.setBackground(QColor('red'))
+                    self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+                elif rows != block:
+                    #creating table objects to update occupancy window
+                    oldTrainLocation = QTableWidgetItem('')
+                    #old train location
+                    oldTrainLocation.setBackground(QColor('white'))
+                    self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
+        elif line == "Red":
+            return
+        else:
+            print("error")
+
+
 
     def updateOccupancy(self, line, block):
         if line == 'Green':
@@ -560,7 +581,7 @@ class ctcMainUI(QMainWindow):
 
     def updateTrainInfo(self, line, id, block, commSpeed, auth, dest):
         if line == 'Green':
-            for rows in range(len(self.ui.greenTrainInfoTable.rowCount())):
+            for rows in range(0, self.ui.greenTrainInfoTable.rowCount()):
                 if self.ui.greenTrainInfoTable.item(rows, 0) == id:
 
                     greenTrainBlock = QTableWidgetItem(str(block))
@@ -609,7 +630,7 @@ class ctcMainUI(QMainWindow):
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     def timePause(self):
-        signals.CTCOneTimesSpeed.emit()
+        signals.CTCTimePause.emit()
     
     def oneTimeSpeed(self):
         signals.CTCOneTimesSpeed.emit()
