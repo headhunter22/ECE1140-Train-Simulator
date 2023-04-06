@@ -389,62 +389,62 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     #!!!!!! TO DO !!!!!!!!!
     def changeOccupancy(self, block):
         print("wayside a UI block", block, "is occupied")
-        if block == '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
+        if block > 76 and block < 86: #== '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
             self.nicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '86' or '87' or '88':
+        if block > 85 and block < 89: #== '86' or '87' or '88':
             self.oicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
+        if block > 88 and block < 98: #== '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
             self.picon.setPixmap(QPixmap('greentrain.png'))
-        if block == '98' or '99' or '100':
+        if block > 97 and block < 101: #== '98' or '99' or '100':
             self.qicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '101':
+        if block > 100 and block < 102: #== '101':
             self.ricon.setPixmap(QPixmap('greentrain.png'))
-        if block == '102' or '103' or '104':
+        if block > 101 and block < 105: #== '102' or '103' or '104':
             self.sicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '105' or '106' or '107' or '108' or '109':
+        if block > 104 and block < 110: #== '105' or '106' or '107' or '108' or '109':
             self.ticon.setPixmap(QPixmap('greentrain.png'))
-        if block == '110' or '111' or '112' or '113' or '114' or '115' or '116':
+        if block > 109 and block < 117: #== '110' or '111' or '112' or '113' or '114' or '115' or '116':
             self.uicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '117' or '118' or '119' or '120' or '121':
+        if block > 116 and block < 122: #== '117' or '118' or '119' or '120' or '121':
             self.vicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
+        if block > 121 and block < 144: #== '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
             self.vicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '144' or '145' or '146':
+        if block > 143 and block < 147: #== '144' or '145' or '146':
             self.xicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '147' or '148' or '149':
+        if block > 146 and block < 150: #== '147' or '148' or '149':
             self.yicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '150':
+        if block > 149 and block < 151: #== '150':
             self.zicon.setPixmap(QPixmap('greentrain.png'))
         
 
     def changeVacancy(self, block):
         print("wayside a UI block", block, "is vacant")
-        if self == '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
-            windowA.nicon.setPixmap(QPixmap('tracks.png'))
-        if self == '86' or '87' or '88':
-            windowA.oicon.setPixmap(QPixmap('tracks.png'))
-        if self == '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
-            windowA.picon.setPixmap(QPixmap('tracks.png'))
-        if self == '98' or '99' or '100':
-            windowA.qicon.setPixmap(QPixmap('tracks.png'))
-        if self == '101':
-            windowA.ricon.setPixmap(QPixmap('tracks.png'))
-        if self == '102' or '103' or '104':
-            windowA.sicon.setPixmap(QPixmap('tracks.png'))
-        if self == '105' or '106' or '107' or '108' or '109':
-            windowA.ticon.setPixmap(QPixmap('tracks.png'))
-        if self == '110' or '111' or '112' or '113' or '114' or '115' or '116':
-            windowA.uicon.setPixmap(QPixmap('tracks.png'))
-        if self == '117' or '118' or '119' or '120' or '121':
-            windowA.vicon.setPixmap(QPixmap('tracks.png'))
-        if self == '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
-            windowA.vicon.setPixmap(QPixmap('tracks.png'))
-        if self == '144' or '145' or '146':
-            windowA.xicon.setPixmap(QPixmap('tracks.png'))
-        if self == '147' or '148' or '149':
-            windowA.yicon.setPixmap(QPixmap('tracks.png'))
-        if self == '150':
-            windowA.zicon.setPixmap(QPixmap('tracks.png'))
+        if block > 76 and block < 86: #== '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
+            self.nicon.setPixmap(QPixmap('tracks.png'))
+        if block > 85 and block < 89: #== '86' or '87' or '88':
+            self.oicon.setPixmap(QPixmap('tracks.png'))
+        if block > 88 and block < 98: #== '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
+            self.picon.setPixmap(QPixmap('tracks.png'))
+        if block > 97 and block < 101: #== '98' or '99' or '100':
+            self.qicon.setPixmap(QPixmap('tracks.png'))
+        if block > 100 and block < 102: #== '101':
+            self.ricon.setPixmap(QPixmap('tracks.png'))
+        if block > 101 and block < 105: #== '102' or '103' or '104':
+            self.sicon.setPixmap(QPixmap('tracks.png'))
+        if block > 104 and block < 110: #== '105' or '106' or '107' or '108' or '109':
+            self.ticon.setPixmap(QPixmap('tracks.png'))
+        if block > 109 and block < 117: #== '110' or '111' or '112' or '113' or '114' or '115' or '116':
+            self.uicon.setPixmap(QPixmap('tracks.png'))
+        if block > 116 and block < 122: #== '117' or '118' or '119' or '120' or '121':
+            self.vicon.setPixmap(QPixmap('tracks.png'))
+        if block > 121 and block < 144: #== '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
+            self.vicon.setPixmap(QPixmap('tracks.png'))
+        if block > 143 and block < 147: #== '144' or '145' or '146':
+            self.xicon.setPixmap(QPixmap('tracks.png'))
+        if block > 146 and block < 150: #== '147' or '148' or '149':
+            self.yicon.setPixmap(QPixmap('tracks.png'))
+        if block > 149 and block < 151: #== '150':
+            self.zicon.setPixmap(QPixmap('tracks.png'))
 
      #function for number of active trains
     #somehow counts the number of times the red train label comes up
@@ -729,60 +729,60 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
     #!!!!!! TO DO !!!!!!!!!
     def changeOccupancy(self, block):
         print("wayside b UI block", block, "is occupied")
-        if block == '1' or '2'or '3':
+        if block > 0 and block < 4:
             self.aicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '4'or '5'or '6':
+        if block > 3 and block < 7: #== '4'or '5'or '6':
             self.bicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '7' or '8' or '9' or '10' or '11' or '12':
+        if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
             self.cicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '13' or '14' or '15' or '16':
+        if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
             self.dicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '17' or '18' or '19' or '20':
+        if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
             self.eicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
+        if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
             self.ficon.setPixmap(QPixmap('greentrain.png'))
-        if block == '29' or '30' or '31' or '32':
+        if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
             self.gicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '33' or '34' or '35':
+        if block > 32 and block < 36: #== '33' or '34' or '35':
             self.hicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
+        if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
             self.iicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '58' or '59' or '60' or '61' or '62':
+        if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
             self.jicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '63' or '64' or '65' or '67' or '68':
+        if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
             self.kicon.setPixmap(QPixmap('greentrain.png'))
-        if block == '69' or '70' or '71' or '72' or '73':
+        if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
             self.licon.setPixmap(QPixmap('greentrain.png'))
-        if block == '74' or '75' or '76':
+        if block > 73 and block < 77: #== '74' or '75' or '76':
             self.micon.setPixmap(QPixmap('greentrain.png'))
 
     def changeVacancy(self, block):
         print("wayside b UI block", block, "is vacant")
-        if block == '1' or '2'or '3':
+        if block > 0 and block < 4:
             self.aicon.setPixmap(QPixmap('tracks.png'))
-        if block == '4'or '5'or '6':
+        if block > 3 and block < 7: #== '4'or '5'or '6':
             self.bicon.setPixmap(QPixmap('tracks.png'))
-        if block == '7' or '8' or '9' or '10' or '11' or '12':
+        if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
             self.cicon.setPixmap(QPixmap('tracks.png'))
-        if block == '13' or '14' or '15' or '16':
+        if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
             self.dicon.setPixmap(QPixmap('tracks.png'))
-        if block == '17' or '18' or '19' or '20':
+        if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
             self.eicon.setPixmap(QPixmap('tracks.png'))
-        if block == '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
+        if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
             self.ficon.setPixmap(QPixmap('tracks.png'))
-        if block == '29' or '30' or '31' or '32':
+        if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
             self.gicon.setPixmap(QPixmap('tracks.png'))
-        if block == '33' or '34' or '35':
+        if block > 32 and block < 36: #== '33' or '34' or '35':
             self.hicon.setPixmap(QPixmap('tracks.png'))
-        if block == '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
+        if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
             self.iicon.setPixmap(QPixmap('tracks.png'))
-        if block == '58' or '59' or '60' or '61' or '62':
+        if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
             self.jicon.setPixmap(QPixmap('tracks.png'))
-        if block == '63' or '64' or '65' or '67' or '68':
+        if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
             self.kicon.setPixmap(QPixmap('tracks.png'))
-        if block == '69' or '70' or '71' or '72' or '73':
+        if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
             self.licon.setPixmap(QPixmap('tracks.png'))
-        if block == '74' or '75' or '76':
+        if block > 73 and block < 77: #== '74' or '75' or '76':
             self.micon.setPixmap(QPixmap('tracks.png'))
 
      #function for number of active trains
@@ -790,7 +790,20 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
     def activeTrains(self, counts):
         self.activetrains.display(counts)
 
+class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
+    def __init__(self, *args, obj=None, **kwargs):
+        super(Ui_Section, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+        self.setWindowTitle('Block Information')
 
+app = QtWidgets.QApplication(sys.argv)
+windowA = WMainWindowA()
+windowB = WMainWindowB()
+#funcA = WaysideUIFunctions(windowA)
+#funcB = WaysideUIFunctions(windowB)
+# windowA.show()
+# windowB.show()
+# app.exec()
 
 class WaysideUIFunctions(QObject):
     # def __init__(self, window):
@@ -1403,21 +1416,6 @@ class WaysideUIFunctions(QObject):
     #somehow counts the number of times the red train label comes up
     def activeTrains(self, counts):
         self.activetrains.display(counts)
-
-class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
-    def __init__(self, *args, obj=None, **kwargs):
-        super(Ui_Section, self).__init__(*args, **kwargs)
-        self.setupUi(self)
-        self.setWindowTitle('Block Information')
-
-app = QtWidgets.QApplication(sys.argv)
-windowA = WMainWindowA()
-windowB = WMainWindowB()
-#funcA = WaysideUIFunctions(windowA)
-#funcB = WaysideUIFunctions(windowB)
-# windowA.show()
-# windowB.show()
-# app.exec()
 
 #test = Ui_testpopup()
 #test.show()
