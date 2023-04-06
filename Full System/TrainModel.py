@@ -17,11 +17,14 @@ class TrainModel(QObject):
         # array to hold trains
         self.trainList = []
 
+        self.serviceBrake = False
+
         # connect signals
         signals.trainModelDispatchTrain.connect(self.dispatchTrain)
         signals.trainModelUpdateCommandedSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelGetPower.connect(self.updatedPower)
         signals.trainModelGetTrack.connect(self.trackReceived)
+        signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -37,19 +40,30 @@ class TrainModel(QObject):
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
 
-    # function to update commanded speed
-    #def updateCommandedSpeed(self, trainID, commandedSpeed):
-    #
-
     def updatedPower(self, train, power):
         # get current line, block and the associated length, speed limit
         currLine = train.line
         currBlock = train.block
+        if currBlock == train.destBlock:
+            train.reachedDest = True
 
         print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
+
+        # calculate dist to stop
+        distToStop = 0
+        tempBlock = currBlock
+        offset = 1
+        while tempBlock != train.destBlock and not train.reachedDest:
+            distToStop += float(currLine.getBlock(tempBlock).length)
+            tempBlock = train.route[offset]
+            offset += 1
+
+        train.authority = distToStop - train.position
+
+        print('dist to stop: ' + str(train.authority))
 
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
@@ -59,35 +73,32 @@ class TrainModel(QObject):
         g = 9.8 # m/s^2
         friction = .006
 
-        # calculating the braking force
-        if train.emBrake == 1:
-            F_b = -2.73
-        elif train.serviceBrake == 1:
-            F_b = -1.2
-        else:
-            F_b = 0
-
-
         print('speed limit: ' + str(blockSpeedLimit))
-        # calculating acceleration
 
+        # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
         if train.actSpeed_1 == 0:
             print('not moving')
             train.An = 0.5
-
+        elif train.emBrake == 1:
+            train.An = -2.73
+        elif train.serviceBrake == 1:
+            train.An = -1.2
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > blockSpeedLimit:
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b)/M
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + F_b + (trainForce))/M
+                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:
             train.An = 0.5
+        
+        if self.serviceBrake == True: #TRAIN CONTROLLER: DONT FORGET TO CHANGE THIS SIGNAL BACK TO FALSE
+            train.An = -1.2 
 
         print('An: ' + str(train.An))
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
@@ -137,3 +148,7 @@ class TrainModel(QObject):
 
     def updateCommandedSpeed(self, train, speed):
         train.commandedSpeed = speed
+    
+    def serviceBrakeActive(self, serviceBrake):
+        self.serviceBrake = serviceBrake
+        print(int(self.serviceBrake))

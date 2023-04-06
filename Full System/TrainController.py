@@ -37,6 +37,15 @@ class TrainController(QObject):
         self.train = train
 
     def sendPower(self):
+        self.StopTime = self.train.actSpeed / 1.2
+        self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
+        signals.trainControllerAuthority.emit(self.train.authority)
+
+        if self.train.authority <= self.StopDistance:
+            self.commandedPower = 0
+
+            signals.trainControllerServiceBrake.emit(True)
+
         if self.train.actSpeed == 0:
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
@@ -54,8 +63,6 @@ class TrainController(QObject):
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
-            print(self.Kp)
-            print(self.Ki)
 
             # send actual speed #
             x = self.train.actSpeed * 2.237

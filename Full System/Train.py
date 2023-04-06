@@ -20,9 +20,11 @@ class Train(QObject):
         self.line = line
         self.block = 63
         self.position = 0.0
+        self.destBlock = destBlock
+        self.reachedDest = False
 
         # authority and speeds
-        self.authority = 3
+        self.authority = 0
         self.currentSpeed = 0
         self.suggSpeed = 70
         self.commandedSpeed = 0
@@ -40,34 +42,3 @@ class Train(QObject):
 
         # mass info
         self.baseMass = 81950 # kgs
-
-    # def sendSpeeds(self):
-    #     print('actual speed: ' + str(self.actSpeed) + ' commanded speed: ' + str(self.commandedSpeed))
-    #     self.trainController.getSpeed(self.actSpeed, self.commandedSpeed)
-        
-    # def getPower(self, power):
-    #     self.commandedPower = power
-    #     #print('got power: ' + str(power))
-
-    #     # calculate mass -> each passenger weighs 150  + train weight in grams
-    #     M = (self.numPassengers*150) + self.baseMass
-    #     theta = math.degrees(math.atan(self.track.getLine('Green').getBlock(str(self.location)).elevation))
-    #     g = 9.8 #  m/s^2
-    #     friction = .006
-    #     #calculating the braking force
-    #     if self.emBrake == 1:
-    #         F_b = -2.73
-    #     elif self.serviceBrake == 1:
-    #         F_b = -1.2
-    #     else:
-    #         F_b = 0
-
-    #     self.An = ((M*g*math.cos(theta)*friction) + (M*g*math.cos(theta)) + F_b + (self.commandedPower/self.actSpeed_1) )/M
-    #     self.actSpeed = self.actSpeed_1 + self.T/2 *(self.An - self.An_1)
-    #     self.An_1 = self.An
-    #     self.actSpeed_1 = self.actSpeed
-
-    #     # calculate force
-    #     force = 0.5 * self.baseMass
-
-    #     self.actualSpeed = self.commandedPower / force
