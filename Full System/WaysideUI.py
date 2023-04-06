@@ -15,8 +15,9 @@ from Wayside_Main_A import Ui_MainWindowA
 #from test2 import Ui_testpopup
 import PLCParser as PLCParser
 
-# MainWindowA N-Z
-# MainWindowB A-M
+# MainWindowA N-Z blue
+# MainWindowB A-M red
+
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
@@ -31,10 +32,12 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.timerTicked.connect(self.ticka)
         
         #set all switch buttons to disabled
-        self.ca.setEnabled(False)
-        self.cb.setEnabled(False)
-        self.ga.setEnabled(False)
-        self.gb.setEnabled(False)
+        self.gate20.setEnabled(False)
+        self.gate21.setEnabled(False)
+        self.gate50.setEnabled(False)
+        self.gate51.setEnabled(False)
+        self.gate60.setEnabled(False)
+        self.gate61.setEnabled(False)
 
         #set up gate buttons
         self.maintenancemode.toggled.connect(self.maintenanceMode)
@@ -42,14 +45,18 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
         #switch button colors
         self.automaticmode.setDown(True)
-        self.ca.clicked.connect(lambda: self.toggleColor(self.ca, self.cb))
-        self.ca.setStyleSheet('background-color: SkyBlue')
-        self.cb.clicked.connect(lambda: self.toggleColor(self.cb, self.ca))
-        self.cb.setStyleSheet('background-color: white; color: gray')
-        self.ga.clicked.connect(lambda: self.toggleColor(self.ga, self.gb))
-        self.ga.setStyleSheet('background-color: SkyBlue')
-        self.gb.clicked.connect(lambda: self.toggleColor(self.gb, self.ga))
-        self.gb.setStyleSheet('background-color: white; color: gray')
+        self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
+        self.gate21.setStyleSheet('background-color: SkyBlue')
+        self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
+        self.gate20.setStyleSheet('background-color: white; color: gray')
+        self.gate50.clicked.connect(lambda: self.toggleColor(self.gate50, self.gate51))
+        self.gate51.setStyleSheet('background-color: SkyBlue')
+        self.gate51.clicked.connect(lambda: self.toggleColor(self.gate51, self.gate50))
+        self.gate50.setStyleSheet('background-color: white; color: gray')
+        self.gate60.clicked.connect(lambda: self.toggleColor(self.gate60, self.gate61))
+        self.gate61.setStyleSheet('background-color: SkyBlue')
+        self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
+        self.gate60.setStyleSheet('background-color: white; color: gray')
 
         #pop up windows
         #self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
@@ -81,7 +88,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
         #lights
         self.reda.setPixmap(QPixmap('redlight.png'))
-        self.greenb.setPixmap(QPixmap('greenlight.png'))
+        #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
     def ticka(self, hrs, mins, secs):
         #print("wayside ticking in class a")
@@ -91,17 +98,21 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def maintenanceMode(self):  
         #print("in maintenance mode") 
-        self.ca.setEnabled(True)
-        self.cb.setEnabled(True)
-        self.ga.setEnabled(True)
-        self.gb.setEnabled(True)
+        self.gate20.setEnabled(True)
+        self.gate21.setEnabled(True)
+        self.gate50.setEnabled(True)
+        self.gate51.setEnabled(True)
+        self.gate60.setEnabled(True)
+        self.gate61.setEnabled(True)
 
     def automaticMode(self):
         #print("in automatic mode") 
-        self.ca.setEnabled(False)
-        self.cb.setEnabled(False)
-        self.ga.setEnabled(False)
-        self.gb.setEnabled(False)
+        self.gate20.setEnabled(False)
+        self.gate21.setEnabled(False)
+        self.gate50.setEnabled(False)
+        self.gate51.setEnabled(False)
+        self.gate60.setEnabled(False)
+        self.gate61.setEnabled(False)
 
     def configurationWindow(self):
         self.trackconfiguration.clicked.connect(self.runParser)
@@ -469,21 +480,46 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         signals.timerTicked.connect(self.tickb)
         
         #set all switch buttons to disabled
-        self.ca.setEnabled(False)
-        self.cb.setEnabled(False)
-        self.ga.setEnabled(False)
-        self.gb.setEnabled(False)
+        self.gate10.setEnabled(False)
+        self.gate11.setEnabled(False)
+        self.gate20.setEnabled(False)
+        self.gate21.setEnabled(False)
+        self.gate30.setEnabled(False)
+        self.gate31.setEnabled(False)
+        self.gate40.setEnabled(False)
+        self.gate41.setEnabled(False)
+        self.gate50.setEnabled(False)
+        self.gate51.setEnabled(False)
+        self.gate60.setEnabled(False)
+        self.gate61.setEnabled(False)
 
         #switch button colors
         self.automaticmode.setDown(True)
-        self.ca.clicked.connect(lambda: self.toggleColor(self.ca, self.cb))
-        self.ca.setStyleSheet('background-color: SkyBlue')
-        self.cb.clicked.connect(lambda: self.toggleColor(self.cb, self.ca))
-        self.cb.setStyleSheet('background-color: white; color: gray')
-        self.ga.clicked.connect(lambda: self.toggleColor(self.ga, self.gb))
-        self.ga.setStyleSheet('background-color: SkyBlue')
-        self.gb.clicked.connect(lambda: self.toggleColor(self.gb, self.ga))
-        self.gb.setStyleSheet('background-color: white; color: gray')
+        self.automaticmode.setDown(True)
+        self.gate10.clicked.connect(lambda: self.toggleColor(self.gate10, self.gate11))
+        self.gate11.setStyleSheet('background-color: SkyBlue')
+        self.gate11.clicked.connect(lambda: self.toggleColor(self.gate11, self.gate10))
+        self.gate10.setStyleSheet('background-color: white; color: gray')
+        self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
+        self.gate21.setStyleSheet('background-color: SkyBlue')
+        self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
+        self.gate20.setStyleSheet('background-color: white; color: gray')
+        self.gate30.clicked.connect(lambda: self.toggleColor(self.gate30, self.gate31))
+        self.gate31.setStyleSheet('background-color: SkyBlue')
+        self.gate31.clicked.connect(lambda: self.toggleColor(self.gate31, self.gate30))
+        self.gate30.setStyleSheet('background-color: white; color: gray')
+        self.gate40.clicked.connect(lambda: self.toggleColor(self.gate40, self.gate41))
+        self.gate41.setStyleSheet('background-color: SkyBlue')
+        self.gate41.clicked.connect(lambda: self.toggleColor(self.gate41, self.gate40))
+        self.gate40.setStyleSheet('background-color: white; color: gray')
+        self.gate50.clicked.connect(lambda: self.toggleColor(self.gate50, self.gate51))
+        self.gate51.setStyleSheet('background-color: SkyBlue')
+        self.gate51.clicked.connect(lambda: self.toggleColor(self.gate51, self.gate50))
+        self.gate50.setStyleSheet('background-color: white; color: gray')
+        self.gate60.clicked.connect(lambda: self.toggleColor(self.gate60, self.gate61))
+        self.gate61.setStyleSheet('background-color: SkyBlue')
+        self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
+        self.gate60.setStyleSheet('background-color: white; color: gray')
 
         #pop up windows
         self.trackconfiguration.clicked.connect(self.configurationWindow)
@@ -519,7 +555,7 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
 
         #lights
         self.reda.setPixmap(QPixmap('redlight.png'))
-        self.greenb.setPixmap(QPixmap('greenlight.png'))
+        #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
     def tickb(self, hrs, mins, secs):
         #print("wayside ticking in class b")
@@ -529,17 +565,33 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
 
     def maintenanceMode(self):  
         #print("in maintenance mode") 
-        self.ca.setEnabled(True)
-        self.cb.setEnabled(True)
-        self.ga.setEnabled(True)
-        self.gb.setEnabled(True)
+        self.gate10.setEnabled(True)
+        self.gate11.setEnabled(True)
+        self.gate20.setEnabled(True)
+        self.gate21.setEnabled(True)
+        self.gate30.setEnabled(True)
+        self.gate31.setEnabled(True)
+        self.gate40.setEnabled(True)
+        self.gate41.setEnabled(True)
+        self.gate50.setEnabled(True)
+        self.gate51.setEnabled(True)
+        self.gate60.setEnabled(True)
+        self.gate61.setEnabled(True)
 
     def automaticMode(self):
         #print("in automatic mode") 
-        self.ca.setEnabled(False)
-        self.cb.setEnabled(False)
-        self.ga.setEnabled(False)
-        self.gb.setEnabled(False)
+        self.gate10.setEnabled(False)
+        self.gate11.setEnabled(False)
+        self.gate20.setEnabled(False)
+        self.gate21.setEnabled(False)
+        self.gate30.setEnabled(False)
+        self.gate31.setEnabled(False)
+        self.gate40.setEnabled(False)
+        self.gate41.setEnabled(False)
+        self.gate50.setEnabled(False)
+        self.gate51.setEnabled(False)
+        self.gate60.setEnabled(False)
+        self.gate61.setEnabled(False)
 
     #function for pop up window for track configuration
     def configurationWindow(self):
@@ -801,9 +853,9 @@ windowA = WMainWindowA()
 windowB = WMainWindowB()
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
-# windowA.show()
-# windowB.show()
-# app.exec()
+windowA.show()
+windowB.show()
+app.exec()
 
 class WaysideUIFunctions(QObject):
     # def __init__(self, window):
