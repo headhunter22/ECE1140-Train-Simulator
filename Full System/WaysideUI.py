@@ -88,7 +88,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.activetrains.display(counts)
 
         #lights
-        self.reda.setPixmap(QPixmap('redlight.png'))
+        self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
     def ticka(self, hrs, mins, secs):
@@ -427,6 +427,22 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.yicon.setPixmap(QPixmap('greentrain.png'))
         if block > 149 and block < 151: #== '150':
             self.zicon.setPixmap(QPixmap('greentrain.png'))
+        if block == 74:
+            self.gate50.setStyleSheet('background-color: SkyBlue')
+            self.gate51.setStyleSheet('background-color: white; color: gray')
+        if block == 83:
+            self.gate60.setStyleSheet('background-color: SkyBlue')
+            self.gate61.setStyleSheet('background-color: white; color: gray')
+        if block == 98:
+            self.gate61.setStyleSheet('background-color: SkyBlue')
+            self.gate60.setStyleSheet('background-color: white; color: gray')
+        if block == 79:
+            self.gate51.setStyleSheet('background-color: SkyBlue')
+            self.gate50.setStyleSheet('background-color: white; color: gray')
+        if block == 148:
+            self.gate20.setStyleSheet('background-color: SkyBlue')
+            self.gate21.setStyleSheet('background-color: white; color: gray')
+        
         
 
     def changeVacancy(self, block):
@@ -481,6 +497,8 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         signals.timerTicked.connect(self.tickb)
         signals.wtowTrainCount.connect(self.activeTrains)
         
+        
+
         #set all switch buttons to disabled
         self.gate10.setEnabled(False)
         self.gate11.setEnabled(False)
@@ -499,17 +517,17 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         self.automaticmode.setDown(True)
         self.automaticmode.setDown(True)
         self.gate10.clicked.connect(lambda: self.toggleColor(self.gate10, self.gate11))
-        self.gate11.setStyleSheet('background-color: SkyBlue')
+        self.gate10.setStyleSheet('background-color: SkyBlue')
         self.gate11.clicked.connect(lambda: self.toggleColor(self.gate11, self.gate10))
-        self.gate10.setStyleSheet('background-color: white; color: gray')
+        self.gate11.setStyleSheet('background-color: white; color: gray')
         self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
         self.gate21.setStyleSheet('background-color: SkyBlue')
         self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
         self.gate20.setStyleSheet('background-color: white; color: gray')
         self.gate30.clicked.connect(lambda: self.toggleColor(self.gate30, self.gate31))
-        self.gate31.setStyleSheet('background-color: SkyBlue')
+        self.gate30.setStyleSheet('background-color: SkyBlue')
         self.gate31.clicked.connect(lambda: self.toggleColor(self.gate31, self.gate30))
-        self.gate30.setStyleSheet('background-color: white; color: gray')
+        self.gate31.setStyleSheet('background-color: white; color: gray')
         self.gate40.clicked.connect(lambda: self.toggleColor(self.gate40, self.gate41))
         self.gate41.setStyleSheet('background-color: SkyBlue')
         self.gate41.clicked.connect(lambda: self.toggleColor(self.gate41, self.gate40))
@@ -556,7 +574,7 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         self.activetrains.display(counts)
 
         #lights
-        self.reda.setPixmap(QPixmap('redlight.png'))
+        self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
     def tickb(self, hrs, mins, secs):
@@ -809,6 +827,33 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
             self.licon.setPixmap(QPixmap('greentrain.png'))
         if block > 73 and block < 77: #== '74' or '75' or '76':
             self.micon.setPixmap(QPixmap('greentrain.png'))
+        if block == 74:
+            self.gate50.setStyleSheet('background-color: SkyBlue')
+            self.gate51.setStyleSheet('background-color: white; color: gray')
+        if block == 83:
+            self.gate60.setStyleSheet('background-color: SkyBlue')
+            self.gate61.setStyleSheet('background-color: white; color: gray')
+        if block == 98:
+            self.gate61.setStyleSheet('background-color: SkyBlue')
+            self.gate60.setStyleSheet('background-color: white; color: gray')
+        if block == 79:
+            self.gate51.setStyleSheet('background-color: SkyBlue')
+            self.gate50.setStyleSheet('background-color: white; color: gray')
+        if block == 148:
+            self.gate20.setStyleSheet('background-color: SkyBlue')
+            self.gate21.setStyleSheet('background-color: white; color: gray')
+        if block == 11:
+            self.gate11.setStyleSheet('background-color: SkyBlue')
+            self.gate10.setStyleSheet('background-color: white; color: gray')
+        if block == 2:
+            self.gate10.setStyleSheet('background-color: SkyBlue')
+            self.gate11.setStyleSheet('background-color: white; color: gray')
+        if block == 27:
+            self.gate21.setStyleSheet('background-color: SkyBlue')
+            self.gate20.setStyleSheet('background-color: white; color: gray')
+        if block == 55:
+            self.gate31.setStyleSheet('background-color: SkyBlue')
+            self.gate30.setStyleSheet('background-color: white; color: gray')
 
     def changeVacancy(self, block):
         print("wayside b UI block", block, "is vacant")
@@ -855,9 +900,9 @@ windowA = WMainWindowA()
 windowB = WMainWindowB()
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
-windowA.show()
-windowB.show()
-app.exec()
+# windowA.show()
+# windowB.show()
+# app.exec()
 
 class WaysideUIFunctions(QObject):
     # def __init__(self, window):
