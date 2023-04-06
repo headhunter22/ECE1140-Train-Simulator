@@ -8,6 +8,7 @@ from Train import Train
 from TrainController import TrainController
 from signals import signals
 import math
+import time
 
 class TrainModel(QObject):
 
@@ -112,13 +113,9 @@ class TrainModel(QObject):
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            #print(" done waiting")
-            
-            #train.An = 0.5
+            time.sleep(1)
             self.serviceBrake = False
-            #train.actSpeed = 1
-            
-            
+
 
         prevPos = train.position
 
@@ -127,9 +124,13 @@ class TrainModel(QObject):
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
             train.block = train.route[1]
-            currPos = currPos - int(currBlockSize)
-            train.position = currPos
-            train.route.pop(0)
+            if (train.block == 57):
+                self.actSpeed = 0
+                print("REACHED THE END OF THE LINE!!")
+            else:
+                currPos = currPos - int(currBlockSize)
+                train.position = currPos
+                train.route.pop(0)
 
             #if len(train.route) == 0:
                 # update train speed to 0 and delete train
@@ -153,6 +154,9 @@ class TrainModel(QObject):
         # set previous variables
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
+
+        if (train.block == 57):
+            train.actSpeed = 0
 
         #sending all signals to the display
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
