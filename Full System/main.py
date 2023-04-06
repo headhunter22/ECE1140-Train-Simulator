@@ -23,7 +23,7 @@ from TrainModelUI import TrainModelUI
 from ctcUI import ctcMainUI
 from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
-from WaysideUI import WMainWindowA, WMainWindowB
+from WaysideUI import WMainWindowA, WMainWindowB, WaysideUIFunctions
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
@@ -47,6 +47,8 @@ trainModUI = TrainModelUI()
 trainConUI = TrainControllerUI()
 waysideUIA = WMainWindowA()
 waysideUIB = WMainWindowB()
+#funcA = WaysideUIFunctions(waysideUIA)
+#funcB = WaysideUIFunctions(waysideUIB)
 
 # dispatch a test train
 #ctcOffice.dispatch('Green', 1)
