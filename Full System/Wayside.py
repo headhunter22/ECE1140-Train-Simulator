@@ -62,12 +62,12 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, block):
         print("block occupancy from track model")
         print(". py block", block, "is occupied")
-        signals.wtowOccupancy.emit(block)
+        signals.wtowOccupancy.emit(lambda: block)
     
     def blockVacancyReceived(self, block):
         print("block vacancy from track model")
         print(".py block", block, "is vacant")
-        signals.wtowVacancy.emit(block)
+        signals.wtowVacancy.emit(lambda: block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
