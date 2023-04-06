@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QObject
 from PyQt6 import QtWidgets, uic
 from signals import signals
 
@@ -26,8 +26,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.setWindowTitle('Wayside Main UI')
 
         #signals
-        signals.wtowOccupancy.connect(WaysideUIFunctions.changeOccupancy)
-        signals.wtowVacancy.connect(WaysideUIFunctions.changeVacancy)
+        #signals.wtowOccupancy.connect(WaysideUIFunctions.changeOccupancy)
+        #signals.wtowVacancy.connect(WaysideUIFunctions.changeVacancy)
+        
         
         #set all switch buttons to disabled
         self.ca.setEnabled(False)
@@ -91,8 +92,8 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         self.setWindowTitle('Wayside Main UI')
 
         #signals
-        signals.wtowOccupancy.connect(WaysideUIFunctions.changeOccupancy)
-        signals.wtowVacancy.connect(WaysideUIFunctions.changeVacancy)
+        # signals.wtowOccupancy.connect(WaysideUIFunctions.changeOccupancy)
+        # signals.wtowVacancy.connect(WaysideUIFunctions.changeVacancy)
         
         #set all switch buttons to disabled
         self.ca.setEnabled(False)
@@ -146,8 +147,30 @@ class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
         self.reda.setPixmap(QPixmap('redlight.png'))
         self.greenb.setPixmap(QPixmap('greenlight.png'))
 
-class WaysideUIFunctions(QtWidgets.QMainWindow, Ui_MainWindowA, Ui_MainWindowB):
+    #     class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
+    # def __init__(self, *args, obj=None, **kwargs):
+    #     super(WMainWindowB, self).__init__(*args, **kwargs)
+
+class WaysideUIFunctions(QObject):
+    def __init__(self, window):
+        super().__init__()
+        #signals.waysideUpdateOccupancy.connect(WaysideUIFunctions.changeOccupancy)
+        #signals.waysideUpdateVacancy.connect(WaysideUIFunctions.changeVacancy)
+        signals.wtowOccupancy.connect(WaysideUIFunctions.changeOccupancy)
+        signals.wtowVacancy.connect(WaysideUIFunctions.changeVacancy)
+        signals.timerTicked.connect(WaysideUIFunctions.tick)
     #function for maintenance mode 
+
+    def tick(hrs, mins, secs):
+        #print("wayside ticking")
+        
+        timenow = str(hrs)+":"+str(mins)+":"+str(secs)
+        #print(timenow)
+        windowA.time.setText(timenow)
+        windowB.time.setText(timenow)
+        #windowA.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+        #windowB.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+
     def maintenanceMode(self):  
         #print("in maintenance mode") 
         windowA.ca.setEnabled(True)
@@ -173,8 +196,8 @@ class WaysideUIFunctions(QtWidgets.QMainWindow, Ui_MainWindowA, Ui_MainWindowB):
     #function for pop up window for track configuration
     def configurationWindow(self):
         #self.tc = TrackConfig()
-        windowA.trackconfiguration.clicked.connect(self.runParser)
-        windowB.trackconfiguration.clicked.connect(self.runParser)
+        windowA.trackconfiguration.clicked.connect(WaysideUIFunctions.runParser)
+        windowB.trackconfiguration.clicked.connect(WaysideUIFunctions.runParser)
         #self.tc.show()
 
     def runParser(self):
@@ -542,11 +565,8 @@ class WaysideUIFunctions(QtWidgets.QMainWindow, Ui_MainWindowA, Ui_MainWindowB):
             windowA.bl.eicon.hide()
             windowA.bl.show()
 
-        #windowA.bl.show()
-        #windowB.bl.show()
-
     #function for toggle switch colors but see if you can do labels instead of buttons??
-    def toggleColor(button1, button2): #adams
+    def toggleColor(button1, button2):
         button1.setEnabled(False)
         button2.setEnabled(True)
         button1.setStyleSheet('background-color: SkyBlue; color: black')
@@ -554,8 +574,8 @@ class WaysideUIFunctions(QtWidgets.QMainWindow, Ui_MainWindowA, Ui_MainWindowB):
 
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
-    def changeOccupancy(self, block):
-        print("UI block", block, "is occupied")
+    def changeOccupancy(block):
+        #print("UI block", block, "is occupied")
         if block == '1' or '2'or '3':
             windowB.aicon.setPixmap(QPixmap('greentrain.png'))
         elif block == '4'or '5'or '6':
@@ -609,8 +629,8 @@ class WaysideUIFunctions(QtWidgets.QMainWindow, Ui_MainWindowA, Ui_MainWindowB):
         elif block == '150':
             windowA.zicon.setPixmap(QPixmap('greentrain.png'))
 
-    def changeVacancy(self, block):
-        print("UI block", block, "is vacant")
+    def changeVacancy(block):
+        #print("UI block", block, "is vacant")
         if block == '1' or '2'or '3':
             windowB.aicon.setPixmap(QPixmap('tracks.png'))
         elif block == '4'or '5'or '6':
@@ -750,6 +770,8 @@ class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
 app = QtWidgets.QApplication(sys.argv)
 windowA = WMainWindowA()
 windowB = WMainWindowB()
+funcA = WaysideUIFunctions(windowA)
+funcB = WaysideUIFunctions(windowB)
 # windowA.show()
 # windowB.show()
 # app.exec()
