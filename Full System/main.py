@@ -52,14 +52,25 @@ waysideUIB = WMainWindowB()
 
 # dispatch a test train
 #ctcOffice.dispatch('Green', 1)
-
-ctcUI.show()
-trackUI.show()
-trainConUI.show()
-trainModUI.show()
-waysideUIA.show()
-waysideUIB.show()
-
+if len(sys.argv) == 1:
+    ctcUI.show()
+    waysideUIA.show()
+    waysideUIB.show()
+    trackUI.show()
+    trainModUI.show()
+    trainConUI.show()
+elif sys.argv[1] == 'ctc':
+    ctcUI.show()
+elif sys.argv[1] == 'wayside':
+    waysideUIA.show()
+    waysideUIB.show() 
+elif sys.argv[1] == 'track':
+    trackUI.show()
+elif sys.argv[1] == 'train':
+    trainModUI.show()
+elif sys.argv[1] == 'controller':
+    trainConUI.show()
+    
 app.exec()
 
 # show CTC window

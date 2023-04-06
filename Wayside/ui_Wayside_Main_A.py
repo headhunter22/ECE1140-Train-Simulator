@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Wayside_Main_B.ui'
+## Form generated from reading UI file 'Wayside_Main_A.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.2
 ##
@@ -20,12 +20,12 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QPushButton, QRadioButton, QSizePolicy, QStatusBar,
     QVBoxLayout, QWidget)
 
-class Ui_MainWindowB(object):
-    def setupUi(self, MainWindowB):
-        if not MainWindowB.objectName():
-            MainWindowB.setObjectName(u"MainWindowB")
-        MainWindowB.resize(724, 737)
-        self.centralwidget = QWidget(MainWindowB)
+class Ui_MainWindowA(object):
+    def setupUi(self, MainWindowA):
+        if not MainWindowA.objectName():
+            MainWindowA.setObjectName(u"MainWindowA")
+        MainWindowA.resize(724, 737)
+        self.centralwidget = QWidget(MainWindowA)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget_8 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_8.setObjectName(u"verticalLayoutWidget_8")
@@ -298,41 +298,88 @@ class Ui_MainWindowB(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setHorizontalSpacing(20)
         self.gridLayout_4.setContentsMargins(0, 0, 9, 0)
-        self.hicon = QLabel(self.gridLayoutWidget_3)
-        self.hicon.setObjectName(u"hicon")
-        self.hicon.setMaximumSize(QSize(50, 50))
-        self.hicon.setPixmap(QPixmap(u"tracks.png"))
-        self.hicon.setScaledContents(True)
-        self.hicon.setAlignment(Qt.AlignCenter)
+        self.pushp = QPushButton(self.gridLayoutWidget_3)
+        self.pushp.setObjectName(u"pushp")
 
-        self.gridLayout_4.addWidget(self.hicon, 9, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushp, 4, 0, 1, 1)
 
-        self.gicon = QLabel(self.gridLayoutWidget_3)
-        self.gicon.setObjectName(u"gicon")
-        self.gicon.setMaximumSize(QSize(50, 50))
-        self.gicon.setPixmap(QPixmap(u"tracks.png"))
-        self.gicon.setScaledContents(True)
-        self.gicon.setAlignment(Qt.AlignCenter)
+        self.pusht = QPushButton(self.gridLayoutWidget_3)
+        self.pusht.setObjectName(u"pusht")
 
-        self.gridLayout_4.addWidget(self.gicon, 8, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pusht, 8, 0, 1, 1)
 
-        self.eicon = QLabel(self.gridLayoutWidget_3)
-        self.eicon.setObjectName(u"eicon")
-        self.eicon.setMaximumSize(QSize(50, 50))
-        self.eicon.setPixmap(QPixmap(u"tracks.png"))
-        self.eicon.setScaledContents(True)
-        self.eicon.setAlignment(Qt.AlignCenter)
+        self.pushs = QPushButton(self.gridLayoutWidget_3)
+        self.pushs.setObjectName(u"pushs")
 
-        self.gridLayout_4.addWidget(self.eicon, 6, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushs, 7, 0, 1, 1)
 
-        self.bicon = QLabel(self.gridLayoutWidget_3)
-        self.bicon.setObjectName(u"bicon")
-        self.bicon.setMaximumSize(QSize(50, 50))
-        self.bicon.setPixmap(QPixmap(u"tracks.png"))
-        self.bicon.setScaledContents(True)
-        self.bicon.setAlignment(Qt.AlignCenter)
+        self.pushq = QPushButton(self.gridLayoutWidget_3)
+        self.pushq.setObjectName(u"pushq")
 
-        self.gridLayout_4.addWidget(self.bicon, 3, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushq, 5, 0, 1, 1)
+
+        self.occupancylabel_2 = QLabel(self.gridLayoutWidget_3)
+        self.occupancylabel_2.setObjectName(u"occupancylabel_2")
+        self.occupancylabel_2.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
+"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+
+        self.gridLayout_4.addWidget(self.occupancylabel_2, 1, 1, 1, 1)
+
+        self.ticon = QLabel(self.gridLayoutWidget_3)
+        self.ticon.setObjectName(u"ticon")
+        self.ticon.setMaximumSize(QSize(50, 50))
+        self.ticon.setPixmap(QPixmap(u"tracks.png"))
+        self.ticon.setScaledContents(True)
+        self.ticon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.ticon, 8, 1, 1, 1)
+
+        self.oicon = QLabel(self.gridLayoutWidget_3)
+        self.oicon.setObjectName(u"oicon")
+        self.oicon.setMaximumSize(QSize(50, 50))
+        self.oicon.setPixmap(QPixmap(u"tracks.png"))
+        self.oicon.setScaledContents(True)
+        self.oicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.oicon, 3, 1, 1, 1)
+
+        self.qicon = QLabel(self.gridLayoutWidget_3)
+        self.qicon.setObjectName(u"qicon")
+        self.qicon.setMaximumSize(QSize(50, 50))
+        self.qicon.setPixmap(QPixmap(u"redtrain.png"))
+        self.qicon.setScaledContents(True)
+        self.qicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.qicon, 5, 1, 1, 1)
+
+        self.wicon = QLabel(self.gridLayoutWidget_3)
+        self.wicon.setObjectName(u"wicon")
+        self.wicon.setMaximumSize(QSize(50, 50))
+        self.wicon.setPixmap(QPixmap(u"redtrain.png"))
+        self.wicon.setScaledContents(True)
+        self.wicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.wicon, 11, 1, 1, 1)
+
+        self.picon = QLabel(self.gridLayoutWidget_3)
+        self.picon.setObjectName(u"picon")
+        self.picon.setMaximumSize(QSize(50, 50))
+        self.picon.setPixmap(QPixmap(u"tracks.png"))
+        self.picon.setScaledContents(True)
+        self.picon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.picon, 4, 1, 1, 1)
+
+        self.pusho = QPushButton(self.gridLayoutWidget_3)
+        self.pusho.setObjectName(u"pusho")
+
+        self.gridLayout_4.addWidget(self.pusho, 3, 0, 1, 1)
+
+        self.pushu = QPushButton(self.gridLayoutWidget_3)
+        self.pushu.setObjectName(u"pushu")
+
+        self.gridLayout_4.addWidget(self.pushu, 9, 0, 1, 1)
 
         self.sectiontitle_2 = QLabel(self.gridLayoutWidget_3)
         self.sectiontitle_2.setObjectName(u"sectiontitle_2")
@@ -343,159 +390,112 @@ class Ui_MainWindowB(object):
 
         self.gridLayout_4.addWidget(self.sectiontitle_2, 1, 0, 1, 1)
 
-        self.pushf = QPushButton(self.gridLayoutWidget_3)
-        self.pushf.setObjectName(u"pushf")
+        self.sicon = QLabel(self.gridLayoutWidget_3)
+        self.sicon.setObjectName(u"sicon")
+        self.sicon.setMaximumSize(QSize(50, 50))
+        self.sicon.setPixmap(QPixmap(u"tracks.png"))
+        self.sicon.setScaledContents(True)
+        self.sicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushf, 7, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.sicon, 7, 1, 1, 1)
 
-        self.pushj = QPushButton(self.gridLayoutWidget_3)
-        self.pushj.setObjectName(u"pushj")
+        self.nicon = QLabel(self.gridLayoutWidget_3)
+        self.nicon.setObjectName(u"nicon")
+        self.nicon.setMaximumSize(QSize(50, 50))
+        self.nicon.setPixmap(QPixmap(u"tracks.png"))
+        self.nicon.setScaledContents(True)
+        self.nicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushj, 11, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.nicon, 2, 1, 1, 1)
 
-        self.pushi = QPushButton(self.gridLayoutWidget_3)
-        self.pushi.setObjectName(u"pushi")
+        self.pushv = QPushButton(self.gridLayoutWidget_3)
+        self.pushv.setObjectName(u"pushv")
 
-        self.gridLayout_4.addWidget(self.pushi, 10, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.pushv, 10, 0, 1, 1)
 
-        self.pushd = QPushButton(self.gridLayoutWidget_3)
-        self.pushd.setObjectName(u"pushd")
+        self.pushn = QPushButton(self.gridLayoutWidget_3)
+        self.pushn.setObjectName(u"pushn")
 
-        self.gridLayout_4.addWidget(self.pushd, 5, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.pushn, 2, 0, 1, 1)
 
-        self.pushe = QPushButton(self.gridLayoutWidget_3)
-        self.pushe.setObjectName(u"pushe")
+        self.pushy = QPushButton(self.gridLayoutWidget_3)
+        self.pushy.setObjectName(u"pushy")
 
-        self.gridLayout_4.addWidget(self.pushe, 6, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.pushy, 13, 0, 1, 1)
 
-        self.occupancylabel_2 = QLabel(self.gridLayoutWidget_3)
-        self.occupancylabel_2.setObjectName(u"occupancylabel_2")
-        self.occupancylabel_2.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
-"font: 700 10pt \"Georgia\";\n"
-"color: rgb(0, 0, 0);")
+        self.pushr = QPushButton(self.gridLayoutWidget_3)
+        self.pushr.setObjectName(u"pushr")
 
-        self.gridLayout_4.addWidget(self.occupancylabel_2, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushr, 6, 0, 1, 1)
 
-        self.cicon = QLabel(self.gridLayoutWidget_3)
-        self.cicon.setObjectName(u"cicon")
-        self.cicon.setMaximumSize(QSize(50, 50))
-        self.cicon.setPixmap(QPixmap(u"tracks.png"))
-        self.cicon.setScaledContents(True)
-        self.cicon.setAlignment(Qt.AlignCenter)
+        self.ricon = QLabel(self.gridLayoutWidget_3)
+        self.ricon.setObjectName(u"ricon")
+        self.ricon.setMaximumSize(QSize(50, 50))
+        self.ricon.setPixmap(QPixmap(u"tracks.png"))
+        self.ricon.setScaledContents(True)
+        self.ricon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.cicon, 4, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.ricon, 6, 1, 1, 1)
 
-        self.pushc = QPushButton(self.gridLayoutWidget_3)
-        self.pushc.setObjectName(u"pushc")
+        self.vicon = QLabel(self.gridLayoutWidget_3)
+        self.vicon.setObjectName(u"vicon")
+        self.vicon.setMaximumSize(QSize(50, 50))
+        self.vicon.setPixmap(QPixmap(u"tracks.png"))
+        self.vicon.setScaledContents(True)
+        self.vicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushc, 4, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.vicon, 10, 1, 1, 1)
 
-        self.pushk = QPushButton(self.gridLayoutWidget_3)
-        self.pushk.setObjectName(u"pushk")
+        self.pushw = QPushButton(self.gridLayoutWidget_3)
+        self.pushw.setObjectName(u"pushw")
 
-        self.gridLayout_4.addWidget(self.pushk, 12, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.pushw, 11, 0, 1, 1)
 
-        self.pushg = QPushButton(self.gridLayoutWidget_3)
-        self.pushg.setObjectName(u"pushg")
+        self.uicon = QLabel(self.gridLayoutWidget_3)
+        self.uicon.setObjectName(u"uicon")
+        self.uicon.setMaximumSize(QSize(50, 50))
+        self.uicon.setPixmap(QPixmap(u"tracks.png"))
+        self.uicon.setScaledContents(True)
+        self.uicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushg, 8, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.uicon, 9, 1, 1, 1)
 
-        self.ficon = QLabel(self.gridLayoutWidget_3)
-        self.ficon.setObjectName(u"ficon")
-        self.ficon.setMaximumSize(QSize(50, 50))
-        self.ficon.setPixmap(QPixmap(u"tracks.png"))
-        self.ficon.setScaledContents(True)
-        self.ficon.setAlignment(Qt.AlignCenter)
+        self.pushx = QPushButton(self.gridLayoutWidget_3)
+        self.pushx.setObjectName(u"pushx")
 
-        self.gridLayout_4.addWidget(self.ficon, 7, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushx, 12, 0, 1, 1)
 
-        self.iicon = QLabel(self.gridLayoutWidget_3)
-        self.iicon.setObjectName(u"iicon")
-        self.iicon.setMaximumSize(QSize(50, 50))
-        self.iicon.setPixmap(QPixmap(u"tracks.png"))
-        self.iicon.setScaledContents(True)
-        self.iicon.setAlignment(Qt.AlignCenter)
+        self.pushz = QPushButton(self.gridLayoutWidget_3)
+        self.pushz.setObjectName(u"pushz")
 
-        self.gridLayout_4.addWidget(self.iicon, 10, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushz, 14, 0, 1, 1)
 
-        self.dicon = QLabel(self.gridLayoutWidget_3)
-        self.dicon.setObjectName(u"dicon")
-        self.dicon.setMaximumSize(QSize(50, 50))
-        self.dicon.setPixmap(QPixmap(u"redtrain.png"))
-        self.dicon.setScaledContents(True)
-        self.dicon.setAlignment(Qt.AlignCenter)
+        self.xicon = QLabel(self.gridLayoutWidget_3)
+        self.xicon.setObjectName(u"xicon")
+        self.xicon.setMaximumSize(QSize(50, 50))
+        self.xicon.setPixmap(QPixmap(u"tracks.png"))
+        self.xicon.setScaledContents(True)
+        self.xicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.dicon, 5, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.xicon, 12, 1, 1, 1)
 
-        self.aicon = QLabel(self.gridLayoutWidget_3)
-        self.aicon.setObjectName(u"aicon")
-        self.aicon.setMaximumSize(QSize(50, 50))
-        self.aicon.setPixmap(QPixmap(u"tracks.png"))
-        self.aicon.setScaledContents(True)
-        self.aicon.setAlignment(Qt.AlignCenter)
+        self.yicon = QLabel(self.gridLayoutWidget_3)
+        self.yicon.setObjectName(u"yicon")
+        self.yicon.setMaximumSize(QSize(50, 50))
+        self.yicon.setPixmap(QPixmap(u"tracks.png"))
+        self.yicon.setScaledContents(True)
+        self.yicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.aicon, 2, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.yicon, 13, 1, 1, 1)
 
-        self.pushh = QPushButton(self.gridLayoutWidget_3)
-        self.pushh.setObjectName(u"pushh")
+        self.zicon = QLabel(self.gridLayoutWidget_3)
+        self.zicon.setObjectName(u"zicon")
+        self.zicon.setMaximumSize(QSize(50, 50))
+        self.zicon.setPixmap(QPixmap(u"tracks.png"))
+        self.zicon.setScaledContents(True)
+        self.zicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushh, 9, 0, 1, 1)
-
-        self.jicon = QLabel(self.gridLayoutWidget_3)
-        self.jicon.setObjectName(u"jicon")
-        self.jicon.setMaximumSize(QSize(50, 50))
-        self.jicon.setPixmap(QPixmap(u"redtrain.png"))
-        self.jicon.setScaledContents(True)
-        self.jicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.jicon, 11, 1, 1, 1)
-
-        self.pusha = QPushButton(self.gridLayoutWidget_3)
-        self.pusha.setObjectName(u"pusha")
-
-        self.gridLayout_4.addWidget(self.pusha, 2, 0, 1, 1)
-
-        self.pushl = QPushButton(self.gridLayoutWidget_3)
-        self.pushl.setObjectName(u"pushl")
-
-        self.gridLayout_4.addWidget(self.pushl, 13, 0, 1, 1)
-
-        self.pushb = QPushButton(self.gridLayoutWidget_3)
-        self.pushb.setObjectName(u"pushb")
-
-        self.gridLayout_4.addWidget(self.pushb, 3, 0, 1, 1)
-
-        self.pushm = QPushButton(self.gridLayoutWidget_3)
-        self.pushm.setObjectName(u"pushm")
-
-        self.gridLayout_4.addWidget(self.pushm, 14, 0, 1, 1)
-
-        self.kicon = QLabel(self.gridLayoutWidget_3)
-        self.kicon.setObjectName(u"kicon")
-        self.kicon.setMaximumSize(QSize(50, 50))
-        self.kicon.setPixmap(QPixmap(u"tracks.png"))
-        self.kicon.setScaledContents(True)
-        self.kicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.kicon, 12, 1, 1, 1)
-
-        self.licon = QLabel(self.gridLayoutWidget_3)
-        self.licon.setObjectName(u"licon")
-        self.licon.setMaximumSize(QSize(50, 50))
-        self.licon.setPixmap(QPixmap(u"tracks.png"))
-        self.licon.setScaledContents(True)
-        self.licon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.licon, 13, 1, 1, 1)
-
-        self.micon = QLabel(self.gridLayoutWidget_3)
-        self.micon.setObjectName(u"micon")
-        self.micon.setMaximumSize(QSize(50, 50))
-        self.micon.setPixmap(QPixmap(u"tracks.png"))
-        self.micon.setScaledContents(True)
-        self.micon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.micon, 14, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.zicon, 14, 1, 1, 1)
 
         self.verticalLayoutWidget_6 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_6.setObjectName(u"verticalLayoutWidget_6")
@@ -560,78 +560,78 @@ class Ui_MainWindowB(object):
 
         self.verticalLayout_7.addLayout(self.horizontalLayout)
 
-        MainWindowB.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindowB)
+        MainWindowA.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(MainWindowA)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 724, 25))
-        MainWindowB.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindowB)
+        MainWindowA.setMenuBar(self.menubar)
+        self.statusbar = QStatusBar(MainWindowA)
         self.statusbar.setObjectName(u"statusbar")
-        MainWindowB.setStatusBar(self.statusbar)
+        MainWindowA.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindowB)
+        self.retranslateUi(MainWindowA)
 
-        QMetaObject.connectSlotsByName(MainWindowB)
+        QMetaObject.connectSlotsByName(MainWindowA)
     # setupUi
 
-    def retranslateUi(self, MainWindowB):
-        MainWindowB.setWindowTitle(QCoreApplication.translate("MainWindowB", u"MainWindow", None))
-        self.label_50.setText(QCoreApplication.translate("MainWindowB", u"Crossing", None))
-        self.label_51.setText(QCoreApplication.translate("MainWindowB", u"Position", None))
-        self.label_52.setText(QCoreApplication.translate("MainWindowB", u"Lights", None))
-        self.label_53.setText(QCoreApplication.translate("MainWindowB", u"1", None))
-        self.gatepositiona.setText(QCoreApplication.translate("MainWindowB", u"Active", None))
+    def retranslateUi(self, MainWindowA):
+        MainWindowA.setWindowTitle(QCoreApplication.translate("MainWindowA", u"MainWindow", None))
+        self.label_50.setText(QCoreApplication.translate("MainWindowA", u"Crossing", None))
+        self.label_51.setText(QCoreApplication.translate("MainWindowA", u"Position", None))
+        self.label_52.setText(QCoreApplication.translate("MainWindowA", u"Lights", None))
+        self.label_53.setText(QCoreApplication.translate("MainWindowA", u"1", None))
+        self.gatepositiona.setText(QCoreApplication.translate("MainWindowA", u"Active", None))
         self.reda.setText("")
         self.yellowa.setText("")
         self.greena.setText("")
-        self.label_55.setText(QCoreApplication.translate("MainWindowB", u"2", None))
-        self.gatepositionb.setText(QCoreApplication.translate("MainWindowB", u"Inactive", None))
+        self.label_55.setText(QCoreApplication.translate("MainWindowA", u"2", None))
+        self.gatepositionb.setText(QCoreApplication.translate("MainWindowA", u"Inactive", None))
         self.redb.setText("")
         self.yellowb.setText("")
         self.greenb.setText("")
-        self.trackconfiguration.setText(QCoreApplication.translate("MainWindowB", u"Upload PLC", None))
-        self.automaticmode.setText(QCoreApplication.translate("MainWindowB", u"Automatic Mode", None))
-        self.maintenancemode.setText(QCoreApplication.translate("MainWindowB", u"Maintenance Mode", None))
-        self.activetrainlabel.setText(QCoreApplication.translate("MainWindowB", u"Active Trains  ", None))
-        self.date.setText(QCoreApplication.translate("MainWindowB", u"2/19/2023", None))
-        self.time.setText(QCoreApplication.translate("MainWindowB", u"11:44 PM", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindowB", u"Sections Managed:", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindowB", u"Green Line", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindowB", u"A- M", None))
-        self.hicon.setText("")
-        self.gicon.setText("")
-        self.eicon.setText("")
-        self.bicon.setText("")
-        self.sectiontitle_2.setText(QCoreApplication.translate("MainWindowB", u"Section", None))
-        self.pushf.setText(QCoreApplication.translate("MainWindowB", u"F", None))
-        self.pushj.setText(QCoreApplication.translate("MainWindowB", u"J", None))
-        self.pushi.setText(QCoreApplication.translate("MainWindowB", u"I", None))
-        self.pushd.setText(QCoreApplication.translate("MainWindowB", u"D", None))
-        self.pushe.setText(QCoreApplication.translate("MainWindowB", u"E", None))
-        self.occupancylabel_2.setText(QCoreApplication.translate("MainWindowB", u"Occupancy", None))
-        self.cicon.setText("")
-        self.pushc.setText(QCoreApplication.translate("MainWindowB", u"C", None))
-        self.pushk.setText(QCoreApplication.translate("MainWindowB", u"K", None))
-        self.pushg.setText(QCoreApplication.translate("MainWindowB", u"G", None))
-        self.ficon.setText("")
-        self.iicon.setText("")
-        self.dicon.setText("")
-        self.aicon.setText("")
-        self.pushh.setText(QCoreApplication.translate("MainWindowB", u"H", None))
-        self.jicon.setText("")
-        self.pusha.setText(QCoreApplication.translate("MainWindowB", u"A", None))
-        self.pushl.setText(QCoreApplication.translate("MainWindowB", u"L", None))
-        self.pushb.setText(QCoreApplication.translate("MainWindowB", u"B", None))
-        self.pushm.setText(QCoreApplication.translate("MainWindowB", u"M", None))
-        self.kicon.setText("")
-        self.licon.setText("")
-        self.micon.setText("")
-        self.label_18.setText(QCoreApplication.translate("MainWindowB", u"Switches", None))
-        self.label_13.setText(QCoreApplication.translate("MainWindowB", u"C", None))
-        self.ca.setText(QCoreApplication.translate("MainWindowB", u"12-13", None))
-        self.cb.setText(QCoreApplication.translate("MainWindowB", u"1-13", None))
-        self.label_14.setText(QCoreApplication.translate("MainWindowB", u"G", None))
-        self.ga.setText(QCoreApplication.translate("MainWindowB", u"29-30", None))
-        self.gb.setText(QCoreApplication.translate("MainWindowB", u"29-150", None))
+        self.trackconfiguration.setText(QCoreApplication.translate("MainWindowA", u"Upload PLC", None))
+        self.automaticmode.setText(QCoreApplication.translate("MainWindowA", u"Automatic Mode", None))
+        self.maintenancemode.setText(QCoreApplication.translate("MainWindowA", u"Maintenance Mode", None))
+        self.activetrainlabel.setText(QCoreApplication.translate("MainWindowA", u"Active Trains  ", None))
+        self.date.setText(QCoreApplication.translate("MainWindowA", u"2/19/2023", None))
+        self.time.setText(QCoreApplication.translate("MainWindowA", u"11:44 PM", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindowA", u"Sections Managed:", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindowA", u"Green Line", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindowA", u"N - Z", None))
+        self.pushp.setText(QCoreApplication.translate("MainWindowA", u"P", None))
+        self.pusht.setText(QCoreApplication.translate("MainWindowA", u"T", None))
+        self.pushs.setText(QCoreApplication.translate("MainWindowA", u"S", None))
+        self.pushq.setText(QCoreApplication.translate("MainWindowA", u"Q", None))
+        self.occupancylabel_2.setText(QCoreApplication.translate("MainWindowA", u"Occupancy", None))
+        self.ticon.setText("")
+        self.oicon.setText("")
+        self.qicon.setText("")
+        self.wicon.setText("")
+        self.picon.setText("")
+        self.pusho.setText(QCoreApplication.translate("MainWindowA", u"O", None))
+        self.pushu.setText(QCoreApplication.translate("MainWindowA", u"U", None))
+        self.sectiontitle_2.setText(QCoreApplication.translate("MainWindowA", u"Section", None))
+        self.sicon.setText("")
+        self.nicon.setText("")
+        self.pushv.setText(QCoreApplication.translate("MainWindowA", u"V", None))
+        self.pushn.setText(QCoreApplication.translate("MainWindowA", u"N", None))
+        self.pushy.setText(QCoreApplication.translate("MainWindowA", u"Y", None))
+        self.pushr.setText(QCoreApplication.translate("MainWindowA", u"R", None))
+        self.ricon.setText("")
+        self.vicon.setText("")
+        self.pushw.setText(QCoreApplication.translate("MainWindowA", u"W", None))
+        self.uicon.setText("")
+        self.pushx.setText(QCoreApplication.translate("MainWindowA", u"X", None))
+        self.pushz.setText(QCoreApplication.translate("MainWindowA", u"Z", None))
+        self.xicon.setText("")
+        self.yicon.setText("")
+        self.zicon.setText("")
+        self.label_18.setText(QCoreApplication.translate("MainWindowA", u"Switches", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindowA", u"C", None))
+        self.ca.setText(QCoreApplication.translate("MainWindowA", u"12-13", None))
+        self.cb.setText(QCoreApplication.translate("MainWindowA", u"1-13", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindowA", u"G", None))
+        self.ga.setText(QCoreApplication.translate("MainWindowA", u"29-30", None))
+        self.gb.setText(QCoreApplication.translate("MainWindowA", u"29-150", None))
     # retranslateUi
 
