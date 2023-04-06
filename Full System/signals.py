@@ -25,7 +25,7 @@ class Signals(QObject):
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
-    ctcUpdateGUIAuthority = pyqtSignal(float) #train.authority
+    ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
 
