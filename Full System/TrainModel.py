@@ -67,7 +67,7 @@ class TrainModel(QObject):
         
         # update authority for ctc occupancy view
         ############### CHNAGE THIS CALC TO WAYSIDE BC SHE CALCULATES AUTH #####################
-        signals.ctcUpdateGUIAuthority.emit(train.authority)
+        signals.ctcUpdateGUIAuthority.emit(train. line.lineName, train.block, train.authority)
 
         print('dist to stop: ' + str(train.authority))
 
