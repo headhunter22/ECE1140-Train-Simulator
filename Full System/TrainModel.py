@@ -62,7 +62,7 @@ class TrainModel(QObject):
             distToStop += float(currLine.getBlock(tempBlock).length)
             tempBlock = train.route[offset]
             offset += 1
-
+        
         train.authority = distToStop - train.position
         
         # update authority for ctc occupancy view
