@@ -27,7 +27,7 @@ class TrainController(QObject):
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
-
+        
         signals.trainControllerKP.emit(self.Kp)
         signals.trainControllerKI.emit(self.Ki)
 
@@ -37,16 +37,23 @@ class TrainController(QObject):
         self.train = train
 
     def sendPower(self):
+        #the train is moving and not stopped at a station
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
         signals.trainControllerAuthority.emit(self.train.authority)
-
+        print('authority: ' + str(self.train.commandedSpeed))
+        print('stopDistance: ' + str(self.train.actSpeed * 3.6))
+    
+        if self.train.authority < 0:
+            self.train.authority = 100
         if self.train.authority <= self.StopDistance:
+            print('authority = ' + str(self.train.authority))
+            print('distance = ' + str(self.StopDistance))
+            print("auth less than dist")
             self.commandedPower = 0
-
             signals.trainControllerServiceBrake.emit(True)
 
-        if self.train.actSpeed == 0:
+        if self.train.actSpeed == 0: #beginning state; train is not moving
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
