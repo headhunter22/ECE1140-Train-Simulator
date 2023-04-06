@@ -24,7 +24,7 @@ class ctcMainUI(QMainWindow):
 
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
-        signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
+        #signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
         #signals.ctcUpdateGUIOccupancy.connect(self.updateVacancy)
