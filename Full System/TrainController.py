@@ -45,7 +45,8 @@ class TrainController(QObject):
         print('stopDistance: ' + str(self.train.actSpeed * 3.6))
     
         if self.train.authority < 0:
-            self.train.authority = 100
+            self.train.authority = 10000
+
         if self.train.authority <= self.StopDistance:
             print('authority = ' + str(self.train.authority))
             print('distance = ' + str(self.StopDistance))
