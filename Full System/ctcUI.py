@@ -24,6 +24,7 @@ class ctcMainUI(QMainWindow):
 
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
+        signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         #signals.ctcUpdateGUIOccupancy.connect(self.updateVacancy)
 
         ##################################
@@ -528,7 +529,6 @@ class ctcMainUI(QMainWindow):
         button1.setStyleSheet('background-color: SkyBlue')
         button2.setStyleSheet('background-color: white; color: gray')
 
-
     ############################################
     ########TRAINS INFO FUNCTIONS###############
     ############################################
@@ -541,6 +541,15 @@ class ctcMainUI(QMainWindow):
         else:
             print("error")
 
+    def updateTrainInfo(self, line, id, block, commSpeed, auth, dest):
+        if line == 'Green':
+
+            for rows in range(len(self.ui.greenTrainInfoTable.rowCount())):
+                if self.ui.greenTrainInfoTable.item(rows, 0) == id:
+                    self.ui.greenTrainInfoTable.setItem(rows, 1, QTableWidgetItem(str(block)))
+                    self.ui.greenTrainInfoTable.setItem(rows, 2, QTableWidgetItem(str(commSpeed)))
+                    self.ui.greenTrainInfoTable.setItem(rows, 3, QTableWidgetItem(str(auth)))
+                    self.ui.greenTrainInfoTable.setItem(rows, 4, QTableWidgetItem(str(dest)))
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
