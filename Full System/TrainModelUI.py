@@ -22,7 +22,9 @@ class TrainModelUI(QtWidgets.QMainWindow):
 
     def displaySpeed(self, train):
         speedMpH = float(train)*2.237
-        self.actSpeed.setText("Speed: {0} mi/h".format(speedMpH)) #actSpeed is the qt creator object
+        txt = f"{speedMpH:.2f}"
+        floatTxt = float(txt)
+        self.actSpeed.setText("Speed: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
     
     def displayBlock(self, train):
         self.commSpeedLabel.setText("Current Block = {0}".format(train)) #commSpeedLabel is the qt creator object
