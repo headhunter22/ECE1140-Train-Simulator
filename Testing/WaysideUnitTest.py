@@ -1,21 +1,26 @@
 import sys, unittest
-sys.path.append('..\Full System')
+sys.path.append('../Full System')
 print(sys.path)
-import Wayside
+from Wayside import Wayside
 from WaysideUI import WMainWindowA
+from Train import Train
+from Track import Track
+from Line import Line
+from CTC import CTC
+import TrackParser
 
-class TestWaysideMethods(unittest.TestCase):
-    def testActiveTrains(self):
-        wayside = Wayside()
-        waysideUI = WMainWindowA()
-        self.assertEqual(waysideUI.activetrains(), 0,
-                         'wrong number of active trains')
-        wayside.dispatchTrain()
-        self.assertEqual(waysideUI.activetrains(), 1,
-                         'wrong number of active trains')
-        
-if __name__ == '__main__':
+class TestWaysideMethods(unittest.TestCase):   
+    def testOccupancyReceived(self):
+        train = Train(1, Line('Green'), '63')
+        wayside.blockOccupancyReceived(train.block)
+        self.assertEqual(waysideUI.oblock, 63)
+
     
+if __name__ == '__main__':
+    track = TrackParser.parseTrack("TrackLayout.csv")
+    ctcOffice = CTC(track)
+    wayside = Wayside(ctcOffice)
+    waysideUI = WMainWindowA()
     unittest.main()
 
 
