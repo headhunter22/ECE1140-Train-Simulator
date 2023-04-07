@@ -1,14 +1,14 @@
 import sys
 from PyQt6 import QtWidgets
 import TrackParser
-from MainWindow import MainWindow
+from TrackModelUI import TrackModelUI
 from TestUI import TestUI
 
 class Connected():
     def __init__(self, track):
         # instantiate windows
         self.app = QtWidgets.QApplication(sys.argv)
-        self.window = MainWindow(track)
+        self.window = TrackModelUI(track)
         self.testWindow = TestUI(track)
 
         # connect signals from test to main

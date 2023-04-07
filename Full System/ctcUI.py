@@ -26,8 +26,7 @@ class ctcMainUI(QMainWindow):
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
-        #signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
-        #signals.ctcUpdateGUIOccupancy.connect(self.updateVacancy)
+        signals.ctcUpdateGUITrainInfo.connect(self.updateT
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -465,11 +464,9 @@ class ctcMainUI(QMainWindow):
         else:
             print("error")
 
-
-
     def updateOccupancy(self, line, block):
         if line == 'Green':
-            for rows in range(0, 149):
+            for rows in range(0, 150):
                 if rows == block:
                     #creating table objects to update occupancy window
                     newTrainLocation = QTableWidgetItem('')
