@@ -1052,9 +1052,9 @@ windowA = WMainWindowA()
 windowB = WMainWindowB()
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
-windowA.show()
-windowB.show()
-app.exec()
+# windowA.show()
+# windowB.show()
+# app.exec()
 
 class WaysideUIFunctions(QObject):
     # def __init__(self, window):
