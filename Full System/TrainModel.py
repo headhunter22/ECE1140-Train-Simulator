@@ -62,11 +62,19 @@ class TrainModel(QObject):
             tempBlock = train.route[offset]
             offset += 1
 
+        #if tempBlock > train.destBlock:
+        #    while tempBlock < len(train.route):
+        #        newoff = 0
+        #        distToStop += float(currLine.getBlock(tempBlock).length)
+        #        tempBlock = train.route[newoff]
+#
+        #        newoff += 1
+
         train.authority = distToStop - train.position
         
         # update authority for ctc occupancy view
         ############### CHNAGE THIS CALC TO WAYSIDE BC SHE CALCULATES AUTH #####################
-        signals.ctcUpdateGUIAuthority.emit(train. line.lineName, train.block, train.authority)
+        signals.ctcUpdateGUIAuthority.emit(train.line.lineName, train.block, train.authority)
 
         print('dist to stop: ' + str(train.authority))
 
