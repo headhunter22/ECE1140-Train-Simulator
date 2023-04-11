@@ -25,7 +25,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         # create section dictionary to hold sections
         self.sectionDict = {}
-        self.pageDict = {}
 
         # create items in scroll area based on track that was instantiated 
         self.createLineItem(self.sectionDict)
@@ -58,6 +57,12 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
         signals.timerTicked.connect(self.updateTime)
+        
+        # connect test ui signals
+        signals.trackModelTestUIUpdateGUIOccupancy.connect(self.updateOccupancy)
+        signals.trackModelTestUIUpdateGUIVacancy.connect(self.updateVacancy)
+        signals.trackModelTestUIUpdateGUICrossings.connect(self.changeCrossings)
+        signals.trackModelTestUIUpdateGUISwitches.connect(self.changeSwitch)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -257,8 +262,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
     def generateBlockInfoPage(self, section):
         self.blockInfo = BlockInfo(section)
-        if self.blockInfo.ID not in self.pageDict:
-            self.pageDict[self.blockInfo.ID] = self.blockInfo
 
         self.openBlockInfo()
 

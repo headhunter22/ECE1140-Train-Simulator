@@ -57,7 +57,13 @@ class Signals(QObject):
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
-    trackModelUpateGUISwitches = pyqtSignal()
+    trackModelUpdateGUISwitches = pyqtSignal()
+
+    # track model test ui signals
+    trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
+    trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block
+    trackModelTestUIUpdateGUICrossings = pyqtSignal(int) # 1-4 for crossing statuses
+    trackModelTestUIUpdateGUISwitches = pyqtSignal(str, str, str) # line, block, switch option
 
     # train model signals
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
