@@ -51,6 +51,14 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
         self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
 
+        # connect temperature button
+        self.tempGo.clicked.connect(self.tempChanged)
+
+        # connect murphy buttons
+        self.breakRail.clicked.connect(self.breakRail)
+        self.powerFailure.clicked.connect(self.powerFailed)
+        self.circuitFailure.clicked.connect(self.circuitFailed)
+
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
@@ -61,6 +69,8 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelTestUIUpdateGUIVacancy.connect(self.updateVacancy)
         signals.trackModelTestUIUpdateGUICrossings.connect(self.changeCrossings)
         signals.trackModelTestUIUpdateGUISwitches.connect(self.changeSwitch)
+        signals.trackModelTestUIUpdateFault.connect(self.updateFaults)
+        signals.trackModelTempUpdated.connect(self.tempUpdate)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -171,6 +181,16 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # add the fault to the track
         self.track.addFault(fault)
 
+    # update rail to break
+    def breakRail(self):
+        signals.trackModelBrokenRail.emit('line', 'block')
+
+    def powerFailed(self):
+        signals.trackModelPowerFailure.emit()
+
+    def circuitFailed(self):
+        signals.trackModelCircuitFailure.emit()
+
     # change RR X-ings
     def changeCrossings(self, crossing):
         if crossing == 1:
@@ -206,6 +226,13 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         # display current temp on mainUI
         self.CurrentTempLabel.setText("Current Temp: " + str(temp))
+
+    def tempChanged(self):
+        # if entry is nonsense, do nothing
+        if not self.tempEntry.text().isnumeric(): 
+            return
+
+        signals.trackModelTempUpdated.emit(int(self.tempEntry.text()))
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
