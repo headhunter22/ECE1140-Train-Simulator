@@ -12,6 +12,7 @@ track = TrackParser.parseTrack('Track Layout.csv')
 testui = TestUI(track)
 model = TrackModelUI(track)
 
+# show windows
 testui.show()
 model.show()
 
