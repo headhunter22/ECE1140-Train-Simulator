@@ -55,7 +55,7 @@ class Signals(QObject):
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
     trackModelTempUpdated = pyqtSignal(int) # temperature
-    trackModelBrokenRail = pyqtSignal(str, str) # line, block
+    trackModelBrokenRail = pyqtSignal(str, str, str) # line, block, 'Broken Rail'
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
 

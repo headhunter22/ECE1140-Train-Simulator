@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QMainWindow, QPushButton, QScrollArea,
-    QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QScrollArea, QSizePolicy, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -312,15 +312,27 @@ class Ui_MainWindow(object):
         self.Spacer3.setGeometry(QRect(210, 600, 3, 61))
         self.Spacer3.setFrameShape(QFrame.VLine)
         self.Spacer3.setFrameShadow(QFrame.Sunken)
-        self.breakRail = QPushButton(self.centralwidget)
-        self.breakRail.setObjectName(u"breakRail")
-        self.breakRail.setGeometry(QRect(230, 620, 91, 32))
+        self.brokenRailButton = QPushButton(self.centralwidget)
+        self.brokenRailButton.setObjectName(u"brokenRailButton")
+        self.brokenRailButton.setGeometry(QRect(230, 620, 91, 32))
         self.powerFailure = QPushButton(self.centralwidget)
         self.powerFailure.setObjectName(u"powerFailure")
-        self.powerFailure.setGeometry(QRect(440, 620, 101, 32))
+        self.powerFailure.setGeometry(QRect(520, 620, 101, 32))
         self.circuitFailure = QPushButton(self.centralwidget)
         self.circuitFailure.setObjectName(u"circuitFailure")
-        self.circuitFailure.setGeometry(QRect(550, 620, 101, 32))
+        self.circuitFailure.setGeometry(QRect(630, 620, 101, 32))
+        self.brokenRailLineLabel = QLabel(self.centralwidget)
+        self.brokenRailLineLabel.setObjectName(u"brokenRailLineLabel")
+        self.brokenRailLineLabel.setGeometry(QRect(350, 610, 81, 20))
+        self.brokenRailBlockLabel = QLabel(self.centralwidget)
+        self.brokenRailBlockLabel.setObjectName(u"brokenRailBlockLabel")
+        self.brokenRailBlockLabel.setGeometry(QRect(450, 610, 58, 16))
+        self.brokenRailLineSelect = QComboBox(self.centralwidget)
+        self.brokenRailLineSelect.setObjectName(u"brokenRailLineSelect")
+        self.brokenRailLineSelect.setGeometry(QRect(330, 630, 91, 32))
+        self.brokenRailBlockSelect = QComboBox(self.centralwidget)
+        self.brokenRailBlockSelect.setObjectName(u"brokenRailBlockSelect")
+        self.brokenRailBlockSelect.setGeometry(QRect(430, 630, 71, 32))
         MainWindow.setCentralWidget(self.centralwidget)
         self.GeneralInfoSpacer.raise_()
         self.RedLineScrollArea.raise_()
@@ -362,9 +374,13 @@ class Ui_MainWindow(object):
         self.tempLabel.raise_()
         self.tempGo.raise_()
         self.Spacer3.raise_()
-        self.breakRail.raise_()
+        self.brokenRailButton.raise_()
         self.powerFailure.raise_()
         self.circuitFailure.raise_()
+        self.brokenRailLineLabel.raise_()
+        self.brokenRailBlockLabel.raise_()
+        self.brokenRailLineSelect.raise_()
+        self.brokenRailBlockSelect.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -408,8 +424,10 @@ class Ui_MainWindow(object):
         self.time.setText("")
         self.tempLabel.setText(QCoreApplication.translate("MainWindow", u"Enter Temperature:", None))
         self.tempGo.setText(QCoreApplication.translate("MainWindow", u"Go", None))
-        self.breakRail.setText(QCoreApplication.translate("MainWindow", u"Broken Rail", None))
+        self.brokenRailButton.setText(QCoreApplication.translate("MainWindow", u"Broken Rail", None))
         self.powerFailure.setText(QCoreApplication.translate("MainWindow", u"Power Failure", None))
         self.circuitFailure.setText(QCoreApplication.translate("MainWindow", u"Circuit Failure", None))
+        self.brokenRailLineLabel.setText(QCoreApplication.translate("MainWindow", u"Line", None))
+        self.brokenRailBlockLabel.setText(QCoreApplication.translate("MainWindow", u"Block", None))
     # retranslateUi
 

@@ -34,6 +34,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         for section in self.sectionDict:
             self.sectionDict[section].button.clicked.connect(lambda ch, i=self.sectionDict[section].section: self.generateBlockInfoPage(i))
 
+        # populate broken line and block dropdowns
+        self.populateLineSelect()
+        self.brokenRailLineSelect.currentTextChanged.connect(self.populateBlockSelect)
+
         # connect upload track button to open that page
         self.UploadTrack.clicked.connect(self.openTrackUpload)
 
@@ -55,7 +59,7 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.tempGo.clicked.connect(self.tempChanged)
 
         # connect murphy buttons
-        self.breakRail.clicked.connect(self.breakRail)
+        self.brokenRailButton.clicked.connect(self.breakRail)
         self.powerFailure.clicked.connect(self.powerFailed)
         self.circuitFailure.clicked.connect(self.circuitFailed)
 
@@ -63,6 +67,7 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
         signals.timerTicked.connect(self.updateTime)
+        signals.trackModelBrokenRail.connect(self.updateFaults)
         
         # connect test ui signals
         signals.trackModelTestUIUpdateGUIOccupancy.connect(self.updateOccupancy)
@@ -183,7 +188,11 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
     # update rail to break
     def breakRail(self):
-        signals.trackModelBrokenRail.emit('line', 'block')
+        line = self.brokenRailLineSelect.currentText()
+        block = self.brokenRailBlockSelect.currentText()
+
+        if line != '' and block != '':
+            signals.trackModelBrokenRail.emit(line, block, 'Broken Rail')
 
     def powerFailed(self):
         signals.trackModelPowerFailure.emit()
@@ -309,6 +318,17 @@ class TrackModelUI(QtWidgets.QMainWindow):
     def showFaultWindow(self):
         self.faultWindow = FaultDisplay(self.track)
         self.faultWindow.show()
+
+    def populateLineSelect(self):
+        for line in self.track.lines:
+            self.brokenRailLineSelect.addItem(line.lineName)
+        
+    def populateBlockSelect(self):
+        self.brokenRailBlockSelect.clear()
+        line = self.brokenRailLineSelect.currentText()
+
+        for block in line.blocks:
+            self.brokenRailBlockSelect.addItem(block.blockName)
 # end main UI class
 
 # class for row objects that go in the scroll window
