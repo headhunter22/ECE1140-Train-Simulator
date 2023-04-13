@@ -1,8 +1,13 @@
+# system imports
 import sys, os
 from copy import deepcopy
+
+# pyqt imports 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 from PyQt6 import uic
+
+# class imports
 from Block import Block
 from Track import Track
 from Train import Train
@@ -27,6 +32,9 @@ class TrackModel(QObject):
 
         # attributes
         self.numTrains = 0
+
+        # create ticket system
+        self.ticketSystem = TicketSystem()
         
         # connect wayside signals
         signals.trackModelDispatchTrain.connect(self.dispatchTrain)
@@ -34,6 +42,7 @@ class TrackModel(QObject):
     
         # connect train model signals
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
+        signals.trackModelPassengersChanging.connect(self.deboardBoard)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
@@ -77,3 +86,10 @@ class TrackModel(QObject):
             signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
             signals.waysideUpdateVacancy.emit(block)
+
+    def deboardBoard(self, train):
+        # unload passengers
+        self.ticketSystem.releasePassengers(train)
+
+        # load new passengers
+        self.ticketSystem.boardTrain(train)

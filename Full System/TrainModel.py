@@ -113,7 +113,8 @@ class TrainModel(QObject):
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            time.sleep(1)
+            time.sleep(5)
+            signals.trackModelPassengersChanging.emit(train)
             self.serviceBrake = False
 
 

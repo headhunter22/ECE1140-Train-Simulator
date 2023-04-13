@@ -26,7 +26,7 @@ class ctcMainUI(QMainWindow):
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
         #signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
-        signals.ctcUpdateGUITrainInfo.connect(self.updateT
+        signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
 
         ##################################
         ########STARTUP FUNCTIONS#########
