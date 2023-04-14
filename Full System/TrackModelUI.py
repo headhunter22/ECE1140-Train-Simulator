@@ -9,8 +9,6 @@ from Section import Section
 import TrackParser 
 from signals import signals
 
-sys.dont_write_bytecode = True
-
 # Main Window Class
 class TrackModelUI(QtWidgets.QMainWindow):
     def __init__(self, track, *args, **kwargs):
@@ -25,7 +23,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         # create section dictionary to hold sections
         self.sectionDict = {}
-        self.pageDict = {}
 
         # create items in scroll area based on track that was instantiated 
         self.createLineItem(self.sectionDict)
@@ -36,6 +33,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # connect all buttons to block pages
         for section in self.sectionDict:
             self.sectionDict[section].button.clicked.connect(lambda ch, i=self.sectionDict[section].section: self.generateBlockInfoPage(i))
+
+        # populate broken line and block dropdowns
+        self.populateLineSelect()
+        self.brokenRailLineSelect.currentTextChanged.connect(self.populateBlockSelect)
 
         # connect upload track button to open that page
         self.UploadTrack.clicked.connect(self.openTrackUpload)
@@ -54,10 +55,27 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
         self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
 
+        # connect temperature button
+        self.tempGo.clicked.connect(self.tempChanged)
+
+        # connect murphy buttons
+        self.brokenRailButton.clicked.connect(self.breakRail)
+        self.powerFailure.clicked.connect(self.powerFailed)
+        self.circuitFailure.clicked.connect(self.circuitFailed)
+
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
         signals.timerTicked.connect(self.updateTime)
+        signals.trackModelBrokenRail.connect(self.updateFaults)
+        
+        # connect test ui signals
+        signals.trackModelTestUIUpdateGUIOccupancy.connect(self.updateOccupancy)
+        signals.trackModelTestUIUpdateGUIVacancy.connect(self.updateVacancy)
+        signals.trackModelTestUIUpdateGUICrossings.connect(self.changeCrossings)
+        signals.trackModelTestUIUpdateGUISwitches.connect(self.changeSwitch)
+        signals.trackModelTestUIUpdateFault.connect(self.updateFaults)
+        signals.trackModelTempUpdated.connect(self.tempUpdate)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -168,6 +186,20 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # add the fault to the track
         self.track.addFault(fault)
 
+    # update rail to break
+    def breakRail(self):
+        line = self.brokenRailLineSelect.currentText()
+        block = self.brokenRailBlockSelect.currentText()
+
+        if line != '' and block != '':
+            signals.trackModelBrokenRail.emit(line, block, 'Broken Rail')
+
+    def powerFailed(self):
+        signals.trackModelPowerFailure.emit()
+
+    def circuitFailed(self):
+        signals.trackModelCircuitFailure.emit()
+
     # change RR X-ings
     def changeCrossings(self, crossing):
         if crossing == 1:
@@ -203,6 +235,13 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         # display current temp on mainUI
         self.CurrentTempLabel.setText("Current Temp: " + str(temp))
+
+    def tempChanged(self):
+        # if entry is nonsense, do nothing
+        if not self.tempEntry.text().isnumeric(): 
+            return
+
+        signals.trackModelTempUpdated.emit(int(self.tempEntry.text()))
 
     def createLineItem(self, sectionDict):
         scrollArea = [self.RedLineScrollArea, self.GreenLineScrollArea]
@@ -257,8 +296,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
     def generateBlockInfoPage(self, section):
         self.blockInfo = BlockInfo(section)
-        if self.blockInfo.ID not in self.pageDict:
-            self.pageDict[self.blockInfo.ID] = self.blockInfo
 
         self.openBlockInfo()
 
@@ -281,6 +318,17 @@ class TrackModelUI(QtWidgets.QMainWindow):
     def showFaultWindow(self):
         self.faultWindow = FaultDisplay(self.track)
         self.faultWindow.show()
+
+    def populateLineSelect(self):
+        for line in self.track.lines:
+            self.brokenRailLineSelect.addItem(line.lineName)
+        
+    def populateBlockSelect(self):
+        self.brokenRailBlockSelect.clear()
+        line = self.brokenRailLineSelect.currentText()
+
+        for block in line.blocks:
+            self.brokenRailBlockSelect.addItem(block.blockName)
 # end main UI class
 
 # class for row objects that go in the scroll window

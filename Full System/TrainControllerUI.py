@@ -276,6 +276,11 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          self.y = float(txt)
          self.Authority.setText("Authority: {0} meters".format(self.y))
 
+    def updateCommandedSpeed(self, commandedSpeed):
+         x = commandedSpeed
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
