@@ -91,6 +91,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
+        oblock=0
+
     def ticka(self, hrs, mins, secs):
         #print("wayside ticking in class a")
         timenow = str(hrs)+":"+str(mins)+":"+str(secs)
@@ -438,6 +440,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
     def changeOccupancy(self, block):
+        self.oblock = block
         print("wayside a UI block", block, "is occupied")
         if block > 76 and block < 86: #== '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
             self.nicon.setPixmap(QPixmap('greentrain.png'))
