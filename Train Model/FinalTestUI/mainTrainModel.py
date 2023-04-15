@@ -13,7 +13,8 @@ from Track import Track
 import TrackParser
 
 # import UIs
-from TrainModelUI import TrainModelUI
+from trainModel_Ui_Final import TrainModelUI
+from trainModel_testUi_Final import MainWindowTestUI
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
@@ -23,9 +24,11 @@ trainModel = TrainModel()
 
 # instantiate UIs
 trainModUI = TrainModelUI()
+trainModTest = MainWindowTestUI()
    
 trainModUI.show()
-   
+trainModTest.show()   
+
 app.exec()
 
 # show CTC window
