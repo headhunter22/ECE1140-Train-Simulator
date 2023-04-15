@@ -47,130 +47,28 @@ class MainWindowTestUI(QtWidgets.QMainWindow):
 
     #temp set function
     def tempInputfunc(self):
-        inputTemp = self.inputTemp.text()
-        if int(inputTemp) > 90 or int(inputTemp)<60:
-            return
-        window.tempLabel.setText("Internal Temp: {0} degrees F".format(inputTemp))
-        window.ACprogressBar.setMinimum(60)
-        window.ACprogressBar.setMaximum(90)
-        window.ACprogressBar.setTextVisible(0)
-        window.ACprogressBar.setValue(int(inputTemp))
-    
+        print("tempInputfunc")
+
     #power set function
     def powInputfunc(self):
-        inputPow = self.inputPow.text()
-        window.powLabel.setText("Power Input: {0} Watts".format(inputPow))
-        window.powProgressBar.setMinimum(0)
-        window.powProgressBar.setMaximum(10000)
-        window.powProgressBar.setTextVisible(0)
-        window.powProgressBar.setValue(int(inputPow))
+        print("powInputfunc")
 
     #commanded speed function
     def commSpeedInputfunc(self):
-        inputCommSpeed = self.commSpeed.text()
-        trainArray[window.trainBox.currentIndex()].commSpeed = self.commSpeed.text()
-        window.commSpeedLabel.setText("Commanded Speed: {0} mph".format(inputCommSpeed))
+        print("commSpeedInputfunc")
 
     #changing box 
     def clickBox(self):
+        print("clickbox")
 
-        #internal lights
-        if self.intLights.isChecked():
-                window.intLightLabel.setStyleSheet("background-color: green")
-                window.intLightLabel.setText("ON")
-        else:
-            window.intLightLabel.setStyleSheet("background-color: red")
-            window.intLightLabel.setText("OFF")
-
-        #external lights
-        if self.extLights.isChecked():
-                window.extLightLabel.setStyleSheet("background-color: green")
-                window.extLightLabel.setText("ON")
-        else:
-            window.extLightLabel.setStyleSheet("background-color: red")
-            window.extLightLabel.setText("OFF")
-
-        #headlights
-        if self.headlights.isChecked():
-                window.headlightLabel.setStyleSheet("background-color: green")
-                window.headlightLabel.setText("ON")
-        else:
-            window.headlightLabel.setStyleSheet("background-color: red")
-            window.headlightLabel.setText("OFF")
-
-        #Left doors
-        if self.leftDoor.isChecked():
-                window.lDoorLabel.setStyleSheet("background-color: green")
-                window.lDoorLabel.setText("OPEN")
-        else:
-            window.lDoorLabel.setStyleSheet("background-color: red")
-            window.lDoorLabel.setText("CLOSED")
-
-        #Right doors
-        if self.rightDoor.isChecked():
-                window.rDoorLabel.setStyleSheet("background-color: green")
-                window.rDoorLabel.setText("OPEN")
-        else:
-            window.rDoorLabel.setStyleSheet("background-color: red")
-            window.rDoorLabel.setText("CLOSED")
-
-        #Signal Fault
-        if self.sigFault.isChecked():
-                sigIcon = QtGui.QIcon("sigON.png")
-                window.sigFaultLabel.setIcon(sigIcon)
-                window.sigFaultLabel.setIconSize(QSize(50, 50))
-        else:
-            sigIcon = QtGui.QIcon("sigOFF.png")
-            window.sigFaultLabel.setIcon(sigIcon)
-            window.sigFaultLabel.setIconSize(QSize(50, 50))
-        #power Fault
-        if self.powFault.isChecked():
-                powIcon = QtGui.QIcon("powON.png")
-                window.powFaultLabel.setIcon(powIcon)
-                window.powFaultLabel.setIconSize(QSize(50, 50))
-        else:
-            powIcon = QtGui.QIcon("powOFF.png")
-            window.powFaultLabel.setIcon(powIcon)
-            window.powFaultLabel.setIconSize(QSize(50, 50))
-        #brake Fault
-        if self.brakeFault.isChecked():
-                brakeIcon = QtGui.QIcon("brakesON.png")
-                window.brakeFaultLabel.setIcon(brakeIcon)
-                window.brakeFaultLabel.setIconSize(QSize(50, 50))
-        else:   
-            brakeIcon = QtGui.QIcon("brakesOFF.png")
-            window.brakeFaultLabel.setIcon(brakeIcon)
-            window.brakeFaultLabel.setIconSize(QSize(50, 50))
-
-        #AC Fault
-        if self.AC.isChecked():
-                ACIm = QtGui.QIcon("ACON.png")
-                window.ACIcon.setIcon(ACIm)
-                window.ACIcon.setIconSize(QSize(50, 50))
-        else:
-            ACIm = QtGui.QIcon("ACOFF.png")
-            window.ACIcon.setIcon(ACIm)
-            window.ACIcon.setIconSize(QSize(50, 50))
-    
     def addingTrainFunc(self):
-        numTrains = window.trainBox.count()
-        window.trainBox.addItem("Train {0}".format(numTrains))
-        newTrain = Train(0, 'red') #THIS IS VERY IMPORTANT: SET ALL ATTRIBUTES FOR THE TRAINS BEING ADDED TO THE TRAIN ARRAY HERE! NOT DOING THIS WILL MAKE AN ERROR
-                            #AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-        trainArray.append(newTrain)  
+        print("tempInputfunc")
     
     def changedCurrentBlock(self):
-         if self.currentBlock.currentText() == "":
-            return
-         currentBlockVal = self.currentBlock.currentIndex()
-         blockVal = int(currentBlockVal) + 1
-         window.currBlockLabel.setText("Current Block:  {0}".format(str(blockVal)))
-         speedVar = track.getLine('Red').getBlock(str(blockVal)).speedLimit
-         window.speedLimitLabel.setText("Speed Limit: {0}".format(speedVar))
+        print("changedCurrentBlock")
 
     def dateTimeFunc(self):
-        dateTime = self.dateBox.dateTime()
-        dateTime_str = dateTime.toString(self.dateBox.displayFormat())
-        window.dateLabel.setText(dateTime_str) 
+        print("dateTimeFunc")
+
   
 #end test UI definition
