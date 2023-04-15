@@ -26,7 +26,9 @@ class ctcMainUI(QMainWindow):
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
         #signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
-        signals.ctcUpdateGUITrainInfo.connect(self.updateT
+        #signals.ctcUpdateGUITrainInfo.connect(self.updateT
+
+        signals.greenStationProperties.connect(self.greenAddStation)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -61,7 +63,7 @@ class ctcMainUI(QMainWindow):
 
         #connecting the green station buttons
         self.greenStations = []
-        self.greenStaionStates = []
+        #self.greenStaionStates = []
         self.ui.pioneerStation.clicked.connect(self.handleGreenStationClicked)
         self.greenStations.append(self.ui.pioneerStation)
         self.ui.edgebrookStation.clicked.connect(self.handleGreenStationClicked)
@@ -107,7 +109,7 @@ class ctcMainUI(QMainWindow):
         self.redStations.append(self.ui.southHillsStation)
 
         #add station buttons
-        self.ui.greenAddStation.clicked.connect(self.addGreenTentStation)
+        self.ui.greenAddStation.clicked.connect(self.greenAddStation)
         self.ui.redAddStation.clicked.connect(self.addRedTentStation)
 
         #add block buttons
@@ -306,7 +308,10 @@ class ctcMainUI(QMainWindow):
 
         self.ui.redBlockDispatch.setCurrentIndex(0)
 
-    def addGreenTentStation(self):
+    def greenAddStation(self, stationStates):
+
+        greenStationStates = stationStates
+
         if self.ui.greenBlockDispatch.currentIndex() != 0:
             return
 
@@ -321,8 +326,18 @@ class ctcMainUI(QMainWindow):
         pioneer = self.ui.pioneerStation.property("selected")
         print(pioneer)
 
-        state = self.sender()
-        state.property("selected")
+        print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
+        print('Edgebrook Station     : ' + str(greenStationStates[1]))
+        print('Whited Station        : ' + str(greenStationStates[2]))
+        print('South Bank Station    : ' + str(greenStationStates[3]))
+        print('Central Station       : ' + str(greenStationStates[4]))
+        print('Inglewood Station     : ' + str(greenStationStates[5]))
+        print('Overbrook Station     : ' + str(greenStationStates[6]))
+        print('Glenbury Station      : ' + str(greenStationStates[7]))
+        print('Dormont Station       : ' + str(greenStationStates[8]))
+        print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
+        print('Poplar Station        : ' + str(greenStationStates[10]))
+        print('Castle Shannon Station: ' + str(greenStationStates[11]))
 
     def addRedTentStation(self):
         if self.ui.redBlockDispatch.currentIndex() != 0:
@@ -389,18 +404,20 @@ class ctcMainUI(QMainWindow):
             self.ui.lebanonStation.property("selected")   , self.ui.poplarStation.property("selected")    , self.ui.castleShannonStation.property("selected")
         ]
 
-        print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
-        print('Edgebrook Station     : ' + str(greenStationStates[1]))
-        print('Whited Station        : ' + str(greenStationStates[2]))
-        print('South Bank Station    : ' + str(greenStationStates[3]))
-        print('Central Station       : ' + str(greenStationStates[4]))
-        print('Inglewood Station     : ' + str(greenStationStates[5]))
-        print('Overbrook Station     : ' + str(greenStationStates[6]))
-        print('Glenbury Station      : ' + str(greenStationStates[7]))
-        print('Dormont Station       : ' + str(greenStationStates[8]))
-        print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
-        print('Poplar Station        : ' + str(greenStationStates[10]))
-        print('Castle Shannon Station: ' + str(greenStationStates[11]))
+        # signals.greenStationProperties.emit(greenStationStates)
+
+        #print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
+        #print('Edgebrook Station     : ' + str(greenStationStates[1]))
+        #print('Whited Station        : ' + str(greenStationStates[2]))
+        #print('South Bank Station    : ' + str(greenStationStates[3]))
+        #print('Central Station       : ' + str(greenStationStates[4]))
+        #print('Inglewood Station     : ' + str(greenStationStates[5]))
+        #print('Overbrook Station     : ' + str(greenStationStates[6]))
+        #print('Glenbury Station      : ' + str(greenStationStates[7]))
+        #print('Dormont Station       : ' + str(greenStationStates[8]))
+        #print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
+        #print('Poplar Station        : ' + str(greenStationStates[10]))
+        #print('Castle Shannon Station: ' + str(greenStationStates[11]))
 
         #return greenStationStates
 

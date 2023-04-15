@@ -15,6 +15,7 @@ class Signals(QObject):
     CTCOneTimesSpeed = pyqtSignal()
     CTCTenTimesSpeed = pyqtSignal()
     CTCFiftyTimesSpeed = pyqtSignal()
+    greenStationProperties = pyqtSignal(list)
     # authorityToWayside = pyqtSignal(Train)
     # suggSpeedToWayside = pyqtSignal(Train)
     # trainObjectToWayside = pyqtSignal(Train)
