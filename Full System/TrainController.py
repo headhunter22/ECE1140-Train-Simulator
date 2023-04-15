@@ -46,16 +46,16 @@ class TrainController(QObject):
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
         signals.trainControllerAuthority.emit(self.train.authority)
-        print('authority: ' + str(self.train.commandedSpeed))
-        print('stopDistance: ' + str(self.train.actSpeed * 3.6))
+        # print('authority: ' + str(self.train.commandedSpeed))
+        # print('stopDistance: ' + str(self.train.actSpeed * 3.6))
     
         if self.train.authority < 0:
             self.train.authority = 10000
 
         if self.train.authority <= self.StopDistance:
-            print('authority = ' + str(self.train.authority))
-            print('distance = ' + str(self.StopDistance))
-            print("auth less than dist")
+            # print('authority = ' + str(self.train.authority))
+            # print('distance = ' + str(self.StopDistance))
+            # print("auth less than dist")
             self.commandedPower = 0
             signals.trainControllerServiceBrake.emit(True)
 
@@ -63,8 +63,13 @@ class TrainController(QObject):
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
+<<<<<<< HEAD
             # # velocity error calcuation
             # self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
+=======
+            # velocity error calcuation
+            self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
+>>>>>>> fd5663f64083088549111b375ece6d7883a0340d
             # print('commanded speed: ' + str(self.train.commandedSpeed))
             # print('actual speed: ' + str(self.train.actSpeed * 3.6))
             # print('ek: ' + str(self.ek))

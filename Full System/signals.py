@@ -28,6 +28,7 @@ class Signals(QObject):
     ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -54,10 +55,25 @@ class Signals(QObject):
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
+    trackModelTempUpdated = pyqtSignal(int) # temperature
+    trackModelBrokenRail = pyqtSignal(str, str, str) # line, block, 'Broken Rail'
+    trackModelPowerFailure = pyqtSignal() # emit power failed
+    trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
+    trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelReparse = pyqtSignal(str) # filename
+
+    # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
-    trackModelUpateGUISwitches = pyqtSignal()
+    trackModelUpdateGUISwitches = pyqtSignal()
+
+    # track model test ui signals
+    trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
+    trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block
+    trackModelTestUIUpdateGUICrossings = pyqtSignal(int) # 1-4 for crossing statuses
+    trackModelTestUIUpdateGUISwitches = pyqtSignal(str, str, str) # line, block, switch option
+    trackModelTestUIUpdateFault = pyqtSignal(str, str, str) # line, block, fault type
 
     # train model signals
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
