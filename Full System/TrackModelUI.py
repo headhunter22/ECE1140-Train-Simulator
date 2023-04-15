@@ -310,10 +310,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
             initialFilter='Data File (*.csv)'
         )
 
-        self.fileName = str(response[0][0])
+        fileName = str(response[0][0])
 
         # print filename
-        print(self.fileName)
+        signals.trackModelReparseTrack.emit(filename)
 
     def showFaultWindow(self):
         self.faultWindow = FaultDisplay(self.track)

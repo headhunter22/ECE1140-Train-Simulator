@@ -28,6 +28,7 @@ class Signals(QObject):
     ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -59,6 +60,7 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelReparse = pyqtSignal(str) # filename
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
