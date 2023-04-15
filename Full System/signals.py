@@ -104,6 +104,10 @@ class Signals(QObject):
     trainControllerKI = pyqtSignal(float)
     trainControllerUIKP = pyqtSignal(float)
     trainControllerUIKI = pyqtSignal(float)
+    trainControllerRightDoors = pyqtSignal(bool)
+    trainControllerLeftDoors = pyqtSignal(bool)
+    trainControllerExteriorLights = pyqtSignal(bool)
+    trainControllerInteriorLights = pyqtSignal(bool)
 
 
 
