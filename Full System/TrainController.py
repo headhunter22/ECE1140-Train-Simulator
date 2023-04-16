@@ -63,13 +63,8 @@ class TrainController(QObject):
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
-<<<<<<< HEAD
             # # velocity error calcuation
             # self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
-=======
-            # velocity error calcuation
-            self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
->>>>>>> fd5663f64083088549111b375ece6d7883a0340d
             # print('commanded speed: ' + str(self.train.commandedSpeed))
             # print('actual speed: ' + str(self.train.actSpeed * 3.6))
             # print('ek: ' + str(self.ek))
