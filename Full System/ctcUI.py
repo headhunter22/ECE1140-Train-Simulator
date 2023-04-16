@@ -2,17 +2,18 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QIntValidator
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem, QListWidgetItem
 from ctcMainUiImport import Ui_MainWindow
+
+import ScheduleParser
 import TrackParser
 import pandas as pd
 from signals import signals
 import sys
+import os
 sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
-
-#please
 
 class ctcMainUI(QMainWindow):
     def __init__(self, track):
@@ -26,7 +27,7 @@ class ctcMainUI(QMainWindow):
 
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
-        #signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
+        signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         #signals.ctcUpdateGUITrainInfo.connect(self.updateT
 
@@ -42,9 +43,6 @@ class ctcMainUI(QMainWindow):
         self.fillOccupancy("Green")
         self.fillOccupancy("Red")
         self.uneditable()
-        
-        for line in track.lines:
-            self.ui.lineSelectMaintenance.addItem(line.lineName)
 
         # add green blocks to dispatch page
         for section in track.getLine("Green").sections:
@@ -56,12 +54,21 @@ class ctcMainUI(QMainWindow):
             for block in section.blocks:
                 self.ui.redBlockDispatch.addItem(block.blockName)
 
+        for line in track.lines:
+            self.ui.lineSelectMaintenance.addItem(line.lineName)
+        
+        # add blocks to maintenance select
+        for section in track.getLine("Red").sections:
+            for block in section.blocks:
+                self.ui.blockSelectMaintenance.addItem(block.blockName)
+
         ##################################
         ########DISPATCHING TRAINS########
         ##################################
 
         #iteration 3 button
-        self.ui.dormontDispatch.clicked.connect(self.iterDispatch)
+        #self.ui.dormontDispatch.clicked.connect(self.iterDispatch)
+        self.ui.thisIsATest.clicked.connect(self.iterDispatch)
 
         #connecting the green station buttons
         self.greenStations = []
@@ -231,7 +238,7 @@ class ctcMainUI(QMainWindow):
         ########OPTIONS / XINGS###########
         ##################################
 
-        self.ui.lineSelectMaintenance.currentTextChanged.connect(self.switchLineChanged)
+        self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
 
@@ -457,6 +464,11 @@ class ctcMainUI(QMainWindow):
         print('Station Square Station : ' + str(redStationStates[6]))
         print('South Hills Station    : ' + str(redStationStates[7]))
 
+    def dispatchGreenLine(self):
+        if self.ui.greenScheduledTrains_2.item(0,0).text() == "Dormont":
+            block = 73
+        signals.greenLineTrainDispatchFromCtcUI.emit(block)
+
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
     ############################################
@@ -572,7 +584,7 @@ class ctcMainUI(QMainWindow):
     ########TRAINS INFO FUNCTIONS###############
     ############################################
 
-    def addTrainInfoLine(self, line, id, block, commSpeed, auth, dest):
+    def addTrainInfoLine(self, line, id, block, auth, dest):
         if line == 'Green':
             rowCount = self.ui.greenTrainInfoTable.rowCount()
 
@@ -580,41 +592,37 @@ class ctcMainUI(QMainWindow):
 
             greenTrainID = QTableWidgetItem(str(id))
             greenTrainBlock = QTableWidgetItem(str(block))
-            greenTrainCommSpeed = QTableWidgetItem(str(commSpeed))
             greenTrainAuth = QTableWidgetItem(str(auth))
             greenTrainDest = QTableWidgetItem(str(dest))
 
             self.ui.greenTrainInfoTable.setItem(rowCount, 0, greenTrainID)
             self.ui.greenTrainInfoTable.setItem(rowCount, 1, greenTrainBlock)
-            self.ui.greenTrainInfoTable.setItem(rowCount, 2, greenTrainCommSpeed)
-            self.ui.greenTrainInfoTable.setItem(rowCount, 3, greenTrainAuth)
-            self.ui.greenTrainInfoTable.setItem(rowCount, 4, greenTrainDest)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 2, greenTrainAuth)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 3, greenTrainDest)
 
         elif line == 'Red':
             self.ui.redTrainInfoTable.insertRow()
         else:
             print("error")
 
-    def updateTrainInfo(self, line, id, block, commSpeed, auth, dest):
+    def updateTrainInfo(self, line, id, block, auth, dest):
         if line == 'Green':
             for rows in range(0, self.ui.greenTrainInfoTable.rowCount()):
                 if self.ui.greenTrainInfoTable.item(rows, 0) == id:
 
                     greenTrainBlock = QTableWidgetItem(str(block))
-                    greenTrainCommSpeed = QTableWidgetItem(str(commSpeed))
                     greenTrainAuth = QTableWidgetItem(str(auth))
                     greenTrainDest = QTableWidgetItem(str(dest))
 
                     self.ui.greenTrainInfoTable.setItem(rows, 1, greenTrainBlock)
-                    self.ui.greenTrainInfoTable.setItem(rows, 2, greenTrainCommSpeed)
-                    self.ui.greenTrainInfoTable.setItem(rows, 3, greenTrainAuth)
-                    self.ui.greenTrainInfoTable.setItem(rows, 4, greenTrainDest)
+                    self.ui.greenTrainInfoTable.setItem(rows, 2, greenTrainAuth)
+                    self.ui.greenTrainInfoTable.setItem(rows, 3, greenTrainDest)
 
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
 
-    def timeSelect(self):
+    def timeSelect(self): ########
         # Get the button that was clicked
         clickedButton = self.sender()
 
@@ -642,7 +650,7 @@ class ctcMainUI(QMainWindow):
         #elif clickedButton == self.timeButtons[3]:
         #    self.oneTimeSpeed()
         
-    def changeLabel(self, hrs, mins, secs):
+    def changeLabel(self, hrs, mins, secs): #######
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
     def timePause(self):
@@ -771,13 +779,29 @@ class ctcMainUI(QMainWindow):
         self.ui.dispatchRed.setChecked(False)
         self.ui.greenDispatch.setChecked(False)
 
-    def openFile(self):
+    def openFile(self): ########
         # Open a file dialog and get the path of the selected file
         filePath, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
 
-        # Do something with the selected file
-        print('Selected file:', filePath)
+        fileName = os.path.basename(filePath)
 
+        schedule = ScheduleParser.parseScedule(fileName)
+
+        self.addScheduledTrain(schedule)
+
+    def addScheduledTrain(self, schedule): #########
+        if schedule.line == "Green":
+            rowCount = self.ui.greenScheduledTrains_2.rowCount()
+            self.ui.greenScheduledTrains_2.insertRow(rowCount)
+
+            dest = QTableWidgetItem(str(schedule.stops[0]))
+            at = QTableWidgetItem(str(schedule.arrivalTimes[0]))
+
+            self.ui.greenScheduledTrains_2.setItem(rowCount, 0, dest)
+            self.ui.greenScheduledTrains_2.setItem(rowCount, 1, at)
+
+            self.dispatchGreenLine()
+    
     ############################################
     ########OPTIONS / XINGS FUNCTIONS###########
     ############################################
@@ -789,6 +813,10 @@ class ctcMainUI(QMainWindow):
                 open = QTableWidgetItem('Open')
                 open.setBackground(QColor('White'))
                 self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
+
+                print(self.track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
+
+                #signals.blockMaintenanceUpdateFromCTC.emit(track.getLine("Green"))
             else:
                 maintenance = QTableWidgetItem('Maintenance')
                 maintenance.setBackground(QColor('Gold'))
@@ -810,9 +838,14 @@ class ctcMainUI(QMainWindow):
         self.ui.modeSelect.setCurrentIndex(0)
 
     #when the line is switched this replaced the block selection to the correct amount for the given line
-    def switchLineChanged(self, line):
+    def switchLineChanged(self, track): #########
         # clear current options in the dropdowns 
         self.ui.blockSelectMaintenance.clear()
+
+        if self.ui.blockSelectMaintenance.currentIndex() == 0:
+            line = "Red"
+        else:
+            line = "Green"
 
         # add the appropriate blocks
         for section in track.getLine(line).sections:

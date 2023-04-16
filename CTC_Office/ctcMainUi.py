@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog,
 from ctcMainUiImport import Ui_MainWindow
 import TrackParser
 import pandas as pd
-from Clock import Clock
+#from Clock import Clock
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
@@ -15,10 +15,6 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-        self.sysClock = Clock()
-        self.sysClock.start()
-        self.sysClock.clock.timeout.connect(self.changeLabel)
 
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
@@ -732,7 +728,7 @@ class MainWindow(QMainWindow):
             self.ui.stackedWidget.setCurrentIndex(3)
 
 if __name__ == '__main__':
-    track = TrackParser.parseTrack('Track Layout.csv')
+    track = TrackParser.parseTrack('TrackLayout.csv')
     app = QApplication([])
     window = MainWindow()
     app.exec()

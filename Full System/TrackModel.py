@@ -70,10 +70,10 @@ class TrackModel(QObject):
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
             signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
+            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateOccupancy.emit(block)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
             signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
+            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateVacancy.emit(block)

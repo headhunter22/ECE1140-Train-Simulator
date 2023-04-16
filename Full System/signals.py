@@ -16,10 +16,7 @@ class Signals(QObject):
     CTCTenTimesSpeed = pyqtSignal()
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list)
-    # authorityToWayside = pyqtSignal(Train)
-    # suggSpeedToWayside = pyqtSignal(Train)
-    # trainObjectToWayside = pyqtSignal(Train)
-    # switchStates = pyqtSignal(int, bool)
+    blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
 
     # ctc frontend emission signals
     greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
