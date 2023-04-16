@@ -15,8 +15,8 @@ class SWTrainController(QObject):
         self.trainControllers.append(trainController)
         signals.trainControllerUpdateCurrSpeed.emit(train, 0)
 
-    def calculatePower(self):
+    def calculatePower(self, train):
         if len(self.trainControllers) == 0:
             return
         else:
-            self.trainControllers[0].sendPower()
+            self.trainControllers[0].sendPower(self, train)

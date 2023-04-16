@@ -113,6 +113,14 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
         self.ServiceBrake.clicked.connect(self.ServiceBrakeClick)
 
+        # Init A/C button
+        self.AC = QtWidgets.QPushButton("Train A/C", self)
+        self.AC.setGeometry(400, 350, 200, 100)
+        self.AC.setFont(font)
+        self.AC.setCheckable(True)
+        self.AC.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.AC.clicked.connect(self.ACClick)
+
         # Init Manual/Automatic Buttons #
         self.ManualMode = QtWidgets.QPushButton("Manual Mode", self)
         self.ManualMode.setGeometry(775, 400, 100, 100)
@@ -243,6 +251,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.InteriorLights.setCheckable(False)
               self.RateReq.setDisabled(True)
               self.ServiceBrake.setCheckable(False)
+              self.AC.setCheckable(False)
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
          if self.AutoMode.isChecked() == False:
@@ -255,6 +264,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.InteriorLights.setCheckable(True)
               self.RateReq.setDisabled(False)
               self.ServiceBrake.setCheckable(True)
+              self.AC.setCheckable(True)
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
@@ -294,6 +304,17 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
+
+    def ACClick(self):
+         if self.AC.isChecked() == True:
+              self.AC.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
+              print("AC On")
+              signals.trainControllerAC.emit(True)
+
+         if self.AC.isChecked() == False:
+              self.AC.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
+              print("AC Off")
+              signals.trainControllerAC.emit(False)
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
