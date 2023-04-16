@@ -110,6 +110,4 @@ class Signals(QObject):
     trainControllerInteriorLights = pyqtSignal(bool)
     trainControllerAC = pyqtSignal(bool)
 
-
-
 signals = Signals()

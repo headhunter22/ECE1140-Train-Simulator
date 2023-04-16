@@ -14,3 +14,5 @@ class Signals(QObject):
     trainModelGUIcommandedSpeed = pyqtSignal(str)
     trainModelGUIBlock = pyqtSignal(str)
     trainModelGUIpower = pyqtSignal(str)
+
+signals = Signals()
