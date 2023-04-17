@@ -12,6 +12,7 @@ class Block:
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
         self.section = section
+        self.beacon = None
 
         # boolean attributes
         self.occupied = False
@@ -30,9 +31,6 @@ class Block:
             opt1 = self.infrastructure[start+1:middle]
             self.switchConnection = opt1
 
-        # placeholder until train model and track model communicate
-        self.passengers = 0
-
         # underground logic
         if 'UNDERGROUND' in self.infrastructure:
             self.underground = True
@@ -42,3 +40,6 @@ class Block:
     # declare methods
     def setMaintenance(self, underMaintenance):
         maintenance = underMaintenance
+
+    def addBeacon(self, beacon):
+        self.beacon = beacon
