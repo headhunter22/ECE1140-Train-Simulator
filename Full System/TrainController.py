@@ -18,8 +18,8 @@ class TrainController(QObject):
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
 
-        self.Ki = 1000
-        self.Kp = 1000
+        self.Ki = 100
+        self.Kp = 100
 
         self.UkPrev = 0
         self.EkPrev = 0
@@ -54,7 +54,9 @@ class TrainController(QObject):
         if self.train.authority <= self.StopDistance:
             print('authority = ' + str(self.train.authority))
             print('distance = ' + str(self.StopDistance))
+            
             print("auth less than dist")
+
             self.commandedPower = 0
             signals.trainControllerServiceBrake.emit(True)
 

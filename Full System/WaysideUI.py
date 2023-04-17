@@ -5,9 +5,6 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt, QObject
 from PyQt6 import QtWidgets, uic
 from signals import signals
-
-#sys.path.append('/Users/Public/Documents/VSCode/ECE1140-Team-1/Wayside')
-#print(sys.path)
 #from Track_Configuration import Ui_TrackConfig 
 from blockwidget import Ui_Section
 from Wayside_Main_B import Ui_MainWindowB
@@ -17,7 +14,6 @@ import PLCParser as PLCParser
 
 # MainWindowA N-Z blue
 # MainWindowB A-M red
-
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
@@ -31,6 +27,11 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.wtowVacancy.connect(self.changeVacancy)
         signals.timerTicked.connect(self.ticka)
         signals.wtowTrainCount.connect(self.activeTrains)
+        #PLC signals
+        # signals.waysideSwitchStates.connect(self.wholeTrack)
+        # signals.waysideSwitchLocationsfromPLC.connect(self.wholeTrack)
+        # signals.waysideTrackfromPLC.connect(self.wholeTrack)
+        # signals.waysideSectionsfromPLC.connect(self.wholeTrack)
         
         #set all switch buttons to disabled
         self.gate20.setEnabled(False)
@@ -520,530 +521,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def activeTrains(self, counts):
         self.activetrains.display(counts)
             
-
-
-
-
-# MainWindowB A-M
-class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
-    def __init__(self, *args, obj=None, **kwargs):
-        super(WMainWindowB, self).__init__(*args, **kwargs)
-        self.setupUi(self)
-
-        self.setWindowTitle('Wayside Main UI')
-
-        #signals
-        signals.wtowVacancy.connect(self.changeVacancy)
-        signals.wtowOccupancy.connect(self.changeOccupancy)
-        signals.timerTicked.connect(self.tickb)
-        signals.wtowTrainCount.connect(self.activeTrains)
-        
-        
-
-        #set all switch buttons to disabled
-        self.gate10.setEnabled(False)
-        self.gate11.setEnabled(False)
-        self.gate20.setEnabled(False)
-        self.gate21.setEnabled(False)
-        self.gate30.setEnabled(False)
-        self.gate31.setEnabled(False)
-        self.gate40.setEnabled(False)
-        self.gate41.setEnabled(False)
-        self.gate50.setEnabled(False)
-        self.gate51.setEnabled(False)
-        self.gate60.setEnabled(False)
-        self.gate61.setEnabled(False)
-
-        #switch button colors
-        self.automaticmode.setDown(True)
-        self.automaticmode.setDown(True)
-        self.gate10.clicked.connect(lambda: self.toggleColor(self.gate10, self.gate11))
-        self.gate10.setStyleSheet('background-color: SkyBlue')
-        self.gate11.clicked.connect(lambda: self.toggleColor(self.gate11, self.gate10))
-        self.gate11.setStyleSheet('background-color: white; color: gray')
-        self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
-        self.gate21.setStyleSheet('background-color: SkyBlue')
-        self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
-        self.gate20.setStyleSheet('background-color: white; color: gray')
-        self.gate30.clicked.connect(lambda: self.toggleColor(self.gate30, self.gate31))
-        self.gate30.setStyleSheet('background-color: SkyBlue')
-        self.gate31.clicked.connect(lambda: self.toggleColor(self.gate31, self.gate30))
-        self.gate31.setStyleSheet('background-color: white; color: gray')
-        self.gate40.clicked.connect(lambda: self.toggleColor(self.gate40, self.gate41))
-        self.gate41.setStyleSheet('background-color: SkyBlue')
-        self.gate41.clicked.connect(lambda: self.toggleColor(self.gate41, self.gate40))
-        self.gate40.setStyleSheet('background-color: white; color: gray')
-        self.gate50.clicked.connect(lambda: self.toggleColor(self.gate50, self.gate51))
-        self.gate51.setStyleSheet('background-color: SkyBlue')
-        self.gate51.clicked.connect(lambda: self.toggleColor(self.gate51, self.gate50))
-        self.gate50.setStyleSheet('background-color: white; color: gray')
-        self.gate60.clicked.connect(lambda: self.toggleColor(self.gate60, self.gate61))
-        self.gate61.setStyleSheet('background-color: SkyBlue')
-        self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
-        self.gate60.setStyleSheet('background-color: white; color: gray')
-
-        #pop up windows
-        self.trackconfiguration.clicked.connect(self.configurationWindow)
-        self.pusha.clicked.connect(lambda: self.makeSectionWindow('A'))
-        self.pushb.clicked.connect(lambda: self.makeSectionWindow('B'))
-        self.pushc.clicked.connect(lambda: self.makeSectionWindow('C'))
-        self.pushd.clicked.connect(lambda: self.makeSectionWindow('D'))
-        self.pushe.clicked.connect(lambda: self.makeSectionWindow('E'))
-        self.pushf.clicked.connect(lambda: self.makeSectionWindow('F'))
-        self.pushg.clicked.connect(lambda: self.makeSectionWindow('G'))
-        self.pushh.clicked.connect(lambda: self.makeSectionWindow('H'))
-        self.pushi.clicked.connect(lambda: self.makeSectionWindow('I'))
-        self.pushj.clicked.connect(lambda: self.makeSectionWindow('J'))
-        self.pushk.clicked.connect(lambda: self.makeSectionWindow('K'))
-        self.pushl.clicked.connect(lambda: self.makeSectionWindow('L'))
-        self.pushm.clicked.connect(lambda: self.makeSectionWindow('M'))
-        #self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
-
-        #set up gate buttons
-        self.maintenancemode.toggled.connect(self.maintenanceMode)
-        self.automaticmode.toggled.connect(self.automaticMode)
-
-        #active trains
-        self.aicon.setPixmap(QPixmap('tracks.png'))
-        self.bicon.setPixmap(QPixmap('tracks.png'))
-        self.cicon.setPixmap(QPixmap('tracks.png'))
-        self.dicon.setPixmap(QPixmap('tracks.png'))
-        #self.eicon.setPixmap(QPixmap('redtracks.png'))
-        #self.ficon.setPixmap(QPixmap('redtracks.png'))
-        self.jicon.setPixmap(QPixmap('tracks.png'))
-        
-        counts = 0
-        self.activetrains.display(counts)
-
-        #lights
-        self.reda.setPixmap(QPixmap('greenlight.png'))
-        #self.greenb.setPixmap(QPixmap('greenlight.png'))
-
-    def tickb(self, hrs, mins, secs):
-        #print("wayside ticking in class b")
-        timenow = str(hrs)+":"+str(mins)+":"+str(secs)
-        #print(timenow)
-        self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
-
-    def maintenanceMode(self):  
-        #print("in maintenance mode") 
-        self.gate10.setEnabled(True)
-        self.gate11.setEnabled(True)
-        self.gate20.setEnabled(True)
-        self.gate21.setEnabled(True)
-        self.gate30.setEnabled(True)
-        self.gate31.setEnabled(True)
-        self.gate40.setEnabled(True)
-        self.gate41.setEnabled(True)
-        self.gate50.setEnabled(True)
-        self.gate51.setEnabled(True)
-        self.gate60.setEnabled(True)
-        self.gate61.setEnabled(True)
-
-    def automaticMode(self):
-        #print("in automatic mode") 
-        self.gate10.setEnabled(False)
-        self.gate11.setEnabled(False)
-        self.gate20.setEnabled(False)
-        self.gate21.setEnabled(False)
-        self.gate30.setEnabled(False)
-        self.gate31.setEnabled(False)
-        self.gate40.setEnabled(False)
-        self.gate41.setEnabled(False)
-        self.gate50.setEnabled(False)
-        self.gate51.setEnabled(False)
-        self.gate60.setEnabled(False)
-        self.gate61.setEnabled(False)
-
-    #function for pop up window for track configuration
-    def configurationWindow(self):
-        self.trackconfiguration.clicked.connect(self.runParser)
-
-    def runParser(self):
-        PLCParser.parse(self)
-
-    def makeSectionWindow(self, whichsection):
-        self.bl = Ui_Section()
-        self.bl.sectionname.setText("Section "+ whichsection)
-        
-        image = QLabel()
-        pic = QPixmap('tracks.png')
-        image.setPixmap(pic.scaled(50, 50))
-        image1 = QLabel()
-        pic = QPixmap('tracks.png')
-        image1.setPixmap(pic.scaled(50, 50))
-        image2 = QLabel()
-        pic = QPixmap('tracks.png')
-        image2.setPixmap(pic.scaled(50, 50))
-        image3 = QLabel()
-        pic = QPixmap('tracks.png')
-        image3.setPixmap(pic.scaled(50, 50))
-        image4 = QLabel()
-        pic = QPixmap('tracks.png')
-        image4.setPixmap(pic.scaled(50, 50))
-        image5 = QLabel()
-        pic = QPixmap('tracks.png')
-        image5.setPixmap(pic.scaled(50, 50))
-        image6 = QLabel()
-        pic = QPixmap('tracks.png')
-        image6.setPixmap(pic.scaled(50, 50))
-        image7 = QLabel()
-        pic = QPixmap('tracks.png')
-        image7.setPixmap(pic.scaled(50, 50))
-        image8 = QLabel()
-        pic = QPixmap('tracks.png')
-        image8.setPixmap(pic.scaled(50, 50))
-        image9 = QLabel()
-        pic = QPixmap('tracks.png')
-        image9.setPixmap(pic.scaled(50, 50))
-        image10 = QLabel()
-        pic = QPixmap('tracks.png')
-        image10.setPixmap(pic.scaled(50, 50))
-        image11 = QLabel()
-        pic = QPixmap('tracks.png')
-        image11.setPixmap(pic.scaled(50, 50))
-        image12 = QLabel()
-        pic = QPixmap('tracks.png')
-        image12.setPixmap(pic.scaled(50, 50))
-        image13 = QLabel()
-        pic = QPixmap('tracks.png')
-        image13.setPixmap(pic.scaled(50, 50))
-        image14 = QLabel()
-        pic = QPixmap('tracks.png')
-        image14.setPixmap(pic.scaled(50, 50))
-        image15 = QLabel()
-        pic = QPixmap('tracks.png')
-        image15.setPixmap(pic.scaled(50, 50))
-        image16 = QLabel()
-        pic = QPixmap('tracks.png')
-        image16.setPixmap(pic.scaled(50, 50))
-        image17 = QLabel()
-        pic = QPixmap('tracks.png')
-        image17.setPixmap(pic.scaled(50, 50))
-        self.bl.gridLayout.addWidget(image1, 2,1)
-        self.bl.gridLayout.addWidget(image1, 2,1)
-        switch = QLabel("X")
-        switch2 = QLabel("X")
-
-        if whichsection == 'A':
-            #'1' or '2'or '3':
-            self.bl.label_5.setText('1')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('2')
-            self.bl.label_7.setText('3')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'B':
-            #'4'or '5'or '6':
-            self.bl.label_5.setText('4')
-            self.bl.label_6.setText('5')
-            self.bl.label_7.setText('6')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'C':
-            #'7' or '8' or '9' or '10' or '11' or '12':
-            self.bl.label_5.setText('7')
-            self.bl.label_6.setText('8')
-            self.bl.label_7.setText('9')
-            self.bl.label_8.setText('10')
-            self.bl.label_9.setText('11')
-            label_10 = QLabel('12')
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            self.bl.gridLayout.addWidget(image2,6,1)
-            self.bl.gridLayout.addWidget(switch, 6,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.show()
-        elif whichsection == 'D':
-            #'13' or '14' or '15' or '16':
-            self.bl.label_5.setText('13')
-            self.bl.label_6.setText('14')
-            self.bl.label_7.setText('15')
-            self.bl.label_8.setText('16')
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'E':
-            #'17' or '18' or '19' or '20':
-            self.bl.label_5.setText('17')
-            self.bl.label_6.setText('18')
-            self.bl.label_7.setText('19')
-            self.bl.label_8.setText('20')
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'F':
-            #'21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
-            self.bl.label_5.setText('21')
-            self.bl.label_6.setText('22')
-            self.bl.label_7.setText('23')
-            self.bl.label_8.setText('24')
-            self.bl.label_9.setText('25')
-            label_10 = QLabel('26')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('27')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            label_12 = QLabel('28')
-            self.bl.gridLayout.addWidget(label_12, 8,0)
-            label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image3,8,1)
-            self.bl.gridLayout.addWidget(switch, 8,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.show()
-        elif whichsection == 'G':
-            #'29' or '30' or '31' or '32':
-            self.bl.label_5.setText('29')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('30')
-            self.bl.label_7.setText('31')
-            self.bl.label_8.setText('32')
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'H':
-            #'33' or '34' or '35':
-            self.bl.label_5.setText('33')
-            self.bl.label_6.setText('34')
-            self.bl.label_7.setText('35')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'I':
-            #'36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
-            self.bl.label_5.setText('36')
-            self.bl.label_6.setText('37')
-            self.bl.label_7.setText('38')
-            self.bl.label_8.setText('39')
-            self.bl.label_9.setText('40')
-            label_10 = QLabel('41')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('42')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            label_12 = QLabel('43')
-            self.bl.gridLayout.addWidget(label_12, 8,0)
-            label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image3,8,1)
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            label_13 = QLabel('44')
-            self.bl.gridLayout.addWidget(label_13, 9,0)
-            label_13.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image4,9,1)
-            label_14 = QLabel('45')
-            self.bl.gridLayout.addWidget(label_14, 10,0)
-            label_14.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image5,10,1)
-            label_15 = QLabel('46')
-            self.bl.gridLayout.addWidget(label_15, 11,0)
-            label_15.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image6,11,1)
-            label_16 = QLabel('47')
-            self.bl.gridLayout.addWidget(label_16, 12,0)
-            label_16.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image7,12,1)
-            label_17 = QLabel('48')
-            self.bl.gridLayout.addWidget(label_17, 13,0)
-            label_17.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image8,13,1)
-            label_18 = QLabel('49')
-            self.bl.gridLayout.addWidget(label_18, 14,0)
-            label_18.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image9,14,1)
-            label_19 = QLabel('50')
-            self.bl.gridLayout.addWidget(label_19, 15,0)
-            label_19.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image10,15,1)
-            label_20 = QLabel('51')
-            self.bl.gridLayout.addWidget(label_20, 16,0)
-            label_20.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image11,16,1)
-            label_21 = QLabel('52')
-            self.bl.gridLayout.addWidget(label_21, 17,0)
-            label_21.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image12,17,1)
-            label_22 = QLabel('53')
-            self.bl.gridLayout.addWidget(label_22, 18,0)
-            label_22.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image13,18,1)
-            label_23 = QLabel('54')
-            self.bl.gridLayout.addWidget(label_23, 19,0)
-            label_23.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image14,19,1)
-            label_24 = QLabel('55')
-            self.bl.gridLayout.addWidget(label_24, 20,0)
-            label_24.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image15,20,1)
-            label_25 = QLabel('56')
-            self.bl.gridLayout.addWidget(label_25, 21,0)
-            label_25.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image16,21,1)
-            label_26 = QLabel('57')
-            self.bl.gridLayout.addWidget(label_26, 22,0)
-            label_26.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image17,22,1)
-            self.bl.gridLayout.addWidget(switch, 22,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.show()
-        elif whichsection == 'J':
-            #'58' or '59' or '60' or '61' or '62':
-            self.bl.label_5.setText('58')
-            self.bl.gridLayout.addWidget(switch, 2,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('59')
-            self.bl.label_7.setText('60')
-            self.bl.label_8.setText('61')
-            self.bl.label_9.setText('61')
-            self.bl.gridLayout.addWidget(switch2, 5,2)
-            switch2.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.show()
-        elif whichsection == 'K':
-            #'63' or '64' or '65' or '67' or '68':
-            self.bl.label_5.setText('62')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('63')
-            self.bl.label_7.setText('64')
-            self.bl.label_8.setText('64')
-            self.bl.label_9.setText('66')
-            self.bl.show()
-        elif whichsection == 'L':
-            #'69' or '70' or '71' or '72' or '73':
-            self.bl.label_5.setText('69')
-            self.bl.label_6.setText('70')
-            self.bl.label_7.setText('71')
-            self.bl.label_8.setText('72')
-            self.bl.label_9.setText('73')
-            self.bl.show()
-        elif whichsection == 'M':
-            #'74' or '75' or '76':
-            self.bl.label_5.setText('74')
-            self.bl.label_6.setText('75')
-            self.bl.label_7.setText('76')
-            self.bl.label_8.setText('77')
-            self.bl.gridLayout.addWidget(switch, 4,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        
-
-    #function for toggle switch colors but see if you can do labels instead of buttons??
-    def toggleColor(self,button1, button2):
-        button1.setEnabled(False)
-        button2.setEnabled(True)
-        button1.setStyleSheet('background-color: SkyBlue; color: black')
-        button2.setStyleSheet('background-color: white; color: gray')
-
-    #occupation 2 blocks ahead for now
-    #!!!!!! TO DO !!!!!!!!!
-    def changeOccupancy(self, block):
-        print("wayside b UI block", block, "is occupied")
-        if block > 0 and block < 4:
-            self.aicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 3 and block < 7: #== '4'or '5'or '6':
-            self.bicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
-            self.cicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
-            self.dicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
-            self.eicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
-            self.ficon.setPixmap(QPixmap('greentrain.png'))
-        if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
-            self.gicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 32 and block < 36: #== '33' or '34' or '35':
-            self.hicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
-            self.iicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
-            self.jicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
-            self.kicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
-            self.licon.setPixmap(QPixmap('greentrain.png'))
-        if block > 73 and block < 77: #== '74' or '75' or '76':
-            self.micon.setPixmap(QPixmap('greentrain.png'))
-        if block == 74:
-            self.gate50.setStyleSheet('background-color: SkyBlue')
-            self.gate51.setStyleSheet('background-color: white; color: gray')
-        if block == 83:
-            self.gate60.setStyleSheet('background-color: SkyBlue')
-            self.gate61.setStyleSheet('background-color: white; color: gray')
-        if block == 98:
-            self.gate61.setStyleSheet('background-color: SkyBlue')
-            self.gate60.setStyleSheet('background-color: white; color: gray')
-        if block == 79:
-            self.gate51.setStyleSheet('background-color: SkyBlue')
-            self.gate50.setStyleSheet('background-color: white; color: gray')
-        if block == 148:
-            self.gate20.setStyleSheet('background-color: SkyBlue')
-            self.gate21.setStyleSheet('background-color: white; color: gray')
-        if block == 11:
-            self.gate11.setStyleSheet('background-color: SkyBlue')
-            self.gate10.setStyleSheet('background-color: white; color: gray')
-        if block == 2:
-            self.gate10.setStyleSheet('background-color: SkyBlue')
-            self.gate11.setStyleSheet('background-color: white; color: gray')
-        if block == 27:
-            self.gate21.setStyleSheet('background-color: SkyBlue')
-            self.gate20.setStyleSheet('background-color: white; color: gray')
-        if block == 55:
-            self.gate31.setStyleSheet('background-color: SkyBlue')
-            self.gate30.setStyleSheet('background-color: white; color: gray')
-
-    def changeVacancy(self, block):
-        print("wayside b UI block", block, "is vacant")
-        if block > 0 and block < 4:
-            self.aicon.setPixmap(QPixmap('tracks.png'))
-        if block > 3 and block < 7: #== '4'or '5'or '6':
-            self.bicon.setPixmap(QPixmap('tracks.png'))
-        if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
-            self.cicon.setPixmap(QPixmap('tracks.png'))
-        if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
-            self.dicon.setPixmap(QPixmap('tracks.png'))
-        if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
-            self.eicon.setPixmap(QPixmap('tracks.png'))
-        if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
-            self.ficon.setPixmap(QPixmap('tracks.png'))
-        if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
-            self.gicon.setPixmap(QPixmap('tracks.png'))
-        if block > 32 and block < 36: #== '33' or '34' or '35':
-            self.hicon.setPixmap(QPixmap('tracks.png'))
-        if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
-            self.iicon.setPixmap(QPixmap('tracks.png'))
-        if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
-            self.jicon.setPixmap(QPixmap('tracks.png'))
-        if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
-            self.kicon.setPixmap(QPixmap('tracks.png'))
-        if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
-            self.licon.setPixmap(QPixmap('tracks.png'))
-        if block > 73 and block < 77: #== '74' or '75' or '76':
-            self.micon.setPixmap(QPixmap('tracks.png'))
-
-     #function for number of active trains
-    #somehow counts the number of times the red train label comes up
-    def activeTrains(self, counts):
-        self.activetrains.display(counts)
-
 class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
     def __init__(self, *args, obj=None, **kwargs):
         super(Ui_Section, self).__init__(*args, **kwargs)
@@ -1052,14 +529,534 @@ class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
 
 app = QtWidgets.QApplication(sys.argv)
 windowA = WMainWindowA()
-windowB = WMainWindowB()
+#windowB = WMainWindowB()
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
-# windowA.show()
-# windowB.show()
-# app.exec()
+#windowA.show()
+#windowB.show()
+#app.exec()
 
-class WaysideUIFunctions(QObject):
+# MainWindowB A-M
+#class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
+#     def __init__(self, *args, obj=None, **kwargs):
+#         super(WMainWindowB, self).__init__(*args, **kwargs)
+#         self.setupUi(self)
+
+#         self.setWindowTitle('Wayside Main UI')
+
+#         #signals
+#         signals.wtowVacancy.connect(self.changeVacancy)
+#         signals.wtowOccupancy.connect(self.changeOccupancy)
+#         signals.timerTicked.connect(self.tickb)
+#         signals.wtowTrainCount.connect(self.activeTrains)
+        
+        
+
+#         #set all switch buttons to disabled
+#         self.gate10.setEnabled(False)
+#         self.gate11.setEnabled(False)
+#         self.gate20.setEnabled(False)
+#         self.gate21.setEnabled(False)
+#         self.gate30.setEnabled(False)
+#         self.gate31.setEnabled(False)
+#         self.gate40.setEnabled(False)
+#         self.gate41.setEnabled(False)
+#         self.gate50.setEnabled(False)
+#         self.gate51.setEnabled(False)
+#         self.gate60.setEnabled(False)
+#         self.gate61.setEnabled(False)
+
+#         #switch button colors
+#         self.automaticmode.setDown(True)
+#         self.automaticmode.setDown(True)
+#         self.gate10.clicked.connect(lambda: self.toggleColor(self.gate10, self.gate11))
+#         self.gate10.setStyleSheet('background-color: SkyBlue')
+#         self.gate11.clicked.connect(lambda: self.toggleColor(self.gate11, self.gate10))
+#         self.gate11.setStyleSheet('background-color: white; color: gray')
+#         self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
+#         self.gate21.setStyleSheet('background-color: SkyBlue')
+#         self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
+#         self.gate20.setStyleSheet('background-color: white; color: gray')
+#         self.gate30.clicked.connect(lambda: self.toggleColor(self.gate30, self.gate31))
+#         self.gate30.setStyleSheet('background-color: SkyBlue')
+#         self.gate31.clicked.connect(lambda: self.toggleColor(self.gate31, self.gate30))
+#         self.gate31.setStyleSheet('background-color: white; color: gray')
+#         self.gate40.clicked.connect(lambda: self.toggleColor(self.gate40, self.gate41))
+#         self.gate41.setStyleSheet('background-color: SkyBlue')
+#         self.gate41.clicked.connect(lambda: self.toggleColor(self.gate41, self.gate40))
+#         self.gate40.setStyleSheet('background-color: white; color: gray')
+#         self.gate50.clicked.connect(lambda: self.toggleColor(self.gate50, self.gate51))
+#         self.gate51.setStyleSheet('background-color: SkyBlue')
+#         self.gate51.clicked.connect(lambda: self.toggleColor(self.gate51, self.gate50))
+#         self.gate50.setStyleSheet('background-color: white; color: gray')
+#         self.gate60.clicked.connect(lambda: self.toggleColor(self.gate60, self.gate61))
+#         self.gate61.setStyleSheet('background-color: SkyBlue')
+#         self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
+#         self.gate60.setStyleSheet('background-color: white; color: gray')
+
+#         #pop up windows
+#         self.trackconfiguration.clicked.connect(self.configurationWindow)
+#         self.pusha.clicked.connect(lambda: self.makeSectionWindow('A'))
+#         self.pushb.clicked.connect(lambda: self.makeSectionWindow('B'))
+#         self.pushc.clicked.connect(lambda: self.makeSectionWindow('C'))
+#         self.pushd.clicked.connect(lambda: self.makeSectionWindow('D'))
+#         self.pushe.clicked.connect(lambda: self.makeSectionWindow('E'))
+#         self.pushf.clicked.connect(lambda: self.makeSectionWindow('F'))
+#         self.pushg.clicked.connect(lambda: self.makeSectionWindow('G'))
+#         self.pushh.clicked.connect(lambda: self.makeSectionWindow('H'))
+#         self.pushi.clicked.connect(lambda: self.makeSectionWindow('I'))
+#         self.pushj.clicked.connect(lambda: self.makeSectionWindow('J'))
+#         self.pushk.clicked.connect(lambda: self.makeSectionWindow('K'))
+#         self.pushl.clicked.connect(lambda: self.makeSectionWindow('L'))
+#         self.pushm.clicked.connect(lambda: self.makeSectionWindow('M'))
+#         #self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
+
+#         #set up gate buttons
+#         self.maintenancemode.toggled.connect(self.maintenanceMode)
+#         self.automaticmode.toggled.connect(self.automaticMode)
+
+#         #active trains
+#         self.aicon.setPixmap(QPixmap('tracks.png'))
+#         self.bicon.setPixmap(QPixmap('tracks.png'))
+#         self.cicon.setPixmap(QPixmap('tracks.png'))
+#         self.dicon.setPixmap(QPixmap('tracks.png'))
+#         #self.eicon.setPixmap(QPixmap('redtracks.png'))
+#         #self.ficon.setPixmap(QPixmap('redtracks.png'))
+#         self.jicon.setPixmap(QPixmap('tracks.png'))
+        
+#         counts = 0
+#         self.activetrains.display(counts)
+
+#         #lights
+#         self.reda.setPixmap(QPixmap('greenlight.png'))
+#         #self.greenb.setPixmap(QPixmap('greenlight.png'))
+
+#     def tickb(self, hrs, mins, secs):
+#         #print("wayside ticking in class b")
+#         timenow = str(hrs)+":"+str(mins)+":"+str(secs)
+#         #print(timenow)
+#         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+
+#     def maintenanceMode(self):  
+#         #print("in maintenance mode") 
+#         self.gate10.setEnabled(True)
+#         self.gate11.setEnabled(True)
+#         self.gate20.setEnabled(True)
+#         self.gate21.setEnabled(True)
+#         self.gate30.setEnabled(True)
+#         self.gate31.setEnabled(True)
+#         self.gate40.setEnabled(True)
+#         self.gate41.setEnabled(True)
+#         self.gate50.setEnabled(True)
+#         self.gate51.setEnabled(True)
+#         self.gate60.setEnabled(True)
+#         self.gate61.setEnabled(True)
+
+#     def automaticMode(self):
+#         #print("in automatic mode") 
+#         self.gate10.setEnabled(False)
+#         self.gate11.setEnabled(False)
+#         self.gate20.setEnabled(False)
+#         self.gate21.setEnabled(False)
+#         self.gate30.setEnabled(False)
+#         self.gate31.setEnabled(False)
+#         self.gate40.setEnabled(False)
+#         self.gate41.setEnabled(False)
+#         self.gate50.setEnabled(False)
+#         self.gate51.setEnabled(False)
+#         self.gate60.setEnabled(False)
+#         self.gate61.setEnabled(False)
+
+#     #function for pop up window for track configuration
+#     def configurationWindow(self):
+#         self.trackconfiguration.clicked.connect(self.runParser)
+
+#     def runParser(self):
+#         PLCParser.parse(self)
+
+#     def makeSectionWindow(self, whichsection):
+#         self.bl = Ui_Section()
+#         self.bl.sectionname.setText("Section "+ whichsection)
+        
+#         image = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image.setPixmap(pic.scaled(50, 50))
+#         image1 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image1.setPixmap(pic.scaled(50, 50))
+#         image2 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image2.setPixmap(pic.scaled(50, 50))
+#         image3 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image3.setPixmap(pic.scaled(50, 50))
+#         image4 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image4.setPixmap(pic.scaled(50, 50))
+#         image5 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image5.setPixmap(pic.scaled(50, 50))
+#         image6 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image6.setPixmap(pic.scaled(50, 50))
+#         image7 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image7.setPixmap(pic.scaled(50, 50))
+#         image8 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image8.setPixmap(pic.scaled(50, 50))
+#         image9 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image9.setPixmap(pic.scaled(50, 50))
+#         image10 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image10.setPixmap(pic.scaled(50, 50))
+#         image11 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image11.setPixmap(pic.scaled(50, 50))
+#         image12 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image12.setPixmap(pic.scaled(50, 50))
+#         image13 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image13.setPixmap(pic.scaled(50, 50))
+#         image14 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image14.setPixmap(pic.scaled(50, 50))
+#         image15 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image15.setPixmap(pic.scaled(50, 50))
+#         image16 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image16.setPixmap(pic.scaled(50, 50))
+#         image17 = QLabel()
+#         pic = QPixmap('tracks.png')
+#         image17.setPixmap(pic.scaled(50, 50))
+#         self.bl.gridLayout.addWidget(image1, 2,1)
+#         self.bl.gridLayout.addWidget(image1, 2,1)
+#         switch = QLabel("X")
+#         switch2 = QLabel("X")
+
+#         if whichsection == 'A':
+#             #'1' or '2'or '3':
+#             self.bl.label_5.setText('1')
+#             self.bl.gridLayout.addWidget(switch, 1,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.label_6.setText('2')
+#             self.bl.label_7.setText('3')
+#             self.bl.label_8.hide()
+#             self.bl.dicon.hide()
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'B':
+#             #'4'or '5'or '6':
+#             self.bl.label_5.setText('4')
+#             self.bl.label_6.setText('5')
+#             self.bl.label_7.setText('6')
+#             self.bl.label_8.hide()
+#             self.bl.dicon.hide()
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'C':
+#             #'7' or '8' or '9' or '10' or '11' or '12':
+#             self.bl.label_5.setText('7')
+#             self.bl.label_6.setText('8')
+#             self.bl.label_7.setText('9')
+#             self.bl.label_8.setText('10')
+#             self.bl.label_9.setText('11')
+#             label_10 = QLabel('12')
+#             label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(label_10, 6,0)
+#             self.bl.gridLayout.addWidget(image2,6,1)
+#             self.bl.gridLayout.addWidget(switch, 6,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.show()
+#         elif whichsection == 'D':
+#             #'13' or '14' or '15' or '16':
+#             self.bl.label_5.setText('13')
+#             self.bl.label_6.setText('14')
+#             self.bl.label_7.setText('15')
+#             self.bl.label_8.setText('16')
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'E':
+#             #'17' or '18' or '19' or '20':
+#             self.bl.label_5.setText('17')
+#             self.bl.label_6.setText('18')
+#             self.bl.label_7.setText('19')
+#             self.bl.label_8.setText('20')
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'F':
+#             #'21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
+#             self.bl.label_5.setText('21')
+#             self.bl.label_6.setText('22')
+#             self.bl.label_7.setText('23')
+#             self.bl.label_8.setText('24')
+#             self.bl.label_9.setText('25')
+#             label_10 = QLabel('26')
+#             self.bl.gridLayout.addWidget(label_10, 6,0)
+#             label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image,6,1)
+#             label_11 = QLabel('27')
+#             self.bl.gridLayout.addWidget(label_11, 7,0)
+#             label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image2,7,1)
+#             label_12 = QLabel('28')
+#             self.bl.gridLayout.addWidget(label_12, 8,0)
+#             label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image3,8,1)
+#             self.bl.gridLayout.addWidget(switch, 8,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.show()
+#         elif whichsection == 'G':
+#             #'29' or '30' or '31' or '32':
+#             self.bl.label_5.setText('29')
+#             self.bl.gridLayout.addWidget(switch, 1,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.label_6.setText('30')
+#             self.bl.label_7.setText('31')
+#             self.bl.label_8.setText('32')
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'H':
+#             #'33' or '34' or '35':
+#             self.bl.label_5.setText('33')
+#             self.bl.label_6.setText('34')
+#             self.bl.label_7.setText('35')
+#             self.bl.label_8.hide()
+#             self.bl.dicon.hide()
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+#         elif whichsection == 'I':
+#             #'36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
+#             self.bl.label_5.setText('36')
+#             self.bl.label_6.setText('37')
+#             self.bl.label_7.setText('38')
+#             self.bl.label_8.setText('39')
+#             self.bl.label_9.setText('40')
+#             label_10 = QLabel('41')
+#             self.bl.gridLayout.addWidget(label_10, 6,0)
+#             label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image,6,1)
+#             label_11 = QLabel('42')
+#             self.bl.gridLayout.addWidget(label_11, 7,0)
+#             label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image2,7,1)
+#             label_12 = QLabel('43')
+#             self.bl.gridLayout.addWidget(label_12, 8,0)
+#             label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image3,8,1)
+#             self.bl.gridLayout.addWidget(switch, 1,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             label_13 = QLabel('44')
+#             self.bl.gridLayout.addWidget(label_13, 9,0)
+#             label_13.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image4,9,1)
+#             label_14 = QLabel('45')
+#             self.bl.gridLayout.addWidget(label_14, 10,0)
+#             label_14.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image5,10,1)
+#             label_15 = QLabel('46')
+#             self.bl.gridLayout.addWidget(label_15, 11,0)
+#             label_15.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image6,11,1)
+#             label_16 = QLabel('47')
+#             self.bl.gridLayout.addWidget(label_16, 12,0)
+#             label_16.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image7,12,1)
+#             label_17 = QLabel('48')
+#             self.bl.gridLayout.addWidget(label_17, 13,0)
+#             label_17.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image8,13,1)
+#             label_18 = QLabel('49')
+#             self.bl.gridLayout.addWidget(label_18, 14,0)
+#             label_18.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image9,14,1)
+#             label_19 = QLabel('50')
+#             self.bl.gridLayout.addWidget(label_19, 15,0)
+#             label_19.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image10,15,1)
+#             label_20 = QLabel('51')
+#             self.bl.gridLayout.addWidget(label_20, 16,0)
+#             label_20.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image11,16,1)
+#             label_21 = QLabel('52')
+#             self.bl.gridLayout.addWidget(label_21, 17,0)
+#             label_21.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image12,17,1)
+#             label_22 = QLabel('53')
+#             self.bl.gridLayout.addWidget(label_22, 18,0)
+#             label_22.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image13,18,1)
+#             label_23 = QLabel('54')
+#             self.bl.gridLayout.addWidget(label_23, 19,0)
+#             label_23.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image14,19,1)
+#             label_24 = QLabel('55')
+#             self.bl.gridLayout.addWidget(label_24, 20,0)
+#             label_24.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image15,20,1)
+#             label_25 = QLabel('56')
+#             self.bl.gridLayout.addWidget(label_25, 21,0)
+#             label_25.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image16,21,1)
+#             label_26 = QLabel('57')
+#             self.bl.gridLayout.addWidget(label_26, 22,0)
+#             label_26.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.gridLayout.addWidget(image17,22,1)
+#             self.bl.gridLayout.addWidget(switch, 22,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.show()
+#         elif whichsection == 'J':
+#             #'58' or '59' or '60' or '61' or '62':
+#             self.bl.label_5.setText('58')
+#             self.bl.gridLayout.addWidget(switch, 2,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.label_6.setText('59')
+#             self.bl.label_7.setText('60')
+#             self.bl.label_8.setText('61')
+#             self.bl.label_9.setText('61')
+#             self.bl.gridLayout.addWidget(switch2, 5,2)
+#             switch2.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.show()
+#         elif whichsection == 'K':
+#             #'63' or '64' or '65' or '67' or '68':
+#             self.bl.label_5.setText('62')
+#             self.bl.gridLayout.addWidget(switch, 1,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.label_6.setText('63')
+#             self.bl.label_7.setText('64')
+#             self.bl.label_8.setText('64')
+#             self.bl.label_9.setText('66')
+#             self.bl.show()
+#         elif whichsection == 'L':
+#             #'69' or '70' or '71' or '72' or '73':
+#             self.bl.label_5.setText('69')
+#             self.bl.label_6.setText('70')
+#             self.bl.label_7.setText('71')
+#             self.bl.label_8.setText('72')
+#             self.bl.label_9.setText('73')
+#             self.bl.show()
+#         elif whichsection == 'M':
+#             #'74' or '75' or '76':
+#             self.bl.label_5.setText('74')
+#             self.bl.label_6.setText('75')
+#             self.bl.label_7.setText('76')
+#             self.bl.label_8.setText('77')
+#             self.bl.gridLayout.addWidget(switch, 4,2)
+#             switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+#             self.bl.label_9.hide()
+#             self.bl.eicon.hide()
+#             self.bl.show()
+        
+
+#     #function for toggle switch colors but see if you can do labels instead of buttons??
+#     def toggleColor(self,button1, button2):
+#         button1.setEnabled(False)
+#         button2.setEnabled(True)
+#         button1.setStyleSheet('background-color: SkyBlue; color: black')
+#         button2.setStyleSheet('background-color: white; color: gray')
+
+#     #occupation 2 blocks ahead for now
+#     #!!!!!! TO DO !!!!!!!!!
+#     def changeOccupancy(self, block):
+#         print("wayside b UI block", block, "is occupied")
+#         if block > 0 and block < 4:
+#             self.aicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 3 and block < 7: #== '4'or '5'or '6':
+#             self.bicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
+#             self.cicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
+#             self.dicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
+#             self.eicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
+#             self.ficon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
+#             self.gicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 32 and block < 36: #== '33' or '34' or '35':
+#             self.hicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
+#             self.iicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
+#             self.jicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
+#             self.kicon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
+#             self.licon.setPixmap(QPixmap('greentrain.png'))
+#         if block > 73 and block < 77: #== '74' or '75' or '76':
+#             self.micon.setPixmap(QPixmap('greentrain.png'))
+#         if block == 74:
+#             self.gate50.setStyleSheet('background-color: SkyBlue')
+#             self.gate51.setStyleSheet('background-color: white; color: gray')
+#         if block == 83:
+#             self.gate60.setStyleSheet('background-color: SkyBlue')
+#             self.gate61.setStyleSheet('background-color: white; color: gray')
+#         if block == 98:
+#             self.gate61.setStyleSheet('background-color: SkyBlue')
+#             self.gate60.setStyleSheet('background-color: white; color: gray')
+#         if block == 79:
+#             self.gate51.setStyleSheet('background-color: SkyBlue')
+#             self.gate50.setStyleSheet('background-color: white; color: gray')
+#         if block == 148:
+#             self.gate20.setStyleSheet('background-color: SkyBlue')
+#             self.gate21.setStyleSheet('background-color: white; color: gray')
+#         if block == 11:
+#             self.gate11.setStyleSheet('background-color: SkyBlue')
+#             self.gate10.setStyleSheet('background-color: white; color: gray')
+#         if block == 2:
+#             self.gate10.setStyleSheet('background-color: SkyBlue')
+#             self.gate11.setStyleSheet('background-color: white; color: gray')
+#         if block == 27:
+#             self.gate21.setStyleSheet('background-color: SkyBlue')
+#             self.gate20.setStyleSheet('background-color: white; color: gray')
+#         if block == 55:
+#             self.gate31.setStyleSheet('background-color: SkyBlue')
+#             self.gate30.setStyleSheet('background-color: white; color: gray')
+
+#     def changeVacancy(self, block):
+#         print("wayside b UI block", block, "is vacant")
+#         if block > 0 and block < 4:
+#             self.aicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 3 and block < 7: #== '4'or '5'or '6':
+#             self.bicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 6 and block < 13: #== '7' or '8' or '9' or '10' or '11' or '12':
+#             self.cicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 12 and block < 16: #== '13' or '14' or '15' or '16':
+#             self.dicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 16 and block < 21: #== '17' or '18' or '19' or '20':
+#             self.eicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 20 and block < 29: #== '21' or '22' or '23' or '24' or '25' or '26' or '27' or '28':
+#             self.ficon.setPixmap(QPixmap('tracks.png'))
+#         if block > 28 and block < 33: #== '29' or '30' or '31' or '32':
+#             self.gicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 32 and block < 36: #== '33' or '34' or '35':
+#             self.hicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 35 and block < 58: #== '36' or '37' or '38' or '39' or '40' or '41' or '42' or '43' or '44' or '45' or '46' or '47' or '48' or '49' or '50' or '44' or '45' or '46' or '47' or '48' or '49' or '50'or '51' or '52' or '53' or '54' or '55' or '56' or '57':
+#             self.iicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 57 and block < 63: #== '58' or '59' or '60' or '61' or '62':
+#             self.jicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 62 and block < 69: #== '63' or '64' or '65' or '67' or '68':
+#             self.kicon.setPixmap(QPixmap('tracks.png'))
+#         if block > 68 and block < 74: #== '69' or '70' or '71' or '72' or '73':
+#             self.licon.setPixmap(QPixmap('tracks.png'))
+#         if block > 73 and block < 77: #== '74' or '75' or '76':
+#             self.micon.setPixmap(QPixmap('tracks.png'))
+
+#      #function for number of active trains
+#     #somehow counts the number of times the red train label comes up
+#     def activeTrains(self, counts):
+#         self.activetrains.display(counts)
+
+#class WaysideUIFunctions(QObject):
     # def __init__(self, window):
     #     super().__init__()
     #     #signals.waysideUpdateOccupancy.connect(WaysideUIFunctions.changeOccupancy)
@@ -1668,8 +1665,8 @@ class WaysideUIFunctions(QObject):
 
     #function for number of active trains
     #somehow counts the number of times the red train label comes up
-    def activeTrains(self, counts):
-        self.activetrains.display(counts)
+    # def activeTrains(self, counts):
+    #     self.activetrains.display(counts)
 
 #test = Ui_testpopup()
 #test.show()

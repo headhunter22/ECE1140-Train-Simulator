@@ -33,6 +33,16 @@ class Signals(QObject):
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
+    waysideSwitchStates = pyqtSignal(list)
+    waysideCommandedSpeed = pyqtSignal(int)
+    #plc
+    waysideSwitchLocationsfromPLC = pyqtSignal(list)
+    waysideTrackfromPLC = pyqtSignal(list)
+    waysideSectionsfromPLC = pyqtSignal(list)
+    waysideinstance1 = pyqtSignal(list)
+    waysideinstance2 = pyqtSignal(list)
+    waysideinstance3 = pyqtSignal(list)
+    waysideinstance4 = pyqtSignal(list)
 
     # wayside UI signals
     wtowOccupancy = pyqtSignal(int) # block
