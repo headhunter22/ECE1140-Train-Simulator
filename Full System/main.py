@@ -23,7 +23,7 @@ from TrainModelUI import TrainModelUI
 from ctcUI import ctcMainUI
 from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
-from WaysideUI import WMainWindowA, WMainWindowB, WaysideUIFunctions
+from WaysideUI import WMainWindowA#, WMainWindowB, WaysideUIFunctions
 
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
@@ -46,7 +46,7 @@ trackUI = TrackModelUI(track)
 trainModUI = TrainModelUI()
 trainConUI = TrainControllerUI()
 waysideUIA = WMainWindowA()
-waysideUIB = WMainWindowB()
+#waysideUIB = WMainWindowB()
 #funcA = WaysideUIFunctions(waysideUIA)
 #funcB = WaysideUIFunctions(waysideUIB)
 
@@ -55,7 +55,7 @@ waysideUIB = WMainWindowB()
 if len(sys.argv) == 1:
     ctcUI.show()
     waysideUIA.show()
-    waysideUIB.show()
+    #waysideUIB.show()
     trackUI.show()
     trainModUI.show()
     trainConUI.show()
@@ -63,7 +63,7 @@ elif sys.argv[1] == 'ctc':
     ctcUI.show()
 elif sys.argv[1] == 'wayside':
     waysideUIA.show()
-    waysideUIB.show() 
+    #waysideUIB.show() 
 elif sys.argv[1] == 'track':
     trackUI.show()
 elif sys.argv[1] == 'train':
