@@ -25,22 +25,17 @@ class Clock(QThread):
         self.timer.setInterval(self.period * self.tickFactor * 1000)
         self.timer.timeout.connect(self.triggered)
 
-        self.powerTimer.setInterval(100)
-        self.powerTimer.timeout.connect(self.powerTrigger)
-
         # connect signals
         signals.CTCTimePause.connect(self.stopTimer)
         signals.CTCOneTimesSpeed.connect(self.oneTimes)
         signals.CTCTenTimesSpeed.connect(self.tenTimes)
         signals.CTCFiftyTimesSpeed.connect(self.fiftyTimes)
 
-    def powerTrigger(self):
-        signals.trainControllerTimeTrigger.emit()
-
     # function called when timer thread ends
     def triggered(self):
         # emit triggered signal
         try:
+            signals.trainControllerTimeTrigger.emit()
 
             # increment seconds
             self.currSecs += 1
@@ -62,7 +57,6 @@ class Clock(QThread):
     # start time
     def startTimer(self):
         self.timer.start()
-        self.powerTimer.start()
 
     def oneTimes(self):
         self.timer.start()
