@@ -21,7 +21,7 @@ class Wayside(QObject):
         signals.trackCTCToWayside.connect(self.trackReceived)
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
-        signals.waysideCommandedSpeed.connect(self.dispatchTrain)
+        #signals.waysideCommandedSpeed.connect(self.commspeed)
 
         # signals.waysideinstance1.connect(self.wayside1range)#TODO
         # signals.waysideinstance2.connect(self.wayside2range)#TODO
@@ -30,24 +30,28 @@ class Wayside(QObject):
         
     # function to dispatch a train
     # hard coded for green line for the time being
+    def commspeed(self, train):
+        if (train.authority == '0'):
+            commSpeed = 0
+        else:
+            commSpeed = train.suggSpeed
+
+        signals.waysideCommandedSpeed.emit(commSpeed)
+
     def dispatchTrain(self, train):
         # set occupancy of first block
         #self.setOccupancy(train.line, 63, 1)
 
         print('wayside dispatched')
-        print(train.authority)
+        print("wayside print 1", train.authority)
         # compare suggSpeed to commandedSpeed
         #speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
-        if (train.authority == 0):
-            commSpeed = 0
-        else:
-            commSpeed = train.suggSpeed
-
+        self.commspeed(train)
         # emit dispatched train to track model
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
-        signals.waysideCommandedSpeed.emit(commSpeed)
+        
 
     # function to set block occupancies
     #def setOccupancy(self, line, blockNumber, occupied):
