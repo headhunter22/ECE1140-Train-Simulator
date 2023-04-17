@@ -32,7 +32,7 @@ clock.startTimer()
 ctcOffice = CTC(track)
 waysideController = Wayside(ctcOffice)
 ctcOffice.addWayside(waysideController)
-trackModel = TrackModel(waysideController)
+trackModel = TrackModel()
 trainModel = TrainModel()
 tc = SWTrainController()
 

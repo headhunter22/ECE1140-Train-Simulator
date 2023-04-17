@@ -3,15 +3,10 @@ from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
 import TrackParser
 from Fault import Fault
+from signals import signals
 
 # Test UI class
 class TestUI(QtWidgets.QMainWindow):
-    occupancyPressed = pyqtSignal(str, str)
-    vacancyPressed = pyqtSignal(str, str)
-    crossingChanged = pyqtSignal(int)
-    switchChanged = pyqtSignal(str, str, str)
-    tempSignal = pyqtSignal(int)
-    faultSignal = pyqtSignal(str, str, str)
 
     def __init__(self, track, *args, **kwargs):
         self.track = track
@@ -63,18 +58,18 @@ class TestUI(QtWidgets.QMainWindow):
         if not self.tempEntry.text().isnumeric(): 
             return
 
-        self.tempSignal.emit(int(self.tempEntry.text()))
+        signals.trackModelTempUpdated.emit(int(self.tempEntry.text()))
 
     # function to get crossing statuses when they change
     def changeCrossingStatuses(self):
         if self.RedXing.isChecked() and self.GreenXing.isChecked():
-            self.crossingChanged.emit(1) 
+            signals.trackModelTestUIUpdateGUICrossings.emit(1) 
         elif self.RedXing.isChecked() and not self.GreenXing.isChecked():
-            self.crossingChanged.emit(2)
+            signals.trackModelTestUIUpdateGUICrossings.emit(2)
         elif not self.RedXing.isChecked() and self.GreenXing.isChecked():
-            self.crossingChanged.emit(3)
+            signals.trackModelTestUIUpdateGUICrossings.emit(3)
         else:
-            self.crossingChanged.emit(4)
+            signals.trackModelTestUIUpdateGUICrossings.emit(4)
 
     # function to change dropdowns for switch selection
     def switchLineChanged(self, line):
@@ -134,19 +129,18 @@ class TestUI(QtWidgets.QMainWindow):
                 self.FaultBlockSelect.addItem(block.blockName)
 
     def setOcc(self):
-        self.occupancyPressed.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
+        signals.trackModelTestUIUpdateGUIOccupancy.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
         
     def setVac(self):
-        self.vacancyPressed.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
+        signals.trackModelTestUIUpdateGUIVacancy.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
 
     def changeSwitchOpt1(self):
-        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption1.text())
+        signals.trackModelTestUIUpdateGUISwitches.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption1.text())
 
     def changeSwitchOpt2(self):
-        self.switchChanged.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
+        signals.trackModelTestUIUpdateGUISwitches.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
 
     def induceFault(self, faultType):
-        # emit signal
-        self.faultSignal.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)
+        signals.trackModelTestUIUpdateFault.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)
 
 #end TestUI class

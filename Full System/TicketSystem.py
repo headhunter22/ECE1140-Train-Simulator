@@ -1,19 +1,20 @@
 import random
+from Train import Train
+from signals import signals
 
 class TicketSystem:
 
-    totalPassengersMoved = 0
+    totalPassengersMoved = {'Red: ': 0,
+                            'Green: ': 0}
 
-    def __init__(self):
-        self.passengersWaiting = 0
-        self.passengersOnboard = 0
+    def releasePassengers(self, train):
+        passengersOff = random.randint(1, train.numPassengers)
+        print('Passengers Off: ' + str(passengersOff))
+        train.numPassengers -= passengersOff
+        TicketSystem.totalPassengersMoved[train.line.lineName] += passengersOff
+        signals.ctcGetPassengersPerLine.emit(passengersOff, train.line.lineName)
 
-    def releasePassengers(self):
-        print('Passengers Off: ' + str(self.passengersOnboard))
-        totalPassengersMoved += self.passengersOnboard
-
-    def boardTrain(self):
-        self.passengersWaiting = random.randint(1, 222)
-        print('Passengers On: ' + str(self.passengersWaiting))
-        self.passengersOnboard = self.passengersWaiting
-        
+    def boardTrain(self, train):
+        passengersWaiting = random.randint(1, 222)
+        train.numPassengers += passengersWaiting
+        print('Passengers On: ' + str(passengersWaiting))
