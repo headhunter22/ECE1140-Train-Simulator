@@ -15,7 +15,7 @@ class Signals(QObject):
     CTCOneTimesSpeed = pyqtSignal()
     CTCTenTimesSpeed = pyqtSignal()
     CTCFiftyTimesSpeed = pyqtSignal()
-    greenStationProperties = pyqtSignal(list)
+    greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
 
     # ctc frontend emission signals
