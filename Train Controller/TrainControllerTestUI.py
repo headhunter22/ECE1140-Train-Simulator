@@ -137,4 +137,4 @@ window = TestUI()
 window.show()
 
 # Start the event loop.
-#app.exec()
+app.exec()

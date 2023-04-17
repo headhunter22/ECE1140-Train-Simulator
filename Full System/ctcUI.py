@@ -34,8 +34,6 @@ class ctcMainUI(QMainWindow):
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
 
-        signals.greenStationProperties.connect(self.greenAddStation)
-
         ##################################
         ########STARTUP FUNCTIONS#########
         ##################################
@@ -271,7 +269,7 @@ class ctcMainUI(QMainWindow):
     ############################################
 
     def iterDispatch(self):
-        signals.greenLineTrainDispatchFromCtcUI.emit(73)
+        signals.greenLineTrainDispatchFromCtcUI.emit(65)
 
     def dipatchGreenTrain(self):
         if self.ui.greenTentSchedule.item(0).text() == '':
