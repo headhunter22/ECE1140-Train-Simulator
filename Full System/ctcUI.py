@@ -9,6 +9,7 @@ import pandas as pd
 from signals import signals
 import sys
 import os
+import re
 sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
@@ -29,7 +30,7 @@ class ctcMainUI(QMainWindow):
         signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
-        #signals.ctcUpdateGUITrainInfo.connect(self.updateT
+        signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
 
         signals.greenStationProperties.connect(self.greenAddStation)
 
@@ -241,6 +242,25 @@ class ctcMainUI(QMainWindow):
         self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
+
+
+
+
+
+
+
+
+
+        self.ui.greenAddStop.clicked.connect(self.testGreenAddition)
+
+
+
+
+
+
+
+
+
 
         self.show()
 
@@ -468,6 +488,40 @@ class ctcMainUI(QMainWindow):
         if self.ui.greenScheduledTrains_2.item(0,0).text() == "Dormont":
             block = 73
         signals.greenLineTrainDispatchFromCtcUI.emit(block)
+
+    def testGreenAddition(self):
+        stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
+        stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
+        pattern = r"^\d{2}:\d{2}$"
+
+        if (self.ui.greenDestination.text() not in stations) or (not re.match(pattern, self.ui.greenTime.text())):
+            self.ui.greenDestination.clear()
+            self.ui.greenTime.clear()
+            return
+        else:
+            for i in range(0, len(stations)):
+                if self.ui.greenDestination.text() == stations[i]:
+                    block = stationBlocks[i]
+
+            time = self.ui.greenTime.text().split(":")
+            temp = time[0] + ":" + time[1]
+
+            rowCount = self.ui.greenTentSchedule.rowCount()
+
+            self.ui.greenTentSchedule.insertRow(rowCount)
+
+            print(block)
+            print(temp)
+
+            dest = QTableWidgetItem(self.ui.greenDestination.text())
+            at = QTableWidgetItem(temp)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 0, dest)
+            self.ui.greenTrainInfoTable.setItem(rowCount, 1, at)
+
+
+
+
+
 
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
