@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QIntValidator
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem, QListWidgetItem
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem
 from ctcMainUiImport import Ui_MainWindow
 
 import ScheduleParser
@@ -15,8 +15,6 @@ sys.dont_write_bytecode = True
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
-
-#catching up
 
 class ctcMainUI(QMainWindow):
     def __init__(self, track):
@@ -272,44 +270,8 @@ class ctcMainUI(QMainWindow):
     ############################################
 
     def iterDispatch(self):
-        signals.greenLineTrainDispatchFromCtcUI.emit(69)
-
-    def dipatchGreenTrain(self):
-        if self.ui.greenTentSchedule.item(0).text() == '':
-            return
-
-        for button in self.greenStations:
-            button.setProperty("selected", False)
-
-        # Update the background color of all buttons to white
-        for button in self.greenStations:
-            button.setStyleSheet("background-color: white;")
-        
-        nextTrain = self.ui.greenTentSchedule.item(0).text()
-
-        slicedText = str(self.ui.greenScheduledTrains.count() + 1) + nextTrain[nextTrain.find('.'):nextTrain.find('\n')] + '\n   Departure: hh:mm\n   ' + nextTrain[nextTrain.find('A'):]  + '\n'
-
-        item = QListWidgetItem(slicedText)
-
-        self.ui.greenScheduledTrains.addItem(item)
-        self.ui.greenTentSchedule.clear()
-
-    def dipatchRedTrain(self):
-        for button in self.redStations:
-            button.setProperty("selected", False)
-
-        # Update the background color of all buttons to white
-        for button in self.redStations:
-            button.setStyleSheet("background-color: white;")
-        
-        nextTrain = self.ui.redTentSchedule.item(0).text()
-
-        slicedText = str(self.ui.redTentSchedule_3.count() + 1) + nextTrain[nextTrain.find('.'):nextTrain.find('\n')] + '\n   Departure: hh:mm\n   ' + nextTrain[nextTrain.find('A'):]  + '\n'
-
-        item = QListWidgetItem(slicedText)
-
-        self.ui.redTentSchedule_3.addItem(item)
-        self.ui.redTentSchedule.clear()
+        stops = [65, 73]
+        signals.greenLineTrainDispatchFromCtcUI.emit(stops)
 
     def clearGreenDispatch(self):
         #clear the station selections
@@ -382,33 +344,6 @@ class ctcMainUI(QMainWindow):
         # Update the background color of all buttons to white
         for button in self.redStations:
             button.setStyleSheet("background-color: white;")
-
-    def addGreenTentBlock(self):
-        if self.ui.greenBlockDispatch.currentIndex() != 0:
-            
-            greenTime = self.ui.greenArrivalInput.time()
-            blockString = str(self.ui.greenTentSchedule.count() + 1) + '. Block: ' + str(self.ui.greenBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + greenTime.toString("hh:mm")
-            item = QListWidgetItem(blockString)
-            self.ui.greenTentSchedule.addItem(item)
-
-        self.ui.greenBlockDispatch.setCurrentIndex(0)
-
-    def addRedTentBlock(self):
-        if self.ui.redBlockDispatch.currentIndex() != 0:
-            
-            redTime = self.ui.redArrivalInput.time()
-            blockString = str(self.ui.redTentSchedule.count() + 1) + '. Block: ' + str(self.ui.redBlockDispatch.currentIndex()) + '\n    Arrival Time: ' + redTime.toString("hh:mm")
-            item = QListWidgetItem(blockString)
-            self.ui.redTentSchedule.addItem(item)
-
-        self.ui.redBlockDispatch.setCurrentIndex(0)
-
-    
-        if self.ui.redBlockDispatch.currentIndex() == 0:
-            yardTime = self.ui.redArrivalInput.time()
-            yardString = str(self.ui.redTentSchedule.count() + 1) + '. Yard' + '\n    Arrival Time: ' + yardTime.toString("hh:mm")
-            item = QListWidgetItem(yardString)
-            self.ui.redTentSchedule.addItem(item)
 
     def handleGreenStationClicked(self):
         # Get the button that was clicked
@@ -545,7 +480,7 @@ class ctcMainUI(QMainWindow):
     ############################################
 
     def updateAuthority(self, line, block, authority):
-        blockAuth = int(authority / 50)
+        blockAuth = int(authority / 100)
 
         if line == 'Green':
             for rows in range(0, 149):
