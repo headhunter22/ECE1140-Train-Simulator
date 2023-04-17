@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
     QMenuBar, QProgressBar, QPushButton, QSizePolicy,
-    QSlider, QStatusBar, QWidget)
+    QStatusBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.powProgressBar.setValue(24)
         self.ACprogressBar = QProgressBar(self.centralwidget)
         self.ACprogressBar.setObjectName(u"ACprogressBar")
-        self.ACprogressBar.setGeometry(QRect(10, 320, 161, 21))
+        self.ACprogressBar.setGeometry(QRect(10, 320, 151, 21))
         self.ACprogressBar.setStyleSheet(u"QProgressBar {\n"
 "     border: 2px solid black;\n"
 "     border-radius: 5px;\n"
@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
 "padding: 2px;")
         self.lDoorLabel = QLabel(self.centralwidget)
         self.lDoorLabel.setObjectName(u"lDoorLabel")
-        self.lDoorLabel.setGeometry(QRect(166, 210, 51, 20))
+        self.lDoorLabel.setGeometry(QRect(166, 220, 51, 20))
         self.sigFaultLabel = QPushButton(self.centralwidget)
         self.sigFaultLabel.setObjectName(u"sigFaultLabel")
         self.sigFaultLabel.setGeometry(QRect(10, 400, 71, 61))
@@ -90,6 +90,13 @@ class Ui_MainWindow(object):
         self.EmerButton.setObjectName(u"EmerButton")
         self.EmerButton.setGeometry(QRect(540, 220, 241, 171))
         self.EmerButton.setStyleSheet(u"background-color: rgb(255, 0, 0);")
+        self.tempLabel = QLabel(self.centralwidget)
+        self.tempLabel.setObjectName(u"tempLabel")
+        self.tempLabel.setGeometry(QRect(10, 340, 211, 31))
+        self.tempLabel.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;\n"
+"font: 11pt \"Segoe UI\";")
         self.label_23 = QLabel(self.centralwidget)
         self.label_23.setObjectName(u"label_23")
         self.label_23.setGeometry(QRect(20, 100, 111, 191))
@@ -104,15 +111,18 @@ class Ui_MainWindow(object):
 "padding: 2px;")
         self.ACIcon = QPushButton(self.centralwidget)
         self.ACIcon.setObjectName(u"ACIcon")
-        self.ACIcon.setGeometry(QRect(190, 310, 51, 51))
+        self.ACIcon.setGeometry(QRect(170, 280, 51, 51))
         self.ACIcon.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.headlightLabel = QLabel(self.centralwidget)
         self.headlightLabel.setObjectName(u"headlightLabel")
-        self.headlightLabel.setGeometry(QRect(166, 170, 51, 20))
+        self.headlightLabel.setGeometry(QRect(166, 190, 51, 20))
         self.brakeFaultLabel = QPushButton(self.centralwidget)
         self.brakeFaultLabel.setObjectName(u"brakeFaultLabel")
         self.brakeFaultLabel.setGeometry(QRect(150, 400, 71, 61))
         self.brakeFaultLabel.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.extLightLabel = QLabel(self.centralwidget)
+        self.extLightLabel.setObjectName(u"extLightLabel")
+        self.extLightLabel.setGeometry(QRect(166, 160, 51, 20))
         self.rDoorLabel = QLabel(self.centralwidget)
         self.rDoorLabel.setObjectName(u"rDoorLabel")
         self.rDoorLabel.setGeometry(QRect(166, 250, 51, 20))
@@ -171,10 +181,6 @@ class Ui_MainWindow(object):
         self.speedLimitLabel_2.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
-        self.tempSlider = QSlider(self.centralwidget)
-        self.tempSlider.setObjectName(u"tempSlider")
-        self.tempSlider.setGeometry(QRect(10, 350, 160, 18))
-        self.tempSlider.setOrientation(Qt.Horizontal)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -199,12 +205,14 @@ class Ui_MainWindow(object):
         self.lDoorLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
         self.sigFaultLabel.setText("")
         self.EmerButton.setText(QCoreApplication.translate("MainWindow", u"EMERGENCY BRAKE", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Internal Lights:</span></p><p><span style=\" font-size:12pt;\">Headlights:</span></p><p><span style=\" font-size:12pt;\">Left Doors:</span></p><p><span style=\" font-size:12pt;\">Right Doors:</span></p></body></html>", None))
+        self.tempLabel.setText(QCoreApplication.translate("MainWindow", u"Internal Temp:", None))
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Internal Lights:</span></p><p><span style=\" font-size:12pt;\">External Lights:</span></p><p><span style=\" font-size:12pt;\">Headlights:</span></p><p><span style=\" font-size:12pt;\">Left Doors:</span></p><p><span style=\" font-size:12pt;\">Right Doors:</span></p></body></html>", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Min: 60  Max: 90", None))
         self.commSpeedLabel.setText(QCoreApplication.translate("MainWindow", u"Commanded Speed:", None))
         self.ACIcon.setText("")
         self.headlightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
         self.brakeFaultLabel.setText("")
+        self.extLightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
         self.rDoorLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
         self.powFaultLabel.setText("")
         self.tempLabel_2.setText(QCoreApplication.translate("MainWindow", u"Current Section:", None))
