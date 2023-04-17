@@ -36,11 +36,14 @@ class CTC(QObject):
         # create a new track object and emit to wayside
         print(destBlock[0])
         train = Train(self.nextID, self.track.getLine('Green'), destBlock)
+        print("ctc 1 print", train.authority)
         train.authority = 3
+        print("ctc 2 print", train.authority)
         train.suggSpeed = 70
         print('ctc dispatched')
 
         signals.waysideDispatchTrain.emit(train)
+        print("ctc signal emit")
         signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
 
         # update the next ID of the next train
