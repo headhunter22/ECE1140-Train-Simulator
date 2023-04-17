@@ -120,15 +120,15 @@ class ctcMainUI(QMainWindow):
         self.ui.redAddStation.clicked.connect(self.addRedTentStation)
 
         #add block buttons
-        self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
-        self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
+        #self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
+        #self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
 
         #dispatch and clear buttons for red and green line
         
         #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
 
-        self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
+        #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
         self.ui.redClear.clicked.connect(self.clearRedDispatch)
 
         ##################################
@@ -424,7 +424,7 @@ class ctcMainUI(QMainWindow):
 
     def dispatchGreenLine(self):
         if self.ui.greenScheduledTrains.item(0,0).text() == "Dormont":
-            block = 73
+            block = [73]
         signals.greenLineTrainDispatchFromCtcUI.emit(block)
 
     def testGreenAddition(self):
@@ -437,10 +437,6 @@ class ctcMainUI(QMainWindow):
             self.ui.greenTime.clear()
             return
         else:
-            for i in range(0, len(stations)):
-                if self.ui.greenDestination.text() == stations[i]:
-                    block = stationBlocks[i]
-
             time = self.ui.greenTime.text().split(":")
             temp = time[0] + ":" + time[1]
 
@@ -467,13 +463,20 @@ class ctcMainUI(QMainWindow):
         self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
         self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
 
-        for i in range(0, len(stations)):
-            if self.ui.greenTentSchedule.item(0,0).text() == stations[i]:
-                block = stationBlocks[i]
+        blocks = []
+
+        for i in range(0, self.ui.greenTentSchedule.rowCount()):
+            for i in range(0, len(stations)):
+                if self.ui.greenTentSchedule.item(0,i).text() == stations[i]:
+                    blocks.append(stationBlocks[i])
+
+        for i in range(0, len(blocks)):
+            print(i)
+            print(blocks[i])
 
         self.ui.greenTentSchedule.clear()
 
-        signals.greenLineTrainDispatchFromCtcUI.emit(block)
+        signals.greenLineTrainDispatchFromCtcUI.emit(blocks)
 
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
@@ -646,15 +649,6 @@ class ctcMainUI(QMainWindow):
                 button.setStyleSheet("background-color: SkyBlue;")
             else:
                 button.setStyleSheet("background-color: white;")
-
-        #if clickedButton == self.timeButtons[0]:
-        #    self.oneTimeSpeed()
-        #elif clickedButton == self.timeButtons[1]:
-        #    self.oneTimeSpeed()
-        #elif clickedButton == self.timeButtons[2]:
-        #    self.tenTimesSpeed()
-        #elif clickedButton == self.timeButtons[3]:
-        #    self.oneTimeSpeed()
         
     def changeLabel(self, hrs, mins, secs): #######
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
