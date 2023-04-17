@@ -60,7 +60,6 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
-    trackModelReparse = pyqtSignal(str) # filename
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)

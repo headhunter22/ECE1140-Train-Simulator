@@ -44,7 +44,6 @@ class TrackModel(QObject):
         # connect train model signals
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
         signals.trackModelPassengersChanging.connect(self.board)
-        signals.trackModelReparse.connect(self.reparseTrack)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
@@ -92,10 +91,3 @@ class TrackModel(QObject):
     def board(self, train):
         # load new passengers
         self.ticketSystem.boardTrain(train)
-
-    def reparseTrack(self, filename):
-        # put the track into a new track class with the parser
-        self.track = TrackParser(filename)
-        print(self.track.lines)
-
-        # recreate the ui with new track
