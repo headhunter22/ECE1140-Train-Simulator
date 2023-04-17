@@ -16,6 +16,8 @@ trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
 greenStationStates = []
 
+#catching up
+
 class ctcMainUI(QMainWindow):
     def __init__(self, track):
         super().__init__()
