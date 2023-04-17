@@ -113,8 +113,8 @@ class TrainModel(QObject):
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            time.sleep(5)
             signals.trackModelPassengersChanging.emit(train) # this kinda works, might be getting called 1 too many times (slowing down to stop and speeding up from stop)
+            self.waitAtStation()
             # here needs to call train model passengers departing
             self.serviceBrake = False
 
@@ -175,11 +175,7 @@ class TrainModel(QObject):
         self.serviceBrake = serviceBrake
         #print(int(self.serviceBrake))
     
-    def stopped30Sec(self,hrs,min,sec):
-        self.timeWaiting = self.timeWaiting + 1
-        #print('timewaiting = ' + str(self.timeWaiting))
-        if self.timeWaiting == 30:
-            #print("train waited 30 seconds")
-            return True
-        else:
-            return False
+    def waitAtStation(self):
+        counter = 0
+        while counter < 30:
+            counter += 1
