@@ -14,6 +14,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
         signals.trainControllerAuthority.connect(self.updateAuthority)
+        signals.waysideCommandedSpeed.connect(self.updateCommandedSpeed)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -302,8 +303,8 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          self.y = float(txt)
          self.Authority.setText("Authority: {0} meters".format(self.y))
 
-    def updateCommandedSpeed(self):
-         x = Wayside.commSpeed
+    def updateCommandedSpeed(self, commSpeed):
+         x = commSpeed
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
