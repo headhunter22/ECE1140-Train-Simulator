@@ -218,6 +218,8 @@ class ctcMainUI(QMainWindow):
 
         self.ui.time1x.clicked.connect(self.oneTimeSpeed)
         self.ui.time10x.clicked.connect(self.tenTimeSpeed)
+        self.ui.timePause.clicked.connect(self.timePause)
+        self.ui.time50x.clicked.connect(self.fiftyTimeSpeed)
 
         ##################################
         ########TRAINS INFO###############
@@ -238,7 +240,7 @@ class ctcMainUI(QMainWindow):
     ############################################
 
     def iterDispatch(self):
-        signals.greenLineTrainDispatchFromCtcUI.emit(65)
+        signals.greenLineTrainDispatchFromCtcUI.emit(69)
 
     def dipatchGreenTrain(self):
         if self.ui.greenTentSchedule.item(0).text() == '':
@@ -636,7 +638,7 @@ class ctcMainUI(QMainWindow):
         signals.CTCTenTimesSpeed.emit()
 
     def fiftyTimeSpeed(self):
-        signals.CTCOneTimesSpeed.emit()
+        signals.CTCFiftyTimesSpeed.emit()
 
     def autoSwitch(self):
         #doesnt allow the user to uncheck the mode and in turn having no mode selected

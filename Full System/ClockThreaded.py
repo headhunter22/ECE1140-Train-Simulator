@@ -27,6 +27,7 @@ class Clock(QThread):
         signals.CTCTimePause.connect(self.stopTimer)
         signals.CTCOneTimesSpeed.connect(self.oneTimes)
         signals.CTCTenTimesSpeed.connect(self.tenTimes)
+        signals.CTCFiftyTimesSpeed.connect(self.fiftyTimes)
 
     # function called when timer thread ends
     def triggered(self):
@@ -51,30 +52,25 @@ class Clock(QThread):
             print('system ended')
             pass
 
-    # start thread
+    # start time
     def startTimer(self):
         self.timer.start()
 
     def oneTimes(self):
+        self.timer.start()
         self.timer.setInterval(1000)
 
     def tenTimes(self):
+        self.timer.start()
         self.timer.setInterval(100)
 
     def fiftyTimes(self):
+        self.timer.start()
         self.timer.setInterval(20)
 
-    # stop thread
+    # stop time
     def stopTimer(self):
-        self.running = False
-        self.resumeTimer()
-        self.timer.join()
-
-    # pause thread
-    def pauseTimer(self):
-        if not self.lock.locked():
-            self.lock.acquire()
-            self.paused = True
+        self.timer.stop()
 
     # resume thread
     def resumeTimer(self):
