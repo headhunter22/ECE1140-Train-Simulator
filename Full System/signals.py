@@ -19,7 +19,7 @@ class Signals(QObject):
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
 
     # ctc frontend emission signals
-    greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
+    greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
