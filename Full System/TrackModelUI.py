@@ -310,10 +310,16 @@ class TrackModelUI(QtWidgets.QMainWindow):
             initialFilter='Data File (*.csv)'
         )
 
-        fileName = str(response[0][0])
+        filename = str(response[0][0])
+        self.reparseTrack(filename)
 
-        # print filename
-        signals.trackModelReparseTrack.emit(filename)
+    def reparseTrack(self, filename):
+        # put the track into a new track class with the parser
+        self.track = TrackParser.parseTrack(filename)
+
+        # recreate the ui with new track
+        # clear the widgets from the scroll area
+        self.RedLineScrollArea.removeWidget
 
     def showFaultWindow(self):
         self.faultWindow = FaultDisplay(self.track)
