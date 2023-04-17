@@ -49,7 +49,7 @@ class TrainModel(QObject):
         if currBlock == train.destBlock:
             train.reachedDest = True
 
-        print('power received: ' + str(power))
+        #print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
         blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
@@ -69,7 +69,7 @@ class TrainModel(QObject):
         ############### CHNAGE THIS CALC TO WAYSIDE BC SHE CALCULATES AUTH #####################
         signals.ctcUpdateGUIAuthority.emit(train.line.lineName, train.block, train.authority)
 
-        print('dist to stop: ' + str(train.authority))
+        #print('dist to stop: ' + str(train.authority))
 
         # convert speed limit, commSpeed to m/s
         commSpeed = train.commandedSpeed * 0.27777
@@ -79,7 +79,7 @@ class TrainModel(QObject):
         g = 9.8 # m/s^2
         friction = .006
 
-        print('speed limit: ' + str(blockSpeedLimit))
+        #print('speed limit: ' + str(blockSpeedLimit))
 
         # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
@@ -95,7 +95,7 @@ class TrainModel(QObject):
         else:
             if (train.actSpeed*3.6) > blockSpeedLimit:
                 train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
-                print('During Too Fast An: ' + str(train.An))
+                #print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
                 train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
@@ -108,15 +108,15 @@ class TrainModel(QObject):
             train.An = -1.2 
 
 
-        print('An: ' + str(train.An))
+        #print('An: ' + str(train.An))
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
             time.sleep(5)
-            signals.trackModelPassengersChanging.emit(train) # this kinda works, might be getting called too many times
+            signals.trackModelPassengersChanging.emit(train) # this kinda works, might be getting called 1 too many times (slowing down to stop and speeding up from stop)
+            # here needs to call train model passengers departing
             self.serviceBrake = False
-
 
         prevPos = train.position
 
@@ -173,13 +173,13 @@ class TrainModel(QObject):
     
     def serviceBrakeActive(self, serviceBrake):
         self.serviceBrake = serviceBrake
-        print(int(self.serviceBrake))
+        #print(int(self.serviceBrake))
     
     def stopped30Sec(self,hrs,min,sec):
         self.timeWaiting = self.timeWaiting + 1
-        print('timewaiting = ' + str(self.timeWaiting))
+        #print('timewaiting = ' + str(self.timeWaiting))
         if self.timeWaiting == 30:
-            print("train waited 30 seconds")
+            #print("train waited 30 seconds")
             return True
         else:
             return False

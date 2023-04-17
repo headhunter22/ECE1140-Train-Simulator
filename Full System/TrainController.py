@@ -6,6 +6,8 @@ from Track import Track
 import time
 from Clock import Clock
 from signals import signals
+from simple_pid import PID
+from Train import Train
 
 class TrainController(QObject):  
 
@@ -17,8 +19,9 @@ class TrainController(QObject):
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
+        signals.trainModelGUIcommandedSpeed.connect(self.sendPower)
 
-        self.Ki = 1000
+        self.Ki = 10
         self.Kp = 1000
 
         self.UkPrev = 0
@@ -36,21 +39,23 @@ class TrainController(QObject):
         self.currentSpeed = currSpeed
         self.train = train
 
-    def sendPower(self):
+    def sendPower(self, train):
         #the train is moving and not stopped at a station
+        self.commSpeed = float(train) * 0.621
+        self.pid = PID(self.Kp, self.Ki, 0, self.commSpeed, 1)
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
         signals.trainControllerAuthority.emit(self.train.authority)
-        print('authority: ' + str(self.train.commandedSpeed))
-        print('stopDistance: ' + str(self.train.actSpeed * 3.6))
+        # print('authority: ' + str(self.train.commandedSpeed))
+        # print('stopDistance: ' + str(self.train.actSpeed * 3.6))
     
         if self.train.authority < 0:
             self.train.authority = 10000
 
         if self.train.authority <= self.StopDistance:
-            print('authority = ' + str(self.train.authority))
-            print('distance = ' + str(self.StopDistance))
-            print("auth less than dist")
+            # print('authority = ' + str(self.train.authority))
+            # print('distance = ' + str(self.StopDistance))
+            # print("auth less than dist")
             self.commandedPower = 0
             signals.trainControllerServiceBrake.emit(True)
 
@@ -58,19 +63,22 @@ class TrainController(QObject):
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
-            # velocity error calcuation
-            self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
-            print('commanded speed: ' + str(self.train.commandedSpeed))
-            print('actual speed: ' + str(self.train.actSpeed * 3.6))
-            print('ek: ' + str(self.ek))
+            # # velocity error calcuation
+            # self.ek = (self.train.commandedSpeed * .2777) - self.train.actSpeed
+            # print('commanded speed: ' + str(self.train.commandedSpeed))
+            # print('actual speed: ' + str(self.train.actSpeed * 3.6))
+            # print('ek: ' + str(self.ek))
 
-            # calculate uk
-            self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
+            # # calculate uk
+            # self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
 
-            self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
+            # self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
 
-            self.UkPrev = self.uk
-            self.EkPrev = self.ek
+            # self.UkPrev = self.uk
+            # self.EkPrev = self.ek
+
+            self.control = self.pid(self.currentSpeed)
+            
 
             # send actual speed #
             x = self.train.actSpeed * 2.237
@@ -81,7 +89,7 @@ class TrainController(QObject):
         if self.commandedPower > 120000:
             self.commandedPower = 120000
 
-        signals.trainModelGetPower.emit(self.train, self.commandedPower)
+        signals.trainModelGetPower.emit(self.train, self.control)
         signals.trainControllerPower.emit(self.commandedPower)
 
     def EmerBrake(self):

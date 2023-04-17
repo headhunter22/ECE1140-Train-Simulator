@@ -28,6 +28,7 @@ class Signals(QObject):
     ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
@@ -102,7 +103,10 @@ class Signals(QObject):
     trainControllerKI = pyqtSignal(float)
     trainControllerUIKP = pyqtSignal(float)
     trainControllerUIKI = pyqtSignal(float)
-
-
+    trainControllerRightDoors = pyqtSignal(bool)
+    trainControllerLeftDoors = pyqtSignal(bool)
+    trainControllerExteriorLights = pyqtSignal(bool)
+    trainControllerInteriorLights = pyqtSignal(bool)
+    trainControllerAC = pyqtSignal(bool)
 
 signals = Signals()

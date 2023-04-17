@@ -1,5 +1,20 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import QObject, pyqtSignal
 import sys
+
+trainControllerPower = pyqtSignal(float)
+trainControllerSpeed = pyqtSignal(float)
+trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
+trainControllerServiceBrake = pyqtSignal(bool)
+trainControllerRightDoors = pyqtSignal(bool)
+trainControllerLeftDoors = pyqtSignal(bool)
+trainControllerExteriorLights = pyqtSignal(bool)
+trainControllerInteriorLights = pyqtSignal(bool)
+trainControllerKP = pyqtSignal(float)
+trainControllerKI = pyqtSignal(float)
+trainControllerUIKP = pyqtSignal(float)
+trainControllerUIKI = pyqtSignal(float)
+trainControllerAuthority = pyqtSignal(float)
 
 class TestUI(QtWidgets.QMainWindow):
     def __init__(self):
@@ -127,14 +142,19 @@ class TestUI(QtWidgets.QMainWindow):
          window.Authority.setText("Authority: {0}mi".format(k))
 
 class MainWindow(QtWidgets.QMainWindow):
+   class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Train Controller")
         self.resize(980, 620)
 
+        # Connect Signals #
+        trainControllerPower.connect(self.updatePower)
+        trainControllerSpeed.connect(self.updateSpeed)
+        trainControllerAuthority.connect(self.updateAuthority)
 
-            # Emergency Brake button init #
+        # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
         self.txt = QtWidgets.QPushButton("Emergency Brake Disengaged", self)
         self.EmerBrake.setGeometry(50, 50, 200, 200)
@@ -149,25 +169,25 @@ class MainWindow(QtWidgets.QMainWindow):
         self.EmerBrake.clicked.connect(self.EBText)
 
 
-            # Slide Request init #
+        # Slide Request init #
         self.RateReq = QtWidgets.QSlider(self)
         self.RateText = QtWidgets.QLabel("Requested Speed: 0mph", self)
         self.CommandedSpeed = QtWidgets.QLabel("Commanded Speed: 0mph", self)
-        self.Authority = QtWidgets.QLabel("Authority: 0mi", self)
+        self.Authority = QtWidgets.QLabel("Authority: 0 meters", self)
         self.RateText.setGeometry(750, 275, 200, 100)
         self.RateReq.setGeometry(800, 50, 50, 250)
         self.CommandedSpeed.setGeometry(750, 300, 200, 100)
-        self.Authority.setGeometry(750, 325, 100, 100)
-        self.RateReq.setMinimum(-100)
-        self.RateReq.setMaximum(100)
+        self.Authority.setGeometry(750, 325, 200, 100)
+        self.RateReq.setMinimum(0)
+        self.RateReq.setMaximum(45)
         self.RateReq.setSingleStep(1)
 
         # Slider increment labels # 
-        self.HundredLabel = QtWidgets.QLabel("100 Mph", self)
-        self.FiftyLabel = QtWidgets.QLabel("50 Mph", self)
-        self.ZeroLabel = QtWidgets.QLabel("0 Mph", self)
-        self.NegFiftyLabel = QtWidgets.QLabel("-50 Mph", self)
-        self.NegHundredLabel = QtWidgets.QLabel("-100 Mph", self)
+        self.HundredLabel = QtWidgets.QLabel("45 Mph", self)
+        self.FiftyLabel = QtWidgets.QLabel("35 Mph", self)
+        self.ZeroLabel = QtWidgets.QLabel("25 Mph", self)
+        self.NegFiftyLabel = QtWidgets.QLabel("15 Mph", self)
+        self.NegHundredLabel = QtWidgets.QLabel("0 Mph", self)
 
         self.HundredLabel.setGeometry(850, 30, 50, 50)
         self.FiftyLabel.setGeometry(850, 90, 50, 50)
@@ -207,8 +227,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.RightDoors.clicked.connect(self.RightDoorsClick)
 
         # Showing Power Output #
-        self.PowerShown = QtWidgets.QPushButton("0 Watts", self)
-        self.PowerShown.setGeometry(425, 50, 200, 100)
+        self.PowerShown = QtWidgets.QPushButton("0 KWatts", self)
+        self.PowerShown.setGeometry(325, 50, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.PowerShown.setFont(font)
@@ -217,22 +237,32 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Showing Actual speed #
         self.SpeedShown = QtWidgets.QPushButton("0 mph", self)
-        self.SpeedShown.setGeometry(425, 155, 200, 100)
+        self.SpeedShown.setGeometry(325, 155, 250, 100)
         font = QtGui.QFont()
         font.setPointSize(24)
         self.SpeedShown.setFont(font)
         self.SpeedShown.setCheckable(False)
         self.SpeedShown.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
 
+        # Init Service Brake Button #
+        self.ServiceBrake = QtWidgets.QPushButton("Service Brake", self)
+        self.ServiceBrake.setGeometry(600, 125, 200, 100)
+        self.ServiceBrake.setFont(font)
+        self.ServiceBrake.setCheckable(True)
+        self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.ServiceBrake.clicked.connect(self.ServiceBrakeClick)
+
         # Init Manual/Automatic Buttons #
         self.ManualMode = QtWidgets.QPushButton("Manual Mode", self)
         self.ManualMode.setGeometry(775, 400, 100, 100)
-        self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
         self.ManualMode.setCheckable(True)
         self.AutoMode = QtWidgets.QPushButton("Automatic Mode", self)
-        self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
+        self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
         self.AutoMode.setGeometry(775, 505, 100, 100)
         self.AutoMode.setCheckable(True)
+        self.AutoMode.setChecked(True)
+        self.AutoModeClick()
 
         #Connections #
         self.ManualMode.clicked.connect(self.ManualModeClick)
@@ -242,24 +272,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.GainChange = QtWidgets.QPushButton("Edit Gain Values", self)
         self.GainChange.setGeometry(25, 550, 100, 50)
         self.GainChange.clicked.connect(self.OpenGainWindow)
-
-    def OpenGainWindow(self):  
-        window3.show()
     
-    def CloseGains(self):
-         window3.close()
+    def CloseGainWindow(self):
+        self.GW.close()
 
         # Calling the clicked-on EmerBrake functions #
     def EBClick(self):
             if self.EmerBrake.isChecked() == False:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
                  print("Emergency Brake Disengaged")
-                 window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+                 trainControllerEmerBrake.emit(False)
+                 #window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
             if self.EmerBrake.isChecked() == True:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+                 trainControllerEmerBrake.emit(True)
                  print("Emergency Brake Engaged")
-                 window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+                 
     
     def EBText(self):
             if self.EmerBrake.isChecked() == True:
@@ -273,80 +302,144 @@ class MainWindow(QtWidgets.QMainWindow):
     def SliderMoved(self, i):
         self.RateText.setText("Requested Speed: {0}mph".format(i))
 
-        
         # Calling headlights clicked function #
     def HeadlightsClick(self):
         if self.Headlights.isChecked() == True:
              self.Headlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
              print("Headlights On")
-             window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+             trainControllerExteriorLights.emit(True)
+            #window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
 
         if self.Headlights.isChecked() == False:
              self.Headlights.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
              print("Headlights Off")
-             window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+             trainControllerExteriorLights.emit(False)
+             #window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling InteriorLights clicked function #
     def InteriorLightsClick(self):
         if self.InteriorLights.isChecked() == True:
              self.InteriorLights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
              print("Interior Lights On")
-             window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+             trainControllerInteriorLights.emit(True)
+             #window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
         if self.InteriorLights.isChecked() == False:
              self.InteriorLights.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
              print("Interior Lights Off")
-             window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+             trainControllerInteriorLights.emit(False)
+             #window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling LeftDoors clicked function #
     def LeftDoorsClick(self):
         if self.LeftDoors.isChecked() == True:
              self.LeftDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
              print("Left Doors Opened")
-             window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+             trainControllerLeftDoors.emit(True)
+             #window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
         if self.LeftDoors.isChecked() == False:
              self.LeftDoors.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
              print("Left Doors Closed")
-             window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+             trainControllerLeftDoors.emit(False)
+             #window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling RightDoors clicked function #
     def RightDoorsClick(self):
         if self.RightDoors.isChecked() == True:
              self.RightDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
              print("Right Doors Opened")
-             window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+             trainControllerRightDoors.emit(True)
+             #window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
         if self.RightDoors.isChecked() == False:
              self.RightDoors.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
              print("Left Doors Closed")
-             window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+             trainControllerRightDoors.emit(False)
+             #window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling Manual button Functions #
     def ManualModeClick(self):
         if self.ManualMode.isChecked() == True:
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-              window2.TestManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.AutoMode.setChecked(True)
+              self.AutoModeClick()
 
         if self.ManualMode.isChecked() == False:
-              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-              window2.TestManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.AutoModeClick()
 
        # Calling Auto button function #
     def AutoModeClick(self):
          if self.AutoMode.isChecked() == True:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-              window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.ManualMode.setCheckable(False)
+              self.EmerBrake.setCheckable(False)
+              self.RightDoors.setCheckable(False)
+              self.LeftDoors.setCheckable(False)
+              self.Headlights.setCheckable(False)
+              self.InteriorLights.setCheckable(False)
+              self.RateReq.setDisabled(True)
+              self.ServiceBrake.setCheckable(False)
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-              window2.TestAutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              self.ManualMode.setCheckable(True)
+              self.EmerBrake.setCheckable(True)
+              self.RightDoors.setCheckable(True)
+              self.LeftDoors.setCheckable(True)
+              self.Headlights.setCheckable(True)
+              self.InteriorLights.setCheckable(True)
+              self.RateReq.setDisabled(False)
+              self.ServiceBrake.setCheckable(True)
+              self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+              self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
+    def ServiceBrakeClick(self):
+         if self.ServiceBrake.isChecked() == True:
+              self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
+              print("Service Brake engaged")
+
+         if self.ServiceBrake.isChecked() == False:
+              self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
+              print("Service Brake Disengaged")
+
+    def updatePower(self, power):
+         x = power
+         power = power/1000
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.power = self.y
+         self.PowerShown.setText("{0} KWatts".format(self.y))
+
+    def updateSpeed(self, speed):
+         self.speed = speed
+         self.SpeedShown.setText("{0} Mph".format(speed))
+
+    def OpenGainWindow(self):
+         self.GW = GainWindow()
+         self.GW.show()
+
+    def updateAuthority(self, auth):
+         x = auth
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.Authority.setText("Authority: {0} meters".format(self.y))
+
+    #def updateCommandedSpeed(self):
+         #x = Wayside.commSpeed
+         #txt = f"{x:.2f}"
+         #self.y = float(txt)
+         #self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(GainWindow, self).__init__()
+
+        # Connect KP/KI #
+        #trainControllerKP.connect(self.updateKP)
 
         self.setWindowTitle("Edit Gain")
         self.resize(490, 310)
@@ -364,10 +457,23 @@ class GainWindow(QtWidgets.QMainWindow):
         font.setPointSize(24)
         self.KILabel.setFont(font)
 
-         # init confirm button # 
-        self.Confirm = QtWidgets.QPushButton("Confirm", self)
-        self.Confirm.setGeometry(375, 250, 100, 50)
-        self.Confirm.clicked.connect(window.CloseGains)
+         # init KP/PI Edits # 
+        self.KIChange = QtWidgets.QLineEdit("1000", self)
+        self.KIChange.setGeometry(225, 92, 50, 25)
+        self.KPChange = QtWidgets.QLineEdit("1000", self)
+        self.KPChange.setGeometry(225, 192, 50, 25)
+        
+    def updateKP(self):
+        textkp = self.KIChange.textfield.text()
+        INPUT2 = float(textkp)
+        trainControllerUIKP.emit(INPUT2)
+        self.KIChange.setText(textkp)
+
+    def updateKP(self):
+        textki = self.KIChange.textfield.text()
+        INPUT2 = float(textki)
+        trainControllerUIKI.emit(INPUT2)
+        self.KIChange.setText(textki)
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.

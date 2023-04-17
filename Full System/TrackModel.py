@@ -12,6 +12,7 @@ from Block import Block
 from Track import Track
 from Train import Train
 from TicketSystem import TicketSystem
+import TrackParser
 from signals import signals
 
 # green route array
@@ -42,7 +43,7 @@ class TrackModel(QObject):
     
         # connect train model signals
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
-        signals.trackModelPassengersChanging.connect(self.deboardBoard)
+        signals.trackModelPassengersChanging.connect(self.board)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
@@ -87,9 +88,6 @@ class TrackModel(QObject):
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
             signals.waysideUpdateVacancy.emit(block)
 
-    def deboardBoard(self, train):
-        # unload passengers
-        self.ticketSystem.releasePassengers(train)
-
+    def board(self, train):
         # load new passengers
         self.ticketSystem.boardTrain(train)
