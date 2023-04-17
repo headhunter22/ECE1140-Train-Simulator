@@ -3,6 +3,10 @@ PLC Dictionary
 Block:
 	BLK #type of job
 	ID bluea1 #ID boolean
+	SC "" #Section **maybe make this into binary
+	BN 000 #Block number
+	NB 000 #Next block
+	PB 000 #Previous block
 	ST 0 #Station 1- has a station 0- does not have a station
 	RX 0 #Railroad Crossing 1- has a crossing 0- does not have a crossing
 	RS 0 #Railroad Crossing State 1- active 0- inactive 
