@@ -43,10 +43,17 @@ class TrainModel(QObject):
         signals.trainControllerDispatchedSignal.emit(train)
 
     def updatedPower(self, train, power):
+        if len(self.trainList) == 0:
+            return
         # get current line, block and the associated length, speed limit
         currLine = train.line
         currBlock = train.block
-        if currBlock == train.destBlock:
+
+        # if the train has stopped at all given destination, go to yard
+        if not train.destBlock:
+            train.destBlock.append(57)
+
+        if currBlock == train.destBlock[0]:
             train.reachedDest = True
 
         #print('power received: ' + str(power))
@@ -58,7 +65,7 @@ class TrainModel(QObject):
         distToStop = 0
         tempBlock = currBlock
         offset = 1
-        while tempBlock != train.destBlock and not train.reachedDest:
+        while tempBlock != train.destBlock[0] and not train.reachedDest:
             distToStop += float(currLine.getBlock(tempBlock).length)
             tempBlock = train.route[offset]
             offset += 1
@@ -97,7 +104,7 @@ class TrainModel(QObject):
                 train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 #print('During Too Fast An: ' + str(train.An))
             else:
-                trainForce = power / train.actSpeed_1
+                trainForce = train.commandedPower / train.actSpeed_1
                 train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
@@ -117,6 +124,7 @@ class TrainModel(QObject):
             self.waitAtStation()
             # here needs to call train model passengers departing
             self.serviceBrake = False
+            train.destBlock.pop(0)
 
         prevPos = train.position
 
@@ -156,6 +164,8 @@ class TrainModel(QObject):
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
 
+
+        # train at the end of the track
         if (train.block == 57):
             train.actSpeed = 0
 
@@ -163,7 +173,7 @@ class TrainModel(QObject):
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
         signals.trainModelGUIBlock.emit(str(train.block))
         signals.trainModelGUIcommandedSpeed.emit(str(train.commandedSpeed))
-        signals.trainModelGUIpower.emit(str(power))
+        signals.trainModelGUIpower.emit(str(train.commandedPower))
     
     def trackReceived(self, track):
         self.track = track

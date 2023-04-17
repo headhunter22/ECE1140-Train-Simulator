@@ -107,7 +107,7 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>130</y>
+      <y>100</y>
       <width>251</width>
       <height>71</height>
      </rect>
@@ -187,7 +187,7 @@ padding: 2px;</string>
       <x>540</x>
       <y>220</y>
       <width>241</width>
-      <height>191</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -246,7 +246,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>200</y>
+      <y>170</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -331,19 +331,6 @@ padding: 2px;</string>
      <string>Null</string>
     </property>
    </widget>
-   <widget class="QLabel" name="currentFile">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>440</y>
-      <width>231</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Current Schedule:</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="powFaultLabel">
     <property name="geometry">
      <rect>
@@ -383,7 +370,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>230</y>
+      <y>200</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -463,7 +450,7 @@ padding: 2px;</string>
       <x>540</x>
       <y>90</y>
       <width>231</width>
-      <height>111</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -492,6 +479,37 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="text">
      <string>Current Block:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="popUpUI">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>410</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Display Train Stats</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="speedLimitLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>230</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 2px solid black;
+border-radius: 4px;
+padding: 2px;</string>
+    </property>
+    <property name="text">
+     <string>Acceleration:</string>
     </property>
    </widget>
   </widget>
