@@ -1,0 +1,139 @@
+
+    
+    
+from PyQt6.QtWidgets import QApplication, QWidget, QCheckBox, QVBoxLayout
+from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
+
+class MyWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        # Create some QCheckBox widgets
+        self.checkbox1 = QCheckBox('Checkbox 1', self)
+        self.checkbox2 = QCheckBox('Checkbox 2', self)
+        self.checkbox3 = QCheckBox('Checkbox 3', self)
+
+        # Connect the clicked signal of all checkboxes to the checkboxClicked slot
+        self.checkbox1.clicked.connect(self.checkboxClicked)
+        self.checkbox2.clicked.connect(self.checkboxClicked)
+        self.checkbox3.clicked.connect(self.checkboxClicked)
+
+        # Add the checkboxes to a QVBoxLayout
+        layout = QVBoxLayout()
+        layout.addWidget(self.checkbox1)
+        layout.addWidget(self.checkbox2)
+        layout.addWidget(self.checkbox3)
+        self.setLayout(layout)
+
+        self.setGeometry(300, 300, 250, 150)
+        self.show()
+
+    @pyqtSlot()
+    def checkboxClicked(self):
+        # Get the checkbox that was just clicked
+        checkbox = self.sender()
+
+        # Iterate over all the checkboxes and uncheck them except for the one that was just clicked
+        for checkbox_ in [self.checkbox1, self.checkbox2, self.checkbox3]:
+            if checkbox_ != checkbox:
+                checkbox_.setChecked(False)
+
+if __name__ == '__main__':
+    app = QApplication([])
+    widget = MyWidget()
+    app.exec()
+
+
+
+
+################BAD SLOW WAY TO DO IT########################
+def autoSwitch(self):
+        self.manualSelect.setChecked(False)
+        self.maintenanceSelect.setChecked(False)
+
+    def manualSwitch(self):
+        self.autoSelect.setChecked(False)
+        self.maintenanceSelect.setChecked(False)
+
+    def maintenanceSwitch(self):
+        self.manualSelect.setChecked(False)
+        self.autoSelect.setChecked(False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+####################implemented functionality#########################
+#switch which one is on
+self.autoSelect.clicked.connect(self.autoSwitch)
+self.manualSelect.clicked.connect(self.manualSwitch)
+self.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
+
+#suggested speed set
+self.enterButton.clicked.connect(self.showSuggSpeed)
+
+#clear button clears all text fields
+self.clearButton.clicked.connect(self.clearInputs)
+
+
+
+def clearInputs(self):
+    self.enterLocation.setText("{0}".format(""))
+    self.enterSpeed.setText("{0}".format(""))
+    self.suggSpeedOutput.setText("Suggested Speed: --mph")
+    self.authority.setText("Authority: --mi")
+
+def showSuggSpeed(self):
+    entSpeed = self.enterSpeed.text()
+    self.suggSpeedOutput.setText("Suggested Speed: {0}mph".format(entSpeed))
+    self.enterLocation.setText("{0}".format(""))
+    self.enterSpeed.setText("{0}".format(""))
+
+def autoSwitch(self):
+    self.manualSelect.setChecked(False)
+    self.maintenanceSelect.setChecked(False)
+
+def manualSwitch(self):
+    self.autoSelect.setChecked(False)
+    self.maintenanceSelect.setChecked(False)
+
+def maintenanceSwitch(self):
+    self.manualSelect.setChecked(False)
+    self.autoSelect.setChecked(False)
+
+
+
+
+
+
+    newAuthority = 0
+
+        if line.currentText == "Green":
+            startingBlock = block.currentData + 75
+        else:
+            startingBlock = block
+
+        for startingBlock in zip(blockLength, infrastructure):
+            for startingBlock in infrastructure:
+            if 'SWITCH' not in infrastructure:
+                newAuthority += blockLength[startingBlock]
+            else:
+                break
+        
+        self.ui.authority.setText("Authority: {0}mph".format(newAuthority))
