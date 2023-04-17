@@ -21,6 +21,12 @@ class Wayside(QObject):
         signals.trackCTCToWayside.connect(self.trackReceived)
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
+        signals.waysideCommandedSpeed.connect(self.wayside)#TODO
+
+        signals.waysideinstance1.connect(self.wayside1range)#TODO
+        signals.waysideinstance2.connect(self.wayside2range)#TODO
+        signals.waysideinstance3.connect(self.wayside3range)#TODO
+        signals.waysideinstance4.connect(self.wayside4range)#TODO
         
     # function to dispatch a train
     # hard coded for green line for the time being

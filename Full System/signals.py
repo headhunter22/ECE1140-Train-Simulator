@@ -26,20 +26,25 @@ class Signals(QObject):
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
     ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
-<<<<<<< HEAD
-    ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, suggested speed, aithority, destination block
-    ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, suggested speed, aithority, destination block
-=======
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
->>>>>>> 68a1fb8b538ec84819bb88fc387de8d63a1b5bb3
 
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
+    waysideSwitchStates = pyqtSignal(list)
+    waysideCommandedSpeed = pyqtSignal(int)
+    #plc
+    waysideSwitchLocationsfromPLC = pyqtSignal(list)
+    waysideTrackfromPLC = pyqtSignal(list)
+    waysideSectionsfromPLC = pyqtSignal(list)
+    waysideinstance1 = pyqtSignal(list)
+    waysideinstance2 = pyqtSignal(list)
+    waysideinstance3 = pyqtSignal(list)
+    waysideinstance4 = pyqtSignal(list)
 
     # wayside UI signals
     wtowOccupancy = pyqtSignal(int) # block

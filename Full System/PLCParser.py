@@ -69,5 +69,5 @@ with open(fname, 'r+') as f: #newline='',
         elif x[:3] == "END":
             newtrack.addBlock(newblock)
             #print("add block object to track")
-    newtrack.wholeTrack()
-    newtrack.addWayside()
+#newtrack.wholeTrack()
+#newtrack.Waysides()
