@@ -8,8 +8,6 @@ from Line import Line
 from signals import signals
 sys.dont_write_bytecode = True
 
-#trying to catch up
-
 class CTC(QObject):
     def __init__(self, track):
         super().__init__()
@@ -42,7 +40,7 @@ class CTC(QObject):
         print('ctc dispatched')
 
         signals.waysideDispatchTrain.emit(train)
-        signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.commandedSpeed, train.authority, train. destBlock)
+        signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train. destBlock)
 
         # update the next ID of the next train
         self.nextID += 1

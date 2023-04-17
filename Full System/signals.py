@@ -15,10 +15,8 @@ class Signals(QObject):
     CTCOneTimesSpeed = pyqtSignal()
     CTCTenTimesSpeed = pyqtSignal()
     CTCFiftyTimesSpeed = pyqtSignal()
-    # authorityToWayside = pyqtSignal(Train)
-    # suggSpeedToWayside = pyqtSignal(Train)
-    # trainObjectToWayside = pyqtSignal(Train)
-    # switchStates = pyqtSignal(int, bool)
+    greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
+    blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
 
     # ctc frontend emission signals
     greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
@@ -26,8 +24,8 @@ class Signals(QObject):
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
     ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
-    ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
-    ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
