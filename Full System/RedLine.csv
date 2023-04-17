@@ -1,4 +1,4 @@
-Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,Station Side,ELEVATION (M),CUMALTIVE ELEVATION (M),Beacon,,
+﻿Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,Station Side,ELEVATION (M),CUMALTIVE ELEVATION (M),Beacon,,
 Red,A,1,50,0.5,40,,,0.25,0.25,,,
 Red,A,2,50,1,40,,,0.50,0.75,,,
 Red,A,3,50,1.5,40,,,0.75,1.50,,,

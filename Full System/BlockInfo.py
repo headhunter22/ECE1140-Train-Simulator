@@ -85,13 +85,6 @@ class BlockInfo(QtWidgets.QMainWindow):
             switchLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(switchLabel)
 
-            # create label for passengers
-            passengersLabel = QtWidgets.QLabel(str(block.passengers), self)
-            passengersLabel.setFixedHeight(50)
-            passengersLabel.setFixedWidth(75)
-            passengersLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-            self.hbox.addWidget(passengersLabel)
-
             # add row to vbox
             self.vbox.addLayout(self.hbox)
 
