@@ -260,7 +260,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="dormontStation">
@@ -849,7 +849,7 @@
        <string>Red Line Scheduled Trains:</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="greenScheduledTrains_2">
+     <widget class="QTableWidget" name="greenScheduledTrains">
       <property name="geometry">
        <rect>
         <x>0</x>

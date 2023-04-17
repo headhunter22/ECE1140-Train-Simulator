@@ -68,7 +68,6 @@ class ctcMainUI(QMainWindow):
         ##################################
 
         #iteration 3 button
-        #self.ui.dormontDispatch.clicked.connect(self.iterDispatch)
         self.ui.thisIsATest.clicked.connect(self.iterDispatch)
 
         #connecting the green station buttons
@@ -127,7 +126,8 @@ class ctcMainUI(QMainWindow):
         self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
 
         #dispatch and clear buttons for red and green line
-        self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
+        
+        #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
 
         self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
@@ -252,6 +252,7 @@ class ctcMainUI(QMainWindow):
 
 
         self.ui.greenAddStop.clicked.connect(self.testGreenAddition)
+        self.ui.greenDispatch.clicked.connect(self.testGreenDispatch)
 
 
 
@@ -485,7 +486,7 @@ class ctcMainUI(QMainWindow):
         print('South Hills Station    : ' + str(redStationStates[7]))
 
     def dispatchGreenLine(self):
-        if self.ui.greenScheduledTrains_2.item(0,0).text() == "Dormont":
+        if self.ui.greenScheduledTrains.item(0,0).text() == "Dormont":
             block = 73
         signals.greenLineTrainDispatchFromCtcUI.emit(block)
 
@@ -510,18 +511,32 @@ class ctcMainUI(QMainWindow):
 
             self.ui.greenTentSchedule.insertRow(rowCount)
 
-            print(block)
-            print(temp)
-
             dest = QTableWidgetItem(self.ui.greenDestination.text())
             at = QTableWidgetItem(temp)
-            self.ui.greenTrainInfoTable.setItem(rowCount, 0, dest)
-            self.ui.greenTrainInfoTable.setItem(rowCount, 1, at)
+            self.ui.greenTentSchedule.setItem(rowCount, 0, dest)
+            self.ui.greenTentSchedule.setItem(rowCount, 1, at)
 
 
+    def testGreenDispatch(self):
+        stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
+        stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
 
+        rowCount = self.ui.greenScheduledTrains.rowCount()
 
+        self.ui.greenScheduledTrains.insertRow(rowCount)
 
+        dest = QTableWidgetItem(self.ui.greenTentSchedule.item(0,0).text())
+        at = QTableWidgetItem(self.ui.greenTentSchedule.item(0,1).text())
+        self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
+        self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
+
+        for i in range(0, len(stations)):
+            if self.ui.greenTentSchedule.item(0,0).text() == stations[i]:
+                block = stationBlocks[i]
+
+        self.ui.greenTentSchedule.clear()
+
+        signals.greenLineTrainDispatchFromCtcUI.emit(block)
 
     ############################################
     ########OCCUPANCY WINDOWS FUNCTIONS#########
