@@ -83,6 +83,8 @@ class Signals(QObject):
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
 
+    # track model block page signals
+
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block

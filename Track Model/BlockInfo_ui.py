@@ -22,20 +22,20 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(991, 483)
+        MainWindow.resize(999, 483)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.MainScrollArea = QScrollArea(self.centralwidget)
         self.MainScrollArea.setObjectName(u"MainScrollArea")
-        self.MainScrollArea.setGeometry(QRect(0, 100, 991, 381))
+        self.MainScrollArea.setGeometry(QRect(0, 100, 1001, 381))
         self.MainScrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 989, 379))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 999, 379))
         self.MainScrollArea.setWidget(self.scrollAreaWidgetContents)
         self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setObjectName(u"horizontalLayoutWidget_2")
-        self.horizontalLayoutWidget_2.setGeometry(QRect(0, 60, 991, 41))
+        self.horizontalLayoutWidget_2.setGeometry(QRect(0, 60, 1001, 41))
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.label_5.setObjectName(u"label_5")
         sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
         self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setMinimumSize(QSize(50, 0))
+        self.label_5.setMinimumSize(QSize(75, 0))
         self.label_5.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_5)
@@ -73,7 +73,7 @@ class Ui_MainWindow(object):
         self.label_4.setObjectName(u"label_4")
         sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
-        self.label_4.setMinimumSize(QSize(100, 0))
+        self.label_4.setMinimumSize(QSize(75, 0))
         self.label_4.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_4)
@@ -89,33 +89,39 @@ class Ui_MainWindow(object):
 
         self.label_2 = QLabel(self.horizontalLayoutWidget_2)
         self.label_2.setObjectName(u"label_2")
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
+        self.label_2.setMinimumSize(QSize(125, 0))
         self.label_2.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
         self.label_8 = QLabel(self.horizontalLayoutWidget_2)
         self.label_8.setObjectName(u"label_8")
+        sizePolicy.setHeightForWidth(self.label_8.sizePolicy().hasHeightForWidth())
+        self.label_8.setSizePolicy(sizePolicy)
+        self.label_8.setMinimumSize(QSize(100, 0))
         self.label_8.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_8)
 
         self.label_9 = QLabel(self.horizontalLayoutWidget_2)
         self.label_9.setObjectName(u"label_9")
+        sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        self.label_9.setMinimumSize(QSize(100, 0))
         self.label_9.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_9)
 
         self.label_10 = QLabel(self.horizontalLayoutWidget_2)
         self.label_10.setObjectName(u"label_10")
+        sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
+        self.label_10.setMinimumSize(QSize(100, 0))
         self.label_10.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.label_10)
-
-        self.label_11 = QLabel(self.horizontalLayoutWidget_2)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setAlignment(Qt.AlignCenter)
-
-        self.horizontalLayout_2.addWidget(self.label_11)
 
         self.Header = QLabel(self.centralwidget)
         self.Header.setObjectName(u"Header")
@@ -139,7 +145,6 @@ class Ui_MainWindow(object):
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Station Side", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Underground?", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Switch Connection", None))
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Passengers", None))
         self.Header.setText(QCoreApplication.translate("MainWindow", u"Section A Info", None))
     # retranslateUi
 
