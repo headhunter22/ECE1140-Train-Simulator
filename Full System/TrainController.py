@@ -39,8 +39,10 @@ class TrainController(QObject):
     def setNewAuthority(self):
         self.train.authority = 1000
         print("Authority has been updated")
+        signals.trainGo.emit()
 
     def waitAtStation(self):
+        signals.trainWaiting.emit()
         self.waitTimer = QTimer()
         self.waitTimer.singleShot(30000, self.setNewAuthority)
 
@@ -50,11 +52,16 @@ class TrainController(QObject):
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
         if self.train.authority <= 0:
+            print('waiting')
             self.train.authority = 0
-            self.waitAtStation
+            self.waitAtStation()
             signals.trainControllerAuthority.emit(self.train.authority)
             # wait at station
             # make authority higher
+<<<<<<< HEAD
+=======
+
+>>>>>>> f11a967504ec9bdc70a166f7915ec8207f9a271a
         signals.trainControllerAuthority.emit(self.train.authority)
     
         if self.train.authority < 0:
@@ -70,7 +77,6 @@ class TrainController(QObject):
             signals.trainControllerServiceBrake.emit(True)
 
         if self.train.actSpeed == 0: #beginning state; train is not moving
-            self.waitAtStation()
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
