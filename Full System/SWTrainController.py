@@ -8,6 +8,8 @@ class SWTrainController(QObject):
         self.trainControllers = []
         signals.trainControllerDispatchedSignal.connect(self.dispatchTrain)
         signals.trainControllerTimeTrigger.connect(self.calculatePower)
+        signals.trainWaiting.connect(self.disconnectSignal)
+        signals.trainGo.connect(self.connectSignal)
 
     def dispatchTrain(self, train):
         print('train controlled dispatched')
@@ -20,3 +22,9 @@ class SWTrainController(QObject):
             return
         else:
             self.trainControllers[0].sendPower()
+
+    def disconnectSignal(self):
+        signals.trainControllerTimeTrigger.disconnect(self.calculatePower)
+
+    def connectSignal(self):
+        signals.trainControllerTimeTrigger.connect(self.calculatePower)

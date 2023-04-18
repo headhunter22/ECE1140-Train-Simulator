@@ -78,12 +78,10 @@ class Wayside(QObject):
         signals.trackWaysideToTrackModel.emit(track)
 
     def blockOccupancyReceived(self, block):
-        print("wayside block occupancy from track model")
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
     
     def blockVacancyReceived(self, block):
-        print("wayside block vacancy from track model")
         #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
 
