@@ -28,9 +28,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainControllerInteriorLights.connect(self.internalLights)
         signals.trainControllerLeftDoors.connect(self.LeftDoors)
         signals.trainControllerRightDoors.connect(self.RightDoors)
+        signals.trainModelGUIacc.connect(self.displayAcc)
 
         #displaying the stats of the train popup
         self.popUpUI.clicked.connect(self.displayPopUp)
+        self.EmerButton.clicked.connect(self.emergencyBrake)
         
         #icon set up
         sigIcon = QtGui.QIcon("sigOFF.png")
@@ -60,6 +62,12 @@ class TrainModelUI(QtWidgets.QMainWindow):
         txt = f"{speedMpH:.2f}"
         floatTxt = float(txt)
         self.actSpeed.setText("Speed: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
+
+    def displayAcc(self,train):
+        acc = float(train)*2.237
+        txt = f"{acc:.2f}"
+        floatTxt = float(txt)
+        self.trainAcc.setText("Acc.: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
     
     def displayBlock(self, train):
         self.commSpeedLabel.setText("Current Block = {0}".format(train)) #commSpeedLabel is the qt creator object
@@ -115,3 +123,15 @@ class TrainModelUI(QtWidgets.QMainWindow):
         else:
             self.intLightLabel.setStyleSheet("background-color: red")
             self.intLightLabel.setText("OFF")
+    
+    def emergencyBrake(self):
+        if (self.EmerButton.styleSheet() == 'background-color: red'):
+            self.actSpeed.setStyleSheet("background-color: red; border: 2px solid black; border-radius: 4px;padding: 2px;")
+            self.EmerButton.setText("Reset")
+            self.EmerButton.setStyleSheet("background-color: gray; border: 2px solid black; border-radius: 4px;padding: 2px; font: 16pt Segoe UI")
+            signals.trainModelEmerBrake.emit(True)
+        else:
+            self.actSpeed.setStyleSheet("background-color:  light gray; border: 2px solid black; border-radius: 4px;padding: 2px;")
+            self.EmerButton.setText("EMERGENCY BRAKE")
+            self.EmerButton.setStyleSheet("background-color: red")
+            signals.trainModelEmerBrake.emit(False)
