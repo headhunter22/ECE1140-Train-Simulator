@@ -52,9 +52,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.GreenFaultWidget = QtWidgets.QWidget()
         self.GreenFaultWidget.setLayout(self.GreenFaultLayout)
 
-        self.RedBreakagesScroll.setWidget(self.RedFaultWidget)
-        self.GreenBreakagesScroll.setWidget(self.GreenFaultWidget)
-
         # connect temperature button
         self.tempGo.clicked.connect(self.tempChanged)
 
@@ -62,12 +59,13 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.brokenRailButton.clicked.connect(self.breakRail)
         self.powerFailure.clicked.connect(self.powerFailed)
         self.circuitFailure.clicked.connect(self.circuitFailed)
+        self.fixButton.clicked.connect(self.fixFaults)
 
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
         signals.timerTicked.connect(self.updateTime)
-        signals.trackModelBrokenRail.connect(self.updateFaults)
+        # signals.trackModelBrokenRail.connect(self.updateFaults)
         
         # connect test ui signals
         signals.trackModelTestUIUpdateGUIOccupancy.connect(self.updateOccupancy)
@@ -167,12 +165,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
         if faultType == 'Broken Rail':
             # highlight Broken Rail orange
             self.BrokenRailLabel.setStyleSheet("color: orange")
-
-            # add to broken rails section
-            if inLine == 'Red':
-                self.RedFaultLayout.addWidget(faultLabel)
-            else:
-                self.GreenFaultLayout.addWidget(faultLabel)
         elif faultType == 'Power':
             # highlight Power orange
             self.PowerFaultLabel.setStyleSheet("color: orange")
@@ -193,12 +185,28 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         if line != '' and block != '':
             signals.trackModelBrokenRail.emit(line, block, 'Broken Rail')
+        
+        self.updateFaults(line, block, 'Broken Rail')
 
     def powerFailed(self):
+        line = self.brokenRailLineSelect.currentText()
         signals.trackModelPowerFailure.emit()
+        self.updateFaults(line, '0', 'Power')
 
     def circuitFailed(self):
+        line = self.brokenRailLineSelect.currentText()
         signals.trackModelCircuitFailure.emit()
+        self.updateFaults(line, '0', 'Broken Circuit')
+
+    def fixFaults(self):
+        # clear the track faults dictionary
+        for key in self.track.faults:
+            self.track.faults[key].clear()
+
+        # set the color of the labels back to black
+        self.BrokenRailLabel.setStyleSheet("color: black")
+        self.PowerFaultLabel.setStyleSheet("color: black")
+        self.BrokenCircuitLabel.setStyleSheet("color: black")
 
     # change RR X-ings
     def changeCrossings(self, crossing):
@@ -310,8 +318,12 @@ class TrackModelUI(QtWidgets.QMainWindow):
             initialFilter='Data File (*.csv)'
         )
 
-        filename = str(response[0][0])
-        self.reparseTrack(filename)
+        # test to make sure filename isn't blank (upload canceled)
+        try:
+            filename = str(response[0][0])
+            self.reparseTrack(filename)
+        except: 
+            print('no file selected')
 
     def reparseTrack(self, filename):
         # put the track into a new track class with the parser
@@ -329,11 +341,15 @@ class TrackModelUI(QtWidgets.QMainWindow):
         for line in self.track.lines:
             self.brokenRailLineSelect.addItem(line.lineName)
         
+        line = self.brokenRailLineSelect.currentText()
+        for block in self.track.getLine(line).blocks:
+            self.brokenRailBlockSelect.addItem(block.blockName)
+        
     def populateBlockSelect(self):
         self.brokenRailBlockSelect.clear()
         line = self.brokenRailLineSelect.currentText()
 
-        for block in line.blocks:
+        for block in self.track.getLine(line).blocks:
             self.brokenRailBlockSelect.addItem(block.blockName)
 # end main UI class
 

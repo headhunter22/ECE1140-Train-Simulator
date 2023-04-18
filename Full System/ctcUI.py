@@ -866,8 +866,8 @@ class ctcMainUI(QMainWindow):
         elif self.ui.maintenanceSelect.isChecked():
             self.ui.stackedWidget.setCurrentIndex(3)
 
-if __name__ == '__main__':
-    track = TrackParser.parseTrack('TrackLayout.csv')
-    app = QApplication([])
-    window = ctcMainUI(track)
-    app.exec()
+# if __name__ == '__main__':
+#     track = TrackParser.parseTrack('TrackLayout.csv')
+#     app = QApplication([])
+#     window = ctcMainUI(track)
+#     app.exec()
