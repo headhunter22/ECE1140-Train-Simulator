@@ -11,6 +11,7 @@ import math
 import time
 
 class TrainModel(QObject):
+    #its a comment
 
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
