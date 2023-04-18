@@ -304,7 +304,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          self.Authority.setText("Authority: {0} meters".format(self.y))
 
     def updateCommandedSpeed(self, commSpeed):
-         x = commSpeed
+         x = commSpeed / 1.609
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
