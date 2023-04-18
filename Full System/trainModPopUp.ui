@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>269</height>
+    <width>309</width>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Train Length:</string>
+     <string>Train Length:     32.3 m</string>
     </property>
    </widget>
    <widget class="QLabel" name="trainWidth">
@@ -40,15 +40,15 @@
      </rect>
     </property>
     <property name="text">
-     <string>Train Width:</string>
+     <string>Train Width:      2.65 m</string>
     </property>
    </widget>
    <widget class="QLabel" name="passengers">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
-      <width>291</width>
+      <y>140</y>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -60,13 +60,26 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>140</y>
-      <width>291</width>
+      <y>180</y>
+      <width>131</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Current Mass: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Train Height:     3.42 m</string>
     </property>
    </widget>
   </widget>
@@ -75,7 +88,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>418</width>
+     <width>309</width>
      <height>26</height>
     </rect>
    </property>
