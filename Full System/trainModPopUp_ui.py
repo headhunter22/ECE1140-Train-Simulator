@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(418, 269)
+        MainWindow.resize(309, 272)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.trainLength = QLabel(self.centralwidget)
@@ -34,14 +34,17 @@ class Ui_MainWindow(object):
         self.trainWidth.setGeometry(QRect(20, 60, 291, 31))
         self.passengers = QLabel(self.centralwidget)
         self.passengers.setObjectName(u"passengers")
-        self.passengers.setGeometry(QRect(20, 100, 291, 31))
+        self.passengers.setGeometry(QRect(20, 140, 141, 31))
         self.currentMass = QLabel(self.centralwidget)
         self.currentMass.setObjectName(u"currentMass")
-        self.currentMass.setGeometry(QRect(20, 140, 291, 31))
+        self.currentMass.setGeometry(QRect(20, 180, 131, 31))
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(20, 110, 201, 21))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 418, 26))
+        self.menubar.setGeometry(QRect(0, 0, 309, 26))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -54,9 +57,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.trainLength.setText(QCoreApplication.translate("MainWindow", u"Train Length:", None))
-        self.trainWidth.setText(QCoreApplication.translate("MainWindow", u"Train Width:", None))
+        self.trainLength.setText(QCoreApplication.translate("MainWindow", u"Train Length:     32.3 m", None))
+        self.trainWidth.setText(QCoreApplication.translate("MainWindow", u"Train Width:      2.65 m", None))
         self.passengers.setText(QCoreApplication.translate("MainWindow", u"Passengers:", None))
         self.currentMass.setText(QCoreApplication.translate("MainWindow", u"Current Mass: ", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Train Height:     3.42 m", None))
     # retranslateUi
 

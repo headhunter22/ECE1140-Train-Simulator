@@ -1,3 +1,5 @@
+from Beacon import Beacon
+
 class Block:
 
     # constructor
@@ -11,6 +13,9 @@ class Block:
         self.stationSide = blockInfo[5]
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
+        self.beacon1 = None
+        self.beacon2 = None
+            
         self.section = section
 
         # boolean attributes
@@ -21,6 +26,16 @@ class Block:
         # if the block does not have a switch, the connection is blank
         if 'SWITCH' not in self.infrastructure:
             self.switchConnection = ''
+            
+            if 'UNDERGROUND' in self.infrastructure:
+                self.station = self.infrastructure.replace('; UNDERGROUND', '')
+            else:
+                self.station = self.infrastructure
+
+            # add beacon if needed
+            if blockInfo[9]:
+                self.beacon = Beacon(self.station, self.stationSide)
+                print(self.beacon.stationName, self.beacon.stationSide)
         else:
             # if the block has a connection, default to first option
             # parse out the options
@@ -29,9 +44,6 @@ class Block:
 
             opt1 = self.infrastructure[start+1:middle]
             self.switchConnection = opt1
-
-        # placeholder until train model and track model communicate
-        self.passengers = 0
 
         # underground logic
         if 'UNDERGROUND' in self.infrastructure:
@@ -42,3 +54,6 @@ class Block:
     # declare methods
     def setMaintenance(self, underMaintenance):
         maintenance = underMaintenance
+
+    def addBeacon(self, beacon):
+        self.beacon = beacon
