@@ -58,10 +58,6 @@ class TrainController(QObject):
             signals.trainControllerAuthority.emit(self.train.authority)
             # wait at station
             # make authority higher
-<<<<<<< HEAD
-=======
-
->>>>>>> f11a967504ec9bdc70a166f7915ec8207f9a271a
         signals.trainControllerAuthority.emit(self.train.authority)
     
         if self.train.authority < 0:
