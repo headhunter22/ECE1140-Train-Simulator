@@ -1,6 +1,6 @@
 import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal
+from PyQt6.QtCore import QSize, QObject, QThread, pyqtSignal, QTimer
 from PyQt6 import uic
 from Track import Track
 import time
@@ -36,14 +36,23 @@ class TrainController(QObject):
         self.currentSpeed = currSpeed
         self.train = train
 
+    def setNewAuthority(self):
+        self.train.authority = 1000
+        print("Authority has been updated")
+
+    def waitAtStation(self):
+        self.waitTimer = QTimer()
+        self.waitTimer.singleShot(30000, self.setNewAuthority)
+
     def sendPower(self):
         #the train is moving and not stopped at a station
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
-        #if self.train.authority <= 0:
-        #    self.train.authority = 0
-        #    signals.trainControllerAuthority.emit(self.train.authority)
+        if self.train.authority <= 0:
+            self.train.authority = 0
+            self.waitAtStation
+            signals.trainControllerAuthority.emit(self.train.authority)
             # wait at station
             # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
@@ -61,6 +70,7 @@ class TrainController(QObject):
             signals.trainControllerServiceBrake.emit(True)
 
         if self.train.actSpeed == 0: #beginning state; train is not moving
+            self.waitAtStation()
             self.commandedPower = 120000
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
