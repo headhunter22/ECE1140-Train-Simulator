@@ -22,7 +22,7 @@ class Wayside(QObject):
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
         #signals.waysideCommandedSpeed.connect(self.commspeed)
-
+        signals.actuallyshutup.connect(self.imoverthis)
         # signals.waysideinstance1.connect(self.wayside1range)#TODO
         # signals.waysideinstance2.connect(self.wayside2range)#TODO
         # signals.waysideinstance3.connect(self.wayside3range)#TODO
@@ -30,6 +30,11 @@ class Wayside(QObject):
         
     # function to dispatch a train
     # hard coded for green line for the time being
+
+    def imoverthis(self):
+        print("make it stop")
+        signals.please.emit()
+        
     def commspeed(self, train):
         if (train.authority == '0'):
             commSpeed = 0
@@ -43,7 +48,6 @@ class Wayside(QObject):
         #self.setOccupancy(train.line, 63, 1)
 
         print('wayside dispatched')
-        print("wayside print 1", train.authority)
         # compare suggSpeed to commandedSpeed
         #speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
         self.commspeed(train)
@@ -74,13 +78,13 @@ class Wayside(QObject):
         signals.trackWaysideToTrackModel.emit(track)
 
     def blockOccupancyReceived(self, block):
-        print("block occupancy from track model")
-        print(". py block", block, "is occupied")
+        print("wayside block occupancy from track model")
+        #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
     
     def blockVacancyReceived(self, block):
-        print("block vacancy from track model")
-        print(".py block", block, "is vacant")
+        print("wayside block vacancy from track model")
+        #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
@@ -89,7 +93,7 @@ class Wayside(QObject):
 
     def addTrackModel(self, trackModel):
         self.trackModel = trackModel
-        self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
+        #self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
         self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
 
     def changeRoute(self, train):

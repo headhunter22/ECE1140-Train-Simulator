@@ -39,10 +39,14 @@ class Signals(QObject):
     waysideSwitchLocationsfromPLC = pyqtSignal(list)
     waysideTrackfromPLC = pyqtSignal(list)
     waysideSectionsfromPLC = pyqtSignal(list)
-    waysideinstance1 = pyqtSignal(list)
-    waysideinstance2 = pyqtSignal(list)
-    waysideinstance3 = pyqtSignal(list)
-    waysideinstance4 = pyqtSignal(list)
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list) #from wtrack
+    actuallyshutup = pyqtSignal()
+    please = pyqtSignal()
+    # waysideinstance2 = pyqtSignal(list, list)
+    # waysideinstance3 = pyqtSignal(list, list)
+    # waysideinstance4 = pyqtSignal(list, list)
+    waysidefirst = pyqtSignal(int) #from showmain in ui
+    waysidesetup = pyqtSignal(int)
 
     # wayside UI signals
     wtowOccupancy = pyqtSignal(int) # block
