@@ -7,10 +7,10 @@ from PyQt6 import QtWidgets, uic
 from signals import signals
 #from Track_Configuration import Ui_TrackConfig 
 from blockwidget import Ui_Section
-from Wayside_Main_B import Ui_MainWindowB
+#from Wayside_Main_B import Ui_MainWindowB
 from Wayside_Main_A import Ui_MainWindowA
 #from test2 import Ui_testpopup
-import PLCParser as PLCParser
+from PLCParser import Parser
 
 # MainWindowA N-Z blue
 # MainWindowB A-M red
@@ -19,20 +19,92 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
         super(WMainWindowA, self).__init__(*args, **kwargs)
         self.setupUi(self)
-
         self.setWindowTitle('Wayside Main UI')
-
+        self.resize(650, 690)
+        
+        self.instance =  ''
+        self.first = 0
+        self.sectionrange = []
+        self.wayside1range = []
+        self.wayside1sectionrange = []
+        self.wayside2range = []
+        self.wayside2sectionrange = []
+        self.wayside3range = []
+        self.wayside3sectionrange = []
+        self.wayside4range = []
+        self.wayside4sectionrange = []
+        #print("sectionrange1",self.sectionrange)
+        #PLCParser.parse(self)
+        print("wayside1range",self.wayside1range)
+        plc.parse()
+        
         #signals
-        signals.wtowOccupancy.connect(self.changeOccupancy)
-        signals.wtowVacancy.connect(self.changeVacancy)
-        signals.timerTicked.connect(self.ticka)
-        signals.wtowTrainCount.connect(self.activeTrains)
+        signals.timerTicked.connect(self.ticka) #clock from ctc
+        signals.waysidefirst.connect(self.firstinstance) #from selection pop up window
+        signals.waysideinstances.connect(self.setupinstances) #supposed to be from wtrack in parser
+        signals.wtowOccupancy.connect(self.changeOccupancy) #from .py from track controller
+        signals.wtowVacancy.connect(self.changeVacancy) #from .py from track controller
+        signals.wtowTrainCount.connect(self.activeTrains) #from .py track controller
+        signals.waysidesetup.connect(self.setuppopups)
+        #signals.actuallyshutup.connect(self.works)
+        signals.please.connect(self.works)
+        print("wayside1range",self.wayside1range)
+        #PLCParser.parse(self)
+        #print("sectionrange4",self.sectionrange)
         #PLC signals
         # signals.waysideSwitchStates.connect(self.wholeTrack)
         # signals.waysideSwitchLocationsfromPLC.connect(self.wholeTrack)
         # signals.waysideTrackfromPLC.connect(self.wholeTrack)
-        # signals.waysideSectionsfromPLC.connect(self.wholeTrack)
+        # signals.waysideSectionsfromPLC.connect(self.popupnames)
         
+        # self.block1, self.sections1 = signals.waysideinstance1
+        # self.block2, self.sections2 = signals.waysideinstance2
+        # self.block3, self.sections3 = signals.waysideinstance3
+        # self.block4, self.sections4 = signals.waysideinstance4
+        
+        self.disableallswitchbuttons()
+        self.setupgatebuttons()
+        self.setupswitchbuttons()
+        #self.instances(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
+        #self.setuppopups()
+        
+        #active trains
+        # self.qicon.setPixmap(QPixmap('tracks.png'))
+        # self.wicon.setPixmap(QPixmap('tracks.png'))
+        # self.cicon.setPixmap(QPixmap('redtracks.png'))
+        # self.dicon.setPixmap(QPixmap('tracks.png'))
+        # #self.eicon.setPixmap(QPixmap('redtracks.png'))
+        # #self.ficon.setPixmap(QPixmap('redtracks.png'))
+        # self.jicon.setPixmap(QPixmap('tracks.png'))
+        counts = 0
+        self.activetrains.display(counts)
+
+        #lights
+        #self.reda.setPixmap(QPixmap('greenlight.png'))
+        #self.greenb.setPixmap(QPixmap('greenlight.png'))
+    def works(self):
+        print("i will actually muruder someeone")
+
+    def firstinstance(self, num):
+        self.first = num
+        print("set first", self.first, "=", num)
+        
+
+    def setupinstances(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):
+        print("instanced")
+        self.wayside1range = wayside1range
+        print("wayside range 1", wayside1range)
+        self.wayside1sectionrange = wayside1sectionrange
+        self.wayside2range = wayside2range
+        self.wayside2sectionrange = wayside2sectionrange
+        self.wayside3range  =wayside3range
+        self.wayside3sectionrange = wayside3sectionrange
+        self.wayside4range = wayside4range
+        self.wayside4sectionrange = wayside4sectionrange
+        signals.waysidesetup.emit(self.first)
+
+
+    def disableallswitchbuttons(self):
         #set all switch buttons to disabled
         self.gate20.setEnabled(False)
         self.gate21.setEnabled(False)
@@ -41,10 +113,12 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate60.setEnabled(False)
         self.gate61.setEnabled(False)
 
+    def setupgatebuttons(self):
         #set up gate buttons
         self.maintenancemode.toggled.connect(self.maintenanceMode)
         self.automaticmode.toggled.connect(self.automaticMode)
 
+    def setupswitchbuttons(self):
         #switch button colors
         self.automaticmode.setDown(True)
         self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
@@ -60,39 +134,42 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
         self.gate60.setStyleSheet('background-color: white; color: gray')
 
+    def setuppopups(self, first):
         #pop up windows
+        if first == 1:
+            self.sectionrange = self.wayside1sectionrange
+        elif first == 2:
+            self.sectionrange = self.wayside2sectionrange
+        elif first == 3:
+            self.sectionrange = self.wayside3sectionrange
+        elif first == 4:
+            self.sectionrange = self.wayside4sectionrange
+        print("sectionrange",self.sectionrange)
+        print("first",self.first)
+
+        positions = [(0, j) for j in range(int(len(self.sectionrange)))]
+
+        for position, name in zip(positions, self.sectionrange):
+         if name == '':
+          continue
+         button = QPushButton(name)
+         self.gridLayout_4.addWidget(button, *position)
         #self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
-        self.trackconfiguration.clicked.connect(self.configurationWindow)
-        self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
-        self.pusho.clicked.connect(lambda: self.makeSectionWindow('O'))
-        self.pushp.clicked.connect(lambda: self.makeSectionWindow('P'))
-        self.pushq.clicked.connect(lambda: self.makeSectionWindow('Q'))
-        self.pushr.clicked.connect(lambda: self.makeSectionWindow('R'))
-        self.pushs.clicked.connect(lambda: self.makeSectionWindow('S'))
-        self.pusht.clicked.connect(lambda: self.makeSectionWindow('T'))
-        self.pushu.clicked.connect(lambda: self.makeSectionWindow('U'))
-        self.pushv.clicked.connect(lambda: self.makeSectionWindow('V'))
-        self.pushw.clicked.connect(lambda: self.makeSectionWindow('W'))
-        self.pushx.clicked.connect(lambda: self.makeSectionWindow('X'))
-        self.pushy.clicked.connect(lambda: self.makeSectionWindow('Y'))
-        self.pushz.clicked.connect(lambda: self.makeSectionWindow('Z'))
+        # self.trackconfiguration.clicked.connect(self.runParser)
+        # self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
+        # self.pusho.clicked.connect(lambda: self.makeSectionWindow('O'))
+        # self.pushp.clicked.connect(lambda: self.makeSectionWindow('P'))
+        # self.pushq.clicked.connect(lambda: self.makeSectionWindow('Q'))
+        # self.pushr.clicked.connect(lambda: self.makeSectionWindow('R'))
+        # self.pushs.clicked.connect(lambda: self.makeSectionWindow('S'))
+        # self.pusht.clicked.connect(lambda: self.makeSectionWindow('T'))
+        # self.pushu.clicked.connect(lambda: self.makeSectionWindow('U'))
+        # self.pushv.clicked.connect(lambda: self.makeSectionWindow('V'))
+        # self.pushw.clicked.connect(lambda: self.makeSectionWindow('W'))
+        # self.pushx.clicked.connect(lambda: self.makeSectionWindow('X'))
+        # self.pushy.clicked.connect(lambda: self.makeSectionWindow('Y'))
+        # self.pushz.clicked.connect(lambda: self.makeSectionWindow('Z'))
 
-        #active trains
-        self.qicon.setPixmap(QPixmap('tracks.png'))
-        self.wicon.setPixmap(QPixmap('tracks.png'))
-        # self.cicon.setPixmap(QPixmap('redtracks.png'))
-        # self.dicon.setPixmap(QPixmap('tracks.png'))
-        # #self.eicon.setPixmap(QPixmap('redtracks.png'))
-        # #self.ficon.setPixmap(QPixmap('redtracks.png'))
-        # self.jicon.setPixmap(QPixmap('tracks.png'))
-        counts = 0
-        self.activetrains.display(counts)
-
-        #lights
-        self.reda.setPixmap(QPixmap('greenlight.png'))
-        #self.greenb.setPixmap(QPixmap('greenlight.png'))
-
-        oblock=0
 
     def ticka(self, hrs, mins, secs):
         #print("wayside ticking in class a")
@@ -122,7 +199,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.trackconfiguration.clicked.connect(self.runParser)
 
     def runParser(self):
-        PLCParser.parse(self)
+        plc.parse(self)
 
     def makeSectionWindow(self, whichsection):
         self.bl = Ui_Section()
@@ -527,13 +604,48 @@ class Ui_Section(QtWidgets.QMainWindow, Ui_Section):
         self.setupUi(self)
         self.setWindowTitle('Block Information')
 
+class selectionWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.select = QComboBox()
+        self.resize(200, 120)
+        self.select.setStyleSheet("font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
+        self.select.addItem("Select Wayside")
+        self.select.addItem("Green Wayside 1")
+        self.select.addItem("Green Wayside 2")
+        self.select.addItem("Green Wayside 3")
+        self.select.addItem("Green Wayside 4")
+        self.select.addItem("Red Wayside 1")
+        self.select.addItem("Red Wayside 2")
+        self.select.addItem("Red Wayside 3")
+        self.select.addItem("Red Wayside 4")
+        self.select.setCurrentIndex(0)
+        layout.addWidget(self.select)
+        self.setLayout(layout)
+        self.select.currentTextChanged.connect(self.showmain)
+        
+
+    def showmain(self):
+        self.main = WMainWindowA()
+        self.current = self.select.currentIndex()
+        #print("current from selection", self.current)
+        signals.waysidefirst.emit(self.current)
+        self.main.show()
+        self.close()
+
+
+
 app = QtWidgets.QApplication(sys.argv)
-windowA = WMainWindowA()
+#windowA = WMainWindowA()
 #windowB = WMainWindowB()
+first = selectionWindow()
+plc = Parser()
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
 #windowA.show()
 #windowB.show()
+#first.show()
 #app.exec()
 
 # MainWindowB A-M
