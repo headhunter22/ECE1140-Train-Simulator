@@ -14,6 +14,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
         signals.trainControllerAuthority.connect(self.updateAuthority)
+        signals.waysideCommandedSpeed.connect(self.updateCommandedSpeed)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -272,18 +273,21 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          if self.ServiceBrake.isChecked() == True:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
               print("Service Brake engaged")
+              signals.trainControllerServiceBrake.emit(True)
+              signals.trainControllerPower.emit(0.0)
 
          if self.ServiceBrake.isChecked() == False:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
               print("Service Brake Disengaged")
+              signals.trainControllerServiceBrake.emit(False)
 
     def updatePower(self, power):
          x = power
          power = power/1000
-         txt = f"{x:.2f}"
-         self.y = float(txt)
-         self.power = self.y
-         self.PowerShown.setText("{0} KWatts".format(self.y))
+         txt = f"{power:.2f}"
+         y = float(txt)
+         self.power = y
+         self.PowerShown.setText("{0} KWatts".format(y))
 
     def updateSpeed(self, speed):
          self.speed = speed
@@ -299,8 +303,8 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          self.y = float(txt)
          self.Authority.setText("Authority: {0} meters".format(self.y))
 
-    def updateCommandedSpeed(self):
-         x = Wayside.commSpeed
+    def updateCommandedSpeed(self, commSpeed):
+         x = commSpeed / 1.609
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))

@@ -254,17 +254,17 @@ class Ui_MainWindow(object):
         self.arrivalLabel_6 = QLabel(self.scheduledPage)
         self.arrivalLabel_6.setObjectName(u"arrivalLabel_6")
         self.arrivalLabel_6.setGeometry(QRect(0, 210, 141, 20))
-        self.greenScheduledTrains_2 = QTableWidget(self.scheduledPage)
-        if (self.greenScheduledTrains_2.columnCount() < 3):
-            self.greenScheduledTrains_2.setColumnCount(3)
+        self.greenScheduledTrains = QTableWidget(self.scheduledPage)
+        if (self.greenScheduledTrains.columnCount() < 3):
+            self.greenScheduledTrains.setColumnCount(3)
         __qtablewidgetitem2 = QTableWidgetItem()
-        self.greenScheduledTrains_2.setHorizontalHeaderItem(0, __qtablewidgetitem2)
+        self.greenScheduledTrains.setHorizontalHeaderItem(0, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
-        self.greenScheduledTrains_2.setHorizontalHeaderItem(1, __qtablewidgetitem3)
+        self.greenScheduledTrains.setHorizontalHeaderItem(1, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
-        self.greenScheduledTrains_2.setHorizontalHeaderItem(2, __qtablewidgetitem4)
-        self.greenScheduledTrains_2.setObjectName(u"greenScheduledTrains_2")
-        self.greenScheduledTrains_2.setGeometry(QRect(0, 20, 281, 171))
+        self.greenScheduledTrains.setHorizontalHeaderItem(2, __qtablewidgetitem4)
+        self.greenScheduledTrains.setObjectName(u"greenScheduledTrains")
+        self.greenScheduledTrains.setGeometry(QRect(0, 20, 281, 171))
         self.stackedWidget.addWidget(self.scheduledPage)
         self.trackSwitchStates = QWidget()
         self.trackSwitchStates.setObjectName(u"trackSwitchStates")
@@ -572,7 +572,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -635,11 +635,11 @@ class Ui_MainWindow(object):
         self.arrivalLabel_4.setText(QCoreApplication.translate("MainWindow", u"Tentative Schedule:", None))
         self.arrivalLabel_5.setText(QCoreApplication.translate("MainWindow", u"Green Line Scheduled Trains:", None))
         self.arrivalLabel_6.setText(QCoreApplication.translate("MainWindow", u"Red Line Scheduled Trains:", None))
-        ___qtablewidgetitem2 = self.greenScheduledTrains_2.horizontalHeaderItem(0)
+        ___qtablewidgetitem2 = self.greenScheduledTrains.horizontalHeaderItem(0)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Dest.", None));
-        ___qtablewidgetitem3 = self.greenScheduledTrains_2.horizontalHeaderItem(1)
+        ___qtablewidgetitem3 = self.greenScheduledTrains.horizontalHeaderItem(1)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"AT", None));
-        ___qtablewidgetitem4 = self.greenScheduledTrains_2.horizontalHeaderItem(2)
+        ___qtablewidgetitem4 = self.greenScheduledTrains.horizontalHeaderItem(2)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"DT", None));
         self.blockLabel_5.setText(QCoreApplication.translate("MainWindow", u"Red Line", None))
         self.red_text_H4.setText(QCoreApplication.translate("MainWindow", u"H", None))

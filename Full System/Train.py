@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 class Train(QObject):
     trainCounter = 0
 
-    def __init__(self, id, line, destBlock):
+    def __init__(self, id, line, destBlocks):
         super().__init__()
 
         self.route = []
@@ -20,7 +20,7 @@ class Train(QObject):
         self.line = line
         self.block = 63
         self.position = 0.0
-        self.destBlock = destBlock
+        self.destBlock = destBlocks
         self.reachedDest = False
 
         # authority and speeds

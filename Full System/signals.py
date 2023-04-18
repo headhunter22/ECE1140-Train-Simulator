@@ -19,7 +19,7 @@ class Signals(QObject):
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
 
     # ctc frontend emission signals
-    greenLineTrainDispatchFromCtcUI = pyqtSignal(int) # desination block
+    greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
@@ -33,6 +33,20 @@ class Signals(QObject):
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
+    waysideSwitchStates = pyqtSignal(list)
+    waysideCommandedSpeed = pyqtSignal(int)
+    #plc
+    waysideSwitchLocationsfromPLC = pyqtSignal(list)
+    waysideTrackfromPLC = pyqtSignal(list)
+    waysideSectionsfromPLC = pyqtSignal(list)
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list) #from wtrack
+    actuallyshutup = pyqtSignal()
+    please = pyqtSignal()
+    # waysideinstance2 = pyqtSignal(list, list)
+    # waysideinstance3 = pyqtSignal(list, list)
+    # waysideinstance4 = pyqtSignal(list, list)
+    waysidefirst = pyqtSignal(int) #from showmain in ui
+    waysidesetup = pyqtSignal(int)
 
     # wayside UI signals
     wtowOccupancy = pyqtSignal(int) # block
