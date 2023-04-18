@@ -41,9 +41,9 @@ class TrainController(QObject):
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
-        if self.train.authority <= 0:
-            self.train.authority = 0
-        signals.trainControllerAuthority.emit(self.train.authority)
+        #if self.train.authority <= 0:
+        #    self.train.authority = 0
+        #signals.trainControllerAuthority.emit(self.train.authority)
     
         if self.train.authority < 0:
             self.train.authority = 10000

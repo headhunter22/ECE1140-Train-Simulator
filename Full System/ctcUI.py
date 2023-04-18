@@ -69,6 +69,7 @@ class ctcMainUI(QMainWindow):
         self.ui.thisIsATest.clicked.connect(self.iterDispatch)
 
         #connecting the green station buttons
+        """
         self.greenStations = []
         #self.greenStaionStates = []
         self.ui.pioneerStation.clicked.connect(self.handleGreenStationClicked)
@@ -95,8 +96,10 @@ class ctcMainUI(QMainWindow):
         self.greenStations.append(self.ui.poplarStation)
         self.ui.castleShannonStation.clicked.connect(self.handleGreenStationClicked)
         self.greenStations.append(self.ui.castleShannonStation)
+        """
 
         #connecting the green station buttons
+        """
         self.redStations = []
         self.ui.shadysideStation.clicked.connect(self.handleRedStationClicked)
         self.redStations.append(self.ui.shadysideStation)
@@ -114,6 +117,7 @@ class ctcMainUI(QMainWindow):
         self.redStations.append(self.ui.staionSquareStation)
         self.ui.southHillsStation.clicked.connect(self.handleRedStationClicked)
         self.redStations.append(self.ui.southHillsStation)
+        """
 
         #add station buttons
         self.ui.greenAddStation.clicked.connect(self.greenAddStation)
@@ -224,7 +228,6 @@ class ctcMainUI(QMainWindow):
         self.ui.timePause.setStyleSheet('background-color: white; color: gray')
         self.ui.time50x.clicked.connect(self.timeSelect)
         self.ui.time50x.setStyleSheet('background-color: white; color: gray')
-        
 
         self.ui.time1x.clicked.connect(self.oneTimeSpeed)
         self.ui.time10x.clicked.connect(self.tenTimeSpeed)
@@ -241,7 +244,7 @@ class ctcMainUI(QMainWindow):
 
         self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
-        self.ui.checkButton.clicked.connect(self.updateBlockStatus)
+        self.ui.checkButton.clicked.connect(lambda: self.updateBlockStatus(track))
 
 
 
@@ -802,21 +805,22 @@ class ctcMainUI(QMainWindow):
 
             self.dispatchGreenLine()
     
-    ############################################
-    ########OPTIONS / XINGS FUNCTIONS###########
-    ############################################
+    #################################################
+    ########OPTIONS / THROUGHPUT FUNCTIONS###########
+    #################################################
 
     def updateBlockStatus(self):
         if self.ui.lineSelectMaintenance.currentIndex() == 0:
+            print(self.ui.lineSelectMaintenance.currentText)
             if self.ui.modeSelect.currentIndex() == 0:
 
                 open = QTableWidgetItem('Open')
                 open.setBackground(QColor('White'))
                 self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
 
-                print(self.track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
+                print(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
 
-                #signals.blockMaintenanceUpdateFromCTC.emit(track.getLine("Green"))
+                #signals.blockMaintenanceUpdateFromCTC.emit(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
             else:
                 maintenance = QTableWidgetItem('Maintenance')
                 maintenance.setBackground(QColor('Gold'))
