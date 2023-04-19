@@ -35,6 +35,8 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainControllerRightDoors.connect(self.RightDoors)
         signals.trainModelGUIacc.connect(self.displayAcc)
         signals.trainModelPassengers.connect(self.passengerUpdate)
+        signals.trainModelDestinationSignal.connect(self.trainDest)
+        signals.trainModelLineSignal.connect(self.lineConfig)
 
         #displaying the stats of the train popup
         self.popUpUI.clicked.connect(self.displayPopUp)
@@ -148,10 +150,21 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.popUp.currMass.setText(str(totalWeight))
     
     def sliderChanged(self):
-
         sliderSize = self.tempSlider.value()
         self.ACprogressBar.setMinimum(60)
         self.ACprogressBar.setMaximum(90)
         self.ACprogressBar.setTextVisible(0)
         self.tempText.setText('Current Temp: ' + str(sliderSize) + ' F')
         self.ACprogressBar.setValue(sliderSize)
+
+    def trainDest(self, trainDest):
+        self.destLabel.setText('Destination: ' + str(trainDest[0]))
+
+    def lineConfig(self, line):
+        print(str(line.lineName))
+        if (line.lineName == 'Red'):
+            self.redLineButton.setStyleSheet("background-color: red")
+            self.greenLineButton.setStyleSheet("background-color: light gray")
+        else:
+            self.redLineButton.setStyleSheet("background-color: light gray")
+            self.greenLineButton.setStyleSheet("background-color: green")
