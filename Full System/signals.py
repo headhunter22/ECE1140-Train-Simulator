@@ -2,6 +2,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+from Beacon import Beacon
 import sys
 sys.dont_write_bytecode = True
 
@@ -76,14 +77,13 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelBeaconSending = pyqtSignal(Beacon) # emitting Beacon to train model
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
-
-    # track model block page signals
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
