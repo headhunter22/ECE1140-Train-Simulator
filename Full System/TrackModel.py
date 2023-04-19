@@ -79,8 +79,10 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
+<<<<<<< HEAD
+            signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block)
+=======
             signals.waysideUpdateOccupancy.emit(block)
 
             # if this block has a beacon emit beacon signal
@@ -88,11 +90,11 @@ class TrackModel(QObject):
             blockObj = line.getBlock(block)
             if blockObj.beaconBool:
                 signals.trackModelBeaconSending.emit(blockObj.beacon)
+>>>>>>> c489e3435ddd768b367b93e8f761c8994f14be44
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-            signals.waysideUpdateVacancy.emit(block)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, train.block)
 
     def board(self, train):
         # load new passengers
