@@ -50,7 +50,7 @@ class Block:
                 self.beacon.switchFrom = self.blockName
                 self.beacon.switchTo = self.swOpt1
 
-            print(self.beacon.stationName, self.beacon.stationSide, self.beacon.switchFrom, self.beacon.switchTo)
+                print(self.beacon.switchFrom, self.beacon.switchTo)
 
     # declare methods
     def setMaintenance(self, underMaintenance):
