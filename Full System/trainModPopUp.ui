@@ -27,7 +27,7 @@
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Train Length:     32.3 m</string>
+     <string>Train Length:        32.3 m</string>
     </property>
    </widget>
    <widget class="QLabel" name="trainWidth">
@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Train Width:      2.65 m</string>
+     <string>Train Width:         2.65 m</string>
     </property>
    </widget>
    <widget class="QLabel" name="passengers">
@@ -48,7 +48,7 @@
      <rect>
       <x>20</x>
       <y>140</y>
-      <width>141</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -61,7 +61,7 @@
      <rect>
       <x>20</x>
       <y>180</y>
-      <width>131</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -79,7 +79,33 @@
      </rect>
     </property>
     <property name="text">
-     <string>Train Height:     3.42 m</string>
+     <string>Train Height:       3.42 m</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="numPass">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>150</y>
+      <width>63</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="currMass">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>190</y>
+      <width>63</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

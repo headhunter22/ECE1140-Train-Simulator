@@ -271,7 +271,7 @@ class ctcMainUI(QMainWindow):
 
 
 
-        self.show()
+        #self.show()
 
     ############################################
     ########DISPATCHING TRAINS FUNCTIONS########

@@ -2,6 +2,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+from Beacon import Beacon
 import sys
 sys.dont_write_bytecode = True
 
@@ -78,14 +79,13 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelBeaconSending = pyqtSignal(Beacon) # emitting Beacon to train model
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
-
-    # track model block page signals
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
@@ -104,6 +104,7 @@ class Signals(QObject):
     trainModelGUIBlock = pyqtSignal(str)
     trainModelGUIpower = pyqtSignal(str)
     trainModelGUIacc = pyqtSignal(str)
+    trainModelPassengers = pyqtSignal(int)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)
@@ -111,7 +112,7 @@ class Signals(QObject):
     # train controller signals
     trainControllerDispatch = pyqtSignal(float) # currSpeed
     trainControllerUpdateCurrSpeed = pyqtSignal(Train, float) # train, currSpeed
-    trainControllerUpdateCommSpeed = pyqtSignal(int, float) # trainID, commandedSpeed
+    trainControllerUpdateCommSpeed = pyqtSignal(int) # commandedSpeed
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller

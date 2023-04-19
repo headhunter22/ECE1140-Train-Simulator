@@ -217,7 +217,7 @@ class MainWindow(QMainWindow):
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
 
 
-        self.show()
+        #self.show()
 
     ############################################
     ########DISPATCHING TRAINS FUNCTIONS########

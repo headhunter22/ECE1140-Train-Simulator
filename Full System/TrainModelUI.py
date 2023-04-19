@@ -18,6 +18,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("trainModel_fullsys.ui", self)
 
+        self.popUp = popUpWindow()
+        self.tempSlider.setMinimum(60)
+        self.tempSlider.setMaximum(90)
+        self.tempSlider.valueChanged.connect(self.sliderChanged)
+
         #Connecting the received signals to their display functions
         signals.trainModelUpdateGUISpeed.connect(self.displaySpeed)
         signals.trainModelGUIBlock.connect(self.displayBlock)
@@ -29,6 +34,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainControllerLeftDoors.connect(self.LeftDoors)
         signals.trainControllerRightDoors.connect(self.RightDoors)
         signals.trainModelGUIacc.connect(self.displayAcc)
+        signals.trainModelPassengers.connect(self.passengerUpdate)
 
         #displaying the stats of the train popup
         self.popUpUI.clicked.connect(self.displayPopUp)
@@ -86,7 +92,6 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.powProgressBar.setValue(int(roundTrain))
     
     def displayPopUp(self):
-        self.popUp = popUpWindow()
         self.popUp.show()
     
     def clockUpdate(self, hrs, mins, secs):
@@ -135,3 +140,18 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.EmerButton.setText("EMERGENCY BRAKE")
             self.EmerButton.setStyleSheet("background-color: red")
             signals.trainModelEmerBrake.emit(False)
+    
+    def passengerUpdate(self,numPass):
+        self.popUp.numPass.setText(str(numPass))
+        totalWeight = numPass*150 + (90169.065) #total weight of train
+        print('update!')
+        self.popUp.currMass.setText(str(totalWeight))
+    
+    def sliderChanged(self):
+
+        sliderSize = self.tempSlider.value()
+        self.ACprogressBar.setMinimum(60)
+        self.ACprogressBar.setMaximum(90)
+        self.ACprogressBar.setTextVisible(0)
+        self.tempText.setText('Current Temp: ' + str(sliderSize) + ' F')
+        self.ACprogressBar.setValue(sliderSize)
