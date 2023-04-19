@@ -210,17 +210,17 @@ padding: 2px;</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Internal Lights:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Headlights:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Left Doors:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Right Doors:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="tempText">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>300</y>
-      <width>111</width>
+      <width>161</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Min: 60  Max: 90</string>
+     <string>Current Temp: </string>
     </property>
    </widget>
    <widget class="QLabel" name="commSpeedLabel">
@@ -462,7 +462,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
      <string>Display Train Stats</string>
     </property>
    </widget>
-   <widget class="QLabel" name="speedLimitLabel_2">
+   <widget class="QLabel" name="trainAcc">
     <property name="geometry">
      <rect>
       <x>260</x>

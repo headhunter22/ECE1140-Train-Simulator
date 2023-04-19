@@ -2,6 +2,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+from Beacon import Beacon
 import sys
 sys.dont_write_bytecode = True
 
@@ -17,6 +18,8 @@ class Signals(QObject):
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
+    greenSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, G, J, J, M, N]
+    redSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, E, H, H, H, H, J]
 
     # ctc frontend emission signals
     greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
@@ -31,8 +34,8 @@ class Signals(QObject):
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
-    waysideUpdateOccupancy = pyqtSignal(int)
-    waysideUpdateVacancy = pyqtSignal(int)
+    waysideUpdateOccupancy = pyqtSignal(str, int) # line, block
+    waysideUpdateVacancy = pyqtSignal(str, int) # line, block
     waysideSwitchStates = pyqtSignal(list)
     waysideCommandedSpeed = pyqtSignal(int)
     #plc
@@ -64,12 +67,17 @@ class Signals(QObject):
     # track model signals
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
+
+    ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
+    ########################################
+
     trackModelTempUpdated = pyqtSignal(int) # temperature
     trackModelBrokenRail = pyqtSignal(str, str, str) # line, block, 'Broken Rail'
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelBeaconSending = pyqtSignal(Beacon) # emitting Beacon to train model
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
@@ -93,15 +101,21 @@ class Signals(QObject):
     trainModelGUIcommandedSpeed = pyqtSignal(str)
     trainModelGUIBlock = pyqtSignal(str)
     trainModelGUIpower = pyqtSignal(str)
-    #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
- 
+    trainModelGUIacc = pyqtSignal(str)
+    trainModelPassengers = pyqtSignal(int)
+
+    # train model UI signals
+    trainModelEmerBrake = pyqtSignal(bool)
+    
     # train controller signals
     trainControllerDispatch = pyqtSignal(float) # currSpeed
     trainControllerUpdateCurrSpeed = pyqtSignal(Train, float) # train, currSpeed
-    trainControllerUpdateCommSpeed = pyqtSignal(int, float) # trainID, commandedSpeed
+    trainControllerUpdateCommSpeed = pyqtSignal(int) # commandedSpeed
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
+    trainWaiting = pyqtSignal()
+    trainGo = pyqtSignal()
 
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off

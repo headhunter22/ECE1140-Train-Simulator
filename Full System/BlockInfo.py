@@ -18,6 +18,8 @@ class BlockInfo(QtWidgets.QMainWindow):
         self.widget = QtWidgets.QWidget()
         self.vbox = QtWidgets.QVBoxLayout()
 
+        self.rows = []
+
         for block in section.blocks:
             self.hbox = QtWidgets.QHBoxLayout()
 
@@ -29,17 +31,10 @@ class BlockInfo(QtWidgets.QMainWindow):
             blockLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(blockLabel)
 
-            # create label for occupancy
-            occupiedLabel = QtWidgets.QLabel(str(block.occupied), self)
-            occupiedLabel.setFixedHeight(50)
-            occupiedLabel.setFixedWidth(75)
-            occupiedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-            self.hbox.addWidget(occupiedLabel)
-
             # create label for length
             lengthLabel = QtWidgets.QLabel(str(block.length), self)
             lengthLabel.setFixedHeight(50)
-            lengthLabel.setFixedWidth(50)
+            lengthLabel.setFixedWidth(100)
             lengthLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(lengthLabel)
 
@@ -53,40 +48,34 @@ class BlockInfo(QtWidgets.QMainWindow):
             # create label for grade
             gradeLabel = QtWidgets.QLabel(block.grade, self)
             gradeLabel.setFixedHeight(50)
-            gradeLabel.setFixedWidth(75)
+            gradeLabel.setFixedWidth(100)
             gradeLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(gradeLabel)
 
             # create label for speed limit
             speedLabel = QtWidgets.QLabel(str(block.speedLimit), self)
             speedLabel.setFixedHeight(50)
-            speedLabel.setFixedWidth(125)
+            speedLabel.setFixedWidth(150)
             speedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(speedLabel)
 
             # create label for station side
             stationLabel = QtWidgets.QLabel(block.stationSide, self)
             stationLabel.setFixedHeight(50)
-            stationLabel.setFixedWidth(100)
+            stationLabel.setFixedWidth(125)
             stationLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(stationLabel)
 
             # create label for underground
             undergroundLabel = QtWidgets.QLabel(str(block.underground), self)
             undergroundLabel.setFixedHeight(50)
-            undergroundLabel.setFixedWidth(100)
+            undergroundLabel.setFixedWidth(125)
             undergroundLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             self.hbox.addWidget(undergroundLabel)
 
-            # create label for switchConnection
-            switchLabel = QtWidgets.QLabel(str(block.switchConnection), self)
-            switchLabel.setFixedHeight(50)
-            switchLabel.setFixedWidth(125)
-            switchLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-            self.hbox.addWidget(switchLabel)
-
-            # add row to vbox
+            # add row to vbox and rows array
             self.vbox.addLayout(self.hbox)
+            self.rows.append(self.hbox)
 
         self.widget.setLayout(self.vbox)
         self.MainScrollArea.setWidget(self.widget)

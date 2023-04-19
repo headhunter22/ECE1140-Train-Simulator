@@ -19,10 +19,10 @@ from signals import signals
 greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
                 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 85, 84,
                 83, 82, 81, 80, 79, 78, 77, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
-                12, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
                 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145,
                 146, 147, 148, 149, 150, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15,
-                14, 13, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
                 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
@@ -79,15 +79,25 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
+<<<<<<< HEAD
+            signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block)
+=======
             signals.waysideUpdateOccupancy.emit(block)
+
+            # if this block has a beacon emit beacon signal
+            # declare block object
+            blockObj = line.getBlock(block)
+            if blockObj.beaconBool:
+                signals.trackModelBeaconSending.emit(blockObj.beacon)
+>>>>>>> c489e3435ddd768b367b93e8f761c8994f14be44
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-            signals.waysideUpdateVacancy.emit(block)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, train.block)
 
     def board(self, train):
         # load new passengers
         self.ticketSystem.boardTrain(train)
+        signals.trainModelPassengers.emit(train.numPassengers)      
+        self.ticketSystem.releasePassengers(train)  

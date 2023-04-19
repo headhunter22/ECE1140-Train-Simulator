@@ -27,6 +27,8 @@ class Wayside(QObject):
         #signals.waysideinstance2.connect(self.imoverthis)#TODO
         # signals.waysideinstance3.connect(self.wayside3range)#TODO
         # signals.waysideinstance4.connect(self.wayside4range)#TODO
+
+        signals.greenSwitchStatesFromCTCtoWayside.connect(self.switchSignalTest)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -86,15 +88,29 @@ class Wayside(QObject):
         # pass track onto track model
         signals.trackWaysideToTrackModel.emit(track)
 
+<<<<<<< HEAD
     def blockOccupancyReceived(self, block):
         #print("wayside block occupancy from track model")
+=======
+    def blockOccupancyReceived(self, line, block):
+>>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
+        
+        #occupancy sent to the CTC Office
+        signals.ctcUpdateGUIOccupancy.emit(line, block)
     
+<<<<<<< HEAD
     def blockVacancyReceived(self, block):
         #print("wayside block vacancy from track model")
+=======
+    def blockVacancyReceived(self, line, block):
+>>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
+
+        #vacancy sent to the CTC Office
+        signals.ctcUpdateGUIOccupancy.emit(line, block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
@@ -156,3 +172,12 @@ class Wayside(QObject):
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw
     #     print("authority from CTC to Wayside: " + str(self.authority))
+
+    def switchSignalTest(self, states):
+        print("C:" , states[0])
+        print("G:" , states[1])
+        print("J:" , states[2])
+        print("J:" , states[3])
+        print("M:" , states[4])
+        print("N:" , states[5])
+        print("\n\n")

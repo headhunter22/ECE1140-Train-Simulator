@@ -14,6 +14,10 @@ class CTC(QObject):
         self.track = track
         self.wayside = None
         self.nextID = 1
+        self.greenTotalTickets = 0
+        self.redTotalTickets = 0
+        self.greenThroughput = 0
+        self.redThroughput = 0
 
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
@@ -45,6 +49,19 @@ class CTC(QObject):
 
         # update the next ID of the next train
         self.nextID += 1
+
+    def calculateThroughput(self, tickets, line):
+        
+        if line == "Green":
+            self.greenTotalTickets += tickets
+            signals.ctcGetPassengersPerLine.emit(self.greenTotalTickets, "Green")
+
+        elif line == "Red":
+            self.redTotalTickets += tickets
+            signals.ctcGetPassengersPerLine.emit(self.redTotalTickets, "Red")
+
+        else:
+            print("error")
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)

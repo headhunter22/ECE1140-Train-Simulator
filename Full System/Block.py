@@ -1,3 +1,5 @@
+from Beacon import Beacon
+
 class Block:
 
     # constructor
@@ -11,31 +13,44 @@ class Block:
         self.stationSide = blockInfo[5]
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
+        self.secsToTraverse = blockInfo[8]
+        self.beaconBool = blockInfo[9]
+        self.lastStation = blockInfo[10]
+        self.stationBool = blockInfo[11]
+        self.switchBool = blockInfo[12]
+        self.underground = blockInfo[15]
+
+        self.beacon = Beacon()
+
+        # travel direction 0 means going from lower block # to higher block #
+        # travel diretion 1 means going from higher block # to lower block # 
+        self.travelDirection = 0
+            
         self.section = section
-        self.beacon = None
 
         # boolean attributes
         self.occupied = False
         self.maintenance = False
 
         # switch logic
-        # if the block does not have a switch, the connection is blank
-        if 'SWITCH' not in self.infrastructure:
-            self.switchConnection = ''
+        if self.switchBool:
+            self.swOpt1 = blockInfo[13]
+            self.swOpt2 = blockInfo[14]
         else:
-            # if the block has a connection, default to first option
-            # parse out the options
-            start = self.infrastructure.find('(')
-            middle = self.infrastructure.find(';') 
+            self.swOpt1 = None
+            self.swOpt2 = None
 
-            opt1 = self.infrastructure[start+1:middle]
-            self.switchConnection = opt1
+        # add beacon if needed
+        if self.beaconBool:
+            # if there's a station at this beacon, add that info
+            if self.stationBool:
+                self.beacon.stationName = self.infrastructure
+                self.beacon.stationSide = self.stationSide
+            if self.switchBool:
+                self.beacon.switchFrom = self.blockName
+                self.beacon.switchTo = self.swOpt1
 
-        # underground logic
-        if 'UNDERGROUND' in self.infrastructure:
-            self.underground = True
-        else:
-            self.underground = False
+                print(self.beacon.switchFrom, self.beacon.switchTo)
 
     # declare methods
     def setMaintenance(self, underMaintenance):

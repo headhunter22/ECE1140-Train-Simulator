@@ -93,9 +93,9 @@ class Ui_MainWindow(object):
         self.label_23 = QLabel(self.centralwidget)
         self.label_23.setObjectName(u"label_23")
         self.label_23.setGeometry(QRect(20, 100, 111, 191))
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(10, 300, 111, 20))
+        self.tempText = QLabel(self.centralwidget)
+        self.tempText.setObjectName(u"tempText")
+        self.tempText.setGeometry(QRect(10, 300, 161, 20))
         self.commSpeedLabel = QLabel(self.centralwidget)
         self.commSpeedLabel.setObjectName(u"commSpeedLabel")
         self.commSpeedLabel.setGeometry(QRect(260, 170, 251, 31))
@@ -165,10 +165,10 @@ class Ui_MainWindow(object):
         self.popUpUI = QPushButton(self.centralwidget)
         self.popUpUI.setObjectName(u"popUpUI")
         self.popUpUI.setGeometry(QRect(540, 410, 241, 41))
-        self.speedLimitLabel_2 = QLabel(self.centralwidget)
-        self.speedLimitLabel_2.setObjectName(u"speedLimitLabel_2")
-        self.speedLimitLabel_2.setGeometry(QRect(260, 230, 251, 31))
-        self.speedLimitLabel_2.setStyleSheet(u"border: 2px solid black;\n"
+        self.trainAcc = QLabel(self.centralwidget)
+        self.trainAcc.setObjectName(u"trainAcc")
+        self.trainAcc.setGeometry(QRect(260, 230, 251, 31))
+        self.trainAcc.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
         self.tempSlider = QSlider(self.centralwidget)
@@ -200,7 +200,7 @@ class Ui_MainWindow(object):
         self.sigFaultLabel.setText("")
         self.EmerButton.setText(QCoreApplication.translate("MainWindow", u"EMERGENCY BRAKE", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Internal Lights:</span></p><p><span style=\" font-size:12pt;\">Headlights:</span></p><p><span style=\" font-size:12pt;\">Left Doors:</span></p><p><span style=\" font-size:12pt;\">Right Doors:</span></p></body></html>", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Min: 60  Max: 90", None))
+        self.tempText.setText(QCoreApplication.translate("MainWindow", u"Current Temp: ", None))
         self.commSpeedLabel.setText(QCoreApplication.translate("MainWindow", u"Commanded Speed:", None))
         self.ACIcon.setText("")
         self.headlightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
@@ -216,6 +216,6 @@ class Ui_MainWindow(object):
         self.label_17.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Destination:</p><p><br/></p></body></html>", None))
         self.currBlockLabel.setText(QCoreApplication.translate("MainWindow", u"Current Block:", None))
         self.popUpUI.setText(QCoreApplication.translate("MainWindow", u"Display Train Stats", None))
-        self.speedLimitLabel_2.setText(QCoreApplication.translate("MainWindow", u"Acceleration:", None))
+        self.trainAcc.setText(QCoreApplication.translate("MainWindow", u"Acceleration:", None))
     # retranslateUi
 
