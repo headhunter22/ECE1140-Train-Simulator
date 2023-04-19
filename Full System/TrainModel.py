@@ -44,6 +44,10 @@ class TrainModel(QObject):
         
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
+        #displaying train destination
+        signals.trainModelDestinationSignal.emit(train.destBlock)
+        #displaying trainLine
+        signals.trainModelLineSignal.emit(train.line)
 
     def updatedPower(self, train, power):
         if len(self.trainList) == 0:
@@ -94,11 +98,13 @@ class TrainModel(QObject):
         # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
 
-        if train.actSpeed_1 == 0:
+        if train.actSpeed_1 == 0 | self.emerBrake != 1:
             print('not moving')
             train.An = 0.5
         elif self.emerBrake == 1:
             train.An = -2.73
+            if (train.actSpeed == 0):
+                train.An = 0
             power = 0
             print('emerbraketrue')
         elif self.serviceBrake == 1:
