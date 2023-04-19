@@ -69,7 +69,7 @@ elif sys.argv[1] == 'train':
 elif sys.argv[1] == 'controller':
     trainConUI.show()
 elif sys.argv[1] == 'wayside':
-    waysideUIA.show()
+    waysidestartUI.show()
     #waysideUIB.show()
 elif sys.argv[1] == 'none':
     pass
