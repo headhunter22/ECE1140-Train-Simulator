@@ -15,6 +15,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerSpeed.connect(self.updateSpeed)
         signals.trainControllerAuthority.connect(self.updateAuthority)
         signals.waysideCommandedSpeed.connect(self.updateCommandedSpeed)
+        signals.trainModelEmerBrake.connect(self.EBClick)
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -147,14 +148,14 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.GW.close()
 
         # Calling the clicked-on EmerBrake functions #
-    def EBClick(self):
-            if self.EmerBrake.isChecked() == False:
+    def EBClick(self, emerBrake):
+            if self.EmerBrake.isChecked() == False or emerBrake == False:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
                  print("Emergency Brake Disengaged")
                  signals.trainControllerEmerBrake.emit(False)
                  #window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
-            if self.EmerBrake.isChecked() == True:
+            if self.EmerBrake.isChecked() == True or emerBrake == True:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
                  signals.trainControllerEmerBrake.emit(True)
                  print("Emergency Brake Engaged")
