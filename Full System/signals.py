@@ -110,7 +110,7 @@ class Signals(QObject):
     # train controller signals
     trainControllerDispatch = pyqtSignal(float) # currSpeed
     trainControllerUpdateCurrSpeed = pyqtSignal(Train, float) # train, currSpeed
-    trainControllerUpdateCommSpeed = pyqtSignal(int, float) # trainID, commandedSpeed
+    trainControllerUpdateCommSpeed = pyqtSignal(int) # commandedSpeed
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
