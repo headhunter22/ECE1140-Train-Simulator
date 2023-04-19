@@ -41,7 +41,7 @@ class Wayside(QObject):
         #print("wayside2range", wayside2range)
         ##print("wayside3range", wayside3range)
         #print("wayside4range", wayside4range)
-        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside2sectionrange, wayside2sectionrange)
+        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside3sectionrange, wayside4sectionrange)
         signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
         #print("past please emit .py")
         
@@ -88,24 +88,14 @@ class Wayside(QObject):
         # pass track onto track model
         signals.trackWaysideToTrackModel.emit(track)
 
-<<<<<<< HEAD
-    def blockOccupancyReceived(self, block):
-        #print("wayside block occupancy from track model")
-=======
     def blockOccupancyReceived(self, line, block):
->>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
         
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     
-<<<<<<< HEAD
-    def blockVacancyReceived(self, block):
-        #print("wayside block vacancy from track model")
-=======
     def blockVacancyReceived(self, line, block):
->>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
 
