@@ -51,13 +51,13 @@ class TrainController(QObject):
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
-        if self.train.authority <= 0:
-            print('waiting')
-            self.train.authority = 0
-            self.waitAtStation()
-            signals.trainControllerAuthority.emit(self.train.authority)
-            # wait at station
-            # make authority higher
+        #if self.train.authority <= 0:
+        #    print('waiting')
+        #    self.train.authority = 0
+        #    self.waitAtStation()
+        #    signals.trainControllerAuthority.emit(self.train.authority)
+        #    # wait at station
+        #    # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
     
         if self.train.authority < 0:

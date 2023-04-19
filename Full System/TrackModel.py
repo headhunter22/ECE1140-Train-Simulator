@@ -79,14 +79,12 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-            signals.waysideUpdateOccupancy.emit(block)
+            signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-            signals.waysideUpdateVacancy.emit(block)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, train.block)
 
     def board(self, train):
         # load new passengers

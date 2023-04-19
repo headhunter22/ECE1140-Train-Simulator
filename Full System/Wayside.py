@@ -77,13 +77,19 @@ class Wayside(QObject):
         # pass track onto track model
         signals.trackWaysideToTrackModel.emit(track)
 
-    def blockOccupancyReceived(self, block):
+    def blockOccupancyReceived(self, line, block):
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
+        
+        #occupancy sent to the CTC Office
+        signals.ctcUpdateGUIOccupancy.emit(line, block)
     
-    def blockVacancyReceived(self, block):
+    def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
+
+        #vacancy sent to the CTC Office
+        signals.ctcUpdateGUIOccupancy.emit(line, block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers

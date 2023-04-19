@@ -42,6 +42,7 @@ class ctcMainUI(QMainWindow):
         self.fillOccupancy("Green")
         self.fillOccupancy("Red")
         self.uneditable()
+        self.setColors()
 
         # add green blocks to dispatch page
         for section in track.getLine("Green").sections:
@@ -65,10 +66,10 @@ class ctcMainUI(QMainWindow):
         ########DISPATCHING TRAINS########
         ##################################
 
-        #iteration 3 button
+        # button to send a train to dormont and then the yard
         self.ui.thisIsATest.clicked.connect(self.iterDispatch)
 
-        #connecting the green station buttons
+        # connecting the green station buttons
         """
         self.greenStations = []
         #self.greenStaionStates = []
@@ -98,7 +99,7 @@ class ctcMainUI(QMainWindow):
         self.greenStations.append(self.ui.castleShannonStation)
         """
 
-        #connecting the green station buttons
+        # connecting the green station buttons
         """
         self.redStations = []
         self.ui.shadysideStation.clicked.connect(self.handleRedStationClicked)
@@ -119,19 +120,17 @@ class ctcMainUI(QMainWindow):
         self.redStations.append(self.ui.southHillsStation)
         """
 
-        #add station buttons
+        # add station buttons
         self.ui.greenAddStation.clicked.connect(self.greenAddStation)
         self.ui.redAddStation.clicked.connect(self.addRedTentStation)
 
-        #add block buttons
+        # add block buttons
         #self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
         #self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
 
-        #dispatch and clear buttons for red and green line
-        
+        # dispatch and clear buttons for red and green line
         #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
         self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
-
         #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
         self.ui.redClear.clicked.connect(self.clearRedDispatch)
 
@@ -139,61 +138,37 @@ class ctcMainUI(QMainWindow):
         ########OCCUPANCY WINDOWS#########
         ##################################
 
+        
+
         #initilizing green buttons
         self.ui.green_C1.clicked.connect(lambda: self.toggleColor(self.ui.green_C1, self.ui.green_C2))
-        self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.clicked.connect(lambda: self.toggleColor(self.ui.green_C2, self.ui.green_C1))
-        self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
         self.ui.green_G1.clicked.connect(lambda: self.toggleColor(self.ui.green_G1, self.ui.green_G2))
-        self.ui.green_G1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_G2.clicked.connect(lambda: self.toggleColor(self.ui.green_G2, self.ui.green_G1))
-        self.ui.green_G2.setStyleSheet('background-color: white; color: gray')
         self.ui.green_J1_1.clicked.connect(lambda: self.toggleColor(self.ui.green_J1_1, self.ui.green_J1_2))
-        self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J1_2.clicked.connect(lambda: self.toggleColor(self.ui.green_J1_2, self.ui.green_J1_1))
-        self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
         self.ui.green_J2_1.clicked.connect(lambda: self.toggleColor(self.ui.green_J2_1, self.ui.green_J2_2))
-        self.ui.green_J2_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J2_2.clicked.connect(lambda: self.toggleColor(self.ui.green_J2_2, self.ui.green_J2_1))
-        self.ui.green_J2_2.setStyleSheet('background-color: white; color: gray')
         self.ui.green_M1.clicked.connect(lambda: self.toggleColor(self.ui.green_M1, self.ui.green_M2))
-        self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_M2.clicked.connect(lambda: self.toggleColor(self.ui.green_M2, self.ui.green_M1))
-        self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
         self.ui.green_N1.clicked.connect(lambda: self.toggleColor(self.ui.green_N1, self.ui.green_N2))
-        self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_N2.clicked.connect(lambda: self.toggleColor(self.ui.green_N2, self.ui.green_N1))
-        self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
 
         #initilizing red buttons
         self.ui.red_C1.clicked.connect(lambda: self.toggleColor(self.ui.red_C1, self.ui.red_C2))
-        self.ui.red_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_C2.clicked.connect(lambda: self.toggleColor(self.ui.red_C2, self.ui.red_C1))
-        self.ui.red_C2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_E1.clicked.connect(lambda: self.toggleColor(self.ui.red_E1, self.ui.red_E2))
-        self.ui.red_E1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_E2.clicked.connect(lambda: self.toggleColor(self.ui.red_E2, self.ui.red_E1))
-        self.ui.red_E2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_H1_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H1_1, self.ui.red_H1_2))
-        self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H1_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H1_2, self.ui.red_H1_1))
-        self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_H2_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H2_1, self.ui.red_H2_2))
-        self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H2_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H2_2, self.ui.red_H2_1))
-        self.ui.red_H2_2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_H3_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H3_1, self.ui.red_H3_2))
-        self.ui.red_H3_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H3_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H3_2, self.ui.red_H3_1))
-        self.ui.red_H3_2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_H4_1.clicked.connect(lambda: self.toggleColor(self.ui.red_H4_1, self.ui.red_H4_2))
-        self.ui.red_H4_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H4_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H4_2, self.ui.red_H4_1))
-        self.ui.red_H4_2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_J1.clicked.connect(lambda: self.toggleColor(self.ui.red_J1, self.ui.red_J2))
-        self.ui.red_J1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_J2.clicked.connect(lambda: self.toggleColor(self.ui.red_J2, self.ui.red_J1))
-        self.ui.red_J2.setStyleSheet('background-color: white; color: gray')
 
         ##################################
         ########UTILITY BUTTONS###########
@@ -452,7 +427,6 @@ class ctcMainUI(QMainWindow):
             self.ui.greenTentSchedule.setItem(rowCount, 0, dest)
             self.ui.greenTentSchedule.setItem(rowCount, 1, at)
 
-
     def testGreenDispatch(self):
         stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
         stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
@@ -584,6 +558,8 @@ class ctcMainUI(QMainWindow):
         self.ui.redOccupancy.setColumnWidth(0,65)
         self.ui.redOccupancy.setColumnWidth(1,195)
         self.ui.redOccupancy.setColumnWidth(2,85)
+        self.ui.greenTentSchedule.setColumnWidth(0,90)
+        self.ui.greenTentSchedule.setColumnWidth(1,20)
 
     #toggles the color and boolean value of buttons in maintenance mode
     def toggleColor(self, button1, button2):
@@ -818,7 +794,7 @@ class ctcMainUI(QMainWindow):
                 open.setBackground(QColor('White'))
                 self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
 
-                print(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
+                #print(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
 
                 #signals.blockMaintenanceUpdateFromCTC.emit(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
             else:
@@ -859,6 +835,35 @@ class ctcMainUI(QMainWindow):
     ############################################
     ##############SHARED FUNCITONS##############
     ############################################
+
+    def setColors(self):
+        self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_G1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_G2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_J2_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_J2_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.red_C1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_C2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_E1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_E2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H2_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H3_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H3_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H4_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H4_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_J1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_J2.setStyleSheet('background-color: white; color: gray')
 
     def showPages(self):
         if self.ui.dispatchGreen.isChecked():

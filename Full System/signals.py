@@ -17,6 +17,8 @@ class Signals(QObject):
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
+    greenSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, G, J, J, M, N]
+    redSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, E, H, H, H, H, J]
 
     # ctc frontend emission signals
     greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
@@ -31,8 +33,8 @@ class Signals(QObject):
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
-    waysideUpdateOccupancy = pyqtSignal(int)
-    waysideUpdateVacancy = pyqtSignal(int)
+    waysideUpdateOccupancy = pyqtSignal(str, int) # line, block
+    waysideUpdateVacancy = pyqtSignal(str, int) # line, block
     waysideSwitchStates = pyqtSignal(list)
     waysideCommandedSpeed = pyqtSignal(int)
     #plc
