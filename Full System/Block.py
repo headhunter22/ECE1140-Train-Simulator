@@ -13,6 +13,13 @@ class Block:
         self.stationSide = blockInfo[5]
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
+        self.secsToTraverse = blockInfo[8]
+        self.beaconBool = blockInfo[9]
+        self.lastStation = blockInfo[10]
+        self.stationBool = blockInfo[11]
+        self.switchBool = blockInfo[12]
+        self.underground = blockInfo[15]
+
         self.beacon = Beacon()
 
         # travel direction 0 means going from lower block # to higher block #
@@ -26,40 +33,24 @@ class Block:
         self.maintenance = False
 
         # switch logic
-        # if the block does not have a switch, the connection is blank
-        if 'SWITCH' not in self.infrastructure:
-            self.switchConnection = ''
-            
-            if 'UNDERGROUND' in self.infrastructure:
-                self.station = self.infrastructure.replace('; UNDERGROUND', '')
-            else:
-                self.station = self.infrastructure
+        if self.switchBool:
+            self.swOpt1 = blockInfo[13]
+            self.swOpt2 = blockInfo[14]
+        else:
+            self.swOpt1 = None
+            self.swOpt2 = None
 
-            # add beacon if needed
-            if blockInfo[9]:
-                self.beacon.stationName = self.station
-                
-                # set beacon to be the station side as listed
+        # add beacon if needed
+        if self.beaconBool:
+            # if there's a station at this beacon, add that info
+            if self.stationBool:
+                self.beacon.stationName = self.infrastructure
                 self.beacon.stationSide = self.stationSide
+            if self.switchBool:
+                self.beacon.switchFrom = self.blockName
+                self.beacon.switchTo = self.swOpt1
 
-                print(self.beacon.stationName, self.beacon.stationSide)
-        else:
-            # if the block has a connection, default to first option
-            # parse out the options
-            start = self.infrastructure.find('(')
-            middle = self.infrastructure.find(';') 
-
-            opt1 = self.infrastructure[start+1:middle]
-            self.switchConnection = opt1
-
-            self.beacon.swFrom = self.blockName
-            self.beacon.swTo = self.blockName
-
-        # underground logic
-        if 'UNDERGROUND' in self.infrastructure:
-            self.underground = True
-        else:
-            self.underground = False
+            print(self.beacon.stationName, self.beacon.stationSide, self.beacon.switchFrom, self.beacon.switchTo)
 
     # declare methods
     def setMaintenance(self, underMaintenance):
