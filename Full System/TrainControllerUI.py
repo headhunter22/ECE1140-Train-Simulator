@@ -14,7 +14,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
         signals.trainControllerAuthority.connect(self.updateAuthority)
-        signals.waysideCommandedSpeed.connect(self.updateCommandedSpeed)
+        signals.trainControllerUpdateCommSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelEmerBrake.connect(self.EBClick)
         signals.timerTicked.connect(self.changeLabel)
 
@@ -367,7 +367,7 @@ class GainWindow(QtWidgets.QMainWindow):
         signals.trainControllerUIKP.emit(INPUT2)
         self.KIChange.setText(textkp)
 
-    def updateKP(self):
+    def updateKI(self):
         textki = self.KIChange.textfield.text()
         INPUT2 = float(textki)
         signals.trainControllerUIKI.emit(INPUT2)
