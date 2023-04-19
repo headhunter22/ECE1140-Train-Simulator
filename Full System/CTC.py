@@ -50,12 +50,16 @@ class CTC(QObject):
         # update the next ID of the next train
         self.nextID += 1
 
-    def calculateThroughput(self, line, tickets):
+    def calculateThroughput(self, tickets, line):
+        
         if line == "Green":
-            
-            pass
+            self.greenTotalTickets += tickets
+            signals.ctcGetPassengersPerLine.emit(self.greenTotalTickets, "Green")
+
         elif line == "Red":
-            pass
+            self.redTotalTickets += tickets
+            signals.ctcGetPassengersPerLine.emit(self.redTotalTickets, "Red")
+
         else:
             print("error")
 
