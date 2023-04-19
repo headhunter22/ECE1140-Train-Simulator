@@ -13,8 +13,11 @@ class Block:
         self.stationSide = blockInfo[5]
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
-        self.beacon1 = None
-        self.beacon2 = None
+        self.beacon = Beacon()
+
+        # travel direction 0 means going from lower block # to higher block #
+        # travel diretion 1 means going from higher block # to lower block # 
+        self.travelDirection = 0
             
         self.section = section
 
@@ -34,7 +37,11 @@ class Block:
 
             # add beacon if needed
             if blockInfo[9]:
-                self.beacon = Beacon(self.station, self.stationSide)
+                self.beacon.stationName = self.station
+                
+                # set beacon to be the station side as listed
+                self.beacon.stationSide = self.stationSide
+
                 print(self.beacon.stationName, self.beacon.stationSide)
         else:
             # if the block has a connection, default to first option
@@ -44,6 +51,9 @@ class Block:
 
             opt1 = self.infrastructure[start+1:middle]
             self.switchConnection = opt1
+
+            self.beacon.swFrom = self.blockName
+            self.beacon.swTo = self.blockName
 
         # underground logic
         if 'UNDERGROUND' in self.infrastructure:
