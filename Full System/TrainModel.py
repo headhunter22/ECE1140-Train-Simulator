@@ -155,6 +155,7 @@ class TrainModel(QObject):
 
             # update track model occupancy to occupied for next block in route
             signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
+            signals.trainControllerUpdateCommSpeed.emit(train.line.getBlock(train.route[0]).speedLimit)
 
         # we have not traversed more than the current block length
         else:
