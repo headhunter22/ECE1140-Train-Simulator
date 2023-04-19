@@ -16,6 +16,15 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerAuthority.connect(self.updateAuthority)
         signals.waysideCommandedSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelEmerBrake.connect(self.EBClick)
+        signals.timerTicked.connect(self.changeLabel)
+
+        # Create Time element # 
+        self.dataTime = QtWidgets.QLabel(" ", self)
+        self.dataTime.setGeometry(420, 500, 200, 100)
+        font1 = QtGui.QFont()
+        font1.setPointSize(24)
+        self.dataTime.setFont(font1)
+
 
         # Emergency Brake button init #
         self.EmerBrake = QtWidgets.QPushButton('EMERGENCY BRAKE', self)
@@ -153,7 +162,6 @@ class TrainControllerUI(QtWidgets.QMainWindow):
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
                  print("Emergency Brake Disengaged")
                  signals.trainControllerEmerBrake.emit(False)
-                 #window2.TestEmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
             if self.EmerBrake.isChecked() == True or emerBrake == True:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
@@ -320,6 +328,9 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.AC.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
               print("AC Off")
               signals.trainControllerAC.emit(False)
+
+    def changeLabel(self, hrs, mins, secs): ####### 
+        self.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
 
 class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
