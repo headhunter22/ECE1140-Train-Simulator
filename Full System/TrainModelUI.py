@@ -19,6 +19,9 @@ class TrainModelUI(QtWidgets.QMainWindow):
         uic.loadUi("trainModel_fullsys.ui", self)
 
         self.popUp = popUpWindow()
+        self.tempSlider.setMinimum(60)
+        self.tempSlider.setMaximum(90)
+        self.tempSlider.valueChanged.connect(self.sliderChanged)
 
         #Connecting the received signals to their display functions
         signals.trainModelUpdateGUISpeed.connect(self.displaySpeed)
@@ -143,3 +146,12 @@ class TrainModelUI(QtWidgets.QMainWindow):
         totalWeight = numPass*150 + (90169.065) #total weight of train
         print('update!')
         self.popUp.currMass.setText(str(totalWeight))
+    
+    def sliderChanged(self):
+
+        sliderSize = self.tempSlider.value()
+        self.ACprogressBar.setMinimum(60)
+        self.ACprogressBar.setMaximum(90)
+        self.ACprogressBar.setTextVisible(0)
+        self.tempText.setText('Current Temp: ' + str(sliderSize) + ' F')
+        self.ACprogressBar.setValue(sliderSize)
