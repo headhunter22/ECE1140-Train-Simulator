@@ -265,7 +265,7 @@ class ctcMainUI(QMainWindow):
 
 
 
-
+        self.ui.pushButton.clicked.connect(self.testFunction)
 
 
 
@@ -968,6 +968,11 @@ class ctcMainUI(QMainWindow):
             self.ui.stackedWidget.setCurrentIndex(2)
         elif self.ui.maintenanceSelect.isChecked():
             self.ui.stackedWidget.setCurrentIndex(3)
+
+
+    def testFunction(self):
+        self.ui.green_C2.click()
+
 
 # if __name__ == '__main__':
 #     track = TrackParser.parseTrack('TrackLayout.csv')
