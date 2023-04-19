@@ -27,6 +27,8 @@ class Wayside(QObject):
         # signals.waysideinstance2.connect(self.wayside2range)#TODO
         # signals.waysideinstance3.connect(self.wayside3range)#TODO
         # signals.waysideinstance4.connect(self.wayside4range)#TODO
+
+        signals.greenSwitchStatesFromCTCtoWayside.connect(self.switchSignalTest)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -151,3 +153,12 @@ class Wayside(QObject):
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw
     #     print("authority from CTC to Wayside: " + str(self.authority))
+
+    def switchSignalTest(self, states):
+        print("C:" , states[0])
+        print("G:" , states[1])
+        print("J:" , states[2])
+        print("J:" , states[3])
+        print("M:" , states[4])
+        print("N:" , states[5])
+        print("\n\n")

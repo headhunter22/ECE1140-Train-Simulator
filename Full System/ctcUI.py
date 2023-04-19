@@ -141,6 +141,7 @@ class ctcMainUI(QMainWindow):
         
 
         #initilizing green buttons
+        self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
         self.ui.green_C1.clicked.connect(lambda: self.toggleColor(self.ui.green_C1, self.ui.green_C2))
         self.ui.green_C2.clicked.connect(lambda: self.toggleColor(self.ui.green_C2, self.ui.green_C1))
         self.ui.green_G1.clicked.connect(lambda: self.toggleColor(self.ui.green_G1, self.ui.green_G2))
@@ -153,8 +154,21 @@ class ctcMainUI(QMainWindow):
         self.ui.green_M2.clicked.connect(lambda: self.toggleColor(self.ui.green_M2, self.ui.green_M1))
         self.ui.green_N1.clicked.connect(lambda: self.toggleColor(self.ui.green_N1, self.ui.green_N2))
         self.ui.green_N2.clicked.connect(lambda: self.toggleColor(self.ui.green_N2, self.ui.green_N1))
+        self.ui.green_C1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_C2.clicked.connect(self.emitSwitchStates)
+        self.ui.green_G1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_G2.clicked.connect(self.emitSwitchStates)
+        self.ui.green_J1_1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_J1_2.clicked.connect(self.emitSwitchStates)
+        self.ui.green_J2_1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_J2_2.clicked.connect(self.emitSwitchStates)
+        self.ui.green_M1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_M2.clicked.connect(self.emitSwitchStates)
+        self.ui.green_N1.clicked.connect(self.emitSwitchStates)
+        self.ui.green_N2.clicked.connect(self.emitSwitchStates)
 
         #initilizing red buttons
+        redSwitchStates = []
         self.ui.red_C1.clicked.connect(lambda: self.toggleColor(self.ui.red_C1, self.ui.red_C2))
         self.ui.red_C2.clicked.connect(lambda: self.toggleColor(self.ui.red_C2, self.ui.red_C1))
         self.ui.red_E1.clicked.connect(lambda: self.toggleColor(self.ui.red_E1, self.ui.red_E2))
@@ -169,6 +183,20 @@ class ctcMainUI(QMainWindow):
         self.ui.red_H4_2.clicked.connect(lambda: self.toggleColor(self.ui.red_H4_2, self.ui.red_H4_1))
         self.ui.red_J1.clicked.connect(lambda: self.toggleColor(self.ui.red_J1, self.ui.red_J2))
         self.ui.red_J2.clicked.connect(lambda: self.toggleColor(self.ui.red_J2, self.ui.red_J1))
+        self.ui.red_C1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_C2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_E1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_E2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H1_1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H1_2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H2_1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H2_2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H3_1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H3_2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H4_1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_H4_2.clicked.connect(self.emitSwitchStates)
+        self.ui.red_J1.clicked.connect(self.emitSwitchStates)
+        self.ui.red_J2.clicked.connect(self.emitSwitchStates)
 
         ##################################
         ########UTILITY BUTTONS###########
@@ -780,7 +808,74 @@ class ctcMainUI(QMainWindow):
             self.ui.greenScheduledTrains_2.setItem(rowCount, 1, at)
 
             self.dispatchGreenLine()
-    
+    #################################################
+    ########MAINTENANCE MODE FUNCTIONS###############
+    #################################################
+
+    def emitSwitchStates(self):
+        clickedButton = self.sender()
+
+        if clickedButton == self.ui.green_C1:
+            self.greenSwitchStates[0] = 1
+        elif clickedButton == self.ui.green_C2:
+            self.greenSwitchStates[0] = 0
+        elif clickedButton == self.ui.green_G1:
+            self.greenSwitchStates[1] = 0
+        elif clickedButton == self.ui.green_G2:
+            self.greenSwitchStates[1] = 1
+        elif clickedButton == self.ui.green_J1_1:
+            self.greenSwitchStates[2] = 0
+        elif clickedButton == self.ui.green_J1_2:
+            self.greenSwitchStates[2] = 1
+        elif clickedButton == self.ui.green_J2_1:
+            self.greenSwitchStates[3] = 1
+        elif clickedButton == self.ui.green_J2_2:
+            self.greenSwitchStates[3] = 0
+        elif clickedButton == self.ui.green_M1:
+            self.greenSwitchStates[4] = 0
+        elif clickedButton == self.ui.green_M2:
+            self.greenSwitchStates[4] = 1
+        elif clickedButton == self.ui.green_N1:
+            self.greenSwitchStates[5] = 0
+        elif clickedButton == self.ui.green_N2:
+            self.greenSwitchStates[5] = 1
+        elif clickedButton == self.ui.red_C1:
+            pass
+        elif clickedButton == self.ui.red_C2:
+            pass
+        elif clickedButton == self.ui.red_E1:
+            pass
+        elif clickedButton == self.ui.red_E2:
+            pass
+        elif clickedButton == self.ui.red_H1_1:
+            pass
+        elif clickedButton == self.ui.red_H1_2:
+            pass
+        elif clickedButton == self.ui.red_H2_1:
+            pass
+        elif clickedButton == self.ui.red_H2_2:
+            pass
+        elif clickedButton == self.ui.red_H3_1:
+            pass
+        elif clickedButton == self.ui.red_H3_2:
+            pass
+        elif clickedButton == self.ui.red_H4_1:
+            pass
+        elif clickedButton == self.ui.red_H4_2:
+            pass
+        elif clickedButton == self.ui.red_J1:
+            pass
+        elif clickedButton == self.ui.red_J2:
+            pass
+        else:
+            print("error")
+
+        signals.greenSwitchStatesFromCTCtoWayside.emit(self.greenSwitchStates)
+        #signals.greenSwitchStatesFromCTCtoWayside.emit(self.redSwitchStates)
+
+
+
+
     #################################################
     ########OPTIONS / THROUGHPUT FUNCTIONS###########
     #################################################
@@ -839,14 +934,19 @@ class ctcMainUI(QMainWindow):
     def setColors(self):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_G1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_G2.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.green_G1.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_G2.setStyleSheet('background-color: SkyBlue')
+
         self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_J2_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_J2_2.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.green_J2_1.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_J2_2.setStyleSheet('background-color: SkyBlue')
+
         self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
+
         self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
 
