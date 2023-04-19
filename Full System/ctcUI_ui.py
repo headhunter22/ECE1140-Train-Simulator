@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.greenTentSchedule.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.greenTentSchedule.setObjectName(u"greenTentSchedule")
-        self.greenTentSchedule.setGeometry(QRect(20, 130, 211, 181))
+        self.greenTentSchedule.setGeometry(QRect(20, 130, 131, 181))
         self.greenDestination = QLineEdit(self.greenLinePage)
         self.greenDestination.setObjectName(u"greenDestination")
         self.greenDestination.setGeometry(QRect(20, 40, 113, 24))
@@ -636,6 +636,9 @@ class Ui_MainWindow(object):
         self.line_11.setGeometry(QRect(760, 310, 20, 61))
         self.line_11.setFrameShape(QFrame.VLine)
         self.line_11.setFrameShadow(QFrame.Sunken)
+        self.pushButton = QPushButton(self.centralwidget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(590, 460, 80, 24))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -651,7 +654,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -780,7 +783,7 @@ class Ui_MainWindow(object):
         self.legendLabel_2.setText(QCoreApplication.translate("MainWindow", u"- Occupied by train", None))
         self.modesText.setText(QCoreApplication.translate("MainWindow", u"Modes:", None))
         self.time10x.setText(QCoreApplication.translate("MainWindow", u"10x", None))
-        self.dataTime.setText(QCoreApplication.translate("MainWindow", u"00:07:00", None))
+        self.dataTime.setText(QCoreApplication.translate("MainWindow", u"07:00:00", None))
         self.dispatchGreen.setText(QCoreApplication.translate("MainWindow", u"Green Line", None))
         self.optionsLabel.setText(QCoreApplication.translate("MainWindow", u"Track Block Options", None))
         self.legendLabel_4.setText(QCoreApplication.translate("MainWindow", u"- Block under \n"
@@ -834,6 +837,7 @@ class Ui_MainWindow(object):
         self.blockLabel_12.setText(QCoreApplication.translate("MainWindow", u"Red Line:", None))
         self.redThroughput.setText(QCoreApplication.translate("MainWindow", u"- passengers", None))
         self.greenThroughput.setText(QCoreApplication.translate("MainWindow", u"- passengers", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"testbutton", None))
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(QCoreApplication.translate("MainWindow", u"North Shore Extension - CTC Window", None))
     # retranslateUi
 

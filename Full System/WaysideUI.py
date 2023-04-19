@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 from pathlib import Path
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -10,8 +11,8 @@ from blockwidget import Ui_Section
 #from Wayside_Main_B import Ui_MainWindowB
 from Wayside_Main_A import Ui_MainWindowA
 #from test2 import Ui_testpopup
-from PLCParser import Parser
-
+#import PLCParser
+from PLCParser import WTrack
 # MainWindowA N-Z blue
 # MainWindowB A-M red
 
@@ -21,6 +22,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.setupUi(self)
         self.setWindowTitle('Wayside Main UI')
         self.resize(650, 690)
+        
         
         self.instance =  ''
         self.first = 0
@@ -35,20 +37,25 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside4sectionrange = []
         #print("sectionrange1",self.sectionrange)
         #PLCParser.parse(self)
-        print("wayside1range",self.wayside1range)
-        plc.parse()
+        #print("wayside1range 1 in ui",Wtrack.plc.wayside1range)
+        
+        #self.setuppopups(self.first)
         
         #signals
         signals.timerTicked.connect(self.ticka) #clock from ctc
         signals.waysidefirst.connect(self.firstinstance) #from selection pop up window
-        signals.waysideinstances.connect(self.setupinstances) #supposed to be from wtrack in parser
         signals.wtowOccupancy.connect(self.changeOccupancy) #from .py from track controller
         signals.wtowVacancy.connect(self.changeVacancy) #from .py from track controller
         signals.wtowTrainCount.connect(self.activeTrains) #from .py track controller
         signals.waysidesetup.connect(self.setuppopups)
+        #signals.waysideinstance2.connect(self.imoverthis)
         #signals.actuallyshutup.connect(self.works)
-        signals.please.connect(self.works)
-        print("wayside1range",self.wayside1range)
+        signals.ranges.connect(self.works)
+        signals.sections.connect(self.sectionswork)
+        #signals.please.emit()
+        
+        self.setupplc()
+
         #PLCParser.parse(self)
         #print("sectionrange4",self.sectionrange)
         #PLC signals
@@ -57,14 +64,11 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         # signals.waysideTrackfromPLC.connect(self.wholeTrack)
         # signals.waysideSectionsfromPLC.connect(self.popupnames)
         
-        # self.block1, self.sections1 = signals.waysideinstance1
-        # self.block2, self.sections2 = signals.waysideinstance2
-        # self.block3, self.sections3 = signals.waysideinstance3
-        # self.block4, self.sections4 = signals.waysideinstance4
-        
         self.disableallswitchbuttons()
         self.setupgatebuttons()
         self.setupswitchbuttons()
+        #print("wayside1range 2 in ui .plc",WTrack.wayside1range)
+        #print("wayside1range 2 in ui .self",self.wayside1range)
         #self.instances(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
         #self.setuppopups()
         
@@ -82,27 +86,46 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #lights
         #self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
-    def works(self):
-        print("i will actually muruder someeone")
+    def setupplc(self):
+        #print("setupplc started")
+        plc = WTrack()
+        plc.parse()
+        #print("setupplc wayside1range 2 in ui .plc",plc.wayside1range)
+        self.wayside1range = plc.wayside1range
+        #print("setupplc wayside1range 2 in ui .self",self.wayside1range)
+
+    def works(self, range1, range2, range3, range4):
+        #print("it works in ui from please from .py range1:", range1)
+        #print("works ui range2", range2)
+        #print("works ui range3", range3)
+        #print("works ui range4", range4)
+        self.wayside1range = range1
+        self.wayside2range = range2
+        self.wayside3range = range3
+        self.wayside4range  = range4
+        # print("works ui range2", self.wayside1range)
+        # print("works ui range2", self.wayside2range)
+        # print("works ui range3", self.wayside3range)
+        # print("works ui range4", self.wayside4range)
+
+    def sectionswork(self, range1, range2, range3, range4):
+        #print("sectionswork")
+        self.wayside1sectionrange = range1
+        # print("sectionswork range1 self.", self.wayside1sectionrange)
+        # print("sectionswork range1 ", range1)
+        self.wayside2sectionrange = range2
+        self.wayside3sectionrange = range3
+        self.wayside4sectionrange  = range4
+
+
+    def imoverthis(self, range):
+        #print("im over this in .py from wayside instance 2")
+        print("range in imoverthis in ui", range)
 
     def firstinstance(self, num):
         self.first = num
-        print("set first", self.first, "=", num)
-        
-
-    def setupinstances(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):
-        print("instanced")
-        self.wayside1range = wayside1range
-        print("wayside range 1", wayside1range)
-        self.wayside1sectionrange = wayside1sectionrange
-        self.wayside2range = wayside2range
-        self.wayside2sectionrange = wayside2sectionrange
-        self.wayside3range  =wayside3range
-        self.wayside3sectionrange = wayside3sectionrange
-        self.wayside4range = wayside4range
-        self.wayside4sectionrange = wayside4sectionrange
-        signals.waysidesetup.emit(self.first)
-
+        #print("set first", self.first, "=", num)
+        self.setuppopups(self.first)
 
     def disableallswitchbuttons(self):
         #set all switch buttons to disabled
@@ -135,25 +158,90 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate60.setStyleSheet('background-color: white; color: gray')
 
     def setuppopups(self, first):
+        #print("setuppopups start")
+        
         #pop up windows
+        current = ''
         if first == 1:
-            self.sectionrange = self.wayside1sectionrange
+            current = self.wayside1sectionrange[0]
+            for i in self.wayside1sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 2:
-            self.sectionrange = self.wayside2sectionrange
+            current = self.wayside2sectionrange[0]
+            for i in self.wayside2sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 3:
-            self.sectionrange = self.wayside3sectionrange
+            current = self.wayside3sectionrange[0]
+            for i in self.wayside3sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 4:
-            self.sectionrange = self.wayside4sectionrange
-        print("sectionrange",self.sectionrange)
-        print("first",self.first)
+            current = self.wayside3sectionrange[0]
+            for i in self.wayside3sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
+        #print("setuppopups sectionrange",self.sectionrange)
+        #print("setuppopups first",self.first)
 
-        positions = [(0, j) for j in range(int(len(self.sectionrange)))]
+        positions = [(i, 0) for i in range(2,len(self.sectionrange))]
+        #print(positions)
 
         for position, name in zip(positions, self.sectionrange):
-         if name == '':
-          continue
-         button = QPushButton(name)
-         self.gridLayout_4.addWidget(button, *position)
+            if name == '':
+                continue
+            button = QPushButton(name)
+            self.gridLayout_4.addWidget(button, *position)
+
+        
+        # left = 13-len(self.sectionrange)
+        # if left == 1:
+        #     self.gridLayout_4.removeWidget(self.pushz)
+        #     self.gridLayout_4.removeWidget(self.zicon)
+        # if left == 2:
+        #     self.gridLayout_4.removeWidget(self.pushz)
+        #     self.gridLayout_4.removeWidget(self.zicon)
+        #     self.gridLayout_4.removeWidget(self.pushy)
+        #     self.gridLayout_4.removeWidget(self.yicon)
+        # if left == 3:
+        #     self.gridLayout_4.removeWidget(self.pushz)
+        #     self.gridLayout_4.removeWidget(self.zicon)
+        #     self.gridLayout_4.removeWidget(self.pushy)
+        #     self.gridLayout_4.removeWidget(self.yicon)
+        #     self.gridLayout_4.removeWidget(self.pushx)
+        #     self.gridLayout_4.removeWidget(self.xicon)
+
+        
+                
+
+        
+            #button = QPushButton(str(self.sectionrange[i]))
+            #self.gridLayout_4.addWidget(button, 0,i)
+
+        # positions = [(0, j) for j in range(int(len(self.sectionrange)))]
+
+        # for position, name in zip(positions, self.sectionrange):
+        # #  if name == '':
+        # #   continue
+        #     button = QPushButton(str(name))
+        #     self.gridLayout_4.addWidget(button, position)
         #self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
         # self.trackconfiguration.clicked.connect(self.runParser)
         # self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
@@ -636,11 +724,11 @@ class selectionWindow(QWidget):
 
 
 
-app = QtWidgets.QApplication(sys.argv)
+#app = QtWidgets.QApplication(sys.argv)
 #windowA = WMainWindowA()
 #windowB = WMainWindowB()
-first = selectionWindow()
-plc = Parser()
+#first = selectionWindow()
+
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
 #windowA.show()

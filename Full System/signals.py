@@ -2,6 +2,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
 from Train import Train
 from Track import Track
+from Beacon import Beacon
 import sys
 sys.dont_write_bytecode = True
 
@@ -17,6 +18,8 @@ class Signals(QObject):
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
+    greenSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, G, J, J, M, N]
+    redSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, E, H, H, H, H, J]
 
     # ctc frontend emission signals
     greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
@@ -31,8 +34,8 @@ class Signals(QObject):
     # wayside controller signals
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
-    waysideUpdateOccupancy = pyqtSignal(int)
-    waysideUpdateVacancy = pyqtSignal(int)
+    waysideUpdateOccupancy = pyqtSignal(str, int) # line, block
+    waysideUpdateVacancy = pyqtSignal(str, int) # line, block
     waysideSwitchStates = pyqtSignal(list)
     waysideCommandedSpeed = pyqtSignal(int)
     #plc
@@ -40,11 +43,9 @@ class Signals(QObject):
     waysideTrackfromPLC = pyqtSignal(list)
     waysideSectionsfromPLC = pyqtSignal(list)
     waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list) #from wtrack
-    actuallyshutup = pyqtSignal()
-    please = pyqtSignal()
-    # waysideinstance2 = pyqtSignal(list, list)
-    # waysideinstance3 = pyqtSignal(list, list)
-    # waysideinstance4 = pyqtSignal(list, list)
+    #actuallyshutup = pyqtSignal()
+    ranges = pyqtSignal(list, list, list, list)
+    sections = pyqtSignal(list, list, list, list)
     waysidefirst = pyqtSignal(int) #from showmain in ui
     waysidesetup = pyqtSignal(int)
 
@@ -76,14 +77,13 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
+    trackModelBeaconSending = pyqtSignal(Beacon) # emitting Beacon to train model
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
-
-    # track model block page signals
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
