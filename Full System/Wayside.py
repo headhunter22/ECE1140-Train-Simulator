@@ -41,7 +41,7 @@ class Wayside(QObject):
         #print("wayside2range", wayside2range)
         ##print("wayside3range", wayside3range)
         #print("wayside4range", wayside4range)
-        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside2sectionrange, wayside2sectionrange)
+        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside3sectionrange, wayside4sectionrange)
         signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
         #print("past please emit .py")
         

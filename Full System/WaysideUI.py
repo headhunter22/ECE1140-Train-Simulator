@@ -21,7 +21,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         super(WMainWindowA, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle('Wayside Main UI')
-        self.resize(650, 690)
+        self.resize(640, 645)
         
         
         self.instance =  ''
@@ -53,7 +53,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.ranges.connect(self.works)
         signals.sections.connect(self.sectionswork)
         #signals.please.emit()
-        
         self.setupplc()
 
         #PLCParser.parse(self)
@@ -112,10 +111,13 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("sectionswork")
         self.wayside1sectionrange = range1
         # print("sectionswork range1 self.", self.wayside1sectionrange)
-        # print("sectionswork range1 ", range1)
+        #print("sectionswork range1 ", range1)
         self.wayside2sectionrange = range2
+        #print("sectionswork range2 ", range2)
         self.wayside3sectionrange = range3
+        #print("sectionswork range2 ", range3)
         self.wayside4sectionrange  = range4
+        #print("sectionswork range2 ", range4)
 
 
     def imoverthis(self, range):
@@ -159,9 +161,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def setuppopups(self, first):
         #print("setuppopups start")
-        
+        #print("first",first)
         #pop up windows
-        current = ''
+        #current = ''
         if first == 1:
             current = self.wayside1sectionrange[0]
             for i in self.wayside1sectionrange:
@@ -201,62 +203,73 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("setuppopups sectionrange",self.sectionrange)
         #print("setuppopups first",self.first)
 
-        positions = [(i, 0) for i in range(2,len(self.sectionrange))]
+        positions = [(i, 0) for i in range(2,len(self.sectionrange)+2)]
+        #print("length of sectionrange", self.sectionrange)
         #print(positions)
-
+        namelist = []
         for position, name in zip(positions, self.sectionrange):
             if name == '':
                 continue
             button = QPushButton(name)
+            namelist.append(name)
             self.gridLayout_4.addWidget(button, *position)
+            button.clicked.connect(lambda: self.makeSectionWindow(name))
+            #button.clicked.connect(lambda: self.makeSectionWindow(name))
 
         
-        # left = 13-len(self.sectionrange)
-        # if left == 1:
-        #     self.gridLayout_4.removeWidget(self.pushz)
-        #     self.gridLayout_4.removeWidget(self.zicon)
-        # if left == 2:
-        #     self.gridLayout_4.removeWidget(self.pushz)
-        #     self.gridLayout_4.removeWidget(self.zicon)
-        #     self.gridLayout_4.removeWidget(self.pushy)
-        #     self.gridLayout_4.removeWidget(self.yicon)
-        # if left == 3:
-        #     self.gridLayout_4.removeWidget(self.pushz)
-        #     self.gridLayout_4.removeWidget(self.zicon)
-        #     self.gridLayout_4.removeWidget(self.pushy)
-        #     self.gridLayout_4.removeWidget(self.yicon)
-        #     self.gridLayout_4.removeWidget(self.pushx)
-        #     self.gridLayout_4.removeWidget(self.xicon)
-
+        left = 14-len(self.sectionrange)
+        #print("left", left)
+        if left == 1:
+            self.zzicon.hide()
+            self.pushzz.hide()
+        if left == 2:
+            self.pushzz.hide()
+            self.zzicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+        if left == 3:
+            self.pushzz.hide()
+            self.zzicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+        if left == 4:
+            self.pushzz.hide()
+            self.zzicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+        if left == 5:
+            self.pushzz.hide()
+            self.zzicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+        #print("namelist",namelist)
         
-                
-
-        
-            #button = QPushButton(str(self.sectionrange[i]))
-            #self.gridLayout_4.addWidget(button, 0,i)
-
-        # positions = [(0, j) for j in range(int(len(self.sectionrange)))]
-
-        # for position, name in zip(positions, self.sectionrange):
-        # #  if name == '':
-        # #   continue
-        #     button = QPushButton(str(name))
-        #     self.gridLayout_4.addWidget(button, position)
-        #self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
-        # self.trackconfiguration.clicked.connect(self.runParser)
-        # self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
-        # self.pusho.clicked.connect(lambda: self.makeSectionWindow('O'))
-        # self.pushp.clicked.connect(lambda: self.makeSectionWindow('P'))
-        # self.pushq.clicked.connect(lambda: self.makeSectionWindow('Q'))
-        # self.pushr.clicked.connect(lambda: self.makeSectionWindow('R'))
-        # self.pushs.clicked.connect(lambda: self.makeSectionWindow('S'))
-        # self.pusht.clicked.connect(lambda: self.makeSectionWindow('T'))
-        # self.pushu.clicked.connect(lambda: self.makeSectionWindow('U'))
-        # self.pushv.clicked.connect(lambda: self.makeSectionWindow('V'))
-        # self.pushw.clicked.connect(lambda: self.makeSectionWindow('W'))
-        # self.pushx.clicked.connect(lambda: self.makeSectionWindow('X'))
-        # self.pushy.clicked.connect(lambda: self.makeSectionWindow('Y'))
-        # self.pushz.clicked.connect(lambda: self.makeSectionWindow('Z'))
+        self.pushn.clicked.connect(lambda: self.makeSectionWindow(namelist[0]))
+        self.pusho.clicked.connect(lambda: self.makeSectionWindow(namelist[1]))
+        self.pushp.clicked.connect(lambda: self.makeSectionWindow(namelist[2]))
+        self.pushq.clicked.connect(lambda: self.makeSectionWindow(namelist[3]))
+        self.pushr.clicked.connect(lambda: self.makeSectionWindow(namelist[4]))
+        self.pushs.clicked.connect(lambda: self.makeSectionWindow(namelist[5]))
+        self.pusht.clicked.connect(lambda: self.makeSectionWindow(namelist[6]))
+        self.pushu.clicked.connect(lambda: self.makeSectionWindow(namelist[7]))
+        self.pushv.clicked.connect(lambda: self.makeSectionWindow(namelist[8]))
+        self.pushw.clicked.connect(lambda: self.makeSectionWindow(namelist[9]))
+        self.pushx.clicked.connect(lambda: self.makeSectionWindow(namelist[10]))
+        self.pushy.clicked.connect(lambda: self.makeSectionWindow(namelist[11]))
+        self.pushz.clicked.connect(lambda: self.makeSectionWindow(namelist[12]))
+        self.pushzz.clicked.connect(lambda: self.makeSectionWindow(namelist[13]))
 
 
     def ticka(self, hrs, mins, secs):
@@ -286,10 +299,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def configurationWindow(self):
         self.trackconfiguration.clicked.connect(self.runParser)
 
-    def runParser(self):
-        plc.parse(self)
-
     def makeSectionWindow(self, whichsection):
+        #print("in makesectionwindow")
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
         
