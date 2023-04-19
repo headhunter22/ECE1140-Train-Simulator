@@ -875,9 +875,6 @@ class ctcMainUI(QMainWindow):
         signals.greenSwitchStatesFromCTCtoWayside.emit(self.greenSwitchStates)
         #signals.greenSwitchStatesFromCTCtoWayside.emit(self.redSwitchStates)
 
-
-
-
     #################################################
     ########OPTIONS / THROUGHPUT FUNCTIONS###########
     #################################################
@@ -936,19 +933,14 @@ class ctcMainUI(QMainWindow):
     def setColors(self):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_G1.setStyleSheet('background-color: white; color: gray')
         self.ui.green_G2.setStyleSheet('background-color: SkyBlue')
-
         self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_J2_1.setStyleSheet('background-color: white; color: gray')
         self.ui.green_J2_2.setStyleSheet('background-color: SkyBlue')
-
         self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
-
         self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
 

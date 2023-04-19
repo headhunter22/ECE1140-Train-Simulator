@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
         self.arrivalLabel_3.setGeometry(QtCore.QRect(20, 111, 161, 20))
         self.arrivalLabel_3.setObjectName("arrivalLabel_3")
         self.greenTentSchedule = QtWidgets.QTableWidget(parent=self.greenLinePage)
-        self.greenTentSchedule.setGeometry(QtCore.QRect(20, 130, 141, 181))
+        self.greenTentSchedule.setGeometry(QtCore.QRect(20, 130, 131, 181))
         self.greenTentSchedule.setObjectName("greenTentSchedule")
         self.greenTentSchedule.setColumnCount(2)
         self.greenTentSchedule.setRowCount(0)
@@ -629,6 +629,9 @@ class Ui_MainWindow(object):
         self.line_11.setFrameShape(QtWidgets.QFrame.Shape.VLine)
         self.line_11.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line_11.setObjectName("line_11")
+        self.pushButton = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(590, 460, 80, 24))
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1601, 21))
@@ -817,6 +820,7 @@ class Ui_MainWindow(object):
         self.blockLabel_12.setText(_translate("MainWindow", "Red Line:"))
         self.redThroughput.setText(_translate("MainWindow", "- passengers"))
         self.greenThroughput.setText(_translate("MainWindow", "- passengers"))
+        self.pushButton.setText(_translate("MainWindow", "testbutton"))
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(_translate("MainWindow", "North Shore Extension - CTC Window"))
 
 

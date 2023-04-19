@@ -313,7 +313,7 @@
        <rect>
         <x>20</x>
         <y>130</y>
-        <width>141</width>
+        <width>131</width>
         <height>181</height>
        </rect>
       </property>
@@ -2202,6 +2202,19 @@
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>460</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>testbutton</string>
     </property>
    </widget>
   </widget>
