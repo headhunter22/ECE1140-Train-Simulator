@@ -21,25 +21,41 @@ class Wayside(QObject):
         signals.trackCTCToWayside.connect(self.trackReceived)
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
+        #signals.waysideCommandedSpeed.connect(self.commspeed)
+        signals.actuallyshutup.connect(self.imoverthis)
+        # signals.waysideinstance1.connect(self.wayside1range)#TODO
+        # signals.waysideinstance2.connect(self.wayside2range)#TODO
+        # signals.waysideinstance3.connect(self.wayside3range)#TODO
+        # signals.waysideinstance4.connect(self.wayside4range)#TODO
         
     # function to dispatch a train
     # hard coded for green line for the time being
-    def dispatchTrain(self, train):
-        # set occupancy of first block
-        #self.setOccupancy(train.line, 63, 1)
-        print('wayside dispatched')
 
-        # compare suggSpeed to commandedSpeed
-        speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
-        if (train.suggSpeed > speedLimit):
-            commSpeed = speedLimit
+    def imoverthis(self):
+        print("make it stop")
+        signals.please.emit()
+        
+    def commspeed(self, train):
+        if (train.authority == '0'):
+            commSpeed = 0
         else:
             commSpeed = train.suggSpeed
 
+        signals.waysideCommandedSpeed.emit(commSpeed)
+
+    def dispatchTrain(self, train):
+        # set occupancy of first block
+        #self.setOccupancy(train.line, 63, 1)
+
+        print('wayside dispatched')
+        # compare suggSpeed to commandedSpeed
+        #speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
+        self.commspeed(train)
         # emit dispatched train to track model
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
+        
 
     # function to set block occupancies
     #def setOccupancy(self, line, blockNumber, occupied):
@@ -62,13 +78,11 @@ class Wayside(QObject):
         signals.trackWaysideToTrackModel.emit(track)
 
     def blockOccupancyReceived(self, block):
-        print("block occupancy from track model")
-        print(". py block", block, "is occupied")
+        #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
     
     def blockVacancyReceived(self, block):
-        print("block vacancy from track model")
-        print(".py block", block, "is vacant")
+        #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
@@ -77,7 +91,7 @@ class Wayside(QObject):
 
     def addTrackModel(self, trackModel):
         self.trackModel = trackModel
-        self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
+        #self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
         self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
 
     def changeRoute(self, train):

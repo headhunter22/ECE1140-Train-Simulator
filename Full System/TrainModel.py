@@ -11,6 +11,7 @@ import math
 import time
 
 class TrainModel(QObject):
+    #its a comment
 
     def __init__(self, *args, obj=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,6 +20,7 @@ class TrainModel(QObject):
         self.trainList = []
 
         self.serviceBrake = False
+        self.emerBrake = False
         self.timeWaiting = 0
 
         # connect signals
@@ -27,6 +29,7 @@ class TrainModel(QObject):
         signals.trainModelGetPower.connect(self.updatedPower)
         signals.trainModelGetTrack.connect(self.trackReceived)
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
+        signals.trainModelEmerBrake.connect(self.emerBrakeActive)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -94,18 +97,22 @@ class TrainModel(QObject):
         if train.actSpeed_1 == 0:
             print('not moving')
             train.An = 0.5
-        elif train.emBrake == 1:
+        elif self.emerBrake == 1:
             train.An = -2.73
-        elif train.serviceBrake == 1:
+            power = 0
+            print('emerbraketrue')
+        elif self.serviceBrake == 1:
             train.An = -1.2
+            power = 0
+            print('service brake')
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > blockSpeedLimit:
                 train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 #print('During Too Fast An: ' + str(train.An))
             else:
-                trainForce = train.commandedPower / train.actSpeed_1
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
+                trainForce = power / train.actSpeed_1
+                train.An = ((1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
         
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:
@@ -121,7 +128,6 @@ class TrainModel(QObject):
         if (train.actSpeed < 0):
             train.actSpeed = 0
             signals.trackModelPassengersChanging.emit(train) # this kinda works, might be getting called 1 too many times (slowing down to stop and speeding up from stop)
-            self.waitAtStation()
             # here needs to call train model passengers departing
             self.serviceBrake = False
             train.destBlock.pop(0)
@@ -173,7 +179,10 @@ class TrainModel(QObject):
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
         signals.trainModelGUIBlock.emit(str(train.block))
         signals.trainModelGUIcommandedSpeed.emit(str(train.commandedSpeed))
-        signals.trainModelGUIpower.emit(str(train.commandedPower))
+
+        signals.trainModelGUIpower.emit(str(power))
+        signals.trainModelGUIacc.emit(str(train.An))
+
     
     def trackReceived(self, track):
         self.track = track
@@ -183,9 +192,12 @@ class TrainModel(QObject):
     
     def serviceBrakeActive(self, serviceBrake):
         self.serviceBrake = serviceBrake
-        #print(int(self.serviceBrake))
+    
+    def emerBrakeActive(self, emerBrake):
+        self.emerBrake = emerBrake
     
     def waitAtStation(self):
         counter = 0
         while counter < 30:
             counter += 1
+

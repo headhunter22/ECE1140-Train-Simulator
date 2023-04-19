@@ -33,6 +33,20 @@ class Signals(QObject):
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(int)
     waysideUpdateVacancy = pyqtSignal(int)
+    waysideSwitchStates = pyqtSignal(list)
+    waysideCommandedSpeed = pyqtSignal(int)
+    #plc
+    waysideSwitchLocationsfromPLC = pyqtSignal(list)
+    waysideTrackfromPLC = pyqtSignal(list)
+    waysideSectionsfromPLC = pyqtSignal(list)
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list) #from wtrack
+    actuallyshutup = pyqtSignal()
+    please = pyqtSignal()
+    # waysideinstance2 = pyqtSignal(list, list)
+    # waysideinstance3 = pyqtSignal(list, list)
+    # waysideinstance4 = pyqtSignal(list, list)
+    waysidefirst = pyqtSignal(int) #from showmain in ui
+    waysidesetup = pyqtSignal(int)
 
     # wayside UI signals
     wtowOccupancy = pyqtSignal(int) # block
@@ -52,7 +66,11 @@ class Signals(QObject):
     # track model signals
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
+
+    ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
+    ########################################
+
     trackModelTempUpdated = pyqtSignal(int) # temperature
     trackModelBrokenRail = pyqtSignal(str, str, str) # line, block, 'Broken Rail'
     trackModelPowerFailure = pyqtSignal() # emit power failed
@@ -64,6 +82,8 @@ class Signals(QObject):
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
+
+    # track model block page signals
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
@@ -81,8 +101,11 @@ class Signals(QObject):
     trainModelGUIcommandedSpeed = pyqtSignal(str)
     trainModelGUIBlock = pyqtSignal(str)
     trainModelGUIpower = pyqtSignal(str)
-    #getBlockInfo(Line, int, int, float, int, ) # line, blockNumber, length, grade, speedLimit, infrastructure, stationSide (0 = no station, 1 = station), elevation, cumElevation, secsToTraverse
- 
+    trainModelGUIacc = pyqtSignal(str)
+
+    # train model UI signals
+    trainModelEmerBrake = pyqtSignal(bool)
+    
     # train controller signals
     trainControllerDispatch = pyqtSignal(float) # currSpeed
     trainControllerUpdateCurrSpeed = pyqtSignal(Train, float) # train, currSpeed
@@ -90,6 +113,8 @@ class Signals(QObject):
     trainControllerUpdateAuthority = pyqtSignal(int, int) # trainID, authority
     trainControllerTimeTrigger = pyqtSignal() # trigger to call send power
     trainControllerDispatchedSignal = pyqtSignal(Train) # when dispatched, send signal to train controller
+    trainWaiting = pyqtSignal()
+    trainGo = pyqtSignal()
 
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
