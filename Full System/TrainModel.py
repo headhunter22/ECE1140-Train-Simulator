@@ -44,6 +44,7 @@ class TrainModel(QObject):
         
         # emit dispatched signal to train controller
         signals.trainControllerDispatchedSignal.emit(train)
+        signals.trainControllerUpdateCommSpeed.emit(self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit)
 
     def updatedPower(self, train, power):
         if len(self.trainList) == 0:
