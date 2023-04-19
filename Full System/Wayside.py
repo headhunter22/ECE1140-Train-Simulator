@@ -11,9 +11,10 @@ sys.dont_write_bytecode = True
 
 class Wayside(QObject):
 
-    def __init__(self, ctcOffice):
+    def __init__(self, ctcOffice, mainui):
         super().__init__()
         self.CTC = ctcOffice
+        self.ui = mainui
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
         # connect signals
@@ -22,9 +23,8 @@ class Wayside(QObject):
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
         #signals.waysideCommandedSpeed.connect(self.commspeed)
-        signals.actuallyshutup.connect(self.imoverthis)
-        # signals.waysideinstance1.connect(self.wayside1range)#TODO
-        # signals.waysideinstance2.connect(self.wayside2range)#TODO
+        signals.waysideinstances.connect(self.imoverthis)#TODO
+        #signals.waysideinstance2.connect(self.imoverthis)#TODO
         # signals.waysideinstance3.connect(self.wayside3range)#TODO
         # signals.waysideinstance4.connect(self.wayside4range)#TODO
 
@@ -33,9 +33,18 @@ class Wayside(QObject):
     # function to dispatch a train
     # hard coded for green line for the time being
 
-    def imoverthis(self):
-        print("make it stop")
-        signals.please.emit()
+    def imoverthis(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):#, range):
+        #print("im over this in .py from wayside instance 2")
+        #print("imoverthis in .py")#, range)
+        #print(".py wayside1range", wayside1range)
+        #self.ui.wayside1range = wayside1range
+        #print("wayside2range", wayside2range)
+        ##print("wayside3range", wayside3range)
+        #print("wayside4range", wayside4range)
+        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside2sectionrange, wayside2sectionrange)
+        signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
+        #print("past please emit .py")
+        
         
     def commspeed(self, train):
         if (train.authority == '0'):
@@ -79,14 +88,24 @@ class Wayside(QObject):
         # pass track onto track model
         signals.trackWaysideToTrackModel.emit(track)
 
+<<<<<<< HEAD
+    def blockOccupancyReceived(self, block):
+        #print("wayside block occupancy from track model")
+=======
     def blockOccupancyReceived(self, line, block):
+>>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
         
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     
+<<<<<<< HEAD
+    def blockVacancyReceived(self, block):
+        #print("wayside block vacancy from track model")
+=======
     def blockVacancyReceived(self, line, block):
+>>>>>>> a63a3b14d1428e8521369f60c48c306e810e048f
         #print(".py block", block, "is vacant")
         signals.wtowVacancy.emit(block)
 
