@@ -52,8 +52,8 @@ class Block:
             opt1 = self.infrastructure[start+1:middle]
             self.switchConnection = opt1
 
-            self.beacon1.swFrom = self.blockName
-            self.beacon1.
+            self.beacon.swFrom = self.blockName
+            self.beacon.swTo = self.blockName
 
         # underground logic
         if 'UNDERGROUND' in self.infrastructure:
