@@ -18,10 +18,10 @@ class Signals(QObject):
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
     blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
-    greenSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, G, J, J, M, N]
-    redSwitchStatesFromCTCtoWayside = pyqtSignal(list) # green switch states for blocks [C, E, H, H, H, H, J]
+    switchStatesFromCTCtoWayside = pyqtSignal(list, list) # green switch states for blocks [C, G, J, J, M, N], red switch states for blocks [C, E, H, H, H, H, J]
 
     # ctc frontend emission signals
+    ctcSwitchStates = pyqtSignal(list, list) # green line switches, red line switches
     greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)

@@ -28,7 +28,7 @@ class Wayside(QObject):
         # signals.waysideinstance3.connect(self.wayside3range)#TODO
         # signals.waysideinstance4.connect(self.wayside4range)#TODO
 
-        signals.greenSwitchStatesFromCTCtoWayside.connect(self.switchSignalTest)
+        signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -104,7 +104,7 @@ class Wayside(QObject):
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
-        self.passengersToCTC.emit(passengers)
+        signals.passengersToCTC.emit(passengers)
 
     def addTrackModel(self, trackModel):
         self.trackModel = trackModel
@@ -163,11 +163,20 @@ class Wayside(QObject):
     #     self.switch = sw
     #     print("authority from CTC to Wayside: " + str(self.authority))
 
-    def switchSignalTest(self, states):
-        print("C:" , states[0])
-        print("G:" , states[1])
-        print("J:" , states[2])
-        print("J:" , states[3])
-        print("M:" , states[4])
-        print("N:" , states[5])
+    def switchSignalTest(self, greenStates, redStates):
+        print("Green:")
+        print("C:" , greenStates[0])
+        print("G:" , greenStates[1])
+        print("J:" , greenStates[2])
+        print("J:" , greenStates[3])
+        print("M:" , greenStates[4])
+        print("N:" , greenStates[5])
+        print("\n\nRed:")
+        print("C:" , redStates[0])
+        print("H:" , redStates[1])
+        print("H:" , redStates[2])
+        print("H:" , redStates[3])
+        print("H:" , redStates[4])
+        print("H:" , redStates[5])
+        print("J:" , redStates[6])
         print("\n\n")
