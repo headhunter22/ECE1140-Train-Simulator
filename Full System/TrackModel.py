@@ -90,4 +90,4 @@ class TrackModel(QObject):
         # load new passengers
         self.ticketSystem.boardTrain(train)
         signals.trainModelPassengers.emit(train.numPassengers)      
-        self.ticketSystem.releasePassengers(train)  
+        self.ticketSystem.releasePassengers(train)
