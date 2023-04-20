@@ -137,8 +137,6 @@ class TrainModel(QObject):
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            signals.trackModelPassengersChanging.emit(train) # this kinda works, might be getting called 1 too many times (slowing down to stop and speeding up from stop)
-            # here needs to call train model passengers departing
             self.serviceBrake = False
             train.destBlock.pop(0)
 
@@ -206,11 +204,3 @@ class TrainModel(QObject):
     
     def emerBrakeActive(self, emerBrake):
         self.emerBrake = emerBrake
-    
-    def waitAtStation(self):
-        counter = 0
-        while counter < 30:
-            counter += 1
-    
-
-
