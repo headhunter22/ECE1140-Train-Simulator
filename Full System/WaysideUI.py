@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 from pathlib import Path
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -10,8 +11,8 @@ from blockwidget import Ui_Section
 #from Wayside_Main_B import Ui_MainWindowB
 from Wayside_Main_A import Ui_MainWindowA
 #from test2 import Ui_testpopup
-from PLCParser import Parser
-
+#import PLCParser
+from PLCParser import WTrack
 # MainWindowA N-Z blue
 # MainWindowB A-M red
 
@@ -20,7 +21,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         super(WMainWindowA, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle('Wayside Main UI')
-        self.resize(650, 690)
+        self.resize(640, 715)
+        
         
         self.instance =  ''
         self.first = 0
@@ -35,20 +37,25 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside4sectionrange = []
         #print("sectionrange1",self.sectionrange)
         #PLCParser.parse(self)
-        print("wayside1range",self.wayside1range)
-        plc.parse()
+        #print("wayside1range 1 in ui",Wtrack.plc.wayside1range)
+        
+        #self.setuppopups(self.first)
         
         #signals
         signals.timerTicked.connect(self.ticka) #clock from ctc
         signals.waysidefirst.connect(self.firstinstance) #from selection pop up window
-        signals.waysideinstances.connect(self.setupinstances) #supposed to be from wtrack in parser
         signals.wtowOccupancy.connect(self.changeOccupancy) #from .py from track controller
         signals.wtowVacancy.connect(self.changeVacancy) #from .py from track controller
         signals.wtowTrainCount.connect(self.activeTrains) #from .py track controller
         signals.waysidesetup.connect(self.setuppopups)
+        #signals.waysideinstance2.connect(self.imoverthis)
         #signals.actuallyshutup.connect(self.works)
-        signals.please.connect(self.works)
-        print("wayside1range",self.wayside1range)
+        signals.ranges.connect(self.works)
+        signals.sections.connect(self.sectionswork)
+
+        #signals.please.emit()
+        self.setupplc()
+
         #PLCParser.parse(self)
         #print("sectionrange4",self.sectionrange)
         #PLC signals
@@ -57,14 +64,11 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         # signals.waysideTrackfromPLC.connect(self.wholeTrack)
         # signals.waysideSectionsfromPLC.connect(self.popupnames)
         
-        # self.block1, self.sections1 = signals.waysideinstance1
-        # self.block2, self.sections2 = signals.waysideinstance2
-        # self.block3, self.sections3 = signals.waysideinstance3
-        # self.block4, self.sections4 = signals.waysideinstance4
-        
         self.disableallswitchbuttons()
         self.setupgatebuttons()
         self.setupswitchbuttons()
+        #print("wayside1range 2 in ui .plc",WTrack.wayside1range)
+        #print("wayside1range 2 in ui .self",self.wayside1range)
         #self.instances(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
         #self.setuppopups()
         
@@ -78,36 +82,73 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         # self.jicon.setPixmap(QPixmap('tracks.png'))
         counts = 0
         self.activetrains.display(counts)
+        self.whichwayside.currentIndexChanged.connect(self.changeinstance)
+
 
         #lights
         #self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
-    def works(self):
-        print("i will actually muruder someeone")
+
+    def changeinstance(self):
+        num = self.whichwayside.currentIndex()+1
+        print("num",num)
+        signals.waysidefirst.emit(num)
+        
+
+    def setupplc(self):
+        #print("setupplc started")
+        plc = WTrack()
+        plc.parse()
+        #print("setupplc wayside1range 2 in ui .plc",plc.wayside1range)
+        #self.wayside1range = plc.wayside1range
+        #print("setupplc wayside1range 2 in ui .self",self.wayside1range)
+
+    def works(self, range1, range2, range3, range4):
+        #print("it works in ui from please from .py range1:", range1)
+        #print("works ui range2", range2)
+        #print("works ui range3", range3)
+        #print("works ui range4", range4)
+        self.wayside1range = range1
+        self.wayside2range = range2
+        self.wayside3range = range3
+        self.wayside4range = range4
+        #print("works ui range2", self.wayside1range)
+        #print("works ui range2", self.wayside2range)
+        #print("works ui range3", self.wayside3range)
+        #print("works ui range4", self.wayside4range)
+
+    def sectionswork(self, range1, range2, range3, range4):
+        #print("sectionswork")
+        self.wayside1sectionrange = range1
+        # print("sectionswork range1 self.", self.wayside1sectionrange)
+        #print("sectionswork range1 ", range1)
+        self.wayside2sectionrange = range2
+        #print("sectionswork range2 ", range2)
+        self.wayside3sectionrange = range3
+        #print("sectionswork range2 ", range3)
+        self.wayside4sectionrange  = range4
+        #print("sectionswork range2 ", range4)
+
+
+    def imoverthis(self, range):
+        #print("im over this in .py from wayside instance 2")
+        print("range in imoverthis in ui", range)
 
     def firstinstance(self, num):
         self.first = num
-        print("set first", self.first, "=", num)
-        
-
-    def setupinstances(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):
-        print("instanced")
-        self.wayside1range = wayside1range
-        print("wayside range 1", wayside1range)
-        self.wayside1sectionrange = wayside1sectionrange
-        self.wayside2range = wayside2range
-        self.wayside2sectionrange = wayside2sectionrange
-        self.wayside3range  =wayside3range
-        self.wayside3sectionrange = wayside3sectionrange
-        self.wayside4range = wayside4range
-        self.wayside4sectionrange = wayside4sectionrange
-        signals.waysidesetup.emit(self.first)
-
+        #print("set first", self.first, "=", num)
+        self.setuppopups(self.first)
 
     def disableallswitchbuttons(self):
         #set all switch buttons to disabled
+        self.gate10.setEnabled(False)
+        self.gate11.setEnabled(False)
         self.gate20.setEnabled(False)
         self.gate21.setEnabled(False)
+        self.gate30.setEnabled(False)
+        self.gate31.setEnabled(False)
+        self.gate40.setEnabled(False)
+        self.gate41.setEnabled(False)
         self.gate50.setEnabled(False)
         self.gate51.setEnabled(False)
         self.gate60.setEnabled(False)
@@ -121,10 +162,22 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def setupswitchbuttons(self):
         #switch button colors
         self.automaticmode.setDown(True)
+        self.gate10.clicked.connect(lambda: self.toggleColor(self.gate10, self.gate11))
+        self.gate11.setStyleSheet('background-color: SkyBlue')
+        self.gate11.clicked.connect(lambda: self.toggleColor(self.gate11, self.gate10))
+        self.gate10.setStyleSheet('background-color: white; color: gray')
         self.gate20.clicked.connect(lambda: self.toggleColor(self.gate20, self.gate21))
         self.gate21.setStyleSheet('background-color: SkyBlue')
         self.gate21.clicked.connect(lambda: self.toggleColor(self.gate21, self.gate20))
         self.gate20.setStyleSheet('background-color: white; color: gray')
+        self.gate30.clicked.connect(lambda: self.toggleColor(self.gate30, self.gate31))
+        self.gate31.setStyleSheet('background-color: SkyBlue')
+        self.gate31.clicked.connect(lambda: self.toggleColor(self.gate31, self.gate30))
+        self.gate30.setStyleSheet('background-color: white; color: gray')
+        self.gate40.clicked.connect(lambda: self.toggleColor(self.gate40, self.gate41))
+        self.gate41.setStyleSheet('background-color: SkyBlue')
+        self.gate41.clicked.connect(lambda: self.toggleColor(self.gate41, self.gate40))
+        self.gate40.setStyleSheet('background-color: white; color: gray')
         self.gate50.clicked.connect(lambda: self.toggleColor(self.gate50, self.gate51))
         self.gate51.setStyleSheet('background-color: SkyBlue')
         self.gate51.clicked.connect(lambda: self.toggleColor(self.gate51, self.gate50))
@@ -135,40 +188,172 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate60.setStyleSheet('background-color: white; color: gray')
 
     def setuppopups(self, first):
+        self.sectionrange = []
+        print("first", first)
+        #print("setuppopups start")
+        #print("first",first)
         #pop up windows
+        #current = ''
         if first == 1:
-            self.sectionrange = self.wayside1sectionrange
+            current = self.wayside1sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside1sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 2:
-            self.sectionrange = self.wayside2sectionrange
+            current = self.wayside2sectionrange[0]
+            print(current)
+            self.sectionrange.append(current)
+            for i in self.wayside2sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 3:
-            self.sectionrange = self.wayside3sectionrange
+            current = self.wayside3sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside3sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
         elif first == 4:
-            self.sectionrange = self.wayside4sectionrange
-        print("sectionrange",self.sectionrange)
-        print("first",self.first)
+            print("wayside4range",self.wayside4range)
+            current = self.wayside4sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside4sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+                    #print(i)
+        #print("setuppopups sectionrange",self.sectionrange)
+        #print("setuppopups first",self.first)
 
-        positions = [(0, j) for j in range(int(len(self.sectionrange)))]
+        positions = [(i, 0) for i in range(2,len(self.sectionrange)+2)]
+        #print("length of sectionrange", self.sectionrange)
+        #print(positions)
+        self.namelist = {}
+        nlist = []
 
-        for position, name in zip(positions, self.sectionrange):
-         if name == '':
-          continue
-         button = QPushButton(name)
-         self.gridLayout_4.addWidget(button, *position)
-        #self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
-        # self.trackconfiguration.clicked.connect(self.runParser)
-        # self.pushn.clicked.connect(lambda: self.makeSectionWindow('N'))
-        # self.pusho.clicked.connect(lambda: self.makeSectionWindow('O'))
-        # self.pushp.clicked.connect(lambda: self.makeSectionWindow('P'))
-        # self.pushq.clicked.connect(lambda: self.makeSectionWindow('Q'))
-        # self.pushr.clicked.connect(lambda: self.makeSectionWindow('R'))
-        # self.pushs.clicked.connect(lambda: self.makeSectionWindow('S'))
-        # self.pusht.clicked.connect(lambda: self.makeSectionWindow('T'))
-        # self.pushu.clicked.connect(lambda: self.makeSectionWindow('U'))
-        # self.pushv.clicked.connect(lambda: self.makeSectionWindow('V'))
-        # self.pushw.clicked.connect(lambda: self.makeSectionWindow('W'))
-        # self.pushx.clicked.connect(lambda: self.makeSectionWindow('X'))
-        # self.pushy.clicked.connect(lambda: self.makeSectionWindow('Y'))
-        # self.pushz.clicked.connect(lambda: self.makeSectionWindow('Z'))
+        for row, wholerow in enumerate(self.sectionrange):
+            for col, but in enumerate(wholerow):
+                #self.namelist[but] = QPushButton(but)
+                #self.namelist[but].clicked.connect(lambda: self.makeSectionWindow(but))
+                nlist.append(but)
+                #print("namlist[but]", self.namelist[but])
+                #self.gridLayout_4.addWidget(self.namelist[but], row+2, col)
+        l = len(self.sectionrange)
+        left = 15-l
+        print("range", self.sectionrange, "len", l)
+
+        rangelabel = self.sectionrange[0] + "-" + self.sectionrange[l-1]
+        self.sectionrangelabel.setText(rangelabel)
+
+        self.pushn.setText(self.sectionrange[0])
+        self.pusho.setText(self.sectionrange[1])
+        self.pushp.setText(self.sectionrange[2])
+        self.pushq.setText(self.sectionrange[3])
+        self.pushr.setText(self.sectionrange[4])
+        self.pushs.setText(self.sectionrange[5])
+        self.pusht.setText(self.sectionrange[6])
+        self.pushu.setText(self.sectionrange[7])
+        self.pushv.setText(self.sectionrange[8])
+        self.pushw.setText(self.sectionrange[9])
+        #print("namelist",self.namelist)
+        # for name, button in self.namelist.items():
+        #     print("name",name)
+        #     button.clicked.connect((self.makeSectionWindow(name)))
+
+        # for position, name in zip(positions, self.sectionrange):
+        #     if name == '':
+        #         continue
+        #     bname = "push"+name
+        #     button = QPushButton(name, objectName = bname)
+        #     namelist.append(name)
+        #     self.gridLayout_4.addWidget(button, *position)
+        #     button.clicked.connect(lambda: self.makeSectionWindow(name, bname))
+            #print("name for button",position, bname)
+            #button.clicked.connect(lambda: self.makeSectionWindow(name))
+        #print("left", left)
+        if left == 0:
+            print("if left",left)
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.pushaa.setText(self.sectionrange[13])
+        if left == 1:
+            print("if left",left)
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.aaicon.hide()
+            self.pushaa.hide()
+        if left == 2:
+            print("if left",left)
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+        if left == 3:
+            print("if left",left)
+            self.pushx.setText(self.sectionrange[10])
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+        if left == 4:
+            print("if left",left)
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+        if left == 5:
+            print("if left",left)
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+        #print("namelist",namelist)
+        self.pushn.clicked.connect(lambda: self.makeSectionWindow(nlist[0]))
+        self.pusho.clicked.connect(lambda: self.makeSectionWindow(nlist[1]))
+        self.pushp.clicked.connect(lambda: self.makeSectionWindow(nlist[2]))
+        self.pushq.clicked.connect(lambda: self.makeSectionWindow(nlist[3]))
+        self.pushr.clicked.connect(lambda: self.makeSectionWindow(nlist[4]))
+        self.pushs.clicked.connect(lambda: self.makeSectionWindow(nlist[5]))
+        self.pusht.clicked.connect(lambda: self.makeSectionWindow(nlist[6]))
+        self.pushu.clicked.connect(lambda: self.makeSectionWindow(nlist[7]))
+        self.pushv.clicked.connect(lambda: self.makeSectionWindow(nlist[8]))
+        self.pushw.clicked.connect(lambda: self.makeSectionWindow(nlist[9]))
+        self.pushx.clicked.connect(lambda: self.makeSectionWindow(nlist[10]))
+        self.pushy.clicked.connect(lambda: self.makeSectionWindow(nlist[11]))
+        self.pushz.clicked.connect(lambda: self.makeSectionWindow(nlist[12]))
+        self.pushaa.clicked.connect(lambda: self.makeSectionWindow(nlist[13]))
+        self.pushbb.clicked.connect(lambda: self.makeSectionWindow(nlist[14]))
+        self.pushcc.clicked.connect(lambda: self.makeSectionWindow(nlist[15]))
 
 
     def ticka(self, hrs, mins, secs):
@@ -179,8 +364,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def maintenanceMode(self):  
         #print("in maintenance mode") 
+        self.gate10.setEnabled(True)
+        self.gate11.setEnabled(True)
         self.gate20.setEnabled(True)
         self.gate21.setEnabled(True)
+        self.gate30.setEnabled(True)
+        self.gate31.setEnabled(True)
+        self.gate40.setEnabled(True)
+        self.gate41.setEnabled(True)
         self.gate50.setEnabled(True)
         self.gate51.setEnabled(True)
         self.gate60.setEnabled(True)
@@ -188,8 +379,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def automaticMode(self):
         #print("in automatic mode") 
+        self.gate10.setEnabled(False)
+        self.gate11.setEnabled(False)
         self.gate20.setEnabled(False)
         self.gate21.setEnabled(False)
+        self.gate30.setEnabled(False)
+        self.gate31.setEnabled(False)
+        self.gate40.setEnabled(False)
+        self.gate41.setEnabled(False)
         self.gate50.setEnabled(False)
         self.gate51.setEnabled(False)
         self.gate60.setEnabled(False)
@@ -198,14 +395,99 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def configurationWindow(self):
         self.trackconfiguration.clicked.connect(self.runParser)
 
-    def runParser(self):
-        plc.parse(self)
-
     def makeSectionWindow(self, whichsection):
+        print("in makesectionwindow")
+        #print("section range", self.sectionrange)
+        print("whichsection", whichsection)
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
+        sectionmatrix = []
+        counti = 0
+        countj = 0
         
-        image = QLabel()
+        if self.first == 1:
+            currentletter = []
+            currentletter.append(self.wayside1range[0])
+            print("wayside1sectionrange", self.wayside1sectionrange)
+            print("wayside1range", self.wayside1range)
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside1sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside1range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 2:
+            print("wayside2sectionrange", self.wayside2sectionrange)
+            print("wayside2range", self.wayside2range)
+            currentletter = []
+            currentletter.append(self.wayside2range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside2sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside2range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 3:
+            print("wayside3sectionrange", self.wayside3sectionrange)
+            print("wayside3range", self.wayside3range)
+            currentletter = []
+            currentletter.append(self.wayside3range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside3sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside3range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 4:
+            print("wayside4sectionrange", self.wayside4sectionrange)
+            print("wayside4range", self.wayside4range)
+            currentletter = []
+            currentletter.append(self.wayside4range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside4sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside4range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+                #print("current letter",currentletter)
+        #print("section", self.)
+        print("section matrix",sectionmatrix)
+
+        #positions = [(i, 1) for i in range(2,len(self.sectionrange)+2)]
+        #print("length of sectionrange", self.sectionrange)
+        #print(positions)
+        # image = QLabel()
+        # pic = QPixmap('tracks.png')
+        # image.setPixmap(pic.scaled(50, 50))
+        # for i in range(2,len(self.sectionrange)+2):
+        #     if image == '':
+        #         continue
+        #     label = QLabel(image)
+        #     #namelist.append(name)
+        #     self.gridLayout_4.addWidget(label, i, 1)
+        self.bl.show()
+            #button.clicked.connect(lambda: self.makeSectionWindow(name))
+
+
+
+
+        """image = QLabel()
         pic = QPixmap('tracks.png')
         image.setPixmap(pic.scaled(50, 50))
         image1 = QLabel()
@@ -506,7 +788,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.bl.dicon.hide()
             self.bl.label_9.hide()
             self.bl.eicon.hide()
-            self.bl.show()
+            self.bl.show()"""
 
     #function for toggle switch colors but see if you can do labels instead of buttons??
     def toggleColor(self, button1, button2):
@@ -636,11 +918,11 @@ class selectionWindow(QWidget):
 
 
 
-app = QtWidgets.QApplication(sys.argv)
+#app = QtWidgets.QApplication(sys.argv)
 #windowA = WMainWindowA()
 #windowB = WMainWindowB()
-first = selectionWindow()
-plc = Parser()
+#first = selectionWindow()
+
 #funcA = WaysideUIFunctions(windowA)
 #funcB = WaysideUIFunctions(windowB)
 #windowA.show()

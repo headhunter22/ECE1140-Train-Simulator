@@ -412,7 +412,7 @@ padding: 2px;</string>
      <string>RED LINE</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_17">
+   <widget class="QLabel" name="destLabel">
     <property name="geometry">
      <rect>
       <x>540</x>

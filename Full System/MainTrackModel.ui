@@ -929,7 +929,7 @@ color: black</string>
      <string>16</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="R1">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -945,7 +945,7 @@ color: black</string>
      <string>1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="R15">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -958,7 +958,7 @@ color: black</string>
      <string>15</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="R76">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -984,7 +984,7 @@ color: black</string>
      <string>27</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="R28">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -1000,7 +1000,7 @@ color: black</string>
      <string>28</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="R72">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -1026,7 +1026,7 @@ color: black</string>
      <string>33</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="R32">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -1042,7 +1042,7 @@ color: black</string>
      <string>32</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
+   <widget class="QLabel" name="R71">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -1068,7 +1068,7 @@ color: black</string>
      <string>38</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_12">
+   <widget class="QLabel" name="R39">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -1084,7 +1084,7 @@ color: black</string>
      <string>39</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
+   <widget class="QLabel" name="R67">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -1110,7 +1110,7 @@ color: black</string>
      <string>44</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_15">
+   <widget class="QLabel" name="R43">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -1126,7 +1126,7 @@ color: black</string>
      <string>43</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_16">
+   <widget class="QLabel" name="R66">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -1152,7 +1152,7 @@ color: black</string>
      <string>52</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_18">
+   <widget class="QLabel" name="R53">
     <property name="geometry">
      <rect>
       <x>930</x>
@@ -1181,7 +1181,7 @@ color: black</string>
      <string>85</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_21">
+   <widget class="QLabel" name="G12">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1194,7 +1194,7 @@ color: black</string>
      <string>12</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_22">
+   <widget class="QLabel" name="GYard57">
     <property name="geometry">
      <rect>
       <x>1060</x>
@@ -1210,7 +1210,7 @@ color: black</string>
      <string>Yard</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_23">
+   <widget class="QLabel" name="G100">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1223,7 +1223,7 @@ color: black</string>
      <string>100</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_24">
+   <widget class="QLabel" name="G76">
     <property name="geometry">
      <rect>
       <x>1070</x>
@@ -1278,7 +1278,7 @@ color: black</string>
      <string>77</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_28">
+   <widget class="QLabel" name="G30">
     <property name="geometry">
      <rect>
       <x>1070</x>
@@ -1307,7 +1307,7 @@ color: black</string>
      <string>29</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_31">
+   <widget class="QLabel" name="G1">
     <property name="geometry">
      <rect>
       <x>1070</x>
@@ -1323,7 +1323,7 @@ color: black</string>
      <string>1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_32">
+   <widget class="QLabel" name="G86">
     <property name="geometry">
      <rect>
       <x>1070</x>
@@ -1339,7 +1339,7 @@ color: black</string>
      <string>86</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_33">
+   <widget class="QLabel" name="G150">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1352,7 +1352,7 @@ color: black</string>
      <string>150</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_34">
+   <widget class="QLabel" name="G58">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1365,7 +1365,7 @@ color: black</string>
      <string>58</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_36">
+   <widget class="QLabel" name="G101">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1378,7 +1378,7 @@ color: black</string>
      <string>101</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_37">
+   <widget class="QLabel" name="G62">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -1391,7 +1391,7 @@ color: black</string>
      <string>62</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_38">
+   <widget class="QLabel" name="GYard63">
     <property name="geometry">
      <rect>
       <x>1060</x>
@@ -1420,7 +1420,7 @@ color: black</string>
      <string>63</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_20">
+   <widget class="QLabel" name="RedYard">
     <property name="geometry">
      <rect>
       <x>920</x>
@@ -1436,7 +1436,7 @@ color: black</string>
      <string>Yard</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_35">
+   <widget class="QLabel" name="R10">
     <property name="geometry">
      <rect>
       <x>960</x>
@@ -1509,43 +1509,43 @@ color: black</string>
    <zorder>fixButton</zorder>
    <zorder>SwitchHeading</zorder>
    <zorder>label</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label_3</zorder>
-   <zorder>label_4</zorder>
+   <zorder>R1</zorder>
+   <zorder>R15</zorder>
+   <zorder>R76</zorder>
    <zorder>label_5</zorder>
-   <zorder>label_6</zorder>
-   <zorder>label_7</zorder>
+   <zorder>R28</zorder>
+   <zorder>R72</zorder>
    <zorder>label_8</zorder>
-   <zorder>label_9</zorder>
-   <zorder>label_10</zorder>
+   <zorder>R32</zorder>
+   <zorder>R71</zorder>
    <zorder>label_11</zorder>
-   <zorder>label_12</zorder>
-   <zorder>label_13</zorder>
+   <zorder>R39</zorder>
+   <zorder>R67</zorder>
    <zorder>label_14</zorder>
-   <zorder>label_15</zorder>
-   <zorder>label_16</zorder>
+   <zorder>R43</zorder>
+   <zorder>R66</zorder>
    <zorder>label_17</zorder>
-   <zorder>label_18</zorder>
+   <zorder>R53</zorder>
    <zorder>label_19</zorder>
-   <zorder>label_21</zorder>
-   <zorder>label_22</zorder>
-   <zorder>label_23</zorder>
-   <zorder>label_24</zorder>
+   <zorder>G12</zorder>
+   <zorder>GYard57</zorder>
+   <zorder>G100</zorder>
+   <zorder>G76</zorder>
    <zorder>label_25</zorder>
    <zorder>label_26</zorder>
    <zorder>label_27</zorder>
-   <zorder>label_28</zorder>
+   <zorder>G30</zorder>
    <zorder>label_29</zorder>
-   <zorder>label_31</zorder>
-   <zorder>label_32</zorder>
-   <zorder>label_33</zorder>
-   <zorder>label_34</zorder>
-   <zorder>label_36</zorder>
-   <zorder>label_37</zorder>
-   <zorder>label_38</zorder>
+   <zorder>G1</zorder>
+   <zorder>G86</zorder>
+   <zorder>G150</zorder>
+   <zorder>G58</zorder>
+   <zorder>G101</zorder>
+   <zorder>G62</zorder>
+   <zorder>GYard63</zorder>
    <zorder>label_39</zorder>
-   <zorder>label_20</zorder>
-   <zorder>label_35</zorder>
+   <zorder>RedYard</zorder>
+   <zorder>R10</zorder>
    <zorder>label_30</zorder>
   </widget>
  </widget>
