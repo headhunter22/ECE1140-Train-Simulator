@@ -44,7 +44,9 @@ class TrainController(QObject):
         signals.trainGo.emit()
 
     def waitAtStation(self):
+        # emit signals for waiting and passengers
         signals.trainWaiting.emit()
+        signals.trackModelPassengersChanging.emit(train)
         self.waitTimer = QTimer()
         self.waitTimer.singleShot(30000, self.setNewAuthority)
 
