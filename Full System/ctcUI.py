@@ -435,14 +435,25 @@ class ctcMainUI(QMainWindow):
 
     def testGreenAddition(self):
         stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
-        stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
+        greenBlocks = list(range(1, 151))
+        for i in range(0, 150):
+            stations.append(str(greenBlocks[i]))
         pattern = r"^\d{2}:\d{2}$"
+
+        print(stations)
 
         if (self.ui.greenDestination.text() not in stations) or (not re.match(pattern, self.ui.greenTime.text())):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
             return
         else:
+
+            try:
+                greenTempBlock = int(self.ui.greenDestination.text())
+                destTemp = str(greenTempBlock)
+            except:
+                destTemp = self.ui.greenDestination.text()
+
             time = self.ui.greenTime.text().split(":")
             temp = time[0] + ":" + time[1]
 
@@ -450,14 +461,21 @@ class ctcMainUI(QMainWindow):
 
             self.ui.greenTentSchedule.insertRow(rowCount)
 
-            dest = QTableWidgetItem(self.ui.greenDestination.text())
+            dest = QTableWidgetItem(destTemp)
             at = QTableWidgetItem(temp)
             self.ui.greenTentSchedule.setItem(rowCount, 0, dest)
             self.ui.greenTentSchedule.setItem(rowCount, 1, at)
+            self.ui.greenDestination.clear()
+            self.ui.greenTime.clear()
 
     def testGreenDispatch(self):
         stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
         stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
+        greenBlocks = list(range(1, 151))
+
+        for i in range(0, 150):
+            stations.append(str(greenBlocks[i]))
+            stationBlocks.append(int(greenBlocks[i]))
 
         rowCount = self.ui.greenScheduledTrains.rowCount()
 
@@ -475,9 +493,7 @@ class ctcMainUI(QMainWindow):
             # iterate through the stations list to see if the text in that cell is one of the stations
             for item in range(0, len(stations)):
                 if self.ui.greenTentSchedule.item(rows,0).text() == stations[item]:
-                    print(self.ui.greenTentSchedule.item(rows,0).text(), stationBlocks[item])
                     blocks.append(stationBlocks[item])
-                    print(blocks)
 
         self.ui.greenTentSchedule.setRowCount(0)
         signals.greenLineTrainDispatchFromCtcUI.emit(blocks)
@@ -797,14 +813,14 @@ class ctcMainUI(QMainWindow):
 
     def addScheduledTrain(self, schedule): #########
         if schedule.line == "Green":
-            rowCount = self.ui.greenScheduledTrains_2.rowCount()
-            self.ui.greenScheduledTrains_2.insertRow(rowCount)
+            rowCount = self.ui.greenScheduledTrains.rowCount()
+            self.ui.greenScheduledTrains.insertRow(rowCount)
 
             dest = QTableWidgetItem(str(schedule.stops[0]))
             at = QTableWidgetItem(str(schedule.arrivalTimes[0]))
 
-            self.ui.greenScheduledTrains_2.setItem(rowCount, 0, dest)
-            self.ui.greenScheduledTrains_2.setItem(rowCount, 1, at)
+            self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
+            self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
 
             self.dispatchGreenLine()
     
