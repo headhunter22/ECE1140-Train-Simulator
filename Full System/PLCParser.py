@@ -79,8 +79,8 @@ class WTrack:
         lastsection = self.allsection[int(len(self.allsection))-1]
         #print("last", last)
         #print("we need waysides at", quarter, half, threefourths, full)
-        self.wayside1range = [last] + self.track[0:half+1]
-        self.wayside1sectionrange = [lastsection] + self.allsection[0:half+1]
+        self.wayside1range =self.track[0:half+1]
+        self.wayside1sectionrange =self.allsection[0:half+1]
         #print("1 range", self.wayside1range)
         self.wayside2range = self.track[quarter:threefourths+1]
         self.wayside2sectionrange = self.allsection[quarter:threefourths+1]
@@ -93,6 +93,7 @@ class WTrack:
         #print("4 range", self.wayside4range)
         #print("plcparser rage 1", self.wayside1range)
         signals.waysideinstances.emit(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
+
         #self.main.setupinstances()
         #print("plcparsere rage 2", self.wayside1range)
        

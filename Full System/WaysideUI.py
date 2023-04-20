@@ -52,6 +52,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #signals.actuallyshutup.connect(self.works)
         signals.ranges.connect(self.works)
         signals.sections.connect(self.sectionswork)
+
         #signals.please.emit()
         self.setupplc()
 
@@ -81,10 +82,48 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         # self.jicon.setPixmap(QPixmap('tracks.png'))
         counts = 0
         self.activetrains.display(counts)
+        self.whichwayside.currentIndexChanged.connect(self.changeinstance)
+
 
         #lights
         #self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
+
+    def changeinstance(self):
+        num = self.whichwayside.currentIndex()
+        print("num",num)
+        # self.zzicon.hide()
+        # self.pushzz.hide()
+        # # self.gridLayout_4.removeWidget(self.pushzz)
+        # # self.gridLayout_4.removeWidget(self.zzicon)
+        # self.gridLayout_4.removeWidget(self.pushz)
+        # self.gridLayout_4.removeWidget(self.zicon)
+        # self.gridLayout_4.removeWidget(self.pushy)
+        # self.gridLayout_4.removeWidget(self.yicon)
+        # self.gridLayout_4.removeWidget(self.pushx)
+        # self.gridLayout_4.removeWidget(self.xicon)
+        # self.gridLayout_4.removeWidget(self.pushw)
+        # self.gridLayout_4.removeWidget(self.wicon)
+        # self.gridLayout_4.removeWidget(self.pushv)
+        # self.gridLayout_4.removeWidget(self.vicon)
+        # self.gridLayout_4.removeWidget(self.pushu)
+        # self.gridLayout_4.removeWidget(self.uicon)
+        # self.gridLayout_4.removeWidget(self.pusht)
+        # self.gridLayout_4.removeWidget(self.pushs)
+        # self.gridLayout_4.removeWidget(self.sicon)
+        # self.gridLayout_4.removeWidget(self.pushr)
+        # self.gridLayout_4.removeWidget(self.ricon)
+        # self.gridLayout_4.removeWidget(self.pushq)
+        # self.gridLayout_4.removeWidget(self.qicon)
+        # self.gridLayout_4.removeWidget(self.pushp)
+        # self.gridLayout_4.removeWidget(self.picon)
+        # self.gridLayout_4.removeWidget(self.pusho)
+        # self.gridLayout_4.removeWidget(self.oicon)
+        # self.gridLayout_4.removeWidget(self.pushn)
+        # self.gridLayout_4.removeWidget(self.nicon)
+        signals.waysidefirst.emit(num)
+        
+
     def setupplc(self):
         #print("setupplc started")
         plc = WTrack()
@@ -160,11 +199,13 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate60.setStyleSheet('background-color: white; color: gray')
 
     def setuppopups(self, first):
+        self.sectionrange = []
+        print("first", first)
         #print("setuppopups start")
         #print("first",first)
         #pop up windows
         #current = ''
-        if first == 1:
+        if first == 0:
             current = self.wayside1sectionrange[0]
             self.sectionrange.append(current)
             for i in self.wayside1sectionrange:
@@ -174,8 +215,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     current = i
                     self.sectionrange.append(current)
                     #print(i)
-        elif first == 2:
+        elif first == 1:
             current = self.wayside2sectionrange[0]
+            print(current)
             self.sectionrange.append(current)
             for i in self.wayside2sectionrange:
                 if i == current:
@@ -184,7 +226,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     current = i
                     self.sectionrange.append(current)
                     #print(i)
-        elif first == 3:
+        elif first == 2:
             current = self.wayside3sectionrange[0]
             self.sectionrange.append(current)
             for i in self.wayside3sectionrange:
@@ -194,10 +236,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     current = i
                     self.sectionrange.append(current)
                     #print(i)
-        elif first == 4:
-            current = self.wayside3sectionrange[0]
+        elif first == 3:
+            current = self.wayside4sectionrange[0]
             self.sectionrange.append(current)
-            for i in self.wayside3sectionrange:
+            for i in self.wayside4sectionrange:
                 if i == current:
                     continue
                 else:
@@ -211,12 +253,28 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("length of sectionrange", self.sectionrange)
         #print(positions)
         self.namelist = {}
+        nlist = []
 
         for row, wholerow in enumerate(self.sectionrange):
             for col, but in enumerate(wholerow):
-                self.namelist[but] = QPushButton(but)
-                self.namelist[but].clicked.connect(lambda: self.makeSectionWindow(but))
-                self.gridLayout_4.addWidget(self.namelist[but], row+2, col)
+                #self.namelist[but] = QPushButton(but)
+                #self.namelist[but].clicked.connect(lambda: self.makeSectionWindow(but))
+                nlist.append(but)
+                #print("namlist[but]", self.namelist[but])
+                #self.gridLayout_4.addWidget(self.namelist[but], row+2, col)
+        left = 15-len(self.sectionrange)
+        print("range", self.sectionrange, "len", len(self.sectionrange))
+
+        self.pushn.setText(self.sectionrange[0])
+        self.pusho.setText(self.sectionrange[1])
+        self.pushp.setText(self.sectionrange[2])
+        self.pushq.setText(self.sectionrange[3])
+        self.pushr.setText(self.sectionrange[4])
+        self.pushs.setText(self.sectionrange[5])
+        self.pusht.setText(self.sectionrange[6])
+        self.pushu.setText(self.sectionrange[7])
+        self.pushv.setText(self.sectionrange[8])
+        self.pushw.setText(self.sectionrange[9])
         #print("namelist",self.namelist)
         # for name, button in self.namelist.items():
         #     print("name",name)
@@ -232,19 +290,28 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #     button.clicked.connect(lambda: self.makeSectionWindow(name, bname))
             #print("name for button",position, bname)
             #button.clicked.connect(lambda: self.makeSectionWindow(name))
-
-        
-        left = 14-len(self.sectionrange)
         #print("left", left)
+        if left == 0:
+            
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.pushzz.setText(self.sectionrange[13])
         if left == 1:
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
             self.zzicon.hide()
             self.pushzz.hide()
         if left == 2:
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
             self.pushzz.hide()
             self.zzicon.hide()
             self.pushz.hide()
             self.zicon.hide()
         if left == 3:
+            self.pushx.setText(self.sectionrange[10])
             self.pushzz.hide()
             self.zzicon.hide()
             self.pushz.hide()
@@ -272,32 +339,20 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.pushw.hide()
             self.wicon.hide()
         #print("namelist",namelist)
-        # self.pushA.clicked.connect(lambda: self.makeSectionWindow('A'))
-        # self.pushB.clicked.connect(lambda: self.makeSectionWindow('B'))
-        # self.pushC.clicked.connect(lambda: self.makeSectionWindow('C'))
-        # self.pushD.clicked.connect(lambda: self.makeSectionWindow('D'))
-        # self.pushE.clicked.connect(lambda: self.makeSectionWindow('E'))
-        # self.pushF.clicked.connect(lambda: self.makeSectionWindow('F'))
-        # self.pushG.clicked.connect(lambda: self.makeSectionWindow('G'))
-        # self.pushH.clicked.connect(lambda: self.makeSectionWindow(namelist[7]))
-        # self.pushI.clicked.connect(lambda: self.makeSectionWindow(namelist[8]))
-        # self.pushJ.clicked.connect(lambda: self.makeSectionWindow(namelist[9]))
-        # self.pushK.clicked.connect(lambda: self.makeSectionWindow(namelist[10]))
-        # self.pushL.clicked.connect(lambda: self.makeSectionWindow(namelist[11]))
-        # self.pushM.clicked.connect(lambda: self.makeSectionWindow(namelist[12]))
-        # self.pushN.clicked.connect(lambda: self.makeSectionWindow(namelist[0]))
-        # self.pushO.clicked.connect(lambda: self.makeSectionWindow(namelist[1]))
-        # self.pushP.clicked.connect(lambda: self.makeSectionWindow(namelist[2]))
-        # self.pushQ.clicked.connect(lambda: self.makeSectionWindow(namelist[3]))
-        # self.pushR.clicked.connect(lambda: self.makeSectionWindow(namelist[4]))
-        # self.pushS.clicked.connect(lambda: self.makeSectionWindow(namelist[5]))
-        # self.pushT.clicked.connect(lambda: self.makeSectionWindow(namelist[6]))
-        # self.pushU.clicked.connect(lambda: self.makeSectionWindow(namelist[7]))
-        # self.pushV.clicked.connect(lambda: self.makeSectionWindow(namelist[8]))
-        # self.pushW.clicked.connect(lambda: self.makeSectionWindow(namelist[9]))
-        # self.pushX.clicked.connect(lambda: self.makeSectionWindow(namelist[10]))
-        # self.pushY.clicked.connect(lambda: self.makeSectionWindow(namelist[11]))
-        # self.pushZ.clicked.connect(lambda: self.makeSectionWindow(namelist[12]))
+        self.pushn.clicked.connect(lambda: self.makeSectionWindow(nlist[0]))
+        self.pusho.clicked.connect(lambda: self.makeSectionWindow(nlist[1]))
+        self.pushp.clicked.connect(lambda: self.makeSectionWindow(nlist[2]))
+        self.pushq.clicked.connect(lambda: self.makeSectionWindow(nlist[3]))
+        self.pushr.clicked.connect(lambda: self.makeSectionWindow(nlist[4]))
+        self.pushs.clicked.connect(lambda: self.makeSectionWindow(nlist[5]))
+        self.pusht.clicked.connect(lambda: self.makeSectionWindow(nlist[6]))
+        self.pushu.clicked.connect(lambda: self.makeSectionWindow(nlist[7]))
+        self.pushv.clicked.connect(lambda: self.makeSectionWindow(nlist[8]))
+        self.pushw.clicked.connect(lambda: self.makeSectionWindow(nlist[9]))
+        self.pushx.clicked.connect(lambda: self.makeSectionWindow(nlist[10]))
+        self.pushy.clicked.connect(lambda: self.makeSectionWindow(nlist[11]))
+        self.pushz.clicked.connect(lambda: self.makeSectionWindow(nlist[12]))
+        self.pushzz.clicked.connect(lambda: self.makeSectionWindow(nlist[13]))
 
 
     def ticka(self, hrs, mins, secs):
@@ -330,6 +385,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def makeSectionWindow(self, whichsection):
         print("in makesectionwindow")
         print("section range", self.sectionrange)
+        print("whichsection", whichsection)
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
         sectionmatrix = []
