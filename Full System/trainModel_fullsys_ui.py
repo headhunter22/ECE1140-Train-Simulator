@@ -149,10 +149,10 @@ class Ui_MainWindow(object):
         self.redLineButton = QPushButton(self.centralwidget)
         self.redLineButton.setObjectName(u"redLineButton")
         self.redLineButton.setGeometry(QRect(260, 40, 121, 51))
-        self.label_17 = QLabel(self.centralwidget)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(540, 90, 231, 101))
-        self.label_17.setStyleSheet(u"border: 2px solid black;\n"
+        self.destLabel = QLabel(self.centralwidget)
+        self.destLabel.setObjectName(u"destLabel")
+        self.destLabel.setGeometry(QRect(540, 90, 231, 101))
+        self.destLabel.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
         self.currBlockLabel = QLabel(self.centralwidget)
@@ -213,7 +213,7 @@ class Ui_MainWindow(object):
         self.intLightLabel.setText(QCoreApplication.translate("MainWindow", u"Null", None))
         self.greenLineButton.setText(QCoreApplication.translate("MainWindow", u"GREEN LINE", None))
         self.redLineButton.setText(QCoreApplication.translate("MainWindow", u"RED LINE", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Destination:</p><p><br/></p></body></html>", None))
+        self.destLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Destination:</p><p><br/></p></body></html>", None))
         self.currBlockLabel.setText(QCoreApplication.translate("MainWindow", u"Current Block:", None))
         self.popUpUI.setText(QCoreApplication.translate("MainWindow", u"Display Train Stats", None))
         self.trainAcc.setText(QCoreApplication.translate("MainWindow", u"Acceleration:", None))
