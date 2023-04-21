@@ -23,28 +23,20 @@ class Wayside(QObject):
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
         #signals.waysideCommandedSpeed.connect(self.commspeed)
-        signals.waysideinstances.connect(self.imoverthis)#TODO
-        #signals.waysideinstance2.connect(self.imoverthis)#TODO
-        # signals.waysideinstance3.connect(self.wayside3range)#TODO
-        # signals.waysideinstance4.connect(self.wayside4range)#TODO
+        signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
         
     # function to dispatch a train
     # hard coded for green line for the time being
 
-    def imoverthis(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):#, range):
-        #print("im over this in .py from wayside instance 2")
-        #print("imoverthis in .py")#, range)
-        #print(".py wayside1range", wayside1range)
-        #self.ui.wayside1range = wayside1range
-        #print("wayside2range", wayside2range)
-        ##print("wayside3range", wayside3range)
-        #print("wayside4range", wayside4range)
+        #get switch change from ctc
+        #pass on switch state pass stem and branch (int, int)
+        #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
+
+    def plcinfo(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):#, range):
         signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside3sectionrange, wayside4sectionrange)
         signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
-        #print("past please emit .py")
-        
         
     def commspeed(self, train):
         if (train.authority == '0'):
@@ -74,6 +66,10 @@ class Wayside(QObject):
 
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))
+
+    def sendAuthority(self, blocks):
+        print("authority from Wayside to Track:", str(blocks))
+        signals.waysideAuthority.emit(blocks)
         
     def suggSpeedReceived(self, train):
         print("speed from CTC to Wayside: " + str(train.suggSpeed))
