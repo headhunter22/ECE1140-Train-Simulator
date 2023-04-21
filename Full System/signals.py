@@ -1,5 +1,6 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
+from Block import Block
 from Train import Train
 from Track import Track
 from Beacon import Beacon
