@@ -53,7 +53,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
+      <y>300</y>
       <width>161</width>
       <height>21</height>
      </rect>
@@ -78,7 +78,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>380</y>
+      <y>360</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -169,7 +169,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>400</y>
+      <y>390</y>
       <width>71</width>
       <height>61</height>
      </rect>
@@ -185,9 +185,9 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>220</y>
+      <y>250</y>
       <width>241</width>
-      <height>171</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -214,7 +214,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>280</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -245,7 +245,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>310</y>
+      <y>290</y>
       <width>51</width>
       <height>51</height>
      </rect>
@@ -274,7 +274,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>400</y>
+      <y>390</y>
       <width>71</width>
       <height>61</height>
      </rect>
@@ -303,7 +303,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>400</y>
+      <y>390</y>
       <width>71</width>
       <height>61</height>
      </rect>
@@ -418,7 +418,7 @@ padding: 2px;</string>
       <x>540</x>
       <y>90</y>
       <width>231</width>
-      <height>101</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -453,7 +453,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>410</y>
+      <y>420</y>
       <width>241</width>
       <height>41</height>
      </rect>
@@ -484,13 +484,44 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
+      <y>330</y>
       <width>160</width>
       <height>18</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="beaconLabel">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>170</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 2px solid black;
+border-radius: 4px;
+padding: 2px;</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beacon Info:&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>450</y>
+      <width>201</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Click fault image to activate</string>
     </property>
    </widget>
   </widget>

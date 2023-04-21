@@ -1190,6 +1190,9 @@ color: black</string>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: orange</string>
+    </property>
     <property name="text">
      <string>12</string>
     </property>
@@ -1288,7 +1291,7 @@ color: black</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: orange</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>30</string>
@@ -1317,7 +1320,7 @@ color: black</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: orange</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>1</string>
@@ -1347,6 +1350,9 @@ color: black</string>
       <width>21</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: orange</string>
     </property>
     <property name="text">
      <string>150</string>

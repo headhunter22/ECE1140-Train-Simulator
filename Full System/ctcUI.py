@@ -170,7 +170,7 @@ class ctcMainUI(QMainWindow):
         self.ui.green_N2.clicked.connect(self.emitSwitchStates)
 
         #initilizing red buttons
-        redSwitchStates = []
+        self.redSwitchStates = [0, 0, 0, 0, 0, 0, 0]
         self.ui.red_C1.clicked.connect(lambda: self.toggleColor(self.ui.red_C1, self.ui.red_C2))
         self.ui.red_C2.clicked.connect(lambda: self.toggleColor(self.ui.red_C2, self.ui.red_C1))
         self.ui.red_E1.clicked.connect(lambda: self.toggleColor(self.ui.red_E1, self.ui.red_E2))
@@ -261,11 +261,6 @@ class ctcMainUI(QMainWindow):
 
         self.ui.greenAddStop.clicked.connect(self.testGreenAddition)
         self.ui.greenDispatch.clicked.connect(self.testGreenDispatch)
-
-
-
-
-        self.ui.pushButton.clicked.connect(self.testFunction)
 
 
 
@@ -435,16 +430,30 @@ class ctcMainUI(QMainWindow):
             block = [73]
         signals.greenLineTrainDispatchFromCtcUI.emit(block)
 
+
+
+
     def testGreenAddition(self):
         stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
-        stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
+        greenBlocks = list(range(1, 151))
+        for i in range(0, 150):
+            stations.append(str(greenBlocks[i]))
         pattern = r"^\d{2}:\d{2}$"
+
+        print(stations)
 
         if (self.ui.greenDestination.text() not in stations) or (not re.match(pattern, self.ui.greenTime.text())):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
             return
         else:
+
+            try:
+                greenTempBlock = int(self.ui.greenDestination.text())
+                destTemp = str(greenTempBlock)
+            except:
+                destTemp = self.ui.greenDestination.text()
+
             time = self.ui.greenTime.text().split(":")
             temp = time[0] + ":" + time[1]
 
@@ -452,14 +461,21 @@ class ctcMainUI(QMainWindow):
 
             self.ui.greenTentSchedule.insertRow(rowCount)
 
-            dest = QTableWidgetItem(self.ui.greenDestination.text())
+            dest = QTableWidgetItem(destTemp)
             at = QTableWidgetItem(temp)
             self.ui.greenTentSchedule.setItem(rowCount, 0, dest)
             self.ui.greenTentSchedule.setItem(rowCount, 1, at)
+            self.ui.greenDestination.clear()
+            self.ui.greenTime.clear()
 
     def testGreenDispatch(self):
         stations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
         stationBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
+        greenBlocks = list(range(1, 151))
+
+        for i in range(0, 150):
+            stations.append(str(greenBlocks[i]))
+            stationBlocks.append(int(greenBlocks[i]))
 
         rowCount = self.ui.greenScheduledTrains.rowCount()
 
@@ -472,17 +488,14 @@ class ctcMainUI(QMainWindow):
 
         blocks = []
 
-        for i in range(0, self.ui.greenTentSchedule.rowCount()):
-            for i in range(0, len(stations)):
-                if self.ui.greenTentSchedule.item(0,i).text() == stations[i]:
-                    blocks.append(stationBlocks[i])
+        # iterate through the tent schedule table
+        for rows in range(0, self.ui.greenTentSchedule.rowCount()):
+            # iterate through the stations list to see if the text in that cell is one of the stations
+            for item in range(0, len(stations)):
+                if self.ui.greenTentSchedule.item(rows,0).text() == stations[item]:
+                    blocks.append(stationBlocks[item])
 
-        for i in range(0, len(blocks)):
-            print(i)
-            print(blocks[i])
-
-        self.ui.greenTentSchedule.clear()
-
+        self.ui.greenTentSchedule.setRowCount(0)
         signals.greenLineTrainDispatchFromCtcUI.emit(blocks)
 
     ############################################
@@ -800,16 +813,17 @@ class ctcMainUI(QMainWindow):
 
     def addScheduledTrain(self, schedule): #########
         if schedule.line == "Green":
-            rowCount = self.ui.greenScheduledTrains_2.rowCount()
-            self.ui.greenScheduledTrains_2.insertRow(rowCount)
+            rowCount = self.ui.greenScheduledTrains.rowCount()
+            self.ui.greenScheduledTrains.insertRow(rowCount)
 
             dest = QTableWidgetItem(str(schedule.stops[0]))
             at = QTableWidgetItem(str(schedule.arrivalTimes[0]))
 
-            self.ui.greenScheduledTrains_2.setItem(rowCount, 0, dest)
-            self.ui.greenScheduledTrains_2.setItem(rowCount, 1, at)
+            self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
+            self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
 
             self.dispatchGreenLine()
+    
     #################################################
     ########MAINTENANCE MODE FUNCTIONS###############
     #################################################
@@ -842,38 +856,35 @@ class ctcMainUI(QMainWindow):
         elif clickedButton == self.ui.green_N2:
             self.greenSwitchStates[5] = 1
         elif clickedButton == self.ui.red_C1:
-            pass
+            self.redSwitchStates[0] = 1
         elif clickedButton == self.ui.red_C2:
-            pass
+            self.redSwitchStates[0] = 0
         elif clickedButton == self.ui.red_E1:
-            pass
+            self.redSwitchStates[1] = 1
         elif clickedButton == self.ui.red_E2:
-            pass
+            self.redSwitchStates[1] = 0
         elif clickedButton == self.ui.red_H1_1:
-            pass
+            self.redSwitchStates[2] = 0
         elif clickedButton == self.ui.red_H1_2:
-            pass
+            self.redSwitchStates[2] = 1
         elif clickedButton == self.ui.red_H2_1:
-            pass
+            self.redSwitchStates[3] = 0
         elif clickedButton == self.ui.red_H2_2:
-            pass
+            self.redSwitchStates[3] = 1
         elif clickedButton == self.ui.red_H3_1:
-            pass
+            self.redSwitchStates[4] = 0
         elif clickedButton == self.ui.red_H3_2:
-            pass
+            self.redSwitchStates[4] = 1
         elif clickedButton == self.ui.red_H4_1:
-            pass
+            self.redSwitchStates[5] = 0
         elif clickedButton == self.ui.red_H4_2:
-            pass
+            self.redSwitchStates[5] = 1
         elif clickedButton == self.ui.red_J1:
-            pass
+            self.redSwitchStates[6] = 0
         elif clickedButton == self.ui.red_J2:
-            pass
-        else:
-            print("error")
+            self.redSwitchStates[6] = 1
 
-        signals.greenSwitchStatesFromCTCtoWayside.emit(self.greenSwitchStates)
-        #signals.greenSwitchStatesFromCTCtoWayside.emit(self.redSwitchStates)
+        signals.ctcSwitchStates.emit(self.greenSwitchStates, self.redSwitchStates)
 
     #################################################
     ########OPTIONS / THROUGHPUT FUNCTIONS###########
@@ -930,6 +941,9 @@ class ctcMainUI(QMainWindow):
     ##############SHARED FUNCITONS##############
     ############################################
 
+    def univClear(self):
+        pass
+
     def setColors(self):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
@@ -944,10 +958,10 @@ class ctcMainUI(QMainWindow):
         self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
 
-        self.ui.red_C1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_C2.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_E1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_E2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_C1.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_C2.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_E1.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_E2.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
         self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
         self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
@@ -968,10 +982,6 @@ class ctcMainUI(QMainWindow):
             self.ui.stackedWidget.setCurrentIndex(2)
         elif self.ui.maintenanceSelect.isChecked():
             self.ui.stackedWidget.setCurrentIndex(3)
-
-
-    def testFunction(self):
-        self.ui.green_C2.click()
 
 
 # if __name__ == '__main__':

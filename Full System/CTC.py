@@ -21,6 +21,7 @@ class CTC(QObject):
 
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
+        signals.ctcSwitchStates.connect(self.sendSwitchStates)
         
     # function to dispatch the train
     def dispatch(self, line, destBlock):
@@ -62,6 +63,9 @@ class CTC(QObject):
 
         else:
             print("error")
+
+    def sendSwitchStates(self, greenSwitches, redSwitches):
+        signals.switchStatesFromCTCtoWayside.emit(greenSwitches, redSwitches)
 
     def propagateTrack(self):
         signals.trackCTCToWayside.emit(self.track)
