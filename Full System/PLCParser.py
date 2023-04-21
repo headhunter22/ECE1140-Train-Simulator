@@ -2,10 +2,12 @@ from WBlock import WBlock
 #from WTrack import WTrack
 from signals import signals
 #from WaysideUI import WMainWindowA
+
 #SC = Section
 #BN = Block Number
 #NB = Next Block
 #PB = Previous Block
+#LI = Line
 #ST = Station
 #RX = Crossing
 #RS = Crossing State
@@ -16,6 +18,7 @@ from signals import signals
 #SS = Switch State
 #SL = Switch Lights
 #FT = Fault
+
 class WTrack:
     def __init__(self):
         super().__init__()
@@ -24,6 +27,7 @@ class WTrack:
         self.allsection = []
         self.switches = []
         self.switchStates = []
+        self.crossing = []
 
         self.wayside1range = []
         self.wayside1sectionrange = []
@@ -61,8 +65,15 @@ class WTrack:
         #check if section already exists
         #print("added block", block.blockNumber)
         #print("added section", block.section)
+        if block.crossing == '1':
+            self.addcrossing(block)
+
         if (block.switch == '1'):
             self.addSwitch(block)
+
+
+    def addcrossing(self, block):
+        self.crossing.append(int(block.blockNumber))
 
     def addSwitch(self, block):
         self.switches.append(int(block.blockNumber))
@@ -81,16 +92,20 @@ class WTrack:
         #print("we need waysides at", quarter, half, threefourths, full)
         self.wayside1range =self.track[0:half+1]
         self.wayside1sectionrange =self.allsection[0:half+1]
-        #print("1 range", self.wayside1range)
+        print("1 range", self.wayside1range)
+        print("1 wayside1sectionrange", self.wayside1sectionrange)
         self.wayside2range = self.track[quarter:threefourths+1]
         self.wayside2sectionrange = self.allsection[quarter:threefourths+1]
-        #print("2 range", self.wayside2range)
+        print("2 range", self.wayside2range)
+        print("2 waysidesectionrange", self.wayside2sectionrange)
         self.wayside3range = self.track[half:full+1] + [1]
         self.wayside3sectionrange = self.allsection[half:full+1] + ['A']
-        #print("3 range", self.wayside3range)
-        self.wayside4range = self.track[threefourths:full] + self.track[1:quarter+1]
-        self.wayside4sectionrange = self.allsection[threefourths:full] + self.allsection[1:quarter+1]
-        #print("4 range", self.wayside4range)
+        print("3 range", self.wayside3range)
+        print("3 wayside1sectionrange", self.wayside3sectionrange)
+        self.wayside4range = self.track[threefourths:full] + self.track[0:quarter+1]
+        self.wayside4sectionrange = self.allsection[threefourths:full] + self.allsection[0:quarter+1]
+        print("4 range", self.wayside4range)
+        print("4 wayside1sectionrange", self.wayside4sectionrange)
         #print("plcparser rage 1", self.wayside1range)
         signals.waysideinstances.emit(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
 
@@ -118,60 +133,126 @@ class WTrack:
         # signals.waysideinstance4.emit(self.wayside4range, self.wayside4sectionrange)
         #print("whole track sent")
 
-    def parse(self):
+    def parse(self, fname = "plcLogic_Green"):
         #print("parser instanced")
-        fname = "plcLogic_Green"
+        print("fname",fname)
+        line = 0
+        #fname = "plcLogic_Green"
         with open(fname, 'r+') as f: #newline='', 
-            newtrack = WTrack()   
-            for count, x in enumerate(f): #for count, line in enumerate(fp):
-                if x[:3] == "BLK":
-                    newblock = WBlock()
-                    #print("this is a block")
-                elif x[:2] == "SC":
-                    newblock.section = x[3:4]
-                    #print("SC", x[3:4])
-                elif x[:2] == "BN":
-                    newblock.blockNumber = x[3:6]
-                    #print("BN", x[3:6])             # print("{"  + id + "}")
-                elif x[:2] == "NB":
-                    newblock.nextBlock = x[3:6]
-                    #print("NB", x[3:6])
-                elif x[:2] == "PB":
-                    newblock.previousBlock = x[3:6]
-                    #Print("PB", x[3:6])        
-                elif x[:2] == "ST":
-                    newblock.station = x[3:4]
-                    #print("ST", x[3:4])
-                elif x[:2] == "RX":
-                    newblock.crossing = x[3:4]
-                    #print("RX", x[3:4])
-                elif x[:2] == "RS":
-                    newblock.crossingState = x[3:4]
-                    #print("RS", x[3:4])
-                elif x[:2] == "RL":
-                    newblock.crossingLights = x[3:4]
-                    #print("RL", x[3:4])
-                elif x[:2] == "OC":
-                    newblock.occupation = x[3:4]
-                    #print("OC", x[3:4])
-                elif x[:2] == "AU":
-                    newblock.authority = x[3:4]
-                    #print("AU", x[3:4])
-                elif x[:2] == "SW":
-                    newblock.switch = x[3:4]
-                    #print("SW", x[3:4])
-                elif x[:2] == "SS":
-                    newblock.switchState = x[3:4]
-                    #print("SS", x[3:4])
-                elif x[:2] == "SL":
-                    newblock.switchLights = x[3:4]
-                    #print("SL", x[3:4])
-                elif x[:2] == "FT":
-                    newblock.fault = x[3:4]
-                    #print("FT", x[3:4])
-                elif x[:3] == "END":
-                    newtrack.addBlock(newblock)
-                    #print("add block object to track")
-        newtrack.Waysides()
-        newtrack.wholeTrack()
-        #print("parser finished")
+             
+            while line == 0:
+                newtrack0 = WTrack()  
+                for count, x in enumerate(f): #for count, line in enumerate(fp):
+                    if x[:3] == "BLK":
+                        newblock = WBlock()
+                        #print("this is a block")
+                    elif x[:2] == "SC":
+                        newblock.section = x[3:4]
+                        #print("SC", x[3:4])
+                    elif x[:2] == "BN":
+                        newblock.blockNumber = x[3:6]
+                        #print("BN", x[3:6])             # print("{"  + id + "}")
+                    elif x[:2] == "NB":
+                        newblock.nextBlock = x[3:6]
+                        #print("NB", x[3:6])
+                    elif x[:2] == "PB":
+                        newblock.previousBlock = x[3:6]
+                        #Print("PB", x[3:6]) 
+                    elif x[:2] == "LI": 
+                        newblock.line = x[3:6]
+                        line = int(x[3:6])
+                        #green is 0 red is 1        
+                    elif x[:2] == "ST":
+                        newblock.station = x[3:4]
+                        #print("ST", x[3:4])
+                    elif x[:2] == "RX":
+                        newblock.crossing = x[3:4]
+                        #print("RX", x[3:4])
+                    elif x[:2] == "RS":
+                        newblock.crossingState = x[3:4]
+                        #print("RS", x[3:4])
+                    elif x[:2] == "RL":
+                        newblock.crossingLights = x[3:4]
+                        #print("RL", x[3:4])
+                    elif x[:2] == "OC":
+                        newblock.occupation = x[3:4]
+                        #print("OC", x[3:4])
+                    elif x[:2] == "AU":
+                        newblock.authority = x[3:4]
+                        #print("AU", x[3:4])
+                    elif x[:2] == "SW":
+                        newblock.switch = x[3:4]
+                        #print("SW", x[3:4])
+                    elif x[:2] == "SS":
+                        newblock.switchState = x[3:4]
+                        #print("SS", x[3:4])
+                    elif x[:2] == "SL":
+                        newblock.switchLights = x[3:4]
+                        #print("SL", x[3:4])
+                    elif x[:2] == "FT":
+                        newblock.fault = x[3:4]
+                        #print("FT", x[3:4])
+                    elif x[:3] == "END":
+                        newtrack0.addBlock(newblock)
+                        #print("add block object to track")
+                newtrack0.Waysides()
+                newtrack0.wholeTrack()
+                #print("parser finished")
+            while line == 1:
+                newtrack1 = WTrack()  
+                for count, x in enumerate(f): #for count, line in enumerate(fp):
+                    if x[:3] == "BLK":
+                        newblock = WBlock()
+                        #print("this is a block")
+                    elif x[:2] == "SC":
+                        newblock.section = x[3:4]
+                        #print("SC", x[3:4])
+                    elif x[:2] == "BN":
+                        newblock.blockNumber = x[3:6]
+                        #print("BN", x[3:6])             # print("{"  + id + "}")
+                    elif x[:2] == "NB":
+                        newblock.nextBlock = x[3:6]
+                        #print("NB", x[3:6])
+                    elif x[:2] == "PB":
+                        newblock.previousBlock = x[3:6]
+                        #Print("PB", x[3:6]) 
+                    elif x[:2] == "LI": 
+                        newblock.line = x[3:6]
+                        line = int(x[3:6])
+                        #green is 0 red is 1        
+                    elif x[:2] == "ST":
+                        newblock.station = x[3:4]
+                        #print("ST", x[3:4])
+                    elif x[:2] == "RX":
+                        newblock.crossing = x[3:4]
+                        #print("RX", x[3:4])
+                    elif x[:2] == "RS":
+                        newblock.crossingState = x[3:4]
+                        #print("RS", x[3:4])
+                    elif x[:2] == "RL":
+                        newblock.crossingLights = x[3:4]
+                        #print("RL", x[3:4])
+                    elif x[:2] == "OC":
+                        newblock.occupation = x[3:4]
+                        #print("OC", x[3:4])
+                    elif x[:2] == "AU":
+                        newblock.authority = x[3:4]
+                        #print("AU", x[3:4])
+                    elif x[:2] == "SW":
+                        newblock.switch = x[3:4]
+                        #print("SW", x[3:4])
+                    elif x[:2] == "SS":
+                        newblock.switchState = x[3:4]
+                        #print("SS", x[3:4])
+                    elif x[:2] == "SL":
+                        newblock.switchLights = x[3:4]
+                        #print("SL", x[3:4])
+                    elif x[:2] == "FT":
+                        newblock.fault = x[3:4]
+                        #print("FT", x[3:4])
+                    elif x[:3] == "END":
+                        newtrack1.addBlock(newblock)
+                        #print("add block object to track")
+                newtrack1.Waysides()
+                newtrack1.wholeTrack()
+                #print("parser finished")

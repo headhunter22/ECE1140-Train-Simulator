@@ -38,6 +38,7 @@ class Signals(QObject):
     waysideUpdateVacancy = pyqtSignal(str, int) # line, block
     waysideSwitchStates = pyqtSignal(list)
     waysideCommandedSpeed = pyqtSignal(int)
+    waysideAuthority = pyqtSignal(int)
     #plc
     waysideSwitchLocationsfromPLC = pyqtSignal(list)
     waysideTrackfromPLC = pyqtSignal(list)
