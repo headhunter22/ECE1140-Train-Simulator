@@ -47,7 +47,7 @@ class TrainModel(QObject):
 
         #displaying train destination
         signals.trainModelDestinationSignal.emit(train.destBlock)
-        #displaying trainLine
+        #displaying trainLine and train name
         signals.trainModelLineSignal.emit(train.line)
         
         signals.trainControllerUpdateCommSpeed.emit(self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit)
