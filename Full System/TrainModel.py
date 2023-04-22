@@ -70,7 +70,12 @@ class TrainModel(QObject):
         #print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
-        blockSpeedLimit = currLine.getBlock(currBlock).speedLimit
+        blockSpeedLimit = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+        currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
+        if (blockSpeedLimit > currBlockSpeedLimit):
+            blockSpeedLimit = currBlockSpeedLimit
+
+        signals.trainModelGUISpeedLim.emit(str(currBlockSpeedLimit))
 
         # calculate dist to stop
         distToStop = 0
@@ -118,7 +123,8 @@ class TrainModel(QObject):
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > blockSpeedLimit:
-                train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
+                train.An = -1.2
+                #train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 #print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
@@ -164,7 +170,7 @@ class TrainModel(QObject):
             # update track model occupancy to occupied for next block in route
             signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
             signals.trainControllerUpdateCommSpeed.emit(train.line.getBlock(train.route[0]).speedLimit)
-
+           
         # we have not traversed more than the current block length
         else:
             # still in current block, update train position
@@ -187,7 +193,7 @@ class TrainModel(QObject):
         #sending all signals to the display
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
         signals.trainModelGUIBlock.emit(str(train.block))
-        signals.trainModelGUIcommandedSpeed.emit(str(train.commandedSpeed))
+        signals.trainModelGUIcommandedSpeed.emit(str(blockSpeedLimit))
 
         signals.trainModelGUIpower.emit(str(power))
         signals.trainModelGUIacc.emit(str(train.An))

@@ -19,6 +19,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         uic.loadUi("trainModel_fullsys.ui", self)
 
         self.popUp = popUpWindow()
+        #self.block = Block()
         self.tempSlider.setMinimum(60)
         self.tempSlider.setMaximum(90)
         self.tempSlider.valueChanged.connect(self.sliderChanged)
@@ -38,8 +39,9 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainModelDestinationSignal.connect(self.trainDest)
         signals.trainModelLineSignal.connect(self.lineConfig)
         signals.trainControllerDispatchedSignal.connect(self.addTrain)
-
+        signals.trainModelGUISpeedLim.connect(self.speedLim)
         #displaying the stats of the train popup
+
         self.popUpUI.clicked.connect(self.displayPopUp)
         self.EmerButton.clicked.connect(self.emergencyBrake)
 
@@ -78,18 +80,20 @@ class TrainModelUI(QtWidgets.QMainWindow):
         acc = float(train)*2.237
         txt = f"{acc:.2f}"
         floatTxt = float(txt)
-        self.trainAcc.setText("Acc.: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
+        self.trainAcc.setText("Acc.: {0} mi/h/s".format(floatTxt)) #actSpeed is the qt creator object
     
     def displayBlock(self, block):
         self.currBlockLabel.setText("Current Block = {0}".format(block)) #commSpeedLabel is the qt creator object
-        #incorporating the beacons
-        #if block.beaconBool == True:
-        #    self.beaconLabel.setText("true") #actSpeed is the qt creator object
+        
     
     def displayCommSpeed(self, train):
         commSpeedMpH = float(train)*.621
         self.commSpeedLabel.setText("Commanded Speed = {0} mi/h".format(commSpeedMpH)) #currBlockLabel is the qt creator object
+        
+    def speedLim(self,lim):
+        commSpeedMpH = float(lim)*.621
         self.speedLimitLabel.setText("Speed Limit = {0} mi/h".format(commSpeedMpH)) #speedLimitLabel is the qt creator object
+    
     
     def displayPower(self,train):
         self.powLabel.setText("Power Input: {0} Watts".format(train))
