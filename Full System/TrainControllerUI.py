@@ -13,7 +13,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Connect Signals #
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
-        signals.trainControllerAuthority.connect(self.updateAuthority)
+        signals.trainModelAuthorityToTrainController.connect(self.updateAuthority)
         signals.trainControllerUpdateCommSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelEmerBrake.connect(self.EBClick)
         signals.timerTicked.connect(self.changeLabel)
