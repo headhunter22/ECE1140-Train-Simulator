@@ -17,6 +17,24 @@ class Wayside(QObject):
         self.ui = mainui
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
+        self.wayside1range = []
+        self.wayside1sectionrange = []
+        self.wayside2range = []
+        self.wayside2sectionrange = []
+        self.wayside3range = []
+        self.wayside3sectionrange = []
+        self.wayside4range = []
+        self.wayside4sectionrange = []
+
+        self.wayside5range = []
+        self.wayside5sectionrange = []
+        self.wayside6range = []
+        self.wayside6sectionrange = []
+        self.wayside7range = []
+        self.wayside7sectionrange = []
+        self.wayside8range = []
+        self.wayside8sectionrange = []
+
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
         signals.trackCTCToWayside.connect(self.trackReceived)
@@ -26,17 +44,44 @@ class Wayside(QObject):
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
-        
-    # function to dispatch a train
-    # hard coded for green line for the time being
 
         #get switch change from ctc
         #pass on switch state pass stem and branch (int, int)
         #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
 
-    def plcinfo(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):#, range):
-        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside3sectionrange, wayside4sectionrange)
-        signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
+    def updateAuthority(self, line, block):
+        print("authority starts at 8")
+        auth = 8
+        currblock = block
+        if line == '0':
+            print("green")
+            
+        elif line == '1':
+            print("red")
+
+        signals.waysideAuthoritytoTrack.emit(auth)
+
+    def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
+        signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
+        self.wayside1sectionrange = section1
+        self.wayside2sectionrange = section2
+        self.wayside3sectionrange = section3
+        self.wayside4sectionrange = section4
+        self.wayside5sectionrange = section5
+        self.wayside6sectionrange = section6
+        self.wayside7sectionrange = section7
+        self.wayside8sectionrange = section8
+
+        signals.ranges.emit(range1, range2, range3, range4, range5, range6, range7, range8)
+        self.wayside1range = range1
+        self.wayside2range = range2
+        self.wayside3range = range3
+        self.wayside4range = range4
+        self.wayside5range = range5
+        self.wayside6range = range6
+        self.wayside7range = range7
+        self.wayside8range = range8
+        #print("signals sent in .py plcinfo")
         
     def commspeed(self, train):
         if (train.authority == '0'):
@@ -58,11 +103,6 @@ class Wayside(QObject):
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
-        
-
-    # function to set block occupancies
-    #def setOccupancy(self, line, blockNumber, occupied):
-        #line.getBlock(blockNumber).occupancy = occupied
 
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))
@@ -87,7 +127,7 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, line, block):
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
-        
+        self.updateAuthority(line, block)
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     
