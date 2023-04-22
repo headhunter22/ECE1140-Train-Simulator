@@ -17,34 +17,174 @@ class Wayside(QObject):
         self.ui = mainui
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
+        self.wayside1range = []#GREEN
+        self.wayside1sectionrange = []
+        self.wayside2range = []
+        self.wayside2sectionrange = []
+        self.wayside3range = []
+        self.wayside3sectionrange = []
+        self.wayside4range = []
+        self.wayside4sectionrange = []
+        self.wayside5range = []#RED
+        self.wayside5sectionrange = []
+        self.wayside6range = []
+        self.wayside6sectionrange = []
+        self.wayside7range = []
+        self.wayside7sectionrange = []
+        self.wayside8range = []
+        self.wayside8sectionrange = []
+
+        self.track0 = []
+        self.track1 = []
+        self.section0 = []
+        self.section1 = []
+        self.stations0 = []
+        self.stations1 = []
+        self.switchLocations0 = []
+        self.switchLocations1 = []
+        self.switchStates0 = []
+        self.switchStates1 = []
+
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
         signals.trackCTCToWayside.connect(self.trackReceived)
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
         #signals.waysideCommandedSpeed.connect(self.commspeed)
-        signals.waysideinstances.connect(self.imoverthis)#TODO
-        #signals.waysideinstance2.connect(self.imoverthis)#TODO
-        # signals.waysideinstance3.connect(self.wayside3range)#TODO
-        # signals.waysideinstance4.connect(self.wayside4range)#TODO
+        signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
-        
-    # function to dispatch a train
-    # hard coded for green line for the time being
 
-    def imoverthis(self, wayside1range, wayside1sectionrange, wayside2range, wayside2sectionrange, wayside3range, wayside3sectionrange, wayside4range, wayside4sectionrange):#, range):
-        #print("im over this in .py from wayside instance 2")
-        #print("imoverthis in .py")#, range)
-        #print(".py wayside1range", wayside1range)
-        #self.ui.wayside1range = wayside1range
-        #print("wayside2range", wayside2range)
-        ##print("wayside3range", wayside3range)
-        #print("wayside4range", wayside4range)
-        signals.sections.emit(wayside1sectionrange, wayside2sectionrange, wayside3sectionrange, wayside4sectionrange)
-        signals.ranges.emit(wayside1range, wayside2range, wayside3range, wayside4range)
-        #print("past please emit .py")
+        signals.waysideTrackfromPLC.connect(self.setTracks)
+        signals.waysideSectionsfromPLC.connect(self.setSections)
+        signals.waysideSwitchLocationsfromPLC.connect(self.setSwitchLocations)
+        signals.waysideSwitchStatesfromPLC.connect(self.setSwitchStates)
+        signals.waysideStationsfromPLC.connect(self.setStations)
+
+        #get switch change from ctc
+        #pass on switch state pass stem and branch (int, int)
+        #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
+        #have CTC send authority as 0 and 1 not red and green
+        #vacant signals need to be one behind occupied
+        #send section with occupancy
+
+    def setTracks(self, track0, track1):
+        self.track0 = track0
+        self.track1 = track1
+
+    def setSections(self, section0, section1):
+        self.section0 = section0
+        self.section1 = section1
+
+    def setStations(self, s0, s1):
+        self.stations0 = s0
+        self.stations1 = s1
+
+    def setSwitchLocations(self, loc0, loc1):
+        self.switchLocations0 = loc0
+        self.switchLocations1 = loc1
+
+    def setSwitchStates(self, state0, state1):
+        self.switchStates0 = state0
+        self.switchStates1 = state1
+
+    def updateAuthority(self, line, block):
+        #print("authority starts at 8")
+        auth = 8
+        currblock = self.track0.index(block)
         
+        print("authority currblock", currblock)
+        print("authority line", line)
+        
+        
+        if line == 'Green':
+            #print("in green")
+            next1 = self.track0[currblock+1]
+            #print("authority next1", next1)
+            next2 = self.track0[currblock+2]
+            #print("authority next2", next2)
+            next3 = self.track0[currblock+3]
+            next4 = self.track0[currblock+4]
+            next5 = self.track0[currblock+5]
+            next6 = self.track0[currblock+6]
+            next7 = self.track0[currblock+7]
+            next8 = self.track0[currblock+8]
+
+            for i in self.stations0:
+                if i == next8:
+                    auth = 7
+                elif i == next7:
+                    auth = 6
+                elif i == next6:
+                    auth = 5
+                elif i == next5:
+                    auth = 4
+                elif i == next4:
+                    auth = 3
+                elif i == next3:
+                    auth = 2
+                elif i == next2:
+                    auth = 1
+                elif i == next1:
+                    auth = 0
+                else:
+                    auth = 8
+        elif line == 'Red':
+            #print("in red")
+            next1 = self.track1[currblock+1]
+            #print("authority next1", next1)
+            next2 = self.track1[currblock+2]
+            #print("authority next2", next2)
+            next3 = self.track1[currblock+3]
+            next4 = self.track1[currblock+4]
+            next5 = self.track1[currblock+5]
+            next6 = self.track1[currblock+6]
+            next7 = self.track1[currblock+7]
+            next8 = self.track1[currblock+8]
+
+            for i in self.stations1:
+                if i == next8:
+                    auth = 7
+                elif i == next7:
+                    auth = 6
+                elif i == next6:
+                    auth = 5
+                elif i == next5:
+                    auth = 4
+                elif i == next4:
+                    auth = 3
+                elif i == next3:
+                    auth = 2
+                elif i == next2:
+                    auth = 1
+                elif i == next1:
+                    auth = 0
+                else:
+                    auth = 8
+
+        signals.waysideAuthoritytoTrack.emit(auth, currblock)
+
+    def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
+        signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
+        self.wayside1sectionrange = section1
+        self.wayside2sectionrange = section2
+        self.wayside3sectionrange = section3
+        self.wayside4sectionrange = section4
+        self.wayside5sectionrange = section5
+        self.wayside6sectionrange = section6
+        self.wayside7sectionrange = section7
+        self.wayside8sectionrange = section8
+
+        signals.ranges.emit(range1, range2, range3, range4, range5, range6, range7, range8)
+        self.wayside1range = range1
+        self.wayside2range = range2
+        self.wayside3range = range3
+        self.wayside4range = range4
+        self.wayside5range = range5
+        self.wayside6range = range6
+        self.wayside7range = range7
+        self.wayside8range = range8
+        #print("signals sent in .py plcinfo")
         
     def commspeed(self, train):
         if (train.authority == '0'):
@@ -66,14 +206,13 @@ class Wayside(QObject):
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
-        
-
-    # function to set block occupancies
-    #def setOccupancy(self, line, blockNumber, occupied):
-        #line.getBlock(blockNumber).occupancy = occupied
 
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))
+
+    def sendAuthority(self, blocks):
+        print("authority from Wayside to Track:", str(blocks))
+        signals.waysideAuthority.emit(blocks)
         
     def suggSpeedReceived(self, train):
         print("speed from CTC to Wayside: " + str(train.suggSpeed))
@@ -91,7 +230,7 @@ class Wayside(QObject):
     def blockOccupancyReceived(self, line, block):
         #print(". py block", block, "is occupied")
         signals.wtowOccupancy.emit(block)
-        
+        self.updateAuthority(line, block)
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     

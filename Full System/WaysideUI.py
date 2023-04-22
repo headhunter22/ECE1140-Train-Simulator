@@ -16,13 +16,17 @@ from PLCParser import WTrack
 # MainWindowA N-Z blue
 # MainWindowB A-M red
 
+#if wrong file make error
+#show fault
+#why are buttons not hiding or connecting
+#
+
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
         super(WMainWindowA, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle('Wayside Main UI')
-        self.resize(640, 715)
-        
+        self.resize(640, 715)        
         
         self.instance =  ''
         self.first = 0
@@ -35,6 +39,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside3sectionrange = []
         self.wayside4range = []
         self.wayside4sectionrange = []
+        self.wayside5range = []
+        self.wayside5sectionrange = []
+        self.wayside6range = []
+        self.wayside6sectionrange = []
+        self.wayside7range = []
+        self.wayside7sectionrange = []
+        self.wayside8range = []
+        self.wayside8sectionrange = []
         #print("sectionrange1",self.sectionrange)
         #PLCParser.parse(self)
         #print("wayside1range 1 in ui",Wtrack.plc.wayside1range)
@@ -52,8 +64,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #signals.actuallyshutup.connect(self.works)
         signals.ranges.connect(self.works)
         signals.sections.connect(self.sectionswork)
-
         #signals.please.emit()
+        self.plc = WTrack()
         self.setupplc()
 
         #PLCParser.parse(self)
@@ -83,6 +95,23 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         counts = 0
         self.activetrains.display(counts)
         self.whichwayside.currentIndexChanged.connect(self.changeinstance)
+        self.trackconfiguration.clicked.connect(self.newparse)
+
+        self.pushn.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[0]))
+        self.pusho.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[1]))
+        self.pushp.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[2]))
+        self.pushq.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[3]))
+        self.pushr.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[4]))
+        self.pushs.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[5]))
+        self.pusht.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[6]))
+        self.pushu.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[7]))
+        self.pushv.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[8]))
+        self.pushw.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[9]))
+        self.pushx.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[10]))
+        self.pushy.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[11]))
+        self.pushz.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[12]))
+        self.pushaa.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[13]))
+        self.pushbb.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[14]))
 
 
         #lights
@@ -91,19 +120,28 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def changeinstance(self):
         num = self.whichwayside.currentIndex()+1
-        print("num",num)
+        #print("change instance", num)
+        #print("num",num)
         signals.waysidefirst.emit(num)
         
 
     def setupplc(self):
-        #print("setupplc started")
-        plc = WTrack()
-        plc.parse()
+        
+        self.plc.parse()#fname = "plcLogic_Red")
         #print("setupplc wayside1range 2 in ui .plc",plc.wayside1range)
         #self.wayside1range = plc.wayside1range
         #print("setupplc wayside1range 2 in ui .self",self.wayside1range)
 
-    def works(self, range1, range2, range3, range4):
+    def newparse(self):
+        home_dir = str(Path.home())
+        dialog = QFileDialog()
+        fname, filetypes = dialog.getOpenFileName()#getOpenFileName(self, 'Open file', home_dir)
+        #fname.selectedFiles()
+        #print(" newparse ui fname", fname)
+        #print("neaparse homedir", home_dir)
+        self.plc.parse(fname)
+
+    def works(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("it works in ui from please from .py range1:", range1)
         #print("works ui range2", range2)
         #print("works ui range3", range3)
@@ -112,15 +150,19 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside2range = range2
         self.wayside3range = range3
         self.wayside4range = range4
+        self.wayside5range = range5
+        self.wayside6range = range6
+        self.wayside7range = range7
+        self.wayside8range = range8
         #print("works ui range2", self.wayside1range)
         #print("works ui range2", self.wayside2range)
         #print("works ui range3", self.wayside3range)
         #print("works ui range4", self.wayside4range)
 
-    def sectionswork(self, range1, range2, range3, range4):
+    def sectionswork(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("sectionswork")
         self.wayside1sectionrange = range1
-        # print("sectionswork range1 self.", self.wayside1sectionrange)
+        #print("sectionswork range1 self.", self.wayside1sectionrange)
         #print("sectionswork range1 ", range1)
         self.wayside2sectionrange = range2
         #print("sectionswork range2 ", range2)
@@ -128,16 +170,17 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("sectionswork range2 ", range3)
         self.wayside4sectionrange  = range4
         #print("sectionswork range2 ", range4)
+        self.wayside5sectionrange  = range5
+        self.wayside6sectionrange  = range6
+        self.wayside7sectionrange  = range7
+        self.wayside8sectionrange  = range8
 
-
-    def imoverthis(self, range):
-        #print("im over this in .py from wayside instance 2")
-        print("range in imoverthis in ui", range)
 
     def firstinstance(self, num):
         self.first = num
-        #print("set first", self.first, "=", num)
         self.setuppopups(self.first)
+        #print("set first", self.first, "=", num)
+        #self.whichwayside.setCurrentIndex(self.first)
 
     def disableallswitchbuttons(self):
         #set all switch buttons to disabled
@@ -189,12 +232,15 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def setuppopups(self, first):
         self.sectionrange = []
-        print("first", first)
+        #print("first", first)
         #print("setuppopups start")
         #print("first",first)
         #pop up windows
         #current = ''
         if first == 1:
+            self.linelabel.setText("Green Line")
+            self.sectionrange = []
+            #print("setuppopups wayside1sectionrange[0]",self.wayside1sectionrange[0])
             current = self.wayside1sectionrange[0]
             self.sectionrange.append(current)
             for i in self.wayside1sectionrange:
@@ -205,8 +251,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     self.sectionrange.append(current)
                     #print(i)
         elif first == 2:
+            self.linelabel.setText("Green Line")
+            self.sectionrange = []
             current = self.wayside2sectionrange[0]
-            print(current)
+            #print(current)
             self.sectionrange.append(current)
             for i in self.wayside2sectionrange:
                 if i == current:
@@ -216,6 +264,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     self.sectionrange.append(current)
                     #print(i)
         elif first == 3:
+            self.linelabel.setText("Green Line")
+            self.sectionrange = []
             current = self.wayside3sectionrange[0]
             self.sectionrange.append(current)
             for i in self.wayside3sectionrange:
@@ -226,10 +276,60 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     self.sectionrange.append(current)
                     #print(i)
         elif first == 4:
-            print("wayside4range",self.wayside4range)
+            self.linelabel.setText("Green Line")
+            self.sectionrange = []
+            #print("wayside4range",self.wayside4range)
             current = self.wayside4sectionrange[0]
             self.sectionrange.append(current)
             for i in self.wayside4sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+        elif first == 5:
+            self.linelabel.setText("Red Line")
+            self.sectionrange = []
+            #print("wayside5range",self.wayside5range)
+            current = self.wayside5sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside5sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+        elif first == 6:
+            self.linelabel.setText("Red Line")
+            self.sectionrange = []
+            #print("wayside6range",self.wayside6range)
+            current = self.wayside6sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside6sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+        elif first == 7:
+            self.linelabel.setText("Red Line")
+            self.sectionrange = []
+            #print("wayside7range",self.wayside7range)
+            current = self.wayside7sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside7sectionrange:
+                if i == current:
+                    continue
+                else:
+                    current = i
+                    self.sectionrange.append(current)
+        elif first == 8:
+            self.linelabel.setText("Red Line")
+            self.sectionrange = []
+            #print("wayside8range",self.wayside8range)
+            current = self.wayside8sectionrange[0]
+            self.sectionrange.append(current)
+            for i in self.wayside8sectionrange:
                 if i == current:
                     continue
                 else:
@@ -254,79 +354,299 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                 #self.gridLayout_4.addWidget(self.namelist[but], row+2, col)
         l = len(self.sectionrange)
         left = 15-l
-        print("range", self.sectionrange, "len", l)
-
+        #print("range", self.sectionrange, "len", l)
+        #print("outside l",l)
         rangelabel = self.sectionrange[0] + "-" + self.sectionrange[l-1]
         self.sectionrangelabel.setText(rangelabel)
 
-        self.pushn.setText(self.sectionrange[0])
-        self.pusho.setText(self.sectionrange[1])
-        self.pushp.setText(self.sectionrange[2])
-        self.pushq.setText(self.sectionrange[3])
-        self.pushr.setText(self.sectionrange[4])
-        self.pushs.setText(self.sectionrange[5])
-        self.pusht.setText(self.sectionrange[6])
-        self.pushu.setText(self.sectionrange[7])
-        self.pushv.setText(self.sectionrange[8])
-        self.pushw.setText(self.sectionrange[9])
-        #print("namelist",self.namelist)
-        # for name, button in self.namelist.items():
-        #     print("name",name)
-        #     button.clicked.connect((self.makeSectionWindow(name)))
+        try:
+            button = QPushButton(self.sectionrange[15], objectName = "pushcc", text=self.sectionrange[15])
+            button2 = QPushButton(self.sectionrange[14], objectName = "pushbb", text=self.sectionrange[14])
+            button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
+            button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
+            button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
+            button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+            button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+            button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+            
+        except:
+            try:
+                button2 = QPushButton(self.sectionrange[14], objectName = "pushbb", text=self.sectionrange[14])
+                button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
+                button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
+                button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
+                button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+                button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+            except:
+                try:
+                    button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
+                    button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
+                    button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
+                    button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+                    button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                    button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                    button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                    button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                    button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                    button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                    button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                    button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                    button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                    button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                except:
+                    try:
+                        button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
+                        button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
+                        button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+                        button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                        button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                        button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                        button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                        button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                        button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                        button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                        button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                        button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                        button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                    except:
+                        try:
+                            button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
+                            button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+                            button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                            button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                        except:
+                            try:
+                                button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
+                                button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                                button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                                button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                            except:
+                                try:
+                                    button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
+                                    button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                                    button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                                    button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                                    button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                    button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                    button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                    button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                    button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                    button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                                except:
+                                    try:
+                                        button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
+                                        button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                                        button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                                        button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                        button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                        button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                        button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                        button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                        button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                                    except:
+                                        try:
+                                            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
+                                            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                                            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                                        except:
+                                            try:
+                                                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
+                                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+                                            except:
+                                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
+                                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
+                                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
+                                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
+                                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
+                                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
 
-        # for position, name in zip(positions, self.sectionrange):
-        #     if name == '':
-        #         continue
-        #     bname = "push"+name
-        #     button = QPushButton(name, objectName = bname)
-        #     namelist.append(name)
-        #     self.gridLayout_4.addWidget(button, *position)
-        #     button.clicked.connect(lambda: self.makeSectionWindow(name, bname))
-            #print("name for button",position, bname)
-            #button.clicked.connect(lambda: self.makeSectionWindow(name))
-        #print("left", left)
-        if left == 0:
-            print("if left",left)
-            self.pushx.setText(self.sectionrange[10])
-            self.pushy.setText(self.sectionrange[11])
-            self.pushz.setText(self.sectionrange[12])
-            self.pushaa.setText(self.sectionrange[13])
-        if left == 1:
-            print("if left",left)
-            self.pushx.setText(self.sectionrange[10])
-            self.pushy.setText(self.sectionrange[11])
-            self.pushz.setText(self.sectionrange[12])
-            self.aaicon.hide()
+        if l == 16:
+            
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
+            self.gridLayout_4.addWidget(button3, 13, 0)
+            self.gridLayout_4.addWidget(button0, 14, 0)
+            self.gridLayout_4.addWidget(button1, 15, 0)
+            self.gridLayout_4.addWidget(button2, 16, 0)
+            self.gridLayout_4.addWidget(button, 17, 0)
+            
+        elif l == 15:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
+            self.gridLayout_4.addWidget(button3, 13, 0)
+            self.gridLayout_4.addWidget(button0, 14, 0)
+            self.gridLayout_4.addWidget(button1, 15, 0)
+            self.gridLayout_4.addWidget(button2, 16, 0)
+            #self.gridLayout_4.addWidget(QPixmap('tracks.png'), 16, 1)     
+        elif l == 14:
+            
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
+            self.gridLayout_4.addWidget(button3, 13, 0)
+            self.gridLayout_4.addWidget(button0, 14, 0)
+            self.gridLayout_4.addWidget(button1, 15, 0)
+            self.bbicon.hide()
+            self.pushbb.hide()
+        elif l == 13:
+            
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
+            self.gridLayout_4.addWidget(button3, 13, 0)
+            self.gridLayout_4.addWidget(button0, 14, 0)
             self.pushaa.hide()
-        if left == 2:
-            print("if left",left)
-            self.pushx.setText(self.sectionrange[10])
-            self.pushy.setText(self.sectionrange[11])
-            self.pushaa.hide()
             self.aaicon.hide()
+            self.pushbb.hide()
+            self.bbicon.hide()
+        elif l == 12:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
+            self.gridLayout_4.addWidget(button3, 13, 0)
             self.pushz.hide()
             self.zicon.hide()
-        if left == 3:
-            print("if left",left)
-            self.pushx.setText(self.sectionrange[10])
             self.pushaa.hide()
             self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
+            self.pushbb.hide()
+            self.bbicon.hide()
+        elif l == 11:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.gridLayout_4.addWidget(button4, 12, 0)
             self.pushy.hide()
             self.yicon.hide()
-        if left == 4:
-            print("if left",left)
+            self.pushz.hide()
+            self.zicon.hide()
             self.pushaa.hide()
             self.aaicon.hide()
+            self.pushbb.hide()
+            self.bbicon.hide()
+        elif l == 10:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.gridLayout_4.addWidget(button5, 11, 0)
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushbb.hide()
+            self.bbicon.hide()
             self.pushz.hide()
             self.zicon.hide()
             self.pushy.hide()
             self.yicon.hide()
             self.pushx.hide()
             self.xicon.hide()
-        if left == 5:
-            print("if left",left)
+        elif l == 9:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.gridLayout_4.addWidget(button6, 10, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
             self.pushaa.hide()
             self.aaicon.hide()
             self.pushz.hide()
@@ -337,24 +657,236 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.xicon.hide()
             self.pushw.hide()
             self.wicon.hide()
+        elif l == 8:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.gridLayout_4.addWidget(button7, 9, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+        elif l == 7:
+            
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.gridLayout_4.addWidget(button8, 8, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+        elif l == 6:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.gridLayout_4.addWidget(button9, 7, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+        elif l == 5:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.gridLayout_4.addWidget(button10, 6, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+            self.pushs.hide()
+            self.sicon.hide()
+        elif l == 4:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.gridLayout_4.addWidget(button11, 5, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+            self.pushs.hide()
+            self.sicon.hide()
+            self.pushr.hide()
+            self.ricon.hide()
+        elif l == 3:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.gridLayout_4.addWidget(button12, 4, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+            self.pushs.hide()
+            self.sicon.hide()
+            self.pushr.hide()
+            self.ricon.hide()
+            self.pushq.hide()
+            self.qicon.hide()
+        elif l == 2:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.gridLayout_4.addWidget(button13, 3, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+            self.pushs.hide()
+            self.sicon.hide()
+            self.pushr.hide()
+            self.ricon.hide()
+            self.pushq.hide()
+            self.qicon.hide()
+            self.pushp.hide()
+            self.picon.hide()
+        elif l == 1:
+            self.gridLayout_4.addWidget(button14, 2, 0)
+            self.pushbb.hide()
+            self.bbicon.hide()
+            self.pushaa.hide()
+            self.aaicon.hide()
+            self.pushz.hide()
+            self.zicon.hide()
+            self.pushy.hide()
+            self.yicon.hide()
+            self.pushx.hide()
+            self.xicon.hide()
+            self.pushw.hide()
+            self.wicon.hide()
+            self.pushv.hide()
+            self.vicon.hide()
+            self.pushu.hide()
+            self.uicon.hide()
+            self.pusht.hide()
+            self.ticon.hide()
+            self.pushs.hide()
+            self.sicon.hide()
+            self.pushr.hide()
+            self.ricon.hide()
+            self.pushq.hide()
+            self.qicon.hide()
+            self.pushp.hide()
+            self.picon.hide()
+            self.pusho.hide()
+            self.oicon.hide()
+            
+        self.pushn.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[0]))
+        self.pusho.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[1]))
+        self.pushp.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[2]))
+        self.pushq.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[3]))
+        self.pushr.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[4]))
+        self.pushs.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[5]))
+        self.pusht.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[6]))
+        self.pushu.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[7]))
+        self.pushv.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[8]))
+        self.pushw.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[9]))
+        self.pushx.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[10]))
+        self.pushy.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[11]))
+        self.pushz.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[12]))
+        self.pushaa.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[13]))
+        self.pushbb.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[14]))
         #print("namelist",namelist)
-        self.pushn.clicked.connect(lambda: self.makeSectionWindow(nlist[0]))
-        self.pusho.clicked.connect(lambda: self.makeSectionWindow(nlist[1]))
-        self.pushp.clicked.connect(lambda: self.makeSectionWindow(nlist[2]))
-        self.pushq.clicked.connect(lambda: self.makeSectionWindow(nlist[3]))
-        self.pushr.clicked.connect(lambda: self.makeSectionWindow(nlist[4]))
-        self.pushs.clicked.connect(lambda: self.makeSectionWindow(nlist[5]))
-        self.pusht.clicked.connect(lambda: self.makeSectionWindow(nlist[6]))
-        self.pushu.clicked.connect(lambda: self.makeSectionWindow(nlist[7]))
-        self.pushv.clicked.connect(lambda: self.makeSectionWindow(nlist[8]))
-        self.pushw.clicked.connect(lambda: self.makeSectionWindow(nlist[9]))
-        self.pushx.clicked.connect(lambda: self.makeSectionWindow(nlist[10]))
-        self.pushy.clicked.connect(lambda: self.makeSectionWindow(nlist[11]))
-        self.pushz.clicked.connect(lambda: self.makeSectionWindow(nlist[12]))
-        self.pushaa.clicked.connect(lambda: self.makeSectionWindow(nlist[13]))
-        self.pushbb.clicked.connect(lambda: self.makeSectionWindow(nlist[14]))
-        self.pushcc.clicked.connect(lambda: self.makeSectionWindow(nlist[15]))
-
 
     def ticka(self, hrs, mins, secs):
         #print("wayside ticking in class a")
@@ -460,6 +992,66 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                 for j in self.wayside4sectionrange:
                     if j == i:
                         currentletter.append(self.wayside4range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 5:
+            print("wayside5sectionrange", self.wayside5sectionrange)
+            print("wayside5range", self.wayside5range)
+            currentletter = []
+            currentletter.append(self.wayside5range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside5sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside5range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 6:
+            print("wayside6sectionrange", self.wayside6sectionrange)
+            print("wayside6range", self.wayside6range)
+            currentletter = []
+            currentletter.append(self.wayside6range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside6sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside6range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 7:
+            print("wayside7sectionrange", self.wayside7sectionrange)
+            print("wayside7range", self.wayside7range)
+            currentletter = []
+            currentletter.append(self.wayside7range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside7sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside7range[countj])
+                    else:
+                        continue
+                    countj = countj + 1
+                counti = counti + 1
+                sectionmatrix.append(currentletter)
+        if self.first == 8:
+            print("wayside8sectionrange", self.wayside8sectionrange)
+            print("wayside8range", self.wayside8range)
+            currentletter = []
+            currentletter.append(self.wayside8range[0])
+            for i in self.sectionrange:
+                currentletter = []
+                for j in self.wayside8sectionrange:
+                    if j == i:
+                        currentletter.append(self.wayside8range[countj])
                     else:
                         continue
                     countj = countj + 1
@@ -918,7 +1510,7 @@ class selectionWindow(QWidget):
 
 
 
-#app = QtWidgets.QApplication(sys.argv)
+'''#app = QtWidgets.QApplication(sys.argv)
 #windowA = WMainWindowA()
 #windowB = WMainWindowB()
 #first = selectionWindow()
@@ -928,9 +1520,9 @@ class selectionWindow(QWidget):
 #windowA.show()
 #windowB.show()
 #first.show()
-#app.exec()
+#app.exec()'''
 
-# MainWindowB A-M
+'''# MainWindowB A-M
 #class WMainWindowB(QtWidgets.QMainWindow, Ui_MainWindowB):
 #     def __init__(self, *args, obj=None, **kwargs):
 #         super(WMainWindowB, self).__init__(*args, **kwargs)
@@ -1448,9 +2040,9 @@ class selectionWindow(QWidget):
 #      #function for number of active trains
 #     #somehow counts the number of times the red train label comes up
 #     def activeTrains(self, counts):
-#         self.activetrains.display(counts)
+#         self.activetrains.display(counts)'''
 
-#class WaysideUIFunctions(QObject):
+'''#class WaysideUIFunctions(QObject):
     # def __init__(self, window):
     #     super().__init__()
     #     #signals.waysideUpdateOccupancy.connect(WaysideUIFunctions.changeOccupancy)
@@ -2060,9 +2652,9 @@ class selectionWindow(QWidget):
     #function for number of active trains
     #somehow counts the number of times the red train label comes up
     # def activeTrains(self, counts):
-    #     self.activetrains.display(counts)
+    #     self.activetrains.display(counts)'''
 
-#test = Ui_testpopup()
+'''#test = Ui_testpopup()
 #test.show()
 # class Ui_testpopup(QtWidgets.QMainWindow, Ui_testpopup):
 #     def __init__(self, *args, obj=None, **kwargs):
@@ -2255,14 +2847,9 @@ class selectionWindow(QWidget):
 #             if occupation == 'Occupied':
 #                 window.jicon.setPixmap(QPixmap('greentrain.png'))
 #             if occupation == 'Unoccupied':
-#                 window.jicon.setPixmap(QPixmap('tracks.png'))
+#                 window.jicon.setPixmap(QPixmap('tracks.png'))'''
     
-
-
-
-
-
-#track configuration pop up so hold a funeral
+'''#track configuration pop up so hold a funeral
 
 # class TrackConfig(QtWidgets.QMainWindow, Ui_TrackConfig):
 #     def __init__(self, *args, obj=None, **kwargs):
@@ -2285,10 +2872,9 @@ class selectionWindow(QWidget):
 #             with f:
 #                 data = f.read()
 #                 #print("data: ", data)
-#                 self.plcdisplay.setText(data)
+#                 self.plcdisplay.setText(data)'''
 
-
-#class Communications():
+'''#class Communications():
     #print("communicating from wayside.py")
     #get suggest speed
         #signal emits from .py
@@ -2303,4 +2889,4 @@ class selectionWindow(QWidget):
     #send authority
     #send block occupancy
     #send rr crossings
-    #send switches
+    #send switches'''

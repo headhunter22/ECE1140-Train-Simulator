@@ -19,6 +19,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         uic.loadUi("trainModel_fullsys.ui", self)
 
         self.popUp = popUpWindow()
+        #self.block = Block()
         self.tempSlider.setMinimum(60)
         self.tempSlider.setMaximum(90)
         self.tempSlider.valueChanged.connect(self.sliderChanged)
@@ -37,10 +38,14 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainModelPassengers.connect(self.passengerUpdate)
         signals.trainModelDestinationSignal.connect(self.trainDest)
         signals.trainModelLineSignal.connect(self.lineConfig)
-
+        signals.trainControllerDispatchedSignal.connect(self.addTrain)
+        signals.trainModelGUISpeedLim.connect(self.speedLim)
         #displaying the stats of the train popup
+
         self.popUpUI.clicked.connect(self.displayPopUp)
         self.EmerButton.clicked.connect(self.emergencyBrake)
+
+        self.trainBox.currentIndexChanged.connect(self.trainViewSwitched)
         
         #icon set up
         sigIcon = QtGui.QIcon("sigOFF.png")
@@ -75,15 +80,20 @@ class TrainModelUI(QtWidgets.QMainWindow):
         acc = float(train)*2.237
         txt = f"{acc:.2f}"
         floatTxt = float(txt)
-        self.trainAcc.setText("Acc.: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
+        self.trainAcc.setText("Acc.: {0} mi/h/s".format(floatTxt)) #actSpeed is the qt creator object
     
-    def displayBlock(self, train):
-        self.commSpeedLabel.setText("Current Block = {0}".format(train)) #commSpeedLabel is the qt creator object
+    def displayBlock(self, block):
+        self.currBlockLabel.setText("Current Block = {0}".format(block)) #commSpeedLabel is the qt creator object
         
+    
     def displayCommSpeed(self, train):
         commSpeedMpH = float(train)*.621
-        self.currBlockLabel.setText("Commanded Speed = {0} mi/h".format(commSpeedMpH)) #currBlockLabel is the qt creator object
+        self.commSpeedLabel.setText("Commanded Speed = {0} mi/h".format(commSpeedMpH)) #currBlockLabel is the qt creator object
+        
+    def speedLim(self,lim):
+        commSpeedMpH = float(lim)*.621
         self.speedLimitLabel.setText("Speed Limit = {0} mi/h".format(commSpeedMpH)) #speedLimitLabel is the qt creator object
+    
     
     def displayPower(self,train):
         self.powLabel.setText("Power Input: {0} Watts".format(train))
@@ -158,7 +168,51 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.ACprogressBar.setValue(sliderSize)
 
     def trainDest(self, trainDest):
-        self.destLabel.setText('Destination: ' + str(trainDest[0]))
+        print('length train dest HERHERHERHERHER: ' + str(len(trainDest)))
+        text = 'Destination: '
+        for x in trainDest:
+            if x == 2:
+                station = 'Pioneer'
+            elif x == 9:
+                station = 'Edgebrook'
+            elif x == 16:
+                station = 'Profeta'
+            elif x == 22:
+                station = 'Whited'
+            elif x == 31:
+                station = 'South Bank'
+            elif x == 39:
+                station = 'Central'
+            elif x == 48:
+                station = 'Inglewood'
+            elif x == 57:
+                station = 'Overbrook'
+            elif x == 65:
+                station = 'Glenbury'
+           
+            elif x == 73:
+                station = 'Dormont'
+            elif x == 77:
+                station = 'Mt Lebanon'
+            elif x == 88:
+                station = 'Poplar'
+            elif x == 96:
+                station = 'Castle Shannon'
+            elif x == 105:
+                station = 'Dormont'
+            elif x == 114:
+                station = 'Glenbury'
+            elif x == 123:
+                station = 'Overbrook'
+            elif x == 132:
+                station = 'Inglewood'
+            else:
+                station = 'Central'
+
+            text = text + station + '\n                  '
+
+        self.destLabel.setText(text)
+
 
     def lineConfig(self, line):
         print(str(line.lineName))
@@ -168,3 +222,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
         else:
             self.redLineButton.setStyleSheet("background-color: light gray")
             self.greenLineButton.setStyleSheet("background-color: green")
+        
+    def trainViewSwitched(self):
+        print('train view switched')
+    
+    def addTrain(self,train):
+        self.trainBox.addItem("Train {0}".format(train.ID))
+    
+

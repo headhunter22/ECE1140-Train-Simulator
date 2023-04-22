@@ -1,5 +1,6 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 from Line import Line
+from Block import Block
 from Train import Train
 from Track import Track
 from Beacon import Beacon
@@ -36,16 +37,20 @@ class Signals(QObject):
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(str, int) # line, block
     waysideUpdateVacancy = pyqtSignal(str, int) # line, block
-    waysideSwitchStates = pyqtSignal(list)
     waysideCommandedSpeed = pyqtSignal(int)
+    waysideAuthoritytoTrack = pyqtSignal(int, int)
+    waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
+
     #plc
-    waysideSwitchLocationsfromPLC = pyqtSignal(list)
-    waysideTrackfromPLC = pyqtSignal(list)
-    waysideSectionsfromPLC = pyqtSignal(list)
-    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list) #from wtrack
-    #actuallyshutup = pyqtSignal()
-    ranges = pyqtSignal(list, list, list, list)
-    sections = pyqtSignal(list, list, list, list)
+    waysideTrackfromPLC = pyqtSignal(list, list)
+    waysideStationsfromPLC = pyqtSignal(list, list)
+    waysideSwitchLocationsfromPLC = pyqtSignal(list, list) # 
+    waysideSectionsfromPLC = pyqtSignal(list, list)
+    waysideSwitchStatesfromPLC = pyqtSignal(list, list)
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
+
+    ranges = pyqtSignal(list, list, list, list, list, list, list, list)
+    sections = pyqtSignal(list, list, list, list, list, list, list, list)
     waysidefirst = pyqtSignal(int) #from showmain in ui
     waysidesetup = pyqtSignal(int)
 
@@ -105,6 +110,8 @@ class Signals(QObject):
     trainModelPassengers = pyqtSignal(int)
     trainModelDestinationSignal = pyqtSignal(list)
     trainModelLineSignal= pyqtSignal(Line)
+    trainModelGUISpeedLim = pyqtSignal(str)
+    trainModelAuthorityToTrainController = pyqtSignal(int)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)

@@ -17,6 +17,7 @@ class TrainController(QObject):
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
+        signals.trainModelAuthorityToTrainController.connect(self.setNewAuthority)
 
         self.Ki = 100
         self.Kp = 100
@@ -37,8 +38,8 @@ class TrainController(QObject):
         self.currentSpeed = currSpeed
         self.train = train
 
-    def setNewAuthority(self):
-        self.train.authority = 1000
+    def setNewAuthority(self, auth):
+        self.train.authority = auth
         print("Authority has been updated")
         self.AuthorityHasBeenReset = True
         signals.trainGo.emit()
@@ -46,7 +47,7 @@ class TrainController(QObject):
     def waitAtStation(self):
         # emit signals for waiting and passengers
         signals.trainWaiting.emit()
-        signals.trackModelPassengersChanging.emit(train)
+        signals.trackModelPassengersChanging.emit(self.train)
         self.waitTimer = QTimer()
         self.waitTimer.singleShot(30000, self.setNewAuthority)
 

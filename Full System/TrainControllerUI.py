@@ -13,7 +13,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Connect Signals #
         signals.trainControllerPower.connect(self.updatePower)
         signals.trainControllerSpeed.connect(self.updateSpeed)
-        signals.trainControllerAuthority.connect(self.updateAuthority)
+        signals.trainModelAuthorityToTrainController.connect(self.updateAuthority)
         signals.trainControllerUpdateCommSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelEmerBrake.connect(self.EBClick)
         signals.timerTicked.connect(self.changeLabel)
@@ -336,8 +336,6 @@ class GainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(GainWindow, self).__init__()
 
-        # Connect KP/KI #
-        signals.trainControllerKP.connect(self.updateKP)
 
         self.setWindowTitle("Edit Gain")
         self.resize(490, 310)
@@ -351,24 +349,36 @@ class GainWindow(QtWidgets.QMainWindow):
 
         self.KILabel = QtWidgets.QLabel("KI Gain: ", self)
         self.KILabel.setGeometry(100, 150, 110, 100)
-        font = QtGui.QFont()
-        font.setPointSize(24)
         self.KILabel.setFont(font)
 
-         # init KP/PI Edits # 
-        self.KIChange = QtWidgets.QLineEdit("1000", self)
+         # init KP/PI Edits, confirm button # 
+        self.KIChange = QtWidgets.QLineEdit("100", self)
         self.KIChange.setGeometry(225, 92, 50, 25)
-        self.KPChange = QtWidgets.QLineEdit("1000", self)
+        self.KPChange = QtWidgets.QLineEdit("100", self)
         self.KPChange.setGeometry(225, 192, 50, 25)
+
+        self.confirm = QtWidgets.QPushButton("Confirm", self)
+        self.confirm.setGeometry(370, 250, 100, 50)
+        self.confirm.clicked.connect(self.confirmClick)
+
+        self.confirmLabel = QtWidgets.QLabel(" ", self)
+        self.confirmLabel.setGeometry(50, 225, 350, 100)
+        font2 = QtGui.QFont()
+        font2.setPointSize(14)
+        self.confirmLabel.setFont(font2)
         
-    def updateKP(self):
-        textkp = self.KIChange.textfield.text()
+
+    def confirmClick(self):
+        textkp = self.KIChange.text()
         INPUT2 = float(textkp)
         signals.trainControllerUIKP.emit(INPUT2)
+        print("KP changed to " + textkp)
         self.KIChange.setText(textkp)
 
-    def updateKI(self):
-        textki = self.KIChange.textfield.text()
-        INPUT2 = float(textki)
-        signals.trainControllerUIKI.emit(INPUT2)
+        textki = self.KIChange.text()
+        INPUT3 = float(textki)
+        signals.trainControllerUIKI.emit(INPUT3)
+        print("KI changed to " + textki)
         self.KIChange.setText(textki)
+
+        self.confirmLabel.setText("KP and KI values have been updated")
