@@ -28,6 +28,7 @@ class WTrack:
         self.switches0 = []
         self.switchState0 = []
         self.crossing0 = []
+        self.stations0 = []
 
         self.track1 = []
         self.sections1 = []
@@ -35,6 +36,7 @@ class WTrack:
         self.switches1 = []
         self.switchState1 = []
         self.crossing1 = []
+        self.stations1 = []
 
         self.wayside1range = []
         self.wayside1sectionrange = []
@@ -63,7 +65,6 @@ class WTrack:
         # signals.waysideTrackfromPLC.connect(self.wholeTrack)
         # signals.waysideSectionsfromPLC.connect(self.wholeTrack)
 
-        #signals.please.connect(self.imoverthis)
         
     # function to dispatch a train
     # hard coded for green line for the time being
@@ -83,10 +84,15 @@ class WTrack:
             #print("added block", block.blockNumber)
             #print("added section", block.section)
             if block.crossing == '1':
-                self.addcrossing(block, line)
+                self.crossing0.append(int(block.blockNumber))
 
-            if (block.switch == '1'):
-                self.addSwitch(block, line)
+            if block.switch == '1':
+                self.switches0.append(int(block.blockNumber))
+                self.switchState0.append(int(block.switchState))
+
+            if block.station == '1':
+                self.stations0.append(block.blockNumber)
+
         elif line == 1:
             self.track1.append(int(block.blockNumber))
             self.allsection1.append(block.section)
@@ -101,27 +107,14 @@ class WTrack:
             #print("added block", block.blockNumber)
             #print("added section", block.section)
             if block.crossing == '1':
-                self.addcrossing(block, line)
+                self.crossing1.append(int(block.blockNumber))
 
-            if (block.switch == '1'):
-                self.addSwitch(block, line)
+            if block.switch == '1':
+                self.switches0.append(int(block.blockNumber))
+                self.switchState0.append(int(block.switchState))
 
-
-    def addcrossing(self, block, line):
-        if line == 0:
-            self.crossing0.append(int(block.blockNumber))
-        elif line == 1:
-            self.crossing1.append(int(block.blockNumber))
-
-    def addSwitch(self, block, line):
-        if line == 0:
-            self.switches0.append(int(block.blockNumber))
-            self.switchState0.append(int(block.switchState))
-            #print("added switch to block", block.blockNumber, " state is:", block.switchState)
-        if line == 1:
-            self.switches1.append(int(block.blockNumber))
-            self.switchState1.append(int(block.switchState))
-            #print("added switch to block", block.blockNumber, " state is:", block.switchState)
+            if block.station == '1':
+                self.stations1.append(block.blockNumber)
 
     def Waysides(self):
         #print("waysides in plcparser start")
@@ -187,13 +180,13 @@ class WTrack:
 
     def wholeTrack(self):
         #print("track:", self.track)
-        signals.waysideTrackfromPLC.emit(self.track)
+        signals.waysideTrackfromPLC.emit(self.track0, self.track1)
         #print("sections:", self.sections)
-        signals.waysideSectionsfromPLC.emit(self.sections)
+        signals.waysideSectionsfromPLC.emit(self.sections0, self.sections1)
         #print("switches:", self.switches)
-        signals.waysideSwitchLocationsfromPLC.emit(self.switches)
+        signals.waysideSwitchLocationsfromPLC.emit(self.switches0, self.switches1)
         #print("switchStates:", self.switchStates)
-        signals.waysideSwitchStates.emit(self.switchStates)
+        signals.waysideSwitchStatesfromPLC.emit(self.switchState0, self.switchState1)
 
         #print("wtrack" )
         #signals.actuallyshutup.emit()
@@ -201,7 +194,7 @@ class WTrack:
         #signals.waysidesectionrange2.emit(self.wayside2sectionrange)
         # signals.waysideinstance3.emit(self.wayside3range, self.wayside3sectionrange)
         # signals.waysideinstance4.emit(self.wayside4range, self.wayside4sectionrange)
-        #print("whole track sent")
+        print("whole track sent")
 
     def parse(self, fname = "plcLogic_All"):
         #print("parser instanced")
@@ -270,5 +263,6 @@ class WTrack:
                     #print("add block object to track")
             
             newtrack0.Waysides()
+            newtrack0.wholeTrack()
             #print("end of parser")
             
