@@ -18,7 +18,7 @@ from PLCParser import WTrack
 
 #if wrong file make error
 #show fault
-#why are buttons not hiding or connecting
+#change section and change bl pop up
 #
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
@@ -29,8 +29,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.resize(640, 715)        
         
         self.instance =  ''
-        self.first = 0
+        self.first = 1
         self.sectionrange = []
+        self.occupied = []
+
         self.wayside1range = []
         self.wayside1sectionrange = []
         self.wayside2range = []
@@ -47,6 +49,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside7sectionrange = []
         self.wayside8range = []
         self.wayside8sectionrange = []
+        self.allthesectionsever0 = []
+        self.allthesectionsever1 = []
         #print("sectionrange1",self.sectionrange)
         #PLCParser.parse(self)
         #print("wayside1range 1 in ui",Wtrack.plc.wayside1range)
@@ -65,9 +69,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.ranges.connect(self.works)
         signals.sections.connect(self.sectionswork)
         #signals.please.emit()
+        
         self.plc = WTrack()
         self.setupplc()
-
+        #self.firstinstance(self.first)
         #PLCParser.parse(self)
         #print("sectionrange4",self.sectionrange)
         #PLC signals
@@ -123,6 +128,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("change instance", num)
         #print("num",num)
         signals.waysidefirst.emit(num)
+        #signals.wtowOccupancy.emit() 
         
 
     def setupplc(self):
@@ -162,8 +168,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def sectionswork(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("sectionswork")
         self.wayside1sectionrange = range1
-        #print("sectionswork range1 self.", self.wayside1sectionrange)
-        #print("sectionswork range1 ", range1)
+        print("sectionswork range1 self.", self.wayside1sectionrange)
+        print("sectionswork range1 ", range1)
         self.wayside2sectionrange = range2
         #print("sectionswork range2 ", range2)
         self.wayside3sectionrange = range3
@@ -174,6 +180,18 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside6sectionrange  = range6
         self.wayside7sectionrange  = range7
         self.wayside8sectionrange  = range8
+
+        self.allthesectionsever0.append(range1)
+        self.allthesectionsever0.append(range2)
+        self.allthesectionsever0.append(range3)
+        self.allthesectionsever0.append(range4)
+        #print("allsectionsever0", self.allthesectionsever0)
+        #print("length all", len(self))
+        self.allthesectionsever1.append(range5)
+        self.allthesectionsever1.append(range6)
+        self.allthesectionsever1.append(range7)
+        self.allthesectionsever1.append(range8)
+
 
 
     def firstinstance(self, num):
@@ -358,534 +376,580 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("outside l",l)
         rangelabel = self.sectionrange[0] + "-" + self.sectionrange[l-1]
         self.sectionrangelabel.setText(rangelabel)
+        #self.gridLayout_4.addWidget(, 16, 1)   
+        img = QPixmap('tracks.png')
 
-        try:
-            button = QPushButton(self.sectionrange[15], objectName = "pushcc", text=self.sectionrange[15])
-            button2 = QPushButton(self.sectionrange[14], objectName = "pushbb", text=self.sectionrange[14])
-            button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
-            button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
-            button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
-            button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-            button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-            button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-            
-        except:
-            try:
-                button2 = QPushButton(self.sectionrange[14], objectName = "pushbb", text=self.sectionrange[14])
-                button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
-                button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
-                button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
-                button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-                button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-            except:
-                try:
-                    button1 = QPushButton(self.sectionrange[13], objectName = "pushaa", text=self.sectionrange[13])
-                    button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
-                    button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
-                    button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-                    button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                    button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                    button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                    button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                    button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                    button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                    button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                    button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                    button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                    button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                except:
-                    try:
-                        button0 = QPushButton(self.sectionrange[12], objectName = "pushz", text=self.sectionrange[12])
-                        button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
-                        button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-                        button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                        button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                        button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                        button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                        button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                        button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                        button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                        button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                        button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                        button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                    except:
-                        try:
-                            button3 = QPushButton(self.sectionrange[11], objectName = "pushy", text=self.sectionrange[11])
-                            button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-                            button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                            button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                        except:
-                            try:
-                                button4 = QPushButton(self.sectionrange[10], objectName = "pushx", text=self.sectionrange[10])
-                                button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                                button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                                button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                            except:
-                                try:
-                                    button5 = QPushButton(self.sectionrange[9], objectName = "pushw", text=self.sectionrange[9])
-                                    button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                                    button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                                    button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                                    button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                    button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                    button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                    button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                    button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                    button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                                except:
-                                    try:
-                                        button6 = QPushButton(self.sectionrange[8], objectName = "pushv", text=self.sectionrange[8])
-                                        button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                                        button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                                        button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                        button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                        button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                        button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                        button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                        button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                                    except:
-                                        try:
-                                            button7 = QPushButton(self.sectionrange[7], objectName = "pushu", text=self.sectionrange[7])
-                                            button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                                            button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                            button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                            button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                            button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                            button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                            button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                                        except:
-                                            try:
-                                                button8 = QPushButton(self.sectionrange[6], objectName = "pusht", text=self.sectionrange[6])
-                                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
-                                            except:
-                                                button9 = QPushButton(self.sectionrange[5], objectName = "pushs", text=self.sectionrange[5])
-                                                button10 = QPushButton(self.sectionrange[4], objectName = "pushr", text=self.sectionrange[4])
-                                                button11 = QPushButton(self.sectionrange[3], objectName = "pushq", text=self.sectionrange[3])
-                                                button12 = QPushButton(self.sectionrange[2], objectName = "pushp", text=self.sectionrange[2])
-                                                button13 = QPushButton(self.sectionrange[1], objectName = "pusho", text=self.sectionrange[1])
-                                                button14 = QPushButton(self.sectionrange[0], objectName = "pushn", text=self.sectionrange[0])
+        self.pushn.hide()
+        self.pusho.hide()
+        self.pushp.hide()
+        self.pushq.hide()
+        self.pushr.hide()
+        self.pushs.hide()
+        self.pusht.hide()
+        self.pushu.hide()
+        self.pushv.hide()
+        self.pushw.hide()
+        self.pushx.hide()
+        self.pushy.hide()
+        self.pushz.hide()
+        self.pushaa.hide()
+        self.pushbb.hide()
+        self.pushcc.hide()
 
+        self.nicon.hide()
+        self.oicon.hide()
+        self.picon.hide()
+        self.qicon.hide()
+        self.ricon.hide()
+        self.sicon.hide()
+        self.ticon.hide()
+        self.uicon.hide()
+        self.vicon.hide()
+        self.wicon.hide()
+        self.xicon.hide()
+        self.yicon.hide()
+        self.zicon.hide()
+        self.aaicon.hide()
+        self.bbicon.hide()
+        self.ccicon.hide()
+        
+        
         if l == 16:
-            
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.gridLayout_4.addWidget(button3, 13, 0)
-            self.gridLayout_4.addWidget(button0, 14, 0)
-            self.gridLayout_4.addWidget(button1, 15, 0)
-            self.gridLayout_4.addWidget(button2, 16, 0)
-            self.gridLayout_4.addWidget(button, 17, 0)
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.pushaa.setText(self.sectionrange[13])
+            self.pushbb.setText(self.sectionrange[14])
+            self.pushcc.setText(self.sectionrange[15])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.yicon.setPixmap(img)
+            self.zicon.setPixmap(img)
+            self.aaicon.setPixmap(img)
+            self.bbicon.setPixmap(img)
+            self.ccicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.pushy.show()
+            self.pushz.show()
+            self.pushaa.show()
+            self.pushbb.show()
+            self.pushcc.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
+            self.yicon.show()
+            self.zicon.show()
+            self.aaicon.show()
+            self.bbicon.show()
+            self.ccicon.show()
+
             
         elif l == 15:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.gridLayout_4.addWidget(button3, 13, 0)
-            self.gridLayout_4.addWidget(button0, 14, 0)
-            self.gridLayout_4.addWidget(button1, 15, 0)
-            self.gridLayout_4.addWidget(button2, 16, 0)
-            #self.gridLayout_4.addWidget(QPixmap('tracks.png'), 16, 1)     
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.pushaa.setText(self.sectionrange[13])
+            self.pushbb.setText(self.sectionrange[14])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.yicon.setPixmap(img)
+            self.zicon.setPixmap(img)
+            self.aaicon.setPixmap(img)
+            self.bbicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.pushy.show()
+            self.pushz.show()
+            self.pushaa.show()
+            self.pushbb.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
+            self.yicon.show()
+            self.zicon.show()
+            self.aaicon.show()
+            self.bbicon.show()
         elif l == 14:
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.pushaa.setText(self.sectionrange[13])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.yicon.setPixmap(img)
+            self.zicon.setPixmap(img)
+            self.aaicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.pushy.show()
+            self.pushz.show()
+            self.pushaa.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
+            self.yicon.show()
+            self.zicon.show()
+            self.aaicon.show()
             
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.gridLayout_4.addWidget(button3, 13, 0)
-            self.gridLayout_4.addWidget(button0, 14, 0)
-            self.gridLayout_4.addWidget(button1, 15, 0)
-            self.bbicon.hide()
-            self.pushbb.hide()
         elif l == 13:
-            
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.gridLayout_4.addWidget(button3, 13, 0)
-            self.gridLayout_4.addWidget(button0, 14, 0)
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushbb.hide()
-            self.bbicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.pushz.setText(self.sectionrange[12])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.yicon.setPixmap(img)
+            self.zicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.pushy.show()
+            self.pushz.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
+            self.yicon.show()
+            self.zicon.show()
         elif l == 12:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.gridLayout_4.addWidget(button3, 13, 0)
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushbb.hide()
-            self.bbicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.pushy.setText(self.sectionrange[11])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.yicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.pushy.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
+            self.yicon.show()
         elif l == 11:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.gridLayout_4.addWidget(button4, 12, 0)
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushbb.hide()
-            self.bbicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.pushx.setText(self.sectionrange[10])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.xicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.pushx.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
+            self.xicon.show()
         elif l == 10:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.gridLayout_4.addWidget(button5, 11, 0)
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.pushw.setText(self.sectionrange[9])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.wicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.pushw.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
+            self.wicon.show()
         elif l == 9:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.gridLayout_4.addWidget(button6, 10, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.pushv.setText(self.sectionrange[8])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.vicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.pushv.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
+            self.vicon.show()
         elif l == 8:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.gridLayout_4.addWidget(button7, 9, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.pushu.setText(self.sectionrange[7])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.uicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.pushu.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
+            self.uicon.show()
         elif l == 7:
-            
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.gridLayout_4.addWidget(button8, 8, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.pusht.setText(self.sectionrange[6])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.ticon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.pusht.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
+            self.ticon.show()
         elif l == 6:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.gridLayout_4.addWidget(button9, 7, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.pushs.setText(self.sectionrange[5])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.sicon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.pushs.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+            self.sicon.show()
         elif l == 5:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.gridLayout_4.addWidget(button10, 6, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
-            self.pushs.hide()
-            self.sicon.hide()
-        elif l == 4:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.gridLayout_4.addWidget(button11, 5, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
-            self.pushs.hide()
-            self.sicon.hide()
-            self.pushr.hide()
-            self.ricon.hide()
-        elif l == 3:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.gridLayout_4.addWidget(button12, 4, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
-            self.pushs.hide()
-            self.sicon.hide()
-            self.pushr.hide()
-            self.ricon.hide()
-            self.pushq.hide()
-            self.qicon.hide()
-        elif l == 2:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.gridLayout_4.addWidget(button13, 3, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
-            self.pushs.hide()
-            self.sicon.hide()
-            self.pushr.hide()
-            self.ricon.hide()
-            self.pushq.hide()
-            self.qicon.hide()
-            self.pushp.hide()
-            self.picon.hide()
-        elif l == 1:
-            self.gridLayout_4.addWidget(button14, 2, 0)
-            self.pushbb.hide()
-            self.bbicon.hide()
-            self.pushaa.hide()
-            self.aaicon.hide()
-            self.pushz.hide()
-            self.zicon.hide()
-            self.pushy.hide()
-            self.yicon.hide()
-            self.pushx.hide()
-            self.xicon.hide()
-            self.pushw.hide()
-            self.wicon.hide()
-            self.pushv.hide()
-            self.vicon.hide()
-            self.pushu.hide()
-            self.uicon.hide()
-            self.pusht.hide()
-            self.ticon.hide()
-            self.pushs.hide()
-            self.sicon.hide()
-            self.pushr.hide()
-            self.ricon.hide()
-            self.pushq.hide()
-            self.qicon.hide()
-            self.pushp.hide()
-            self.picon.hide()
-            self.pusho.hide()
-            self.oicon.hide()
+            self.pushn.setText(self.sectionrange[0])
+            self.pusho.setText(self.sectionrange[1])
+            self.pushp.setText(self.sectionrange[2])
+            self.pushq.setText(self.sectionrange[3])
+            self.pushr.setText(self.sectionrange[4])
+            self.nicon.setPixmap(img)
+            self.oicon.setPixmap(img)
+            self.picon.setPixmap(img)
+            self.qicon.setPixmap(img)
+            self.ricon.setPixmap(img)
+            self.pushn.show()
+            self.pusho.show()
+            self.pushp.show()
+            self.pushq.show()
+            self.pushr.show()
+            self.nicon.show()
+            self.oicon.show()
+            self.picon.show()
+            self.qicon.show()
+            self.ricon.show()
+        
             
-        self.pushn.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[0]))
-        self.pusho.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[1]))
-        self.pushp.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[2]))
-        self.pushq.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[3]))
-        self.pushr.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[4]))
-        self.pushs.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[5]))
-        self.pusht.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[6]))
-        self.pushu.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[7]))
-        self.pushv.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[8]))
-        self.pushw.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[9]))
-        self.pushx.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[10]))
-        self.pushy.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[11]))
-        self.pushz.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[12]))
-        self.pushaa.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[13]))
-        self.pushbb.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[14]))
+        # self.pushn.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[0]))
+        # self.pusho.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[1]))
+        # self.pushp.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[2]))
+        # self.pushq.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[3]))
+        # self.pushr.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[4]))
+        # self.pushs.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[5]))
+        # self.pusht.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[6]))
+        # self.pushu.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[7]))
+        # self.pushv.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[8]))
+        # self.pushw.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[9]))
+        # self.pushx.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[10]))
+        # self.pushy.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[11]))
+        # self.pushz.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[12]))
+        # self.pushaa.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[13]))
+        # self.pushbb.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[14]))
         #print("namelist",namelist)
 
     def ticka(self, hrs, mins, secs):
@@ -1391,81 +1455,510 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
-    def changeOccupancy(self, block):
-        self.oblock = block
-        print("wayside a UI block", block, "is occupied")
-        if block > 76 and block < 86: #== '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
-            self.nicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 85 and block < 89: #== '86' or '87' or '88':
-            self.oicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 88 and block < 98: #== '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
-            self.picon.setPixmap(QPixmap('greentrain.png'))
-        if block > 97 and block < 101: #== '98' or '99' or '100':
-            self.qicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 100 and block < 102: #== '101':
-            self.ricon.setPixmap(QPixmap('greentrain.png'))
-        if block > 101 and block < 105: #== '102' or '103' or '104':
-            self.sicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 104 and block < 110: #== '105' or '106' or '107' or '108' or '109':
-            self.ticon.setPixmap(QPixmap('greentrain.png'))
-        if block > 109 and block < 117: #== '110' or '111' or '112' or '113' or '114' or '115' or '116':
-            self.uicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 116 and block < 122: #== '117' or '118' or '119' or '120' or '121':
-            self.vicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 121 and block < 144: #== '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
-            self.vicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 143 and block < 147: #== '144' or '145' or '146':
-            self.xicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 146 and block < 150: #== '147' or '148' or '149':
-            self.yicon.setPixmap(QPixmap('greentrain.png'))
-        if block > 149 and block < 151: #== '150':
-            self.zicon.setPixmap(QPixmap('greentrain.png'))
-        if block == 74:
-            self.gate50.setStyleSheet('background-color: SkyBlue')
-            self.gate51.setStyleSheet('background-color: white; color: gray')
-        if block == 83:
-            self.gate60.setStyleSheet('background-color: SkyBlue')
-            self.gate61.setStyleSheet('background-color: white; color: gray')
-        if block == 98:
-            self.gate61.setStyleSheet('background-color: SkyBlue')
-            self.gate60.setStyleSheet('background-color: white; color: gray')
-        if block == 79:
-            self.gate51.setStyleSheet('background-color: SkyBlue')
-            self.gate50.setStyleSheet('background-color: white; color: gray')
-        if block == 148:
-            self.gate20.setStyleSheet('background-color: SkyBlue')
-            self.gate21.setStyleSheet('background-color: white; color: gray')
+    def changeOccupancy(self, line, block, sec):
+        #print("change occ line block sec", line, block, sec)
+        img = QPixmap('greentrain.png')
+        self.occupied.append(block)
+        print("occupied blocks", self.occupied)
         
-        
+        if self.first == 1 and line == 'Green':
+            #secbutton = self.wayside1sectionrange.index(sec)
+            #print("change", secbutton, "button down in 1")
+            #print("wayside1sectionrange",self.wayside1sectionrange)
+            if sec == 'A':
+                self.nicon.setPixmap(img)
+            elif sec == 'B':
+                self.oicon.setPixmap(img)
+            elif sec == 'C':
+                self.picon.setPixmap(img)
+            elif sec == 'D':
+                self.qicon.setPixmap(img)
+            elif sec == 'E':
+                self.ricon.setPixmap(img)
+            elif sec == 'F':
+                self.sicon.setPixmap(img)
+            elif sec == 'G':
+                self.ticon.setPixmap(img)
+            elif sec == 'H':
+                self.uicon.setPixmap(img)
+            elif sec == 'I':
+                self.vicon.setPixmap(img)
+            elif sec == 'J':
+                self.wicon.setPixmap(img)
+            elif sec == 'K':
+                self.xicon.setPixmap(img)
+            elif sec == 'L':
+                self.yicon.setPixmap(img)
+            elif sec == 'M':
+                self.zicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+        elif self.first == 2 and line == 'Green':
+            #secbutton = self.wayside2sectionrange.index(sec)
+            #print("change", secbutton, "button down in 2")
+            if sec == 'I':
+                self.nicon.setPixmap(img)
+            elif sec == 'J':
+                self.oicon.setPixmap(img)
+            elif sec == 'K':
+                self.picon.setPixmap(img)
+            elif sec == 'L':
+                self.qicon.setPixmap(img)
+            elif sec == 'M':
+                self.ricon.setPixmap(img)
+            elif sec == 'N':
+                self.sicon.setPixmap(img)
+            elif sec == 'O':
+                self.ticon.setPixmap(img)
+            elif sec == 'P':
+                self.uicon.setPixmap(img)
+            elif sec == 'Q':
+                self.vicon.setPixmap(img)
+            elif sec == 'R':
+                self.wicon.setPixmap(img)
+            elif sec == 'S':
+                self.xicon.setPixmap(img)
+            elif sec == 'T':
+                self.yicon.setPixmap(img)
+            elif sec == 'U':
+                self.zicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+            #print("wayside2sectionrange",self.wayside2sectionrange)
+        elif self.first == 3 and line == 'Green':
+            #secbutton = self.wayside3sectionrange.index(sec)
+            #print("change", secbutton, "button down in 3")
+            if sec == 'M':
+                self.nicon.setPixmap(img)
+            elif sec == 'N':
+                self.oicon.setPixmap(img)
+            elif sec == 'O':
+                self.picon.setPixmap(img)
+            elif sec == 'P':
+                self.qicon.setPixmap(img)
+            elif sec == 'Q':
+                self.ricon.setPixmap(img)
+            elif sec == 'R':
+                self.sicon.setPixmap(img)
+            elif sec == 'S':
+                self.ticon.setPixmap(img)
+            elif sec == 'T':
+                self.uicon.setPixmap(img)
+            elif sec == 'U':
+                self.vicon.setPixmap(img)
+            elif sec == 'V':
+                self.wicon.setPixmap(img)
+            elif sec == 'W':
+                self.xicon.setPixmap(img)
+            elif sec == 'X':
+                self.yicon.setPixmap(img)
+            elif sec == 'Y':
+                self.zicon.setPixmap(img)
+            elif sec == 'Z':
+                self.yicon.setPixmap(img)
+            elif sec == 'A':
+                self.zicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+            #print("wayside3sectionrange",self.wayside3sectionrange)
+        elif self.first == 4 and line == 'Green':
+            #secbutton = self.wayside4sectionrange.index(sec)
+            #print("change", secbutton, "button down in 4")
+            if sec == 'U':
+                self.nicon.setPixmap(img)
+            elif sec == 'V':
+                self.oicon.setPixmap(img)
+            elif sec == 'W':
+                self.picon.setPixmap(img)
+            elif sec == 'X':
+                self.qicon.setPixmap(img)
+            elif sec == 'Y':
+                self.ricon.setPixmap(img)
+            elif sec == 'Z':
+                self.sicon.setPixmap(img)
+            elif sec == 'A':
+                self.ticon.setPixmap(img)
+            elif sec == 'B':
+                self.uicon.setPixmap(img)
+            elif sec == 'C':
+                self.vicon.setPixmap(img)
+            elif sec == 'D':
+                self.wicon.setPixmap(img)
+            elif sec == 'E':
+                self.xicon.setPixmap(img)
+            elif sec == 'F':
+                self.yicon.setPixmap(img)
+            elif sec == 'G':
+                self.zicon.setPixmap(img)
+            elif sec == 'H':
+                self.yicon.setPixmap(img)
+            elif sec == 'I':
+                self.zicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+        elif self.first == 5 and line == 'Red':
+            #secbutton = self.wayside5sectionrange.index(sec)
+            #print("change", secbutton, "button down in 5")
+            if sec == 'A':
+                self.nicon.setPixmap(img)
+            elif sec == 'B':
+                self.oicon.setPixmap(img)
+            elif sec == 'C':
+                self.picon.setPixmap(img)
+            elif sec == 'D':
+                self.qicon.setPixmap(img)
+            elif sec == 'E':
+                self.ricon.setPixmap(img)
+            elif sec == 'F':
+                self.sicon.setPixmap(img)
+            elif sec == 'G':
+                self.ticon.setPixmap(img)
+            elif sec == 'H':
+                self.uicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+        elif self.first == 6 and line == 'Red':
+            #secbutton = self.wayside6sectionrange.index(sec)
+            #print("change", secbutton, "button down in 6")
+            if  sec == 'F':
+                self.nicon.setPixmap(img)
+            elif sec == 'G':
+                self.oicon.setPixmap(img)
+            elif sec == 'H':
+                self.picon.setPixmap(img)
+            elif sec == 'I':
+                self.qicon.setPixmap(img)
+            elif sec == 'J':
+                self.ricon.setPixmap(img)
+            elif sec == 'K':
+                self.sicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+        elif self.first == 7 and line == 'Red':
+            #secbutton = self.wayside7sectionrange.index(sec)
+            #print("change", secbutton, "button down in 7")
+            
+            if sec == 'H':
+                self.nicon.setPixmap(img)
+            elif sec == 'I':
+                self.oicon.setPixmap(img)
+            elif sec == 'J':
+                self.picon.setPixmap(img)
+            elif sec == 'K':
+                self.qicon.setPixmap(img)
+            elif sec == 'L':
+                self.ricon.setPixmap(img)
+            elif sec == 'M':
+                self.sicon.setPixmap(img)
+            elif sec == 'N':
+                self.ticon.setPixmap(img)
+            elif sec == 'O':
+                self.uicon.setPixmap(img)
+            elif sec == 'P':
+                self.vicon.setPixmap(img)
+            elif sec == 'Q':
+                self.wicon.setPixmap(img)
+            elif sec == 'R':
+                self.xicon.setPixmap(img)
+            elif sec == 'S':
+                self.yicon.setPixmap(img)
+            elif sec == 'T':
+                self.zicon.setPixmap(img)
+            elif sec == 'A':
+                self.aaicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
+        elif self.first == 8 and line == 'Red':
+            #secbutton = self.wayside8sectionrange.index(sec)
+            #print("change", secbutton, "button down in 8")
+            if  sec == 'K':
+                self.nicon.setPixmap(img)
+            elif sec == 'L':
+                self.oicon.setPixmap(img)
+            elif sec == 'M':
+                self.picon.setPixmap(img)
+            elif sec == 'N':
+                self.qicon.setPixmap(img)
+            elif sec == 'O':
+                self.ricon.setPixmap(img)
+            elif sec == 'P':
+                self.sicon.setPixmap(img)
+            elif sec == 'Q':
+                self.ticon.setPixmap(img)
+            elif sec == 'R':
+                self.uicon.setPixmap(img)
+            elif sec == 'S':
+                self.vicon.setPixmap(img)
+            elif sec == 'T':
+                self.wicon.setPixmap(img)
+            elif sec == 'A':
+                self.xicon.setPixmap(img)
+            elif sec == 'B':
+                self.yicon.setPixmap(img)
+            elif sec == 'C':
+                self.zicon.setPixmap(img)
+            elif sec == 'D':
+                self.aaicon.setPixmap(img)
+            elif sec == 'E':
+                self.bbicon.setPixmap(img)
+            elif sec == 'F':
+                self.ccicon.setPixmap(img)
+            else:
+                print("occupied section not on this wayside")
 
-    def changeVacancy(self, block):
-        print("wayside a UI block", block, "is vacant")
-        if block > 76 and block < 86: #== '77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
-            self.nicon.setPixmap(QPixmap('tracks.png'))
-        if block > 85 and block < 89: #== '86' or '87' or '88':
-            self.oicon.setPixmap(QPixmap('tracks.png'))
-        if block > 88 and block < 98: #== '89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
-            self.picon.setPixmap(QPixmap('tracks.png'))
-        if block > 97 and block < 101: #== '98' or '99' or '100':
-            self.qicon.setPixmap(QPixmap('tracks.png'))
-        if block > 100 and block < 102: #== '101':
-            self.ricon.setPixmap(QPixmap('tracks.png'))
-        if block > 101 and block < 105: #== '102' or '103' or '104':
-            self.sicon.setPixmap(QPixmap('tracks.png'))
-        if block > 104 and block < 110: #== '105' or '106' or '107' or '108' or '109':
-            self.ticon.setPixmap(QPixmap('tracks.png'))
-        if block > 109 and block < 117: #== '110' or '111' or '112' or '113' or '114' or '115' or '116':
-            self.uicon.setPixmap(QPixmap('tracks.png'))
-        if block > 116 and block < 122: #== '117' or '118' or '119' or '120' or '121':
-            self.vicon.setPixmap(QPixmap('tracks.png'))
-        if block > 121 and block < 144: #== '122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
-            self.vicon.setPixmap(QPixmap('tracks.png'))
-        if block > 143 and block < 147: #== '144' or '145' or '146':
-            self.xicon.setPixmap(QPixmap('tracks.png'))
-        if block > 146 and block < 150: #== '147' or '148' or '149':
-            self.yicon.setPixmap(QPixmap('tracks.png'))
-        if block > 149 and block < 151: #== '150':
-            self.zicon.setPixmap(QPixmap('tracks.png'))
+    def changeVacancy(self, line, block, sec):
+        #print("wayside a UI block", block, "is vacant")
+        img = QPixmap('tracks.png')
+        print("vacancy line, block, sec", line, block, sec)
+        find = self.occupied.index(block)
+        print("find", find)
+        self.occupied.pop(find)
+        print("occupied blocks", self.occupied)
+        
+        if self.first == 1:
+            #secbutton = self.wayside1sectionrange.index(sec)
+            #print("change", secbutton, "button down in 1")
+            #print("wayside1sectionrange",self.wayside1sectionrange)
+            if sec == 'A':
+                self.nicon.setPixmap(img)
+            elif sec == 'B':
+                self.oicon.setPixmap(img)
+            elif sec == 'C':
+                self.picon.setPixmap(img)
+            elif sec == 'D':
+                self.qicon.setPixmap(img)
+            elif sec == 'E':
+                self.ricon.setPixmap(img)
+            elif sec == 'F':
+                self.sicon.setPixmap(img)
+            elif sec == 'G':
+                self.ticon.setPixmap(img)
+            elif sec == 'H':
+                self.uicon.setPixmap(img)
+            elif sec == 'I':
+                self.vicon.setPixmap(img)
+            elif sec == 'J':
+                self.wicon.setPixmap(img)
+            elif sec == 'K':
+                self.xicon.setPixmap(img)
+            elif sec == 'L':
+                self.yicon.setPixmap(img)
+            elif sec == 'M':
+                self.zicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+        elif self.first == 2:
+            #secbutton = self.wayside2sectionrange.index(sec)
+            #print("change", secbutton, "button down in 2")
+            if sec == 'I':
+                self.nicon.setPixmap(img)
+            elif sec == 'J':
+                self.oicon.setPixmap(img)
+            elif sec == 'K':
+                self.picon.setPixmap(img)
+            elif sec == 'L':
+                self.qicon.setPixmap(img)
+            elif sec == 'M':
+                self.ricon.setPixmap(img)
+            elif sec == 'N':
+                self.sicon.setPixmap(img)
+            elif sec == 'O':
+                self.ticon.setPixmap(img)
+            elif sec == 'P':
+                self.uicon.setPixmap(img)
+            elif sec == 'Q':
+                self.vicon.setPixmap(img)
+            elif sec == 'R':
+                self.wicon.setPixmap(img)
+            elif sec == 'S':
+                self.xicon.setPixmap(img)
+            elif sec == 'T':
+                self.yicon.setPixmap(img)
+            elif sec == 'U':
+                self.zicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+            #print("wayside2sectionrange",self.wayside2sectionrange)
+        elif self.first == 3:
+            #secbutton = self.wayside3sectionrange.index(sec)
+            #print("change", secbutton, "button down in 3")
+            if sec == 'M':
+                self.nicon.setPixmap(img)
+            elif sec == 'N':
+                self.oicon.setPixmap(img)
+            elif sec == 'O':
+                self.picon.setPixmap(img)
+            elif sec == 'P':
+                self.qicon.setPixmap(img)
+            elif sec == 'Q':
+                self.ricon.setPixmap(img)
+            elif sec == 'R':
+                self.sicon.setPixmap(img)
+            elif sec == 'S':
+                self.ticon.setPixmap(img)
+            elif sec == 'T':
+                self.uicon.setPixmap(img)
+            elif sec == 'U':
+                self.vicon.setPixmap(img)
+            elif sec == 'V':
+                self.wicon.setPixmap(img)
+            elif sec == 'W':
+                self.xicon.setPixmap(img)
+            elif sec == 'X':
+                self.yicon.setPixmap(img)
+            elif sec == 'Y':
+                self.zicon.setPixmap(img)
+            elif sec == 'Z':
+                self.yicon.setPixmap(img)
+            elif sec == 'A':
+                self.zicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+            #print("wayside3sectionrange",self.wayside3sectionrange)
+        elif self.first == 4:
+            #secbutton = self.wayside4sectionrange.index(sec)
+            #print("change", secbutton, "button down in 4")
+            if sec == 'U':
+                self.nicon.setPixmap(img)
+            elif sec == 'V':
+                self.oicon.setPixmap(img)
+            elif sec == 'W':
+                self.picon.setPixmap(img)
+            elif sec == 'X':
+                self.qicon.setPixmap(img)
+            elif sec == 'Y':
+                self.ricon.setPixmap(img)
+            elif sec == 'Z':
+                self.sicon.setPixmap(img)
+            elif sec == 'A':
+                self.ticon.setPixmap(img)
+            elif sec == 'B':
+                self.uicon.setPixmap(img)
+            elif sec == 'C':
+                self.vicon.setPixmap(img)
+            elif sec == 'D':
+                self.wicon.setPixmap(img)
+            elif sec == 'E':
+                self.xicon.setPixmap(img)
+            elif sec == 'F':
+                self.yicon.setPixmap(img)
+            elif sec == 'G':
+                self.zicon.setPixmap(img)
+            elif sec == 'H':
+                self.yicon.setPixmap(img)
+            elif sec == 'I':
+                self.zicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+        elif self.first == 5:
+            #secbutton = self.wayside5sectionrange.index(sec)
+            #print("change", secbutton, "button down in 5")
+            if sec == 'A':
+                self.nicon.setPixmap(img)
+            elif sec == 'B':
+                self.oicon.setPixmap(img)
+            elif sec == 'C':
+                self.picon.setPixmap(img)
+            elif sec == 'D':
+                self.qicon.setPixmap(img)
+            elif sec == 'E':
+                self.ricon.setPixmap(img)
+            elif sec == 'F':
+                self.sicon.setPixmap(img)
+            elif sec == 'G':
+                self.ticon.setPixmap(img)
+            elif sec == 'H':
+                self.uicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+        elif self.first == 6:
+            #secbutton = self.wayside6sectionrange.index(sec)
+            #print("change", secbutton, "button down in 6")
+            if  sec == 'F':
+                self.nicon.setPixmap(img)
+            elif sec == 'G':
+                self.oicon.setPixmap(img)
+            elif sec == 'H':
+                self.picon.setPixmap(img)
+            elif sec == 'I':
+                self.qicon.setPixmap(img)
+            elif sec == 'J':
+                self.ricon.setPixmap(img)
+            elif sec == 'K':
+                self.sicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+        elif self.first == 7:
+            #secbutton = self.wayside7sectionrange.index(sec)
+            #print("change", secbutton, "button down in 7")
+            
+            if sec == 'H':
+                self.nicon.setPixmap(img)
+            elif sec == 'I':
+                self.oicon.setPixmap(img)
+            elif sec == 'J':
+                self.picon.setPixmap(img)
+            elif sec == 'K':
+                self.qicon.setPixmap(img)
+            elif sec == 'L':
+                self.ricon.setPixmap(img)
+            elif sec == 'M':
+                self.sicon.setPixmap(img)
+            elif sec == 'N':
+                self.ticon.setPixmap(img)
+            elif sec == 'O':
+                self.uicon.setPixmap(img)
+            elif sec == 'P':
+                self.vicon.setPixmap(img)
+            elif sec == 'Q':
+                self.wicon.setPixmap(img)
+            elif sec == 'R':
+                self.xicon.setPixmap(img)
+            elif sec == 'S':
+                self.yicon.setPixmap(img)
+            elif sec == 'T':
+                self.zicon.setPixmap(img)
+            elif sec == 'A':
+                self.aaicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
+        elif self.first == 8:
+            #secbutton = self.wayside8sectionrange.index(sec)
+            #print("change", secbutton, "button down in 8")
+            if  sec == 'K':
+                self.nicon.setPixmap(img)
+            elif sec == 'L':
+                self.oicon.setPixmap(img)
+            elif sec == 'M':
+                self.picon.setPixmap(img)
+            elif sec == 'N':
+                self.qicon.setPixmap(img)
+            elif sec == 'O':
+                self.ricon.setPixmap(img)
+            elif sec == 'P':
+                self.sicon.setPixmap(img)
+            elif sec == 'Q':
+                self.ticon.setPixmap(img)
+            elif sec == 'R':
+                self.uicon.setPixmap(img)
+            elif sec == 'S':
+                self.vicon.setPixmap(img)
+            elif sec == 'T':
+                self.wicon.setPixmap(img)
+            elif sec == 'A':
+                self.xicon.setPixmap(img)
+            elif sec == 'B':
+                self.yicon.setPixmap(img)
+            elif sec == 'C':
+                self.zicon.setPixmap(img)
+            elif sec == 'D':
+                self.aaicon.setPixmap(img)
+            elif sec == 'E':
+                self.bbicon.setPixmap(img)
+            elif sec == 'F':
+                self.ccicon.setPixmap(img)
+            else:
+                print("vacant section not on this wayside")
 
      #function for number of active trains
     #somehow counts the number of times the red train label comes up
@@ -1498,12 +1991,12 @@ class selectionWindow(QWidget):
         layout.addWidget(self.select)
         self.setLayout(layout)
         self.select.currentTextChanged.connect(self.showmain)
+              
         
-
     def showmain(self):
         self.main = WMainWindowA()
         self.current = self.select.currentIndex()
-        #print("current from selection", self.current)
+        print("current from selection", self.current)
         signals.waysidefirst.emit(self.current)
         self.main.show()
         self.close()
