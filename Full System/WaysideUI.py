@@ -18,8 +18,8 @@ from PLCParser import WTrack
 
 #if wrong file make error
 #show fault
-#change section and change bl pop up
-#
+#change occupancy on popups
+#change pop up so you don't need to select (maybe)
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
@@ -997,7 +997,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         print("whichsection", whichsection)
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
-        sectionmatrix = []
+        self.sectionmatrix = []
         counti = 0
         countj = 0
         
@@ -1006,6 +1006,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             currentletter.append(self.wayside1range[0])
             print("wayside1sectionrange", self.wayside1sectionrange)
             print("wayside1range", self.wayside1range)
+            print("wayside1 sectionrange", self.sectionrange)
             for i in self.sectionrange:
                 currentletter = []
                 for j in self.wayside1sectionrange:
@@ -1015,10 +1016,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 2:
-            print("wayside2sectionrange", self.wayside2sectionrange)
-            print("wayside2range", self.wayside2range)
+            #print("wayside2sectionrange", self.wayside2sectionrange)
+            #print("wayside2range", self.wayside2range)
             currentletter = []
             currentletter.append(self.wayside2range[0])
             for i in self.sectionrange:
@@ -1030,10 +1031,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 3:
-            print("wayside3sectionrange", self.wayside3sectionrange)
-            print("wayside3range", self.wayside3range)
+            #print("wayside3sectionrange", self.wayside3sectionrange)
+            #print("wayside3range", self.wayside3range)
             currentletter = []
             currentletter.append(self.wayside3range[0])
             for i in self.sectionrange:
@@ -1045,10 +1046,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 4:
-            print("wayside4sectionrange", self.wayside4sectionrange)
-            print("wayside4range", self.wayside4range)
+            #print("wayside4sectionrange", self.wayside4sectionrange)
+            #print("wayside4range", self.wayside4range)
             currentletter = []
             currentletter.append(self.wayside4range[0])
             for i in self.sectionrange:
@@ -1060,10 +1061,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 5:
-            print("wayside5sectionrange", self.wayside5sectionrange)
-            print("wayside5range", self.wayside5range)
+            #print("wayside5sectionrange", self.wayside5sectionrange)
+            #print("wayside5range", self.wayside5range)
             currentletter = []
             currentletter.append(self.wayside5range[0])
             for i in self.sectionrange:
@@ -1075,10 +1076,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 6:
-            print("wayside6sectionrange", self.wayside6sectionrange)
-            print("wayside6range", self.wayside6range)
+            #print("wayside6sectionrange", self.wayside6sectionrange)
+            #print("wayside6range", self.wayside6range)
             currentletter = []
             currentletter.append(self.wayside6range[0])
             for i in self.sectionrange:
@@ -1090,10 +1091,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 7:
-            print("wayside7sectionrange", self.wayside7sectionrange)
-            print("wayside7range", self.wayside7range)
+            #print("wayside7sectionrange", self.wayside7sectionrange)
+            #print("wayside7range", self.wayside7range)
             currentletter = []
             currentletter.append(self.wayside7range[0])
             for i in self.sectionrange:
@@ -1105,10 +1106,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
         if self.first == 8:
-            print("wayside8sectionrange", self.wayside8sectionrange)
-            print("wayside8range", self.wayside8range)
+            #print("wayside8sectionrange", self.wayside8sectionrange)
+            #print("wayside8range", self.wayside8range)
             currentletter = []
             currentletter.append(self.wayside8range[0])
             for i in self.sectionrange:
@@ -1120,10 +1121,167 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                         continue
                     countj = countj + 1
                 counti = counti + 1
-                sectionmatrix.append(currentletter)
+                self.sectionmatrix.append(currentletter)
                 #print("current letter",currentletter)
         #print("section", self.)
-        print("section matrix",sectionmatrix)
+        print("section matrix",self.sectionmatrix)
+        sectionrow = self.sectionrange.index(whichsection)
+        print("wayside1 matrix row", self.sectionmatrix[sectionrow])
+
+        #for i in range(sectionrow):
+            #self.bl.gridLayout.setText(self.sectionmatrix[sectionrow][i])
+
+        l = len(self.sectionmatrix[sectionrow])
+
+        if l == 16:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block11.setText(str(self.sectionmatrix[sectionrow][10]))
+            self.bl.block13.setText(str(self.sectionmatrix[sectionrow][12]))
+            self.bl.block14.setText(str(self.sectionmatrix[sectionrow][13]))
+            self.bl.block15.setText(str(self.sectionmatrix[sectionrow][14]))
+            self.bl.block16.setText(str(self.sectionmatrix[sectionrow][15]))
+        elif l == 15:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block11.setText(str(self.sectionmatrix[sectionrow][10]))
+            self.bl.block12.setText(str(self.sectionmatrix[sectionrow][11]))
+            self.bl.block13.setText(str(self.sectionmatrix[sectionrow][12]))
+            self.bl.block14.setText(str(self.sectionmatrix[sectionrow][13]))
+            self.bl.block15.setText(str(self.sectionmatrix[sectionrow][14]))
+        elif l == 14:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block12.setText(str(self.sectionmatrix[sectionrow][11]))
+            self.bl.block13.setText(str(self.sectionmatrix[sectionrow][12]))
+            self.bl.block14.setText(str(self.sectionmatrix[sectionrow][13]))
+        elif l == 13:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setTextstr((self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block11.setText(str(self.sectionmatrix[sectionrow][10]))
+            self.bl.block12.setText(str(self.sectionmatrix[sectionrow][11]))
+            self.bl.block13.setText(str(self.sectionmatrix[sectionrow][12]))
+        elif l == 12:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block11.setText(str(self.sectionmatrix[sectionrow][10]))
+            self.bl.block12.setText(str(self.sectionmatrix[sectionrow][11]))
+        elif l == 11:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+            self.bl.block11.setText(str(self.sectionmatrix[sectionrow][10]))
+        elif l == 10:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+            self.bl.block10.setText(str(self.sectionmatrix[sectionrow][9]))
+        elif l == 9:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+            self.bl.block9.setText(str(self.sectionmatrix[sectionrow][8]))
+        elif l == 8:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+            self.bl.block8.setText(str(self.sectionmatrix[sectionrow][7]))
+        elif l == 7:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+            self.bl.block7.setText(str(self.sectionmatrix[sectionrow][6]))
+        elif l == 6:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+            self.bl.block6.setText(str(self.sectionmatrix[sectionrow][5]))
+        elif l == 5:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+            self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
+        elif l == 4:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+            self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
+        elif l == 3:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
+        elif l == 2:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+        elif l == 1:
+            self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
+
+        h = 30 + 46*len(self.sectionmatrix[sectionrow])
+        self.bl.resize(505, h) 
 
         #positions = [(i, 1) for i in range(2,len(self.sectionrange)+2)]
         #print("length of sectionrange", self.sectionrange)
@@ -1991,6 +2149,8 @@ class selectionWindow(QWidget):
         layout.addWidget(self.select)
         self.setLayout(layout)
         self.select.currentTextChanged.connect(self.showmain)
+        
+        #signals.waysidefirst.emit(1)
               
         
     def showmain(self):
