@@ -349,8 +349,6 @@ class GainWindow(QtWidgets.QMainWindow):
 
         self.KILabel = QtWidgets.QLabel("KI Gain: ", self)
         self.KILabel.setGeometry(100, 150, 110, 100)
-        font = QtGui.QFont()
-        font.setPointSize(24)
         self.KILabel.setFont(font)
 
          # init KP/PI Edits, confirm button # 
@@ -362,6 +360,12 @@ class GainWindow(QtWidgets.QMainWindow):
         self.confirm = QtWidgets.QPushButton("Confirm", self)
         self.confirm.setGeometry(370, 250, 100, 50)
         self.confirm.clicked.connect(self.confirmClick)
+
+        self.confirmLabel = QtWidgets.QLabel(" ", self)
+        self.confirmLabel.setGeometry(50, 225, 350, 100)
+        font2 = QtGui.QFont()
+        font2.setPointSize(14)
+        self.confirmLabel.setFont(font2)
         
 
     def confirmClick(self):
@@ -376,3 +380,5 @@ class GainWindow(QtWidgets.QMainWindow):
         signals.trainControllerUIKI.emit(INPUT3)
         print("KI changed to " + textki)
         self.KIChange.setText(textki)
+
+        self.confirmLabel.setText("KP and KI values have been updated")
