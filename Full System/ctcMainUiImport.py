@@ -561,7 +561,7 @@ class Ui_MainWindow(object):
         self.redOccupancyText.setStyleSheet("background-color: LightCoral; color: Black")
         self.redOccupancyText.setObjectName("redOccupancyText")
         self.thisIsATest = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.thisIsATest.setGeometry(QtCore.QRect(310, 530, 101, 24))
+        self.thisIsATest.setGeometry(QtCore.QRect(310, 530, 71, 24))
         self.thisIsATest.setObjectName("thisIsATest")
         self.greenTrainInfoTable = QtWidgets.QTableWidget(parent=self.centralwidget)
         self.greenTrainInfoTable.setGeometry(QtCore.QRect(310, 60, 461, 101))
@@ -645,7 +645,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuNorth_Shore_Extension_CTC_Window.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -824,11 +824,11 @@ class Ui_MainWindow(object):
         self.menuNorth_Shore_Extension_CTC_Window.setTitle(_translate("MainWindow", "North Shore Extension - CTC Window"))
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = Ui_MainWindow()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec())
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec())
