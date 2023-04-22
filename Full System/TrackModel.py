@@ -44,7 +44,7 @@ class TrackModel(QObject):
         # connect train model signals
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
         signals.trackModelPassengersChanging.connect(self.board)
-        signals.waysideSwitchStates.connect(self.switchChanged)
+        signals.waysideSwitchtoTrack.connect(self.switchChanged)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
