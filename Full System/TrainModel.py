@@ -30,6 +30,7 @@ class TrainModel(QObject):
         signals.trainModelGetTrack.connect(self.trackReceived)
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
         signals.trainModelEmerBrake.connect(self.emerBrakeActive)
+        signals.waysideAuthority.connect(self.newAuthority)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -210,3 +211,9 @@ class TrainModel(QObject):
     
     def emerBrakeActive(self, emerBrake):
         self.emerBrake = emerBrake
+    
+    def newAuthority(self,blocks, train):
+        for i in range(blocks):
+            auth = train.route[i]
+
+        signals.trainModelAuthorityToTrainController.emit(auth)
