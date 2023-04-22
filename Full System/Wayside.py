@@ -17,7 +17,7 @@ class Wayside(QObject):
         self.ui = mainui
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
 
-        self.wayside1range = []
+        self.wayside1range = []#GREEN
         self.wayside1sectionrange = []
         self.wayside2range = []
         self.wayside2sectionrange = []
@@ -25,8 +25,7 @@ class Wayside(QObject):
         self.wayside3sectionrange = []
         self.wayside4range = []
         self.wayside4sectionrange = []
-
-        self.wayside5range = []
+        self.wayside5range = []#RED
         self.wayside5sectionrange = []
         self.wayside6range = []
         self.wayside6sectionrange = []
@@ -34,6 +33,17 @@ class Wayside(QObject):
         self.wayside7sectionrange = []
         self.wayside8range = []
         self.wayside8sectionrange = []
+
+        self.track0 = []
+        self.track1 = []
+        self.section0 = []
+        self.section1 = []
+        self.stations0 = []
+        self.stations1 = []
+        self.switchLocations0 = []
+        self.switchLocations1 = []
+        self.switchStates0 = []
+        self.switchStates1 = []
 
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
@@ -45,21 +55,114 @@ class Wayside(QObject):
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
 
+        signals.waysideTrackfromPLC.connect(self.setTracks)
+        signals.waysideSectionsfromPLC.connect(self.setSections)
+        signals.waysideSwitchLocationsfromPLC.connect(self.setSwitchLocations)
+        signals.waysideSwitchStatesfromPLC.connect(self.setSwitchStates)
+        signals.waysideStationsfromPLC.connect(self.setStations)
+
         #get switch change from ctc
         #pass on switch state pass stem and branch (int, int)
         #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
+        #have CTC send authority as 0 and 1 not red and green
+        #vacant signals need to be one behind occupied
+        #send section with occupancy
+
+    def setTracks(self, track0, track1):
+        self.track0 = track0
+        self.track1 = track1
+
+    def setSections(self, section0, section1):
+        self.section0 = section0
+        self.section1 = section1
+
+    def setStations(self, s0, s1):
+        self.stations0 = s0
+        self.stations1 = s1
+
+    def setSwitchLocations(self, loc0, loc1):
+        self.switchLocations0 = loc0
+        self.switchLocations1 = loc1
+
+    def setSwitchStates(self, state0, state1):
+        self.switchStates0 = state0
+        self.switchStates1 = state1
 
     def updateAuthority(self, line, block):
-        print("authority starts at 8")
+        #print("authority starts at 8")
         auth = 8
-        currblock = block
-        if line == '0':
-            print("green")
-            
-        elif line == '1':
-            print("red")
+        currblock = self.track0.index(block)
+        
+        print("authority currblock", currblock)
+        print("authority line", line)
+        
+        
+        if line == 'Green':
+            #print("in green")
+            next1 = self.track0[currblock+1]
+            #print("authority next1", next1)
+            next2 = self.track0[currblock+2]
+            #print("authority next2", next2)
+            next3 = self.track0[currblock+3]
+            next4 = self.track0[currblock+4]
+            next5 = self.track0[currblock+5]
+            next6 = self.track0[currblock+6]
+            next7 = self.track0[currblock+7]
+            next8 = self.track0[currblock+8]
 
-        signals.waysideAuthoritytoTrack.emit(auth)
+            for i in self.stations0:
+                if i == next8:
+                    auth = 7
+                elif i == next7:
+                    auth = 6
+                elif i == next6:
+                    auth = 5
+                elif i == next5:
+                    auth = 4
+                elif i == next4:
+                    auth = 3
+                elif i == next3:
+                    auth = 2
+                elif i == next2:
+                    auth = 1
+                elif i == next1:
+                    auth = 0
+                else:
+                    auth = 8
+        elif line == 'Red':
+            #print("in red")
+            next1 = self.track1[currblock+1]
+            #print("authority next1", next1)
+            next2 = self.track1[currblock+2]
+            #print("authority next2", next2)
+            next3 = self.track1[currblock+3]
+            next4 = self.track1[currblock+4]
+            next5 = self.track1[currblock+5]
+            next6 = self.track1[currblock+6]
+            next7 = self.track1[currblock+7]
+            next8 = self.track1[currblock+8]
+
+            for i in self.stations1:
+                if i == next8:
+                    auth = 7
+                elif i == next7:
+                    auth = 6
+                elif i == next6:
+                    auth = 5
+                elif i == next5:
+                    auth = 4
+                elif i == next4:
+                    auth = 3
+                elif i == next3:
+                    auth = 2
+                elif i == next2:
+                    auth = 1
+                elif i == next1:
+                    auth = 0
+                else:
+                    auth = 8
+
+        signals.waysideAuthoritytoTrack.emit(auth, currblock)
 
     def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
         signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
