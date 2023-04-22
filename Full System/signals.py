@@ -107,6 +107,7 @@ class Signals(QObject):
     trainModelPassengers = pyqtSignal(int)
     trainModelDestinationSignal = pyqtSignal(list)
     trainModelLineSignal= pyqtSignal(Line)
+    trainModelGUISpeedLim = pyqtSignal(str)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)
