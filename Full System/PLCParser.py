@@ -175,7 +175,7 @@ class WTrack:
         #self.main.setupinstances()
         #print("plcparsere rage 2", self.wayside1range)
        
-        #print("wayside added in plcparser")
+        print("wayside added in plcparser")
         #signals.actuallyshutup.emit()
 
     def wholeTrack(self):
@@ -183,12 +183,12 @@ class WTrack:
         signals.waysideTrackfromPLC.emit(self.track0, self.track1)
         #print("sections:", self.sections)
         signals.waysideSectionsfromPLC.emit(self.sections0, self.sections1)
+        signals.waysideAllSectionsfromPLC.emit(self.allsection0, self.allsection1)
         #print("switches:", self.switches)
         signals.waysideSwitchLocationsfromPLC.emit(self.switches0, self.switches1)
         #print("switchStates:", self.switchStates)
         signals.waysideSwitchStatesfromPLC.emit(self.switchState0, self.switchState1)
 
-        #print("wtrack" )
         #signals.actuallyshutup.emit()
         #signals.waysiderange2.emit(self.wayside2range)
         #signals.waysidesectionrange2.emit(self.wayside2sectionrange)
@@ -197,7 +197,7 @@ class WTrack:
         print("whole track sent")
 
     def parse(self, fname = "plcLogic_All"):
-        #print("parser instanced")
+        print("parser instanced")
         #print("fname",fname)
         line = 0
         #fname = "plcLogic_Green"
@@ -264,5 +264,5 @@ class WTrack:
             
             newtrack0.Waysides()
             newtrack0.wholeTrack()
-            #print("end of parser")
+            print("end of parser")
             
