@@ -569,7 +569,7 @@ class Ui_MainWindow(object):
         self.redOccupancyText.setStyleSheet(u"background-color: LightCoral; color: Black")
         self.thisIsATest = QPushButton(self.centralwidget)
         self.thisIsATest.setObjectName(u"thisIsATest")
-        self.thisIsATest.setGeometry(QRect(310, 530, 101, 24))
+        self.thisIsATest.setGeometry(QRect(310, 530, 71, 24))
         self.greenTrainInfoTable = QTableWidget(self.centralwidget)
         if (self.greenTrainInfoTable.columnCount() < 4):
             self.greenTrainInfoTable.setColumnCount(4)
@@ -654,7 +654,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

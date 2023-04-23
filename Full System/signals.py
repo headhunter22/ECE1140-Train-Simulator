@@ -51,6 +51,7 @@ class Signals(QObject):
     waysideStationsfromPLC = pyqtSignal(list, list)
     waysideSwitchLocationsfromPLC = pyqtSignal(list, list) # 
     waysideSectionsfromPLC = pyqtSignal(list, list)
+    waysideAllSectionsfromPLC = pyqtSignal(list, list)
     waysideSwitchStatesfromPLC = pyqtSignal(list, list)
     waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
 
@@ -60,8 +61,8 @@ class Signals(QObject):
     waysidesetup = pyqtSignal(int)
 
     # wayside UI signals
-    wtowOccupancy = pyqtSignal(int) # block
-    wtowVacancy = pyqtSignal(int) # block
+    wtowOccupancy = pyqtSignal(str, int, str) # block
+    wtowVacancy = pyqtSignal(str, int, str) # block
     count = 0
     wtowTrainCount = pyqtSignal(int) # number of active trains
 

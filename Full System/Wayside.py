@@ -38,6 +38,8 @@ class Wayside(QObject):
         self.track1 = []
         self.section0 = []
         self.section1 = []
+        self.allsection0 = []
+        self.allsection1 = []
         self.stations0 = []
         self.stations1 = []
         self.switchLocations0 = []
@@ -61,13 +63,14 @@ class Wayside(QObject):
         signals.waysideSwitchLocationsfromPLC.connect(self.setSwitchLocations)
         signals.waysideSwitchStatesfromPLC.connect(self.setSwitchStates)
         signals.waysideStationsfromPLC.connect(self.setStations)
+        signals.waysideAllSectionsfromPLC.connect(self.setAllSections)
 
         #get switch change from ctc
         #pass on switch state pass stem and branch (int, int)
         #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
         #have CTC send authority as 0 and 1 not red and green
-        #vacant signals need to be one behind occupied
-        #send section with occupancy
+        #vacant signals need to be one behind occupied ( just did -1 for now but have jake look into previous block)
+        #
 
     def setTracks(self, track0, track1):
         self.track0 = track0
@@ -76,6 +79,10 @@ class Wayside(QObject):
     def setSections(self, section0, section1):
         self.section0 = section0
         self.section1 = section1
+
+    def setAllSections(self, section0, section1):
+        self.allsection0 = section0
+        self.allsection1 = section1
 
     def setStations(self, s0, s1):
         self.stations0 = s0
@@ -167,6 +174,7 @@ class Wayside(QObject):
         signals.testWaysideAuthorityToCTC.emit(line, route, auth)
 
     def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
+        print("plcinfo start")
         signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
         self.wayside1sectionrange = section1
         self.wayside2sectionrange = section2
@@ -179,6 +187,7 @@ class Wayside(QObject):
 
         signals.ranges.emit(range1, range2, range3, range4, range5, range6, range7, range8)
         self.wayside1range = range1
+        print(".py plcinfo 1 range self.", self.wayside1range)
         self.wayside2range = range2
         self.wayside3range = range3
         self.wayside4range = range4
@@ -231,14 +240,24 @@ class Wayside(QObject):
 
     def blockOccupancyReceived(self, line, block, route):
         #print(". py block", block, "is occupied")
+<<<<<<< HEAD
         signals.wtowOccupancy.emit(block)
         self.updateAuthority(line, block, route)
+=======
+        
+        id = self.track0.index(block)
+        sec = self.allsection0[id]
+        self.updateAuthority(line, block)
+        signals.wtowOccupancy.emit(line, block, sec)
+>>>>>>> 2ed1946a7eb7cf369e859c8870cdf8589a395c5a
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     
     def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
-        signals.wtowVacancy.emit(block)
+        id = self.track0.index(block)
+        sec = self.allsection0[id]
+        signals.wtowVacancy.emit(line, block, sec)
 
         #vacancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
