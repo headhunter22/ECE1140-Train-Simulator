@@ -24,7 +24,7 @@ class Ui_MainWindowA(object):
     def setupUi(self, MainWindowA):
         if not MainWindowA.objectName():
             MainWindowA.setObjectName(u"MainWindowA")
-        MainWindowA.resize(740, 793)
+        MainWindowA.resize(805, 1082)
         self.centralwidget = QWidget(MainWindowA)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
@@ -34,6 +34,10 @@ class Ui_MainWindowA(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.whichwayside = QComboBox(self.verticalLayoutWidget_2)
+        self.whichwayside.addItem("")
+        self.whichwayside.addItem("")
+        self.whichwayside.addItem("")
+        self.whichwayside.addItem("")
         self.whichwayside.addItem("")
         self.whichwayside.addItem("")
         self.whichwayside.addItem("")
@@ -51,173 +55,14 @@ class Ui_MainWindowA(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setHorizontalSpacing(20)
         self.gridLayout_4.setContentsMargins(0, -1, 9, -1)
-        self.qicon = QLabel(self.verticalLayoutWidget_2)
-        self.qicon.setObjectName(u"qicon")
-        self.qicon.setMaximumSize(QSize(50, 50))
-        self.qicon.setPixmap(QPixmap(u"tracks.png"))
-        self.qicon.setScaledContents(True)
-        self.qicon.setAlignment(Qt.AlignCenter)
+        self.aaicon = QLabel(self.verticalLayoutWidget_2)
+        self.aaicon.setObjectName(u"aaicon")
+        self.aaicon.setMaximumSize(QSize(50, 50))
+        self.aaicon.setPixmap(QPixmap(u"tracks.png"))
+        self.aaicon.setScaledContents(True)
+        self.aaicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.qicon, 5, 1, 1, 1)
-
-        self.pushu = QPushButton(self.verticalLayoutWidget_2)
-        self.pushu.setObjectName(u"pushu")
-
-        self.gridLayout_4.addWidget(self.pushu, 9, 0, 1, 1)
-
-        self.picon = QLabel(self.verticalLayoutWidget_2)
-        self.picon.setObjectName(u"picon")
-        self.picon.setMaximumSize(QSize(50, 50))
-        self.picon.setPixmap(QPixmap(u"tracks.png"))
-        self.picon.setScaledContents(True)
-        self.picon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.picon, 4, 1, 1, 1)
-
-        self.pushq = QPushButton(self.verticalLayoutWidget_2)
-        self.pushq.setObjectName(u"pushq")
-
-        self.gridLayout_4.addWidget(self.pushq, 5, 0, 1, 1)
-
-        self.pushp = QPushButton(self.verticalLayoutWidget_2)
-        self.pushp.setObjectName(u"pushp")
-
-        self.gridLayout_4.addWidget(self.pushp, 4, 0, 1, 1)
-
-        self.pushx = QPushButton(self.verticalLayoutWidget_2)
-        self.pushx.setObjectName(u"pushx")
-
-        self.gridLayout_4.addWidget(self.pushx, 12, 0, 1, 1)
-
-        self.pusht = QPushButton(self.verticalLayoutWidget_2)
-        self.pusht.setObjectName(u"pusht")
-
-        self.gridLayout_4.addWidget(self.pusht, 8, 0, 1, 1)
-
-        self.oicon = QLabel(self.verticalLayoutWidget_2)
-        self.oicon.setObjectName(u"oicon")
-        self.oicon.setMaximumSize(QSize(50, 50))
-        self.oicon.setPixmap(QPixmap(u"tracks.png"))
-        self.oicon.setScaledContents(True)
-        self.oicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.oicon, 3, 1, 1, 1)
-
-        self.pushaa = QPushButton(self.verticalLayoutWidget_2)
-        self.pushaa.setObjectName(u"pushaa")
-
-        self.gridLayout_4.addWidget(self.pushaa, 15, 0, 1, 1)
-
-        self.nicon = QLabel(self.verticalLayoutWidget_2)
-        self.nicon.setObjectName(u"nicon")
-        self.nicon.setMaximumSize(QSize(50, 50))
-        self.nicon.setPixmap(QPixmap(u"tracks.png"))
-        self.nicon.setScaledContents(True)
-        self.nicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.nicon, 2, 1, 1, 1)
-
-        self.zicon = QLabel(self.verticalLayoutWidget_2)
-        self.zicon.setObjectName(u"zicon")
-        self.zicon.setMaximumSize(QSize(50, 50))
-        self.zicon.setPixmap(QPixmap(u"tracks.png"))
-        self.zicon.setScaledContents(True)
-        self.zicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.zicon, 14, 1, 1, 1)
-
-        self.pushbb = QPushButton(self.verticalLayoutWidget_2)
-        self.pushbb.setObjectName(u"pushbb")
-
-        self.gridLayout_4.addWidget(self.pushbb, 16, 0, 1, 1)
-
-        self.pushz = QPushButton(self.verticalLayoutWidget_2)
-        self.pushz.setObjectName(u"pushz")
-
-        self.gridLayout_4.addWidget(self.pushz, 14, 0, 1, 1)
-
-        self.ricon = QLabel(self.verticalLayoutWidget_2)
-        self.ricon.setObjectName(u"ricon")
-        self.ricon.setMaximumSize(QSize(50, 50))
-        self.ricon.setPixmap(QPixmap(u"tracks.png"))
-        self.ricon.setScaledContents(True)
-        self.ricon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.ricon, 6, 1, 1, 1)
-
-        self.pushcc = QPushButton(self.verticalLayoutWidget_2)
-        self.pushcc.setObjectName(u"pushcc")
-
-        self.gridLayout_4.addWidget(self.pushcc, 17, 0, 1, 1)
-
-        self.pushs = QPushButton(self.verticalLayoutWidget_2)
-        self.pushs.setObjectName(u"pushs")
-
-        self.gridLayout_4.addWidget(self.pushs, 7, 0, 1, 1)
-
-        self.pushy = QPushButton(self.verticalLayoutWidget_2)
-        self.pushy.setObjectName(u"pushy")
-
-        self.gridLayout_4.addWidget(self.pushy, 13, 0, 1, 1)
-
-        self.uicon = QLabel(self.verticalLayoutWidget_2)
-        self.uicon.setObjectName(u"uicon")
-        self.uicon.setMaximumSize(QSize(50, 50))
-        self.uicon.setPixmap(QPixmap(u"tracks.png"))
-        self.uicon.setScaledContents(True)
-        self.uicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.uicon, 9, 1, 1, 1)
-
-        self.occupancylabel_2 = QLabel(self.verticalLayoutWidget_2)
-        self.occupancylabel_2.setObjectName(u"occupancylabel_2")
-        self.occupancylabel_2.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
-"font: 700 10pt \"Georgia\";\n"
-"color: rgb(0, 0, 0);")
-
-        self.gridLayout_4.addWidget(self.occupancylabel_2, 1, 1, 1, 1)
-
-        self.pusho = QPushButton(self.verticalLayoutWidget_2)
-        self.pusho.setObjectName(u"pusho")
-
-        self.gridLayout_4.addWidget(self.pusho, 3, 0, 1, 1)
-
-        self.wicon = QLabel(self.verticalLayoutWidget_2)
-        self.wicon.setObjectName(u"wicon")
-        self.wicon.setMaximumSize(QSize(50, 50))
-        self.wicon.setPixmap(QPixmap(u"tracks.png"))
-        self.wicon.setScaledContents(True)
-        self.wicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.wicon, 11, 1, 1, 1)
-
-        self.sectiontitle_2 = QLabel(self.verticalLayoutWidget_2)
-        self.sectiontitle_2.setObjectName(u"sectiontitle_2")
-        self.sectiontitle_2.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
-"color: rgb(0, 0, 0);\n"
-"background-color: rgb(221, 221, 221);")
-        self.sectiontitle_2.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.sectiontitle_2, 1, 0, 1, 1)
-
-        self.pushv = QPushButton(self.verticalLayoutWidget_2)
-        self.pushv.setObjectName(u"pushv")
-
-        self.gridLayout_4.addWidget(self.pushv, 10, 0, 1, 1)
-
-        self.pushw = QPushButton(self.verticalLayoutWidget_2)
-        self.pushw.setObjectName(u"pushw")
-
-        self.gridLayout_4.addWidget(self.pushw, 11, 0, 1, 1)
-
-        self.sicon = QLabel(self.verticalLayoutWidget_2)
-        self.sicon.setObjectName(u"sicon")
-        self.sicon.setMaximumSize(QSize(50, 50))
-        self.sicon.setPixmap(QPixmap(u"tracks.png"))
-        self.sicon.setScaledContents(True)
-        self.sicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.sicon, 7, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.aaicon, 15, 1, 1, 1)
 
         self.xicon = QLabel(self.verticalLayoutWidget_2)
         self.xicon.setObjectName(u"xicon")
@@ -228,57 +73,19 @@ class Ui_MainWindowA(object):
 
         self.gridLayout_4.addWidget(self.xicon, 12, 1, 1, 1)
 
-        self.yicon = QLabel(self.verticalLayoutWidget_2)
-        self.yicon.setObjectName(u"yicon")
-        self.yicon.setMaximumSize(QSize(50, 50))
-        self.yicon.setPixmap(QPixmap(u"tracks.png"))
-        self.yicon.setScaledContents(True)
-        self.yicon.setAlignment(Qt.AlignCenter)
+        self.pushp = QPushButton(self.verticalLayoutWidget_2)
+        self.pushp.setObjectName(u"pushp")
 
-        self.gridLayout_4.addWidget(self.yicon, 13, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.pushp, 4, 0, 1, 1)
 
-        self.pushn = QPushButton(self.verticalLayoutWidget_2)
-        self.pushn.setObjectName(u"pushn")
-        self.pushn.setMaximumSize(QSize(80, 16777215))
+        self.qicon = QLabel(self.verticalLayoutWidget_2)
+        self.qicon.setObjectName(u"qicon")
+        self.qicon.setMaximumSize(QSize(50, 50))
+        self.qicon.setPixmap(QPixmap(u"tracks.png"))
+        self.qicon.setScaledContents(True)
+        self.qicon.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_4.addWidget(self.pushn, 2, 0, 1, 1)
-
-        self.ticon = QLabel(self.verticalLayoutWidget_2)
-        self.ticon.setObjectName(u"ticon")
-        self.ticon.setMaximumSize(QSize(50, 50))
-        self.ticon.setPixmap(QPixmap(u"tracks.png"))
-        self.ticon.setScaledContents(True)
-        self.ticon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.ticon, 8, 1, 1, 1)
-
-        self.aaicon = QLabel(self.verticalLayoutWidget_2)
-        self.aaicon.setObjectName(u"aaicon")
-        self.aaicon.setMaximumSize(QSize(50, 50))
-        self.aaicon.setPixmap(QPixmap(u"tracks.png"))
-        self.aaicon.setScaledContents(True)
-        self.aaicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.aaicon, 15, 1, 1, 1)
-
-        self.pushr = QPushButton(self.verticalLayoutWidget_2)
-        self.pushr.setObjectName(u"pushr")
-
-        self.gridLayout_4.addWidget(self.pushr, 6, 0, 1, 1)
-
-        self.vicon = QLabel(self.verticalLayoutWidget_2)
-        self.vicon.setObjectName(u"vicon")
-        self.vicon.setMaximumSize(QSize(50, 50))
-        self.vicon.setPixmap(QPixmap(u"tracks.png"))
-        self.vicon.setScaledContents(True)
-        self.vicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.vicon, 10, 1, 1, 1)
-
-        self.pushdd = QPushButton(self.verticalLayoutWidget_2)
-        self.pushdd.setObjectName(u"pushdd")
-
-        self.gridLayout_4.addWidget(self.pushdd, 18, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.qicon, 5, 1, 1, 1)
 
         self.bbicon = QLabel(self.verticalLayoutWidget_2)
         self.bbicon.setObjectName(u"bbicon")
@@ -289,6 +96,198 @@ class Ui_MainWindowA(object):
 
         self.gridLayout_4.addWidget(self.bbicon, 16, 1, 1, 1)
 
+        self.pusht = QPushButton(self.verticalLayoutWidget_2)
+        self.pusht.setObjectName(u"pusht")
+
+        self.gridLayout_4.addWidget(self.pusht, 8, 0, 1, 1)
+
+        self.wicon = QLabel(self.verticalLayoutWidget_2)
+        self.wicon.setObjectName(u"wicon")
+        self.wicon.setMaximumSize(QSize(50, 50))
+        self.wicon.setPixmap(QPixmap(u"tracks.png"))
+        self.wicon.setScaledContents(True)
+        self.wicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.wicon, 11, 1, 1, 1)
+
+        self.yicon = QLabel(self.verticalLayoutWidget_2)
+        self.yicon.setObjectName(u"yicon")
+        self.yicon.setMaximumSize(QSize(50, 50))
+        self.yicon.setPixmap(QPixmap(u"tracks.png"))
+        self.yicon.setScaledContents(True)
+        self.yicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.yicon, 13, 1, 1, 1)
+
+        self.pushw = QPushButton(self.verticalLayoutWidget_2)
+        self.pushw.setObjectName(u"pushw")
+
+        self.gridLayout_4.addWidget(self.pushw, 11, 0, 1, 1)
+
+        self.ticon = QLabel(self.verticalLayoutWidget_2)
+        self.ticon.setObjectName(u"ticon")
+        self.ticon.setMaximumSize(QSize(50, 50))
+        self.ticon.setPixmap(QPixmap(u"tracks.png"))
+        self.ticon.setScaledContents(True)
+        self.ticon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.ticon, 8, 1, 1, 1)
+
+        self.pushv = QPushButton(self.verticalLayoutWidget_2)
+        self.pushv.setObjectName(u"pushv")
+
+        self.gridLayout_4.addWidget(self.pushv, 10, 0, 1, 1)
+
+        self.pushs = QPushButton(self.verticalLayoutWidget_2)
+        self.pushs.setObjectName(u"pushs")
+
+        self.gridLayout_4.addWidget(self.pushs, 7, 0, 1, 1)
+
+        self.picon = QLabel(self.verticalLayoutWidget_2)
+        self.picon.setObjectName(u"picon")
+        self.picon.setMaximumSize(QSize(50, 50))
+        self.picon.setPixmap(QPixmap(u"tracks.png"))
+        self.picon.setScaledContents(True)
+        self.picon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.picon, 4, 1, 1, 1)
+
+        self.pushr = QPushButton(self.verticalLayoutWidget_2)
+        self.pushr.setObjectName(u"pushr")
+
+        self.gridLayout_4.addWidget(self.pushr, 6, 0, 1, 1)
+
+        self.pushu = QPushButton(self.verticalLayoutWidget_2)
+        self.pushu.setObjectName(u"pushu")
+
+        self.gridLayout_4.addWidget(self.pushu, 9, 0, 1, 1)
+
+        self.pushq = QPushButton(self.verticalLayoutWidget_2)
+        self.pushq.setObjectName(u"pushq")
+
+        self.gridLayout_4.addWidget(self.pushq, 5, 0, 1, 1)
+
+        self.uicon = QLabel(self.verticalLayoutWidget_2)
+        self.uicon.setObjectName(u"uicon")
+        self.uicon.setMaximumSize(QSize(50, 50))
+        self.uicon.setPixmap(QPixmap(u"tracks.png"))
+        self.uicon.setScaledContents(True)
+        self.uicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.uicon, 9, 1, 1, 1)
+
+        self.vicon = QLabel(self.verticalLayoutWidget_2)
+        self.vicon.setObjectName(u"vicon")
+        self.vicon.setMaximumSize(QSize(50, 50))
+        self.vicon.setPixmap(QPixmap(u"tracks.png"))
+        self.vicon.setScaledContents(True)
+        self.vicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.vicon, 10, 1, 1, 1)
+
+        self.nicon = QLabel(self.verticalLayoutWidget_2)
+        self.nicon.setObjectName(u"nicon")
+        self.nicon.setMaximumSize(QSize(50, 50))
+        self.nicon.setPixmap(QPixmap(u"tracks.png"))
+        self.nicon.setScaledContents(True)
+        self.nicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.nicon, 2, 1, 1, 1)
+
+        self.pushaa = QPushButton(self.verticalLayoutWidget_2)
+        self.pushaa.setObjectName(u"pushaa")
+
+        self.gridLayout_4.addWidget(self.pushaa, 15, 0, 1, 1)
+
+        self.sicon = QLabel(self.verticalLayoutWidget_2)
+        self.sicon.setObjectName(u"sicon")
+        self.sicon.setMaximumSize(QSize(50, 50))
+        self.sicon.setPixmap(QPixmap(u"tracks.png"))
+        self.sicon.setScaledContents(True)
+        self.sicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.sicon, 7, 1, 1, 1)
+
+        self.pushn = QPushButton(self.verticalLayoutWidget_2)
+        self.pushn.setObjectName(u"pushn")
+        self.pushn.setMaximumSize(QSize(80, 16777215))
+
+        self.gridLayout_4.addWidget(self.pushn, 2, 0, 1, 1)
+
+        self.occupancylabel_2 = QLabel(self.verticalLayoutWidget_2)
+        self.occupancylabel_2.setObjectName(u"occupancylabel_2")
+        self.occupancylabel_2.setStyleSheet(u"background-color: rgb(221, 221, 221);\n"
+"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+
+        self.gridLayout_4.addWidget(self.occupancylabel_2, 1, 1, 1, 1)
+
+        self.sectiontitle_2 = QLabel(self.verticalLayoutWidget_2)
+        self.sectiontitle_2.setObjectName(u"sectiontitle_2")
+        self.sectiontitle_2.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);\n"
+"background-color: rgb(221, 221, 221);")
+        self.sectiontitle_2.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.sectiontitle_2, 1, 0, 1, 1)
+
+        self.pushz = QPushButton(self.verticalLayoutWidget_2)
+        self.pushz.setObjectName(u"pushz")
+
+        self.gridLayout_4.addWidget(self.pushz, 14, 0, 1, 1)
+
+        self.zicon = QLabel(self.verticalLayoutWidget_2)
+        self.zicon.setObjectName(u"zicon")
+        self.zicon.setMaximumSize(QSize(50, 50))
+        self.zicon.setPixmap(QPixmap(u"tracks.png"))
+        self.zicon.setScaledContents(True)
+        self.zicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.zicon, 14, 1, 1, 1)
+
+        self.pushx = QPushButton(self.verticalLayoutWidget_2)
+        self.pushx.setObjectName(u"pushx")
+
+        self.gridLayout_4.addWidget(self.pushx, 12, 0, 1, 1)
+
+        self.oicon = QLabel(self.verticalLayoutWidget_2)
+        self.oicon.setObjectName(u"oicon")
+        self.oicon.setMaximumSize(QSize(50, 50))
+        self.oicon.setPixmap(QPixmap(u"tracks.png"))
+        self.oicon.setScaledContents(True)
+        self.oicon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.oicon, 3, 1, 1, 1)
+
+        self.ricon = QLabel(self.verticalLayoutWidget_2)
+        self.ricon.setObjectName(u"ricon")
+        self.ricon.setMaximumSize(QSize(50, 50))
+        self.ricon.setPixmap(QPixmap(u"tracks.png"))
+        self.ricon.setScaledContents(True)
+        self.ricon.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_4.addWidget(self.ricon, 6, 1, 1, 1)
+
+        self.pushbb = QPushButton(self.verticalLayoutWidget_2)
+        self.pushbb.setObjectName(u"pushbb")
+
+        self.gridLayout_4.addWidget(self.pushbb, 16, 0, 1, 1)
+
+        self.pushy = QPushButton(self.verticalLayoutWidget_2)
+        self.pushy.setObjectName(u"pushy")
+
+        self.gridLayout_4.addWidget(self.pushy, 13, 0, 1, 1)
+
+        self.pusho = QPushButton(self.verticalLayoutWidget_2)
+        self.pusho.setObjectName(u"pusho")
+
+        self.gridLayout_4.addWidget(self.pusho, 3, 0, 1, 1)
+
+        self.pushcc = QPushButton(self.verticalLayoutWidget_2)
+        self.pushcc.setObjectName(u"pushcc")
+
+        self.gridLayout_4.addWidget(self.pushcc, 17, 0, 1, 1)
+
         self.ccicon = QLabel(self.verticalLayoutWidget_2)
         self.ccicon.setObjectName(u"ccicon")
         self.ccicon.setMaximumSize(QSize(50, 50))
@@ -297,15 +296,6 @@ class Ui_MainWindowA(object):
         self.ccicon.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_4.addWidget(self.ccicon, 17, 1, 1, 1)
-
-        self.ddicon = QLabel(self.verticalLayoutWidget_2)
-        self.ddicon.setObjectName(u"ddicon")
-        self.ddicon.setMaximumSize(QSize(50, 50))
-        self.ddicon.setPixmap(QPixmap(u"tracks.png"))
-        self.ddicon.setScaledContents(True)
-        self.ddicon.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_4.addWidget(self.ddicon, 18, 1, 1, 1)
 
 
         self.verticalLayout_5.addLayout(self.gridLayout_4)
@@ -349,13 +339,6 @@ class Ui_MainWindowA(object):
 
         self.verticalLayout.addWidget(self.sectionrangelabel)
 
-        self.line_4 = QFrame(self.verticalLayoutWidget_2)
-        self.line_4.setObjectName(u"line_4")
-        self.line_4.setFrameShape(QFrame.HLine)
-        self.line_4.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout.addWidget(self.line_4)
-
 
         self.horizontalLayout_5.addLayout(self.verticalLayout)
 
@@ -377,13 +360,6 @@ class Ui_MainWindowA(object):
         self.time.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.verticalLayout_2.addWidget(self.time)
-
-        self.line_6 = QFrame(self.verticalLayoutWidget_2)
-        self.line_6.setObjectName(u"line_6")
-        self.line_6.setFrameShape(QFrame.HLine)
-        self.line_6.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_2.addWidget(self.line_6)
 
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_2)
@@ -728,7 +704,7 @@ class Ui_MainWindowA(object):
         MainWindowA.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindowA)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 740, 25))
+        self.menubar.setGeometry(QRect(0, 0, 805, 25))
         MainWindowA.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindowA)
         self.statusbar.setObjectName(u"statusbar")
@@ -745,44 +721,46 @@ class Ui_MainWindowA(object):
         self.whichwayside.setItemText(1, QCoreApplication.translate("MainWindowA", u"Wayside 2", None))
         self.whichwayside.setItemText(2, QCoreApplication.translate("MainWindowA", u"Wayside 3", None))
         self.whichwayside.setItemText(3, QCoreApplication.translate("MainWindowA", u"Waysdie 4", None))
+        self.whichwayside.setItemText(4, QCoreApplication.translate("MainWindowA", u"Wayside 5", None))
+        self.whichwayside.setItemText(5, QCoreApplication.translate("MainWindowA", u"Wayside 6", None))
+        self.whichwayside.setItemText(6, QCoreApplication.translate("MainWindowA", u"Wayside 7", None))
+        self.whichwayside.setItemText(7, QCoreApplication.translate("MainWindowA", u"Wayside 8", None))
 
         self.whichwayside.setPlaceholderText(QCoreApplication.translate("MainWindowA", u"Select Wayside", None))
-        self.qicon.setText("")
-        self.pushu.setText(QCoreApplication.translate("MainWindowA", u"U", None))
-        self.picon.setText("")
-        self.pushq.setText(QCoreApplication.translate("MainWindowA", u"Q", None))
-        self.pushp.setText(QCoreApplication.translate("MainWindowA", u"P", None))
-        self.pushx.setText(QCoreApplication.translate("MainWindowA", u"X", None))
-        self.pusht.setText(QCoreApplication.translate("MainWindowA", u"T", None))
-        self.oicon.setText("")
-        self.pushaa.setText(QCoreApplication.translate("MainWindowA", u"AA", None))
-        self.nicon.setText("")
-        self.zicon.setText("")
-        self.pushbb.setText(QCoreApplication.translate("MainWindowA", u"BB", None))
-        self.pushz.setText(QCoreApplication.translate("MainWindowA", u"Z", None))
-        self.ricon.setText("")
-        self.pushcc.setText(QCoreApplication.translate("MainWindowA", u"CC", None))
-        self.pushs.setText(QCoreApplication.translate("MainWindowA", u"S", None))
-        self.pushy.setText(QCoreApplication.translate("MainWindowA", u"Y", None))
-        self.uicon.setText("")
-        self.occupancylabel_2.setText(QCoreApplication.translate("MainWindowA", u"Occupancy", None))
-        self.pusho.setText(QCoreApplication.translate("MainWindowA", u"O", None))
-        self.wicon.setText("")
-        self.sectiontitle_2.setText(QCoreApplication.translate("MainWindowA", u"Section", None))
-        self.pushv.setText(QCoreApplication.translate("MainWindowA", u"V", None))
-        self.pushw.setText(QCoreApplication.translate("MainWindowA", u"W", None))
-        self.sicon.setText("")
-        self.xicon.setText("")
-        self.yicon.setText("")
-        self.pushn.setText(QCoreApplication.translate("MainWindowA", u"N", None))
-        self.ticon.setText("")
         self.aaicon.setText("")
-        self.pushr.setText(QCoreApplication.translate("MainWindowA", u"R", None))
-        self.vicon.setText("")
-        self.pushdd.setText(QCoreApplication.translate("MainWindowA", u"DD", None))
+        self.xicon.setText("")
+        self.pushp.setText(QCoreApplication.translate("MainWindowA", u"P", None))
+        self.qicon.setText("")
         self.bbicon.setText("")
+        self.pusht.setText(QCoreApplication.translate("MainWindowA", u"T", None))
+        self.wicon.setText("")
+        self.yicon.setText("")
+        self.pushw.setText(QCoreApplication.translate("MainWindowA", u"W", None))
+        self.ticon.setText("")
+        self.pushv.setText(QCoreApplication.translate("MainWindowA", u"V", None))
+        self.pushs.setText(QCoreApplication.translate("MainWindowA", u"S", None))
+        self.picon.setText("")
+        self.pushr.setText(QCoreApplication.translate("MainWindowA", u"R", None))
+        self.pushu.setText(QCoreApplication.translate("MainWindowA", u"U", None))
+        self.pushq.setText(QCoreApplication.translate("MainWindowA", u"Q", None))
+        self.uicon.setText("")
+        self.vicon.setText("")
+        self.nicon.setText("")
+        self.pushaa.setText(QCoreApplication.translate("MainWindowA", u"AA", None))
+        self.sicon.setText("")
+        self.pushn.setText(QCoreApplication.translate("MainWindowA", u"N", None))
+        self.occupancylabel_2.setText(QCoreApplication.translate("MainWindowA", u"Occupancy", None))
+        self.sectiontitle_2.setText(QCoreApplication.translate("MainWindowA", u"Section", None))
+        self.pushz.setText(QCoreApplication.translate("MainWindowA", u"Z", None))
+        self.zicon.setText("")
+        self.pushx.setText(QCoreApplication.translate("MainWindowA", u"X", None))
+        self.oicon.setText("")
+        self.ricon.setText("")
+        self.pushbb.setText(QCoreApplication.translate("MainWindowA", u"BB", None))
+        self.pushy.setText(QCoreApplication.translate("MainWindowA", u"Y", None))
+        self.pusho.setText(QCoreApplication.translate("MainWindowA", u"O", None))
+        self.pushcc.setText(QCoreApplication.translate("MainWindowA", u"CC", None))
         self.ccicon.setText("")
-        self.ddicon.setText("")
         self.label_5.setText(QCoreApplication.translate("MainWindowA", u"Sections Managed:", None))
         self.linelabel.setText(QCoreApplication.translate("MainWindowA", u"Green Line", None))
         self.sectionrangelabel.setText(QCoreApplication.translate("MainWindowA", u"N - Z", None))

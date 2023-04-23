@@ -153,6 +153,7 @@ class TrainModel(QObject):
 
         # we have traversed more than the current block length
         if currPos > int(currBlockSize):
+
             train.block = train.route[1]
             if (train.block == 57):
                 self.actSpeed = 0
