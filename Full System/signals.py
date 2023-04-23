@@ -27,16 +27,21 @@ class Signals(QObject):
     redLineTrainDispatch = pyqtSignal(Train)
     blockMaintenanceOption = pyqtSignal(Track)
     ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
-    ctcUpdateGUIAuthority = pyqtSignal(str, int, float) #train.authority
+    ctcUpdateGUIAuthority = pyqtSignal(str, int) # line, authority
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
+    ctcCalcDispatchTime = pyqtSignal(int) # first dest block
 
     # wayside controller signals
+
+    testAuthTrackModelToWayside = pyqtSignal(str, list)
+    testWaysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority
+
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
-    waysideUpdateOccupancy = pyqtSignal(str, int) # line, block
-    waysideUpdateVacancy = pyqtSignal(str, int) # line, block
+    waysideUpdateOccupancy = pyqtSignal(str, int, list) # line, block
+    waysideUpdateVacancy = pyqtSignal(str, int, list) # line, block
     waysideCommandedSpeed = pyqtSignal(int)
     waysideAuthoritytoTrack = pyqtSignal(int, int)
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
