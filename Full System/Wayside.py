@@ -9,6 +9,14 @@ from signals import signals
 import sys
 sys.dont_write_bytecode = True
 
+#get switch change from ctc
+#pass on switch state pass stem and branch (int, int)
+#authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
+#have CTC send authority as 0 and 1 not red and green
+#vacant signals need to be one behind occupied (is now sending one ahead))
+#
+
+
 class Wayside(QObject):
 
     def __init__(self, ctcOffice, mainui):
@@ -67,13 +75,7 @@ class Wayside(QObject):
         signals.waysideStationsfromPLC.connect(self.setStations)
         signals.waysideAllSectionsfromPLC.connect(self.setAllSections)
 
-        #get switch change from ctc
-        #pass on switch state pass stem and branch (int, int)
-        #authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
-        #have CTC send authority as 0 and 1 not red and green
-        #vacant signals need to be one behind occupied ( just did -1 for now but have jake look into previous block)
-        #
-
+        
     def setTracks(self, track0, track1, etrack0, etrack1):
         self.track0 = track0
         self.track1 = track1
@@ -89,6 +91,7 @@ class Wayside(QObject):
         self.allsection1 = section1
 
     def setStations(self, s0, s1):
+        #print("stations s0 s1", s0, s1)
         self.stations0 = s0
         self.stations1 = s1
 
@@ -137,7 +140,8 @@ class Wayside(QObject):
             nextblock8 = int(self.everythingtrack0[nextindex7].nextBlock)
             nextindex8 = self.track0.index(nextblock8) 
             #print("8 next block and index", nextblock8, nextindex8)                                                                           
-
+            #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
+            #print("stations", self.stations0)
             # next1 = self.track0[currblock+1]
             # #print("authority next1", next1)
             # next2 = self.track0[currblock+2]
@@ -150,24 +154,34 @@ class Wayside(QObject):
             # next8 = self.track0[currblock+8]
 
             for i in self.stations0:
-                if i == nextblock8:
+                #print("i from inside loop as int", int(i))
+                if int(i) == nextblock8:
+                    #print("int i = next block 8", i, nextblock8)
                     auth = 7
-                elif i == nextblock7:
+                elif int(i) == nextblock7:
+                    #print("int i = next block7", i, nextblock7)
                     auth = 6
-                elif i == nextblock6:
+                elif int(i) == nextblock6:
+                    #print("int i = next block6", i, nextblock6)
                     auth = 5
-                elif i == nextblock5:
+                elif int(i) == nextblock5:
+                    #print("int i = next block5", i, nextblock5)
                     auth = 4
-                elif i == nextblock4:
+                elif int(i) == nextblock4:
+                    #print("int i = next block4", i, nextblock4)
                     auth = 3
-                elif i == nextblock3:
+                elif int(i) == nextblock3:
+                    ##print("int i = next block3", i, nextblock3)
                     auth = 2
-                elif i == nextblock2:
+                elif int(i) == nextblock2:
+                    #print("int i = next block2", i, nextblock2)
                     auth = 1
-                elif i == nextblock1:
+                elif int(i) == nextblock1:
+                    #print("int i = next block1", i, nextblock1)
                     auth = 0
-                else:
-                    auth = 8
+                #else:
+                    #print("else from forloop")
+                    #auth = 8
         elif line == 'Red':
             #print("in green")
             currblock = self.track1.index(block)
@@ -196,32 +210,30 @@ class Wayside(QObject):
             nextblock8 = int(self.everythingtrack1[nextindex7].nextBlock)
             nextindex8 = self.track1.index(nextblock8) 
             #print("8 next block and index", nextblock8, nextindex8)   
-
+            #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             for i in self.stations1:
-                if i == nextblock8:
+                if int(i) == nextblock8:
                     auth = 7
-                elif i == nextblock7:
+                elif int(i) == nextblock7:
                     auth = 6
-                elif i == nextblock6:
+                elif int(i) == nextblock6:
                     auth = 5
-                elif i == nextblock5:
+                elif int(i) == nextblock5:
                     auth = 4
-                elif i == nextblock4:
+                elif int(i) == nextblock4:
                     auth = 3
-                elif i == nextblock3:
+                elif int(i) == nextblock3:
                     auth = 2
-                elif i == nextblock2:
+                elif int(i) == nextblock2:
                     auth = 1
-                elif i == nextblock1:
+                elif int(i) == nextblock1:
                     auth = 0
-                else:
-                    auth = 8
-
+        #print("wayside.py update authority auth", auth)
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
         signals.testWaysideAuthorityToCTC.emit(line, route, auth)
 
     def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
-        print("plcinfo start")
+        #print("plcinfo start")
         signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
         self.wayside1sectionrange = section1
         self.wayside2sectionrange = section2
@@ -234,7 +246,7 @@ class Wayside(QObject):
 
         signals.ranges.emit(range1, range2, range3, range4, range5, range6, range7, range8)
         self.wayside1range = range1
-        print(".py plcinfo 1 range self.", self.wayside1range)
+        #print(".py plcinfo 1 range self.", self.wayside1range)
         self.wayside2range = range2
         self.wayside3range = range3
         self.wayside4range = range4
