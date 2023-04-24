@@ -179,7 +179,8 @@ class WTrack:
         #signals.actuallyshutup.emit()
 
     def wholeTrack(self):
-        #print("track:", self.track)
+        print("track0:", self.track0)
+        print("track1:", self.track1)
         signals.waysideTrackfromPLC.emit(self.track0, self.track1)
         #print("sections:", self.sections)
         signals.waysideSectionsfromPLC.emit(self.sections0, self.sections1)

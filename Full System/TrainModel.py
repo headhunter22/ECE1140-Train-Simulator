@@ -21,6 +21,7 @@ class TrainModel(QObject):
 
         self.serviceBrake = False
         self.emerBrake = False
+        self.manualMode = False
         self.timeWaiting = 0
 
         # connect signals
@@ -71,10 +72,11 @@ class TrainModel(QObject):
         #print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
-        blockSpeedLimit = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+
+        commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
         currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
-        if (blockSpeedLimit > currBlockSpeedLimit):
-            blockSpeedLimit = currBlockSpeedLimit
+        if (commSpeed > currBlockSpeedLimit):
+            commSpeed = currBlockSpeedLimit
 
         signals.trainModelGUISpeedLim.emit(str(currBlockSpeedLimit))
 
@@ -91,15 +93,11 @@ class TrainModel(QObject):
 
         #print('dist to stop: ' + str(train.authority))
 
-        # convert speed limit, commSpeed to m/s
-        commSpeed = train.commandedSpeed * 0.27777
 
         M = (train.numPassengers*150) + train.baseMass
         theta = math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize)
         g = 9.8 # m/s^2
         friction = .006
-
-        #print('speed limit: ' + str(blockSpeedLimit))
 
         # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
@@ -119,7 +117,7 @@ class TrainModel(QObject):
             print('service brake')
         # if moving, calculate acceleration
         else:
-            if (train.actSpeed*3.6) > blockSpeedLimit:
+            if (train.actSpeed*3.6) > commSpeed:
                 train.An = -1.2
                 #train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
                 #print('During Too Fast An: ' + str(train.An))
@@ -191,7 +189,7 @@ class TrainModel(QObject):
         #sending all signals to the display
         signals.trainModelUpdateGUISpeed.emit(str(train.actSpeed))
         signals.trainModelGUIBlock.emit(str(train.block))
-        signals.trainModelGUIcommandedSpeed.emit(str(blockSpeedLimit))
+        signals.trainModelGUIcommandedSpeed.emit(str(commSpeed))
 
         signals.trainModelGUIpower.emit(str(power))
         signals.trainModelGUIacc.emit(str(train.An))
