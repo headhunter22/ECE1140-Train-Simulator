@@ -63,15 +63,15 @@ class CTC(QObject):
         # update the next ID of the next train
         self.nextID += 1
 
-    def calculateDispatchTime(self, destBlock):
+    def calculateDispatchTime(self, line, destBlock):
 
         iterr = greenRouteArr.index(destBlock)
         disTime = 0
 
         for i in range(0, iterr + 1):
-            disTime += float(self.track.getLine("Green").getBlock(greenRouteArr[i]).secsToTraverse)
+            disTime += float(self.track.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
 
-        print(disTime)
+        return disTime
 
     def calculateThroughput(self, tickets, line):
         
