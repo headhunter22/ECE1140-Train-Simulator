@@ -82,15 +82,11 @@ class TrackModel(QObject):
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block, train.route)
-            signals.testAuthTrackModelToWayside.emit(train.line.lineName, train.route)
+            #signals.testAuthTrackModelToWayside.emit(train.line.lineName, train.route)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-<<<<<<< HEAD
             signals.waysideUpdateVacancy.emit(train.line.lineName, train.block, train.route)
-=======
-            signals.waysideUpdateVacancy.emit(train.line.lineName, block)
->>>>>>> 2ed1946a7eb7cf369e859c8870cdf8589a395c5a
 
     def board(self, train):
         # load new passengers

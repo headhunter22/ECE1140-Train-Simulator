@@ -260,7 +260,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="greenLinePage">
      <widget class="QPushButton" name="greenClear">
@@ -313,7 +313,7 @@
        <rect>
         <x>20</x>
         <y>130</y>
-        <width>131</width>
+        <width>141</width>
         <height>181</height>
        </rect>
       </property>
