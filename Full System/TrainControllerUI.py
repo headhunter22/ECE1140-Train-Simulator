@@ -53,6 +53,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.RateReq.setMinimum(0)
         self.RateReq.setMaximum(45)
         self.RateReq.setSingleStep(1)
+        self.RateReq.setValue(20)
 
         # Slider increment labels # 
         self.HundredLabel = QtWidgets.QLabel("45 Mph", self)
@@ -180,6 +181,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Calling Slider changes functions #
     def SliderMoved(self, i):
         self.RateText.setText("Requested Speed: {0}mph".format(i))
+        signals.trainControllerManualModeToTrainModel.emit(True,i)
 
         # Calling headlights clicked function #
     def HeadlightsClick(self):
@@ -254,7 +256,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          if self.AutoMode.isChecked() == True:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
               self.ManualMode.setCheckable(False)
-              self.EmerBrake.setCheckable(False)
+              self.EmerBrake.setCheckable(True)
               self.RightDoors.setCheckable(False)
               self.LeftDoors.setCheckable(False)
               self.Headlights.setCheckable(False)
@@ -319,7 +321,6 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
-         signals.trainControllerManualModeToTrainModel.emit(True,self.CommandedSpeed)
 
     def ACClick(self):
          if self.AC.isChecked() == True:
@@ -355,13 +356,20 @@ class GainWindow(QtWidgets.QMainWindow):
         self.KILabel.setFont(font)
 
          # init KP/PI Edits, confirm button # 
-        self.KIChange = QtWidgets.QLineEdit("100", self)
+        self.KIChange = QtWidgets.QLineEdit(" ", self)
         self.KIChange.setGeometry(225, 92, 50, 25)
-        self.KPChange = QtWidgets.QLineEdit("100", self)
+        self.KPChange = QtWidgets.QLineEdit(" ", self)
         self.KPChange.setGeometry(225, 192, 50, 25)
+
+        # Show updated KP/KI Values #
+        self.correctedKPValue = QtWidgets.QLabel("New KP: ", self)
+        self.correctedKPValue.setGeometry(285, 50, 115, 100)
+        self.correctedKIValue = QtWidgets.QLabel("New KI: ", self)
+        self.correctedKIValue.setGeometry(285, 150, 110, 100)
 
         self.confirm = QtWidgets.QPushButton("Confirm", self)
         self.confirm.setGeometry(370, 250, 100, 50)
+        self.confirm.setCheckable(True)
         self.confirm.clicked.connect(self.confirmClick)
 
         self.confirmLabel = QtWidgets.QLabel(" ", self)
@@ -377,11 +385,13 @@ class GainWindow(QtWidgets.QMainWindow):
         signals.trainControllerUIKP.emit(INPUT2)
         print("KP changed to " + textkp)
         self.KIChange.setText(textkp)
+        self.correctedKPValue.setText("New KP: " + textkp)
 
         textki = self.KIChange.text()
         INPUT3 = float(textki)
         signals.trainControllerUIKI.emit(INPUT3)
         print("KI changed to " + textki)
         self.KIChange.setText(textki)
+        self.correctedKIValue.setText("New KP: " + textki)
 
         self.confirmLabel.setText("KP and KI values have been updated")

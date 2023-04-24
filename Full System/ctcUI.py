@@ -7,9 +7,7 @@ import ScheduleParser
 import TrackParser
 import pandas as pd
 from signals import signals
-import sys
-import os
-import re
+import sys, os, re, ast
 sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
@@ -30,6 +28,9 @@ class ctcMainUI(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.funcTrack = track
+        self.greenID = 1
+        self.redID = 1
 
         ###################################
         ########SIGNAL CONNECTIONS#########
@@ -280,12 +281,28 @@ class ctcMainUI(QMainWindow):
         self.ui.greenDispatch.clicked.connect(self.testGreenDispatch)
 
 
+        self.ui.pushButton.clicked.connect(self.test)
+
+
 
     ############################################
     ############## MISC FUNCTIONS ##############
     ############################################
 
+    def test(self):
+        destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(0, 0).text())
+
+        stops = []
+
+        # iterate through the tent schedule table
+        for rows in range(0, len(destlist)):
+            # iterate through the stations list to see if the text in that cell is one of the stations
+            for item in range(0, len(self.greenStations)):
+                if destlist[rows] == self.greenStations[item]:
+                    stops.append(self.greenStopsBlocks[item])
+
     def iterDispatch(self):
+        self.ui.greenTrainInfoTable.setRowCount(0)
         stops = [65, 73]
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
     
@@ -310,6 +327,7 @@ class ctcMainUI(QMainWindow):
         
     def changeLabel(self, hrs, mins, secs): #######
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
+        self.dispatchGreenLine(hrs, mins, secs)
 
     def timePause(self):
         signals.CTCTimePause.emit()
@@ -331,7 +349,7 @@ class ctcMainUI(QMainWindow):
     ############################################
     
     #, hrs, mins, secs
-    def dispatchGreenLine(self, stops):
+    def dispatchGreenLine(self, hrs, mins, secs):
 
         try:
             if self.ui.greenScheduledTrains.rowCount() > 0:
@@ -339,12 +357,36 @@ class ctcMainUI(QMainWindow):
         except:
             return
 
-        for i in range(0, self.ui.greenScheduledTrains.rowCount()):
-            time = self.ui.greenScheduledTrains.item(0, i).text().split(":")
-            print(time[i])
+        
+        for rows in range(0, self.ui.greenScheduledTrains.rowCount()):
+            if self.ui.greenScheduledTrains.item(rows, 2).text()+":00" == self.ui.dataTime.text():
+                destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(rows, 0).text())
+
+                stops = []
+
+                # iterate through the tent schedule table
+                for rows in range(0, len(destlist)):
+                    # iterate through the stations list to see if the text in that cell is one of the stations
+                    for item in range(0, len(self.greenStations)):
+                        if destlist[rows] == self.greenStations[item]:
+                            stops.append(self.greenStopsBlocks[item])
+                
+                print(stops)
+                signals.greenLineTrainDispatchFromCtcUI.emit(stops)
+                print(rows)
+                self.ui.greenScheduledTrains.removeRow(rows)
 
 
-        signals.greenLineTrainDispatchFromCtcUI.emit(stops)
+
+        #for i in range(0, self.ui.greenScheduledTrains.rowCount()):
+        #    timeArr = self.ui.greenScheduledTrains.item(i, 1).text().split(":")
+        #    timeHour = int(timeArr[0], 10) * 3600
+        #    timeMin = int(timeArr[1], 10) * 60
+        #    totalTime = timeHour + timeMin
+
+
+
+        #signals.greenLineTrainDispatchFromCtcUI.emit(stops)
 
 
         
@@ -384,28 +426,39 @@ class ctcMainUI(QMainWindow):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
 
+    def calculateDispatchTime(self, line, destBlock):
+
+        iterr = greenRouteArr.index(destBlock)
+        disTime = 0
+
+        for i in range(0, iterr + 1):
+            disTime += float(self.funcTrack.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
+
+        return disTime
+
     # reads the green tentative scheule and dispatches it to the scheduled trains list to be dispatched
     def testGreenDispatch(self):
+
         rowCount = self.ui.greenScheduledTrains.rowCount()
 
         self.ui.greenScheduledTrains.insertRow(rowCount)
 
-        dest = QTableWidgetItem(self.ui.greenTentSchedule.item(0,0).text())
-        at = QTableWidgetItem(self.ui.greenTentSchedule.item(0,1).text())
+        destList = []
+        atList = []
+
+        for rows in range(0, self.ui.greenTentSchedule.rowCount()):
+            destList.append(self.ui.greenTentSchedule.item(rows,0).text())
+            atList.append(self.ui.greenTentSchedule.item(rows,1).text())
+
+        dest = QTableWidgetItem(str(destList))
+        at = QTableWidgetItem(str(atList))
+        dt = QTableWidgetItem(str(atList[0]))
         self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
         self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
-
-        blocks = []
-
-        # iterate through the tent schedule table
-        for rows in range(0, self.ui.greenTentSchedule.rowCount()):
-            # iterate through the stations list to see if the text in that cell is one of the stations
-            for item in range(0, len(self.greenStations)):
-                if self.ui.greenTentSchedule.item(rows,0).text() == self.greenStations[item]:
-                    blocks.append(self.greenStopsBlocks[item])
+        self.ui.greenScheduledTrains.setItem(rowCount, 2, dt)
 
         self.ui.greenTentSchedule.setRowCount(0)
-        signals.greenLineTrainDispatchFromCtcUI.emit(blocks)
+        
 
 
 
@@ -542,56 +595,6 @@ class ctcMainUI(QMainWindow):
 
         else:
             pass
-                    
-    
-    #def updateAuthority(self, line, route):
-    #    # blockAuth = int(authority / 100)
-#
-    #    if line == 'Green':
-    #        for i in range(0, 7):
-    #            newTrainAuthority = QTableWidgetItem('')
-    #            newTrainAuthority.setBackground(QColor('red'))
-    #            self.ui.greenOccupancy.setItem(route[i + 1], 0, newTrainAuthority)
-#
-    #    #if line == 'Green':
-    #    #    for rows in range(0, 149):
-    #    #        if (rows > block) and (rows < block + blockAuth):
-    #    #            #creating table objects to update occupancy window
-    #    #            newTrainLocation = QTableWidgetItem('')
-    #    #            #new train location
-    #    #            newTrainLocation.setBackground(QColor('red'))
-    #    #            self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
-    #    #        elif rows != block:
-    #    #            #creating table objects to update occupancy window
-    #    #            oldTrainLocation = QTableWidgetItem('')
-    #    #            #old train location
-    #    #            oldTrainLocation.setBackground(QColor('white'))
-    #    #            self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
-    #    #elif line == "Red":
-    #    #    return
-    #    #else:
-    #    #    print("error")
-#
-    #def updateOccupancy(self, line, block):
-    #    if line == 'Green':
-    #        for rows in range(0, 150):
-    #            if rows == block:
-    #                #creating table objects to update occupancy window
-    #                newTrainLocation = QTableWidgetItem('')
-    #                oldTrainLocation = QTableWidgetItem('')
-    #                #new train location
-    #                newTrainLocation.setBackground(QColor('green'))
-    #                self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
-    #            else:
-    #                #creating table objects to update occupancy window
-    #                oldTrainLocation = QTableWidgetItem('')
-    #                #old train location
-    #                oldTrainLocation.setBackground(QColor('white'))
-    #                self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
-    #    elif line == "Red":
-    #        return
-    #    else:
-    #        print("error")
 
     def fillOccupancy(self, line):
 
