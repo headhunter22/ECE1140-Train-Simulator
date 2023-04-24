@@ -57,6 +57,8 @@ class Wayside(QObject):
         self.switchStates0 = []
         self.switchStates1 = []
 
+        self.wait = False
+
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
         signals.trackCTCToWayside.connect(self.trackReceived)
@@ -75,6 +77,10 @@ class Wayside(QObject):
         signals.waysideStationsfromPLC.connect(self.setStations)
         signals.waysideAllSectionsfromPLC.connect(self.setAllSections)
 
+        signals.waysideWait.connect()
+        
+    def resetwait(self, x):
+        self.wait = x
         
     def setTracks(self, track0, track1, etrack0, etrack1):
         self.track0 = track0
@@ -91,17 +97,26 @@ class Wayside(QObject):
         self.allsection1 = section1
 
     def setStations(self, s0, s1):
-        #print("stations s0 s1", s0, s1)
+        print("stations s0 s1", s0, s1)
         self.stations0 = s0
         self.stations1 = s1
+
+    def checkSwitchStates(self, block):
+        currblock = self.track0.index(block)
+        nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
+        nextindex1 = self.track0.index(nextblock1)
 
     def setSwitchLocations(self, loc0, loc1):
         self.switchLocations0 = loc0
         self.switchLocations1 = loc1
+        print("switch locations 0", loc0)
+        print("switch locations 1", loc1)
 
     def setSwitchStates(self, state0, state1):
         self.switchStates0 = state0
         self.switchStates1 = state1
+        print("switch states 0", state0)
+        print("switch states 1", state1)
 
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
@@ -142,16 +157,6 @@ class Wayside(QObject):
             #print("8 next block and index", nextblock8, nextindex8)                                                                           
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             #print("stations", self.stations0)
-            # next1 = self.track0[currblock+1]
-            # #print("authority next1", next1)
-            # next2 = self.track0[currblock+2]
-            # #print("authority next2", next2)
-            # next3 = self.track0[currblock+3]
-            # next4 = self.track0[currblock+4]
-            # next5 = self.track0[currblock+5]
-            # next6 = self.track0[currblock+6]
-            # next7 = self.track0[currblock+7]
-            # next8 = self.track0[currblock+8]
 
             for i in self.stations0:
                 #print("i from inside loop as int", int(i))
@@ -179,6 +184,7 @@ class Wayside(QObject):
                 elif int(i) == nextblock1:
                     #print("int i = next block1", i, nextblock1)
                     auth = 1
+                    signals.waysideWait.emit(self.wait)
                 #else:
                     #print("else from forloop")
                     #auth = 8
@@ -228,6 +234,7 @@ class Wayside(QObject):
                     auth = 2
                 elif int(i) == nextblock1:
                     auth = 1
+                    signals.waysideWait.emit(self.wait)
         #print("wayside.py update authority auth", auth)
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
         signals.testWaysideAuthorityToCTC.emit(line, route, auth)
