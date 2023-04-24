@@ -70,7 +70,7 @@ class TrainController(QObject):
 
         if self.train.authority <= self.StopDistance:
             print('authority = ' + str(self.train.authority))
-            print('distance = ' + str(self.StopgiDistance))
+            print('distance = ' + str(self.StopDistance))
             
             print("auth less than dist")
 
