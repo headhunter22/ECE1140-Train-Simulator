@@ -74,11 +74,14 @@ class TrainModel(QObject):
         #print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
+
         if (self.manualMode == False):
             commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+            print('Manual mode is false')
         else:
-            commSpeed = self.manualCommSpeed
-            
+            commSpeed = self.manualCommSpeed *1.609
+            print('Manual mode is true')
+
         currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
         if (commSpeed > currBlockSpeedLimit):
             commSpeed = currBlockSpeedLimit
