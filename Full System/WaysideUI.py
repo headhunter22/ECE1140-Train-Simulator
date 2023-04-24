@@ -168,8 +168,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def sectionswork(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("sectionswork")
         self.wayside1sectionrange = range1
-        print("sectionswork range1 self.", self.wayside1sectionrange)
-        print("sectionswork range1 ", range1)
+        #print("sectionswork range1 self.", self.wayside1sectionrange)
+        #print("sectionswork range1 ", range1)
         self.wayside2sectionrange = range2
         #print("sectionswork range2 ", range2)
         self.wayside3sectionrange = range3
@@ -1004,9 +1004,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         if self.first == 1:
             currentletter = []
             currentletter.append(self.wayside1range[0])
-            print("wayside1sectionrange", self.wayside1sectionrange)
-            print("wayside1range", self.wayside1range)
-            print("wayside1 sectionrange", self.sectionrange)
+            #print("wayside1sectionrange", self.wayside1sectionrange)
+            #print("wayside1range", self.wayside1range)
+            #print("wayside1 sectionrange", self.sectionrange)
             for i in self.sectionrange:
                 currentletter = []
                 for j in self.wayside1sectionrange:
@@ -1871,6 +1871,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def changeVacancy(self, line, block, sec):
         #print("wayside a UI block", block, "is vacant")
+        #train is sending next block not previous so have jake look at that
         img = QPixmap('tracks.png')
         print("vacancy line, block, sec", line, block, sec)
         try:
