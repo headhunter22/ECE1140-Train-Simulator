@@ -47,7 +47,7 @@ class Signals(QObject):
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
 
     #plc
-    waysideTrackfromPLC = pyqtSignal(list, list)
+    waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
     waysideSwitchLocationsfromPLC = pyqtSignal(list, list) # 
     waysideSectionsfromPLC = pyqtSignal(list, list)
