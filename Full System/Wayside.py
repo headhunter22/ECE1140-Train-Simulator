@@ -240,16 +240,11 @@ class Wayside(QObject):
 
     def blockOccupancyReceived(self, line, block, route):
         #print(". py block", block, "is occupied")
-<<<<<<< HEAD
-        signals.wtowOccupancy.emit(block)
-        self.updateAuthority(line, block, route)
-=======
         
         id = self.track0.index(block)
         sec = self.allsection0[id]
         self.updateAuthority(line, block)
         signals.wtowOccupancy.emit(line, block, sec)
->>>>>>> 2ed1946a7eb7cf369e859c8870cdf8589a395c5a
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
     
