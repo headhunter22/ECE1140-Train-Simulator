@@ -22,6 +22,7 @@ class TrainModel(QObject):
         self.serviceBrake = False
         self.emerBrake = False
         self.manualMode = False
+        self.manualCommSpeed = 0
         self.timeWaiting = 0
 
         # connect signals
@@ -32,6 +33,7 @@ class TrainModel(QObject):
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
         signals.trainModelEmerBrake.connect(self.emerBrakeActive)
         signals.waysideAuthoritytoTrack.connect(self.newAuthority)
+        signals.trainControllerManualModeToTrainModel.connect(self.manualModeFunc)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -72,8 +74,11 @@ class TrainModel(QObject):
         #print('power received: ' + str(power))
 
         currBlockSize = float(currLine.getBlock(currBlock).length)
-
-        commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+        if (self.manualMode == False):
+            commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+        else:
+            commSpeed = self.manualCommSpeed
+            
         currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
         if (commSpeed > currBlockSpeedLimit):
             commSpeed = currBlockSpeedLimit
@@ -222,3 +227,7 @@ class TrainModel(QObject):
         # next8 = self.track0[currblock+8]
 
         # signals.trainModelAuthorityToTrainController.emit(auth)
+    
+    def manualModeFunc(self, manualMode, commSpeed):
+        self.manualMode = manualMode
+        self.manualCommSpeed = commSpeed
