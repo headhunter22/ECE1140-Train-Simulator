@@ -1133,9 +1133,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
         l = len(self.sectionmatrix[sectionrow])
 
+        #TODO
+        #if sectionmatrix == occupied block matrix 
+        #add widget "greentrain"
+
         if l == 16:
             self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
             self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
+            self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
             self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
             self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
             self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
