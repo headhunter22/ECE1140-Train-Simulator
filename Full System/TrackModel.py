@@ -83,6 +83,7 @@ class TrackModel(QObject):
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block, train.route)
             #signals.testAuthTrackModelToWayside.emit(train.line.lineName, train.route)
+            signals.trackModelBeaconSending.emit(self.track.getLine(line.lineName).getBlock(block))
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
             signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
