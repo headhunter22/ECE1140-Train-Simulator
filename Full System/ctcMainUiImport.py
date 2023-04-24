@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
         self.arrivalLabel_3.setGeometry(QtCore.QRect(20, 111, 161, 20))
         self.arrivalLabel_3.setObjectName("arrivalLabel_3")
         self.greenTentSchedule = QtWidgets.QTableWidget(parent=self.greenLinePage)
-        self.greenTentSchedule.setGeometry(QtCore.QRect(20, 130, 131, 181))
+        self.greenTentSchedule.setGeometry(QtCore.QRect(20, 130, 141, 181))
         self.greenTentSchedule.setObjectName("greenTentSchedule")
         self.greenTentSchedule.setColumnCount(2)
         self.greenTentSchedule.setRowCount(0)
@@ -645,7 +645,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuNorth_Shore_Extension_CTC_Window.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

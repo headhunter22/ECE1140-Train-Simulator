@@ -330,16 +330,18 @@ class ctcMainUI(QMainWindow):
     ########## AUTO MODE FUNCTIONS #############
     ############################################
     
-    def dispatchGreenLine(self, stops, hrs, mins, secs):
+    #, hrs, mins, secs
+    def dispatchGreenLine(self, stops):
 
         try:
-
-
-            pass
-
+            if self.ui.greenScheduledTrains.rowCount() > 0:
+                pass
         except:
-            pass
+            return
 
+        for i in range(0, self.ui.greenScheduledTrains.rowCount()):
+            time = self.ui.greenScheduledTrains.item(0, i).text().split(":")
+            print(time[i])
 
 
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
@@ -481,13 +483,13 @@ class ctcMainUI(QMainWindow):
     # opens and parses a file selected by the user
     def openFile(self): ########
         # Open a file dialog and get the path of the selected file
-        filePath, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
-
-        fileName = os.path.basename(filePath)
-
-        schedule = ScheduleParser.parseScedule(fileName)
-
-        self.addScheduledTrain(schedule)
+            filePath, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
+            if filePath:
+                fileName = os.path.basename(filePath)
+                schedule = ScheduleParser.parseScedule(fileName)
+                self.addScheduledTrain(schedule)
+            else:
+                print("No file was selected")
 
     # adds a train to the scheduled trains list to wait to be dispatched
     def addScheduledTrain(self, schedule): #########

@@ -99,14 +99,41 @@ class Wayside(QObject):
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
         auth = 8
-        currblock = self.track0.index(block)
         
-        print("authority currblock", currblock)
-        print("authority line", line)
+        
+        #print("authority currblock", currblock)
+        #print("authority line", line)
         
         
         if line == 'Green':
             #print("in green")
+            currblock = self.track0.index(block)
+            # print("current block", currblock)
+            # nextblock1 = self.track0[currblock].nextblock
+            # nextindex1 = self.track0.index(nextblock1)
+            # print("1 next block and index", nextblock1, nextindex1)
+            # nextblock2 = self.track0[nextindex1].nextblock
+            # nextindex2 = self.track0.index(nextblock2)
+            # print("2 next block and index", nextblock2, nextindex2)
+            # nextblock3 = self.track0[nextindex2].nextblock
+            # nextindex3 = self.track0.index(nextblock3)
+            # print("3 next block and index", nextblock3, nextindex3)
+            # nextblock4 = self.track0[nextindex3].nextblock
+            # nextindex4 = self.track0.index(nextblock4)
+            # print("4 next block and index", nextblock4, nextindex4)
+            # nextblock5 = self.track0[nextindex4].nextblock
+            # nextindex5 = self.track0.index(nextblock5)
+            # print("5 next block and index", nextblock5, nextindex5)
+            # nextblock6 = self.track0[nextindex5].nextblock   
+            # nextindex6 = self.track0.index(nextblock6)
+            # print("6 next block and index", nextblock6, nextindex6)
+            # nextblock7 = self.track0[nextindex6].nextblock
+            # nextindex7 = self.track0.index(nextblock7)
+            # print("7 next block and index", nextblock7, nextindex7)
+            # nextblock8 = self.track0[nextindex7].nextblock
+            # nextindex8 = self.track0.index(nextblock8) 
+            # print("8 next block and index", nextblock8, nextindex8)                                                                           
+
             next1 = self.track0[currblock+1]
             #print("authority next1", next1)
             next2 = self.track0[currblock+2]
@@ -138,6 +165,8 @@ class Wayside(QObject):
                 else:
                     auth = 8
         elif line == 'Red':
+            currblock = self.track1.index(block)
+            nextblock = self.track1[currblock].nextblock
             #print("in red")
             next1 = self.track1[currblock+1]
             #print("authority next1", next1)
@@ -243,7 +272,7 @@ class Wayside(QObject):
         
         id = self.track0.index(block)
         sec = self.allsection0[id]
-        self.updateAuthority(line, block)
+        self.updateAuthority(line, block, route)
         signals.wtowOccupancy.emit(line, block, sec)
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
