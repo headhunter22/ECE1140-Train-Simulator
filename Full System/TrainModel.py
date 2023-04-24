@@ -22,6 +22,7 @@ class TrainModel(QObject):
         self.serviceBrake = False
         self.emerBrake = False
         self.manualMode = False
+        self.manualCommSpeed = 0
         self.timeWaiting = 0
 
         # connect signals
@@ -32,10 +33,11 @@ class TrainModel(QObject):
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
         signals.trainModelEmerBrake.connect(self.emerBrakeActive)
         signals.waysideAuthoritytoTrack.connect(self.newAuthority)
+        signals.trainControllerManualModeToTrainModel.connect(self.manualModeFunc)
+        signals.trainControllerEmerBrake.connect(self.emerBrakeActive)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
-        print('train model dispatched')
 
         # add train to current trains list
         self.trainList.append(train)
@@ -69,11 +71,13 @@ class TrainModel(QObject):
         if currBlock == train.destBlock[0]:
             train.reachedDest = True
 
-        #print('power received: ' + str(power))
-
         currBlockSize = float(currLine.getBlock(currBlock).length)
 
-        commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+        if (self.manualMode == False):
+            commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
+        else:
+            commSpeed = self.manualCommSpeed *1.609
+           
         currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
         if (commSpeed > currBlockSpeedLimit):
             commSpeed = currBlockSpeedLimit
@@ -91,9 +95,6 @@ class TrainModel(QObject):
         
         train.authority = distToStop - train.position
 
-        #print('dist to stop: ' + str(train.authority))
-
-
         M = (train.numPassengers*150) + train.baseMass
         theta = math.atan(float(self.track.getLine('Green').getBlock(train.block).elevation)/currBlockSize)
         g = 9.8 # m/s^2
@@ -103,24 +104,20 @@ class TrainModel(QObject):
         # if starting off at 0m/s, set acceleration to medium
 
         if train.actSpeed_1 == 0 | self.emerBrake != 1:
-            print('not moving')
             train.An = 0.5
         elif self.emerBrake == 1:
             train.An = -2.73
             if (train.actSpeed == 0):
                 train.An = 0
             power = 0
-            print('emerbraketrue')
         elif self.serviceBrake == 1:
             train.An = -1.2
             power = 0
-            print('service brake')
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > commSpeed:
                 train.An = -1.2
                 #train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
-                #print('During Too Fast An: ' + str(train.An))
             else:
                 trainForce = power / train.actSpeed_1
                 train.An = ((1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)) + (trainForce))/M
@@ -132,8 +129,6 @@ class TrainModel(QObject):
         if self.serviceBrake == True: #TRAIN CONTROLLER: DONT FORGET TO CHANGE THIS SIGNAL BACK TO FALSE
             train.An = -1.2 
 
-
-        #print('An: ' + str(train.An))
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
 
         if (train.actSpeed < 0):
@@ -172,15 +167,9 @@ class TrainModel(QObject):
             # still in current block, update train position
             train.position = currPos
 
-        # print('speed: ' + str(train.actSpeed * 3.6))
-        # print('position: ' + str(train.position))
-        # print('block number: ' + str(train.block))
-        # print('commanded speed: ' + str(train.commandedSpeed))
-
         # set previous variables
         train.An_1 = train.An
         train.actSpeed_1 = train.actSpeed
-
 
         # train at the end of the track
         if (train.block == 57):
@@ -222,3 +211,7 @@ class TrainModel(QObject):
         # next8 = self.track0[currblock+8]
 
         # signals.trainModelAuthorityToTrainController.emit(auth)
+    
+    def manualModeFunc(self, manualMode, commSpeed):
+        self.manualMode = manualMode
+        self.manualCommSpeed = commSpeed

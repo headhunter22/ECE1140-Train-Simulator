@@ -22,6 +22,7 @@ from signals import signals
 class WTrack:
     def __init__(self):
         super().__init__()
+        self.everythingtrack0 = []
         self.track0 = []
         self.sections0 = []
         self.allsection0 = []
@@ -30,6 +31,7 @@ class WTrack:
         self.crossing0 = []
         self.stations0 = []
 
+        self.everythingtrack1 = []
         self.track1 = []
         self.sections1 = []
         self.allsection1 = []
@@ -71,6 +73,7 @@ class WTrack:
 
     def addBlock(self, block, line):
         if line == 0:
+            self.everythingtrack0.append(block)
             self.track0.append(int(block.blockNumber))
             self.allsection0.append(block.section)
             contains = 0
@@ -94,6 +97,7 @@ class WTrack:
                 self.stations0.append(block.blockNumber)
 
         elif line == 1:
+            self.everythingtrack1.append(block)
             self.track1.append(int(block.blockNumber))
             self.allsection1.append(block.section)
             contains = 0
@@ -181,7 +185,7 @@ class WTrack:
     def wholeTrack(self):
         print("track0:", self.track0)
         print("track1:", self.track1)
-        signals.waysideTrackfromPLC.emit(self.track0, self.track1)
+        signals.waysideTrackfromPLC.emit(self.track0, self.track1, self.everythingtrack0, self.everythingtrack1)
         #print("sections:", self.sections)
         signals.waysideSectionsfromPLC.emit(self.sections0, self.sections1)
         signals.waysideAllSectionsfromPLC.emit(self.allsection0, self.allsection1)

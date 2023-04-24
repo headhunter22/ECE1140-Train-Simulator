@@ -36,6 +36,8 @@ class Wayside(QObject):
 
         self.track0 = []
         self.track1 = []
+        self.everythingtrack0 = []
+        self.everythingtrack1 = []
         self.section0 = []
         self.section1 = []
         self.allsection0 = []
@@ -72,9 +74,11 @@ class Wayside(QObject):
         #vacant signals need to be one behind occupied ( just did -1 for now but have jake look into previous block)
         #
 
-    def setTracks(self, track0, track1):
+    def setTracks(self, track0, track1, etrack0, etrack1):
         self.track0 = track0
         self.track1 = track1
+        self.everythingtrack0 = etrack0
+        self.everythingtrack1 = etrack1
 
     def setSections(self, section0, section1):
         self.section0 = section0
@@ -108,93 +112,107 @@ class Wayside(QObject):
         if line == 'Green':
             #print("in green")
             currblock = self.track0.index(block)
-            # print("current block", currblock)
-            # nextblock1 = self.track0[currblock].nextblock
-            # nextindex1 = self.track0.index(nextblock1)
-            # print("1 next block and index", nextblock1, nextindex1)
-            # nextblock2 = self.track0[nextindex1].nextblock
-            # nextindex2 = self.track0.index(nextblock2)
-            # print("2 next block and index", nextblock2, nextindex2)
-            # nextblock3 = self.track0[nextindex2].nextblock
-            # nextindex3 = self.track0.index(nextblock3)
-            # print("3 next block and index", nextblock3, nextindex3)
-            # nextblock4 = self.track0[nextindex3].nextblock
-            # nextindex4 = self.track0.index(nextblock4)
-            # print("4 next block and index", nextblock4, nextindex4)
-            # nextblock5 = self.track0[nextindex4].nextblock
-            # nextindex5 = self.track0.index(nextblock5)
-            # print("5 next block and index", nextblock5, nextindex5)
-            # nextblock6 = self.track0[nextindex5].nextblock   
-            # nextindex6 = self.track0.index(nextblock6)
-            # print("6 next block and index", nextblock6, nextindex6)
-            # nextblock7 = self.track0[nextindex6].nextblock
-            # nextindex7 = self.track0.index(nextblock7)
-            # print("7 next block and index", nextblock7, nextindex7)
-            # nextblock8 = self.track0[nextindex7].nextblock
-            # nextindex8 = self.track0.index(nextblock8) 
-            # print("8 next block and index", nextblock8, nextindex8)                                                                           
+            #print("current block", currblock)
+            nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
+            nextindex1 = self.track0.index(nextblock1)
+            #print("1 next block and index", nextblock1, nextindex1)
+            nextblock2 = int(self.everythingtrack0[nextindex1].nextBlock)
+            nextindex2 = self.track0.index(nextblock2)
+            #print("2 next block and index", nextblock2, nextindex2)
+            nextblock3 = int(self.everythingtrack0[nextindex2].nextBlock)
+            nextindex3 = self.track0.index(nextblock3)
+            #print("3 next block and index", nextblock3, nextindex3)
+            nextblock4 = int(self.everythingtrack0[nextindex3].nextBlock)
+            nextindex4 = self.track0.index(nextblock4)
+            #print("4 next block and index", nextblock4, nextindex4)
+            nextblock5 = int(self.everythingtrack0[nextindex4].nextBlock)
+            nextindex5 = self.track0.index(nextblock5)
+            #print("5 next block and index", nextblock5, nextindex5)
+            nextblock6 = int(self.everythingtrack0[nextindex5].nextBlock)  
+            nextindex6 = self.track0.index(nextblock6)
+            #print("6 next block and index", nextblock6, nextindex6)
+            nextblock7 = int(self.everythingtrack0[nextindex6].nextBlock)
+            nextindex7 = self.track0.index(nextblock7)
+            #print("7 next block and index", nextblock7, nextindex7)
+            nextblock8 = int(self.everythingtrack0[nextindex7].nextBlock)
+            nextindex8 = self.track0.index(nextblock8) 
+            #print("8 next block and index", nextblock8, nextindex8)                                                                           
 
-            next1 = self.track0[currblock+1]
-            #print("authority next1", next1)
-            next2 = self.track0[currblock+2]
-            #print("authority next2", next2)
-            next3 = self.track0[currblock+3]
-            next4 = self.track0[currblock+4]
-            next5 = self.track0[currblock+5]
-            next6 = self.track0[currblock+6]
-            next7 = self.track0[currblock+7]
-            next8 = self.track0[currblock+8]
+            # next1 = self.track0[currblock+1]
+            # #print("authority next1", next1)
+            # next2 = self.track0[currblock+2]
+            # #print("authority next2", next2)
+            # next3 = self.track0[currblock+3]
+            # next4 = self.track0[currblock+4]
+            # next5 = self.track0[currblock+5]
+            # next6 = self.track0[currblock+6]
+            # next7 = self.track0[currblock+7]
+            # next8 = self.track0[currblock+8]
 
             for i in self.stations0:
-                if i == next8:
+                if i == nextblock8:
                     auth = 7
-                elif i == next7:
+                elif i == nextblock7:
                     auth = 6
-                elif i == next6:
+                elif i == nextblock6:
                     auth = 5
-                elif i == next5:
+                elif i == nextblock5:
                     auth = 4
-                elif i == next4:
+                elif i == nextblock4:
                     auth = 3
-                elif i == next3:
+                elif i == nextblock3:
                     auth = 2
-                elif i == next2:
+                elif i == nextblock2:
                     auth = 1
-                elif i == next1:
+                elif i == nextblock1:
                     auth = 0
                 else:
                     auth = 8
         elif line == 'Red':
+            #print("in green")
             currblock = self.track1.index(block)
-            nextblock = self.track1[currblock].nextblock
-            #print("in red")
-            next1 = self.track1[currblock+1]
-            #print("authority next1", next1)
-            next2 = self.track1[currblock+2]
-            #print("authority next2", next2)
-            next3 = self.track1[currblock+3]
-            next4 = self.track1[currblock+4]
-            next5 = self.track1[currblock+5]
-            next6 = self.track1[currblock+6]
-            next7 = self.track1[currblock+7]
-            next8 = self.track1[currblock+8]
+            #print("current block", currblock)
+            nextblock1 = int(self.everythingtrack1[currblock].nextBlock)
+            nextindex1 = self.track1.index(nextblock1)
+            #print("1 next block and index", nextblock1, nextindex1)
+            nextblock2 = int(self.everythingtrack1[nextindex1].nextBlock)
+            nextindex2 = self.track1.index(nextblock2)
+            #print("2 next block and index", nextblock2, nextindex2)
+            nextblock3 = int(self.everythingtrack1[nextindex2].nextBlock)
+            nextindex3 = self.track1.index(nextblock3)
+            #print("3 next block and index", nextblock3, nextindex3)
+            nextblock4 = int(self.everythingtrack1[nextindex3].nextBlock)
+            nextindex4 = self.track1.index(nextblock4)
+            #print("4 next block and index", nextblock4, nextindex4)
+            nextblock5 = int(self.everythingtrack1[nextindex4].nextBlock)
+            nextindex5 = self.track1.index(nextblock5)
+            #print("5 next block and index", nextblock5, nextindex5)
+            nextblock6 = int(self.everythingtrack1[nextindex5].nextBlock)  
+            nextindex6 = self.track1.index(nextblock6)
+            #print("6 next block and index", nextblock6, nextindex6)
+            nextblock7 = int(self.everythingtrack1[nextindex6].nextBlock)
+            nextindex7 = self.track1.index(nextblock7)
+            #print("7 next block and index", nextblock7, nextindex7)
+            nextblock8 = int(self.everythingtrack1[nextindex7].nextBlock)
+            nextindex8 = self.track1.index(nextblock8) 
+            #print("8 next block and index", nextblock8, nextindex8)   
 
             for i in self.stations1:
-                if i == next8:
+                if i == nextblock8:
                     auth = 7
-                elif i == next7:
+                elif i == nextblock7:
                     auth = 6
-                elif i == next6:
+                elif i == nextblock6:
                     auth = 5
-                elif i == next5:
+                elif i == nextblock5:
                     auth = 4
-                elif i == next4:
+                elif i == nextblock4:
                     auth = 3
-                elif i == next3:
+                elif i == nextblock3:
                     auth = 2
-                elif i == next2:
+                elif i == nextblock2:
                     auth = 1
-                elif i == next1:
+                elif i == nextblock1:
                     auth = 0
                 else:
                     auth = 8

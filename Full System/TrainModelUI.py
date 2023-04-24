@@ -21,7 +21,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.popUp = popUpWindow()
         #self.block = Block()
         self.tempSlider.setMinimum(60)
-        self.tempSlider.setMaximum(90)
+        self.tempSlider.setMaximum(80)
+        self.tempSlider.setValue(70)
+        self.ACprogressBar.setMinimum(60)
+        self.ACprogressBar.setMaximum(80)
+        self.ACprogressBar.setValue(70)
         self.tempSlider.valueChanged.connect(self.sliderChanged)
 
         #Connecting the received signals to their display functions
@@ -40,6 +44,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainModelLineSignal.connect(self.lineConfig)
         signals.trainControllerDispatchedSignal.connect(self.addTrain)
         signals.trainModelGUISpeedLim.connect(self.speedLim)
+        signals.trainControllerEmerBrake.connect(self.brakeUI)
         #displaying the stats of the train popup
 
         self.popUpUI.clicked.connect(self.displayPopUp)
@@ -162,7 +167,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
     def sliderChanged(self):
         sliderSize = self.tempSlider.value()
         self.ACprogressBar.setMinimum(60)
-        self.ACprogressBar.setMaximum(90)
+        self.ACprogressBar.setMaximum(80)
         self.ACprogressBar.setTextVisible(0)
         self.tempText.setText('Current Temp: ' + str(sliderSize) + ' F')
         self.ACprogressBar.setValue(sliderSize)
@@ -228,5 +233,17 @@ class TrainModelUI(QtWidgets.QMainWindow):
     
     def addTrain(self,train):
         self.trainBox.addItem("Train {0}".format(train.ID))
+    
+    def brakeUI(self, brake):
+        if brake == False:
+            self.actSpeed.setStyleSheet("background-color:  light gray; border: 2px solid black; border-radius: 4px;padding: 2px;")
+            self.EmerButton.setText("EMERGENCY BRAKE")
+            self.EmerButton.setStyleSheet("background-color: red")
+        else:
+            self.actSpeed.setStyleSheet("background-color: red; border: 2px solid black; border-radius: 4px;padding: 2px;")
+            self.EmerButton.setText("Reset")
+            self.EmerButton.setStyleSheet("background-color: gray; border: 2px solid black; border-radius: 4px;padding: 2px; font: 16pt Segoe UI")
+
+        
     
 
