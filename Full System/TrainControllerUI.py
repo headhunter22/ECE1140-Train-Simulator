@@ -180,6 +180,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         # Calling Slider changes functions #
     def SliderMoved(self, i):
         self.RateText.setText("Requested Speed: {0}mph".format(i))
+        signals.trainControllerManualModeToTrainModel.emit(True,i)
 
         # Calling headlights clicked function #
     def HeadlightsClick(self):
@@ -319,7 +320,6 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
-         signals.trainControllerManualModeToTrainModel.emit(True,self.CommandedSpeed)
 
     def ACClick(self):
          if self.AC.isChecked() == True:
