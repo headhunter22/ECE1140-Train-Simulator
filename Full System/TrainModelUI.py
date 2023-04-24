@@ -45,10 +45,12 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainControllerDispatchedSignal.connect(self.addTrain)
         signals.trainModelGUISpeedLim.connect(self.speedLim)
         signals.trainControllerEmerBrake.connect(self.brakeUI)
+        signals.trackModelBeaconSending.connect(self.beaconFunc)
         #displaying the stats of the train popup
 
         self.popUpUI.clicked.connect(self.displayPopUp)
         self.EmerButton.clicked.connect(self.emergencyBrake)
+        self.EmerButton.styleSheet() == 'background-color: red'
 
         self.trainBox.currentIndexChanged.connect(self.trainViewSwitched)
         
@@ -214,8 +216,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
             else:
                 station = 'Central'
 
-            text = text + station + '\n                  '
-
+            text = text + station + '\n                    '
         self.destLabel.setText(text)
 
 
@@ -244,6 +245,14 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.EmerButton.setText("Reset")
             self.EmerButton.setStyleSheet("background-color: gray; border: 2px solid black; border-radius: 4px;padding: 2px; font: 16pt Segoe UI")
 
-        
+    def beaconFunc(self, block):
+        if (block.beaconBool == True):
+            if str(block.beacon.stationName) == 'None':
+                self.beaconLabel.setText('Beacon Information: \nPassing a Switch')
+            else:
+                self.beaconLabel.setText('Beacon Information: \n' + str(block.beacon.stationName)
+                                     +'\nExit Side: '+ str(block.beacon.stationSide))    
+        else:
+            self.beaconLabel.setText("No Beacon Information")
     
 
