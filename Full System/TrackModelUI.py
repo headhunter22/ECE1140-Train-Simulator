@@ -182,13 +182,11 @@ class TrackModelUI(QtWidgets.QMainWindow):
         if faultType == 'Power' and len(self.track.faults['Power']) == 0:
             # add the fault to the track
             self.track.addFault(fault)
-            signals.trackModelUpdateGUIFaults.emit(fault)
 
         # if there is already a track circuit fault on the track, don't create another
         if faultType == 'Broken Circuit' and len(self.track.faults['Broken Circuit']) == 0:
             # add the fault to the track
             self.track.addFault(fault)
-            signals.trackModelUpdateGUIFaults.emit(fault)
 
     # update rail to break
     def breakRail(self):

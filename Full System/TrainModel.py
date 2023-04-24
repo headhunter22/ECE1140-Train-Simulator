@@ -144,6 +144,7 @@ class TrainModel(QObject):
         if currPos > int(currBlockSize):
 
             train.block = train.route[1]
+            prevBlock = train.route[0]
             if (train.block == 57):
                 self.actSpeed = 0
                 print("REACHED THE END OF THE LINE!!")
@@ -156,10 +157,11 @@ class TrainModel(QObject):
                 # update train speed to 0 and delete train
 
             # update track model occupancy to unoccupied for currBlock
-            signals.trackModelUpdateOccupancy.emit(train, train.line, currBlock, False)
+            signals.trackModelUpdateOccupancy.emit(train, train.line, prevBlock, False)
 
             # update track model occupancy to occupied for next block in route
             signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
+
             signals.trainControllerUpdateCommSpeed.emit(train.line.getBlock(train.route[0]).speedLimit)
            
         # we have not traversed more than the current block length
