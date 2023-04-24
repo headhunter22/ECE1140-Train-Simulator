@@ -52,6 +52,8 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.GreenFaultWidget = QtWidgets.QWidget()
         self.GreenFaultWidget.setLayout(self.GreenFaultLayout)
 
+        self.faultWindow = FaultDisplay(self.track)
+
         # connect temperature button
         self.tempGo.clicked.connect(self.tempChanged)
 
@@ -158,10 +160,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
     # update faults from test UI
     def updateFaults(self, inLine, inBlock, faultType):
-        # create label for rail breakages scroll and add to section
-        faultLabel = QtWidgets.QLabel(inLine + ' ' + inBlock, self)
-        faultLabel.setFixedHeight(30)
-
         if faultType == 'Broken Rail':
             # highlight Broken Rail orange
             self.BrokenRailLabel.setStyleSheet("color: orange")
@@ -175,8 +173,22 @@ class TrackModelUI(QtWidgets.QMainWindow):
         # create a fault in the fault class
         fault = Fault(faultType, inBlock, inLine)
 
-        # add the fault to the track
-        self.track.addFault(fault)
+        # if the same line/block already is broken, don't create another
+        if faultType == 'Broken Rail' and not self.track.faultExists(fault):
+            self.track.addFault(fault)
+            signals.trackModelUpdateGUIFaults.emit(fault)
+
+        # if there is already a power fault on the track, don't create another
+        if faultType == 'Power' and len(self.track.faults['Power']) == 0:
+            # add the fault to the track
+            self.track.addFault(fault)
+            signals.trackModelUpdateGUIFaults.emit(fault)
+
+        # if there is already a track circuit fault on the track, don't create another
+        if faultType == 'Broken Circuit' and len(self.track.faults['Broken Circuit']) == 0:
+            # add the fault to the track
+            self.track.addFault(fault)
+            signals.trackModelUpdateGUIFaults.emit(fault)
 
     # update rail to break
     def breakRail(self):
@@ -334,7 +346,6 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.RedLineScrollArea.removeWidget
 
     def showFaultWindow(self):
-        self.faultWindow = FaultDisplay(self.track)
         self.faultWindow.show()
 
     def populateLineSelect(self):

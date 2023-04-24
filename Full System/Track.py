@@ -25,6 +25,13 @@ class Track:
     def addFault(self, fault):
         self.faults[fault.type].append(fault)
 
+    def faultExists(self, fault):
+        for f in self.faults[fault.type]:
+            if f.line == fault.line and f.block == fault.block:
+                return True
+            
+        return False
+
     def faultsToString(self, faultType):
         faultString = ''
 
