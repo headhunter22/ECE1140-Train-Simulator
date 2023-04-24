@@ -17,11 +17,13 @@ class TrainController(QObject):
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
-        signals.trainModelAuthorityToTrainController.connect(self.setNewAuthority)
+        #signals.trainModelAuthorityToTrainController.connect(self.setNewAuthority)
+        signals.timerTicked.connect(self.waitAtStation)
 
         self.Ki = 100
         self.Kp = 100
         self.AuthorityHasBeenReset = False
+        self.timer = 0
 
         self.UkPrev = 0
         self.EkPrev = 0
@@ -38,35 +40,43 @@ class TrainController(QObject):
         self.currentSpeed = currSpeed
         self.train = train
 
-    def setNewAuthority(self, auth):
-        self.train.authority = auth
-        print("Authority has been updated")
-        self.AuthorityHasBeenReset = True
-        signals.trainGo.emit()
+    # def setNewAuthority(self, auth):
+    #     self.train.authority = auth
+    #     print("Authority has been updated")
+        
 
-    def waitAtStation(self):
+    def waitAtStation(self, waysideWaitBool):
         # emit signals for waiting and passengers
         signals.trainWaiting.emit()
         signals.trackModelPassengersChanging.emit(self.train)
-        self.waitTimer = QTimer()
-        self.waitTimer.singleShot(30000, self.setNewAuthority)
+
+        if waysideWaitBool == True:
+            if self.timer == 30:
+                self.timer = 0
+                #self.setNewAuthority()
+                self.AuthorityHasBeenReset == False
+                signals.trainGo.emit()
+                signals.waysideWait.emit(False)
+
+            else: 
+                self.timer += 1
 
     def sendPower(self):
         #the train is moving and not stopped at a station
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
-        #if self.train.authority <= 0:
-        #    print('waiting')
-        #    self.train.authority = 0
-        #    self.waitAtStation()
-        #    signals.trainControllerAuthority.emit(self.train.authority)
+        if self.train.authority == 1:
+           print('waiting')
+           self.train.authority = 0
+           self.waitAtStation()
+           signals.trainControllerAuthority.emit(self.train.authority)
         #    # wait at station
         #    # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
     
-        if self.train.authority <= 0:
-            self.train.authority = 10000
+        if self.train.actSeeed <= 0:
+            self.AuthorityHasBeenReset = True
 
         if self.train.authority <= self.StopDistance:
             print('authority = ' + str(self.train.authority))
