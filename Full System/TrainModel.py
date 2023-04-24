@@ -197,20 +197,28 @@ class TrainModel(QObject):
         self.emerBrake = emerBrake
     
     def newAuthority(self,blocks, currentblock): #blocks is int allowed, currentblock is 
-        #for i in range(blocks):
-            #auth = train.route[i]
+        currLine = self.trainList[0].line
+        auth = 0
+        for i in range(blocks):
+            print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).length))
+                  
+            if (str(currLine.getBlock(self.trainList[0].route[i]).length) == '86.6'):
+                newAuth = 87
+            else:
+                newAuth = int(currLine.getBlock(self.trainList[0].route[i]).length)
+            auth += newAuth
         print("new authority")
-        # currblock = self.track0.index(currentblock)
-        # next1 = self.track0[currblock+1]
-        # next2 = self.track0[currblock+2]
-        # next3 = self.track0[currblock+3]
-        # next4 = self.track0[currblock+4]
-        # next5 = self.track0[currblock+5]
-        # next6 = self.track0[currblock+6]
-        # next7 = self.track0[currblock+7]
-        # next8 = self.track0[currblock+8]
+        #currblock = self.track0.index(currentblock)
+        #next1 = self.track0[currblock+1]
+        #next2 = self.track0[currblock+2]
+        #next3 = self.track0[currblock+3]
+        #next4 = self.track0[currblock+4]
+        #next5 = self.track0[currblock+5]
+        #next6 = self.track0[currblock+6]
+        #next7 = self.track0[currblock+7]
+        #next8 = self.track0[currblock+8]
 
-        # signals.trainModelAuthorityToTrainController.emit(auth)
+        #signals.trainModelAuthorityToTrainController.emit(auth)
     
     def manualModeFunc(self, manualMode, commSpeed):
         self.manualMode = manualMode
