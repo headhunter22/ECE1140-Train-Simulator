@@ -14,7 +14,7 @@ class Block:
         self.elevation = blockInfo[6]
         self.cumElevation = blockInfo[7]
         self.secsToTraverse = blockInfo[8]
-        self.beaconBool = blockInfo[9]
+        self.beaconBool = bool(blockInfo[9])
         self.lastStation = blockInfo[10]
         self.stationBool = blockInfo[11]
         self.switchBool = blockInfo[12]

@@ -4,6 +4,7 @@ from Block import Block
 from Train import Train
 from Track import Track
 from Beacon import Beacon
+from Fault import Fault
 import sys
 sys.dont_write_bytecode = True
 
@@ -95,6 +96,7 @@ class Signals(QObject):
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal()
+    trackModelUpdateGUIFaults = pyqtSignal(Fault)
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
