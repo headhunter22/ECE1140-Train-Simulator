@@ -263,6 +263,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.ServiceBrake.setCheckable(False)
               self.AC.setCheckable(False)
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              signals.trainControllerManualModeToTrainModel.emit(False, 123)
 
          if self.AutoMode.isChecked() == False:
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
@@ -277,6 +278,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
               self.AC.setCheckable(True)
               self.ManualMode.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
               self.AutoMode.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
+              signals.trainControllerManualModeToTrainModel.emit(True, self.CommandedSpeed)
 
     def ServiceBrakeClick(self):
          if self.ServiceBrake.isChecked() == True:
