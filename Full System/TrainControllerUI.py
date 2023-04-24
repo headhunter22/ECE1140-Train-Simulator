@@ -319,6 +319,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          txt = f"{x:.2f}"
          self.y = float(txt)
          self.CommandedSpeed.setText("Commanded Speed: {0}mph".format(self.y))
+         signals.trainControllerManualModeToTrainModel.emit(True,self.CommandedSpeed)
 
     def ACClick(self):
          if self.AC.isChecked() == True:
