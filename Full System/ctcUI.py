@@ -7,7 +7,7 @@ import ScheduleParser
 import TrackParser
 import pandas as pd
 from signals import signals
-import sys, os, re, ast
+import sys, os, re, ast, datetime
 sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
@@ -267,7 +267,7 @@ class ctcMainUI(QMainWindow):
 
         self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
         self.ui.xButton.clicked.connect(self.clearBlockOptions)
-        self.ui.checkButton.clicked.connect(lambda: self.updateBlockStatus(track))
+        self.ui.checkButton.clicked.connect(self.updateBlockStatus)
 
 
 
@@ -303,7 +303,7 @@ class ctcMainUI(QMainWindow):
 
     def iterDispatch(self):
         self.ui.greenTrainInfoTable.setRowCount(0)
-        stops = [65, 73]
+        stops = [73]
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
     
     def timeSelect(self): ########
@@ -327,7 +327,7 @@ class ctcMainUI(QMainWindow):
         
     def changeLabel(self, hrs, mins, secs): #######
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
-        self.dispatchGreenLine(hrs, mins, secs)
+        self.dispatchGreenLine()
 
     def timePause(self):
         signals.CTCTimePause.emit()
@@ -340,7 +340,6 @@ class ctcMainUI(QMainWindow):
 
     def fiftyTimeSpeed(self):
         signals.CTCFiftyTimesSpeed.emit()
-    
 
 
 
@@ -349,7 +348,7 @@ class ctcMainUI(QMainWindow):
     ############################################
     
     #, hrs, mins, secs
-    def dispatchGreenLine(self, hrs, mins, secs):
+    def dispatchGreenLine(self):
 
         try:
             if self.ui.greenScheduledTrains.rowCount() > 0:
@@ -359,7 +358,8 @@ class ctcMainUI(QMainWindow):
 
         
         for rows in range(0, self.ui.greenScheduledTrains.rowCount()):
-            if self.ui.greenScheduledTrains.item(rows, 2).text()+":00" == self.ui.dataTime.text():
+            print(self.ui.greenScheduledTrains.item(rows, 2).text())
+            if self.ui.greenScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
                 destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(rows, 0).text())
 
                 stops = []
@@ -371,22 +371,8 @@ class ctcMainUI(QMainWindow):
                         if destlist[rows] == self.greenStations[item]:
                             stops.append(self.greenStopsBlocks[item])
                 
-                print(stops)
                 signals.greenLineTrainDispatchFromCtcUI.emit(stops)
-                print(rows)
                 self.ui.greenScheduledTrains.removeRow(rows)
-
-
-
-        #for i in range(0, self.ui.greenScheduledTrains.rowCount()):
-        #    timeArr = self.ui.greenScheduledTrains.item(i, 1).text().split(":")
-        #    timeHour = int(timeArr[0], 10) * 3600
-        #    timeMin = int(timeArr[1], 10) * 60
-        #    totalTime = timeHour + timeMin
-
-
-
-        #signals.greenLineTrainDispatchFromCtcUI.emit(stops)
 
 
         
@@ -446,13 +432,36 @@ class ctcMainUI(QMainWindow):
         destList = []
         atList = []
 
+        
+
         for rows in range(0, self.ui.greenTentSchedule.rowCount()):
             destList.append(self.ui.greenTentSchedule.item(rows,0).text())
             atList.append(self.ui.greenTentSchedule.item(rows,1).text())
 
+        stops = []
+
+        # iterate through the tent schedule table
+        for rows in range(0, len(destList)):
+            # iterate through the stations list to see if the text in that cell is one of the stations
+            for item in range(0, len(self.greenStations)):
+                if destList[rows] == self.greenStations[item]:
+                    stops.append(self.greenStopsBlocks[item])
+
+        disTime = self.calculateDispatchTime("Green", stops[0])
+
+        temp = atList[0]
+        time = temp.split(":")
+        hours = int(time[0]) * 3600
+        minutes = int(time[1]) * 60
+        totalTime = hours + minutes - int(disTime)
+        dispatchTime = str(datetime.timedelta(seconds=totalTime))
+        print(dispatchTime)
+
+
+
         dest = QTableWidgetItem(str(destList))
         at = QTableWidgetItem(str(atList))
-        dt = QTableWidgetItem(str(atList[0]))
+        dt = QTableWidgetItem(dispatchTime)
         self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
         self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
         self.ui.greenScheduledTrains.setItem(rowCount, 2, dt)
