@@ -15,6 +15,13 @@ class FaultDisplay(QtWidgets.QMainWindow):
         signals.trackModelUpdateGUIFaults.connect(self.addFault)
 
     def addFault(self, fault):
-        return
+        # create label
+        label = QtWidgets.QLabel()
+
+        text = fault.line + ' ' + fault.block + ' '
+        label.setText(text)
+
+        # add label to scroll window
+        self.verticalLayout.addWidget(label)
 
 # end fault display class
