@@ -157,28 +157,28 @@ class Wayside(QObject):
                 #print("i from inside loop as int", int(i))
                 if int(i) == nextblock8:
                     #print("int i = next block 8", i, nextblock8)
-                    auth = 7
+                    auth = 8
                 elif int(i) == nextblock7:
                     #print("int i = next block7", i, nextblock7)
-                    auth = 6
+                    auth = 7
                 elif int(i) == nextblock6:
                     #print("int i = next block6", i, nextblock6)
-                    auth = 5
+                    auth = 6
                 elif int(i) == nextblock5:
                     #print("int i = next block5", i, nextblock5)
-                    auth = 4
+                    auth = 5
                 elif int(i) == nextblock4:
                     #print("int i = next block4", i, nextblock4)
-                    auth = 3
+                    auth = 4
                 elif int(i) == nextblock3:
                     ##print("int i = next block3", i, nextblock3)
-                    auth = 2
+                    auth = 3
                 elif int(i) == nextblock2:
                     #print("int i = next block2", i, nextblock2)
-                    auth = 1
+                    auth = 2
                 elif int(i) == nextblock1:
                     #print("int i = next block1", i, nextblock1)
-                    auth = 0
+                    auth = 1
                 #else:
                     #print("else from forloop")
                     #auth = 8
@@ -213,21 +213,21 @@ class Wayside(QObject):
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             for i in self.stations1:
                 if int(i) == nextblock8:
-                    auth = 7
+                    auth = 8
                 elif int(i) == nextblock7:
-                    auth = 6
+                    auth = 7
                 elif int(i) == nextblock6:
-                    auth = 5
+                    auth = 6
                 elif int(i) == nextblock5:
-                    auth = 4
+                    auth = 5
                 elif int(i) == nextblock4:
-                    auth = 3
+                    auth = 4
                 elif int(i) == nextblock3:
-                    auth = 2
+                    auth = 3
                 elif int(i) == nextblock2:
-                    auth = 1
+                    auth = 2
                 elif int(i) == nextblock1:
-                    auth = 0
+                    auth = 1
         #print("wayside.py update authority auth", auth)
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
         signals.testWaysideAuthorityToCTC.emit(line, route, auth)
