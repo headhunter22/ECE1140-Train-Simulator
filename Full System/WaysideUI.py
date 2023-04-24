@@ -1184,7 +1184,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.bl.block14.setText(str(self.sectionmatrix[sectionrow][13]))
         elif l == 13:
             self.bl.block1.setText(str(self.sectionmatrix[sectionrow][0]))
-            self.bl.block2.setTextstr((self.sectionmatrix[sectionrow][1]))
+            self.bl.block2.setText(str(self.sectionmatrix[sectionrow][1]))
             self.bl.block3.setText(str(self.sectionmatrix[sectionrow][2]))
             self.bl.block4.setText(str(self.sectionmatrix[sectionrow][3]))
             self.bl.block5.setText(str(self.sectionmatrix[sectionrow][4]))
@@ -1873,9 +1873,12 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("wayside a UI block", block, "is vacant")
         img = QPixmap('tracks.png')
         print("vacancy line, block, sec", line, block, sec)
-        find = self.occupied.index(block)
-        print("find", find)
-        self.occupied.pop(find)
+        try:
+            find = self.occupied.index(block)
+            print("find", find)
+            self.occupied.pop(find)
+        except:
+            print("no blocks occupied yet")
         print("occupied blocks", self.occupied)
         
         if self.first == 1:

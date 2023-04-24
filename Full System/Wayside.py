@@ -272,7 +272,7 @@ class Wayside(QObject):
         
         id = self.track0.index(block)
         sec = self.allsection0[id]
-        self.updateAuthority(line, block)
+        self.updateAuthority(line, block, route)
         signals.wtowOccupancy.emit(line, block, sec)
         #occupancy sent to the CTC Office
         signals.ctcUpdateGUIOccupancy.emit(line, block)
