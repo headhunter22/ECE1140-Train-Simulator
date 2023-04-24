@@ -14,7 +14,16 @@ sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
-greenStationStates = []
+#greenStationStates = []
+greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+                82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 85, 84,
+                83, 82, 81, 80, 79, 78, 77, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+                129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145,
+                146, 147, 148, 149, 150, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15,
+                14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+                43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
 class ctcMainUI(QMainWindow):
     def __init__(self, track):
@@ -27,10 +36,12 @@ class ctcMainUI(QMainWindow):
         ###################################
 
         signals.timerTicked.connect(self.changeLabel)
-        signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
-        signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
+        #signals.ctcUpdateGUIOccupancy.connect(self.updateOccupancy)
+        #signals.ctcUpdateGUIAuthority.connect(self.updateAuthority)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
+
+        signals.testWaysideAuthorityToCTC.connect(self.testOccupancyAuthority)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -148,9 +159,6 @@ class ctcMainUI(QMainWindow):
         ##################################
         ########OCCUPANCY WINDOWS#########
         ##################################
-
-        
-
         #initilizing green buttons
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
         self.ui.green_C1.clicked.connect(lambda: self.toggleColorMaintenance(self.ui.green_C1, self.ui.green_C2))
@@ -272,6 +280,7 @@ class ctcMainUI(QMainWindow):
         self.ui.greenDispatch.clicked.connect(self.testGreenDispatch)
 
 
+
     ############################################
     ############## MISC FUNCTIONS ##############
     ############################################
@@ -314,7 +323,6 @@ class ctcMainUI(QMainWindow):
     def fiftyTimeSpeed(self):
         signals.CTCFiftyTimesSpeed.emit()
     
-    
 
 
 
@@ -322,7 +330,18 @@ class ctcMainUI(QMainWindow):
     ########## AUTO MODE FUNCTIONS #############
     ############################################
     
-    def dispatchGreenLine(self, stops):
+    def dispatchGreenLine(self, stops, hrs, mins, secs):
+
+        try:
+
+
+            pass
+
+        except:
+            pass
+
+
+
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
 
 
@@ -501,49 +520,76 @@ class ctcMainUI(QMainWindow):
     ############################################
     ######## OCCUPANCY VIEW FUNCTIONS ##########
     ############################################
-    
-    def updateAuthority(self, line, block, authority):
-        blockAuth = int(authority / 100)
 
-        if line == 'Green':
-            for rows in range(0, 149):
-                if (rows > block) and (rows < block + blockAuth):
-                    #creating table objects to update occupancy window
-                    newTrainLocation = QTableWidgetItem('')
-                    #new train location
-                    newTrainLocation.setBackground(QColor('red'))
-                    self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
-                elif rows != block:
-                    #creating table objects to update occupancy window
-                    oldTrainLocation = QTableWidgetItem('')
-                    #old train location
-                    oldTrainLocation.setBackground(QColor('white'))
-                    self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
-        elif line == "Red":
-            return
-        else:
-            print("error")
-
-    def updateOccupancy(self, line, block):
-        if line == 'Green':
-            for rows in range(0, 150):
-                if rows == block:
-                    #creating table objects to update occupancy window
-                    newTrainLocation = QTableWidgetItem('')
-                    oldTrainLocation = QTableWidgetItem('')
-                    #new train location
-                    newTrainLocation.setBackground(QColor('green'))
-                    self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+    def testOccupancyAuthority(self, line, route, auth):
+        if line == "Green":
+            for i in range(0, 149):
+                if i in route[:auth+1]:
+                    if i == route[0]:
+                        location = QTableWidgetItem('')
+                        location.setBackground(QColor('green'))
+                        self.ui.greenOccupancy.setItem(i-1, 0, location)
+                    else:
+                        authority = QTableWidgetItem('')
+                        authority.setBackground(QColor('red'))
+                        self.ui.greenOccupancy.setItem(i-1, 0, authority)
                 else:
-                    #creating table objects to update occupancy window
-                    oldTrainLocation = QTableWidgetItem('')
-                    #old train location
-                    oldTrainLocation.setBackground(QColor('white'))
-                    self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
-        elif line == "Red":
-            return
+                    vacancy = QTableWidgetItem('')
+                    vacancy.setBackground(QColor('white'))
+                    self.ui.greenOccupancy.setItem(i-1, 0, vacancy)
+
         else:
-            print("error")
+            pass
+                    
+    
+    #def updateAuthority(self, line, route):
+    #    # blockAuth = int(authority / 100)
+#
+    #    if line == 'Green':
+    #        for i in range(0, 7):
+    #            newTrainAuthority = QTableWidgetItem('')
+    #            newTrainAuthority.setBackground(QColor('red'))
+    #            self.ui.greenOccupancy.setItem(route[i + 1], 0, newTrainAuthority)
+#
+    #    #if line == 'Green':
+    #    #    for rows in range(0, 149):
+    #    #        if (rows > block) and (rows < block + blockAuth):
+    #    #            #creating table objects to update occupancy window
+    #    #            newTrainLocation = QTableWidgetItem('')
+    #    #            #new train location
+    #    #            newTrainLocation.setBackground(QColor('red'))
+    #    #            self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+    #    #        elif rows != block:
+    #    #            #creating table objects to update occupancy window
+    #    #            oldTrainLocation = QTableWidgetItem('')
+    #    #            #old train location
+    #    #            oldTrainLocation.setBackground(QColor('white'))
+    #    #            self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
+    #    #elif line == "Red":
+    #    #    return
+    #    #else:
+    #    #    print("error")
+#
+    #def updateOccupancy(self, line, block):
+    #    if line == 'Green':
+    #        for rows in range(0, 150):
+    #            if rows == block:
+    #                #creating table objects to update occupancy window
+    #                newTrainLocation = QTableWidgetItem('')
+    #                oldTrainLocation = QTableWidgetItem('')
+    #                #new train location
+    #                newTrainLocation.setBackground(QColor('green'))
+    #                self.ui.greenOccupancy.setItem(rows, 0, newTrainLocation)
+    #            else:
+    #                #creating table objects to update occupancy window
+    #                oldTrainLocation = QTableWidgetItem('')
+    #                #old train location
+    #                oldTrainLocation.setBackground(QColor('white'))
+    #                self.ui.greenOccupancy.setItem(rows, 0, oldTrainLocation)
+    #    elif line == "Red":
+    #        return
+    #    else:
+    #        print("error")
 
     def fillOccupancy(self, line):
 
@@ -975,7 +1021,6 @@ class ctcMainUI(QMainWindow):
 
     def updateBlockStatus(self):
         if self.ui.lineSelectMaintenance.currentIndex() == 0:
-            print(self.ui.lineSelectMaintenance.currentText)
             if self.ui.modeSelect.currentIndex() == 0:
 
                 open = QTableWidgetItem('Open')
