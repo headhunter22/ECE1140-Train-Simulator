@@ -33,10 +33,7 @@ class Signals(QObject):
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
-
-    testAuthTrackModelToWayside = pyqtSignal(str, list)
-    testWaysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority
-
+    waysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(str, int, list) # line, block
