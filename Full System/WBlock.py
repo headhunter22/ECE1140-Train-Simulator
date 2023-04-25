@@ -14,6 +14,8 @@ class WBlock:
         self.occupancy = 0
         self.authority = 0
         self.switch = 0
+        self.switch0 = ''
+        self.switch1 = ''
         self.switchstate = 0
         self.switchLights = 0
         self.fault = 0
