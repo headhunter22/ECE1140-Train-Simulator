@@ -12,6 +12,7 @@ sys.dont_write_bytecode = True
 
 trackCSV = pd.read_csv('TrackLayout.csv')
 trackDict = trackCSV.to_dict()
+#greenStationStates = []
 greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
                 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 85, 84,
                 83, 82, 81, 80, 79, 78, 77, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
@@ -38,7 +39,7 @@ class ctcMainUI(QMainWindow):
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
-        signals.waysideAuthorityToCTC.connect(self.testOccupancyAuthority)
+        signals.testWaysideAuthorityToCTC.connect(self.testOccupancyAuthority)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -60,6 +61,16 @@ class ctcMainUI(QMainWindow):
             self.greenStations.append(str(greenBlocks[i]))
             self.greenStopsBlocks.append(int(greenBlocks[i]))
 
+        # add green blocks to dispatch page
+        for section in track.getLine("Green").sections:
+            for block in section.blocks:
+                self.ui.greenBlockDispatch.addItem(block.blockName)
+
+        # add red blocks to dispatch page
+        for section in track.getLine("Red").sections:
+            for block in section.blocks:
+                self.ui.redBlockDispatch.addItem(block.blockName)
+
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
         
@@ -75,17 +86,74 @@ class ctcMainUI(QMainWindow):
         # button to send a train to dormont and then the yard
         self.ui.thisIsATest.clicked.connect(self.iterDispatch)
 
-        # manually dispatching trains
-        self.ui.greenAddStop.clicked.connect(self.addGreenStop)
-        self.ui.greenDispatch.clicked.connect(self.addGreenScheduledTrain)
+        # connecting the green station buttons
+        """
+        self.greenStations = []
+        #self.greenStaionStates = []
+        self.ui.pioneerStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.pioneerStation)
+        self.ui.edgebrookStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.edgebrookStation)
+        self.ui.whitedStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.whitedStation)
+        self.ui.southBankStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.southBankStation)
+        self.ui.centralStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.centralStation)
+        self.ui.inglewoodStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.inglewoodStation)
+        self.ui.overbrookStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.overbrookStation)
+        self.ui.glenburyStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.glenburyStation)
+        self.ui.dormontStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.dormontStation)
+        self.ui.lebanonStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.lebanonStation)
+        self.ui.poplarStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.poplarStation)
+        self.ui.castleShannonStation.clicked.connect(self.handleGreenStationClicked)
+        self.greenStations.append(self.ui.castleShannonStation)
+        """
 
-        #upload schedule
-        self.ui.uploadSchedule.clicked.connect(self.openFile)
+        # connecting the green station buttons
+        """
+        self.redStations = []
+        self.ui.shadysideStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.shadysideStation)
+        self.ui.herronStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.herronStation)
+        self.ui.swissvilleStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.swissvilleStation)
+        self.ui.pennStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.pennStation)
+        self.ui.steelPlazaStaion.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.steelPlazaStaion)
+        self.ui.firstAveStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.firstAveStation)
+        self.ui.staionSquareStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.staionSquareStation)
+        self.ui.southHillsStation.clicked.connect(self.handleRedStationClicked)
+        self.redStations.append(self.ui.southHillsStation)
+        """
+
+        # add station buttons
+        self.ui.greenAddStation.clicked.connect(self.greenAddStation)
+        self.ui.redAddStation.clicked.connect(self.addRedTentStation)
+
+        # add block buttons
+        #self.ui.greenAddBlock.clicked.connect(self.addGreenTentBlock)
+        #self.ui.redAddBlock.clicked.connect(self.addRedTentBlock)
+
+        # dispatch and clear buttons for red and green line
+        #self.ui.greenDispatch.clicked.connect(self.dipatchGreenTrain)
+        self.ui.greenClear.clicked.connect(self.clearGreenDispatch)
+        #self.ui.redDispatch.clicked.connect(self.dipatchRedTrain)
+        self.ui.redClear.clicked.connect(self.clearRedDispatch)
 
         ##################################
         ########OCCUPANCY WINDOWS#########
         ##################################
-
         #initilizing green buttons
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
         self.ui.green_C1.clicked.connect(lambda: self.toggleColorMaintenance(self.ui.green_C1, self.ui.green_C2))
@@ -163,7 +231,8 @@ class ctcMainUI(QMainWindow):
         self.ui.scheduledTrains.clicked.connect(self.showPages)
         #self.ui.scheduledTrains.clicked.connect(self.schedTrains)
 
-        
+        #upload schedule
+        self.ui.uploadSchedule.clicked.connect(self.openFile)
         
         #time speed buttons
         self.timeButtons = [self.ui.timePause, self.ui.time1x, self.ui.time10x, self.ui.time50x]
@@ -194,16 +263,42 @@ class ctcMainUI(QMainWindow):
 
 
 
+
+
+
+
+
+
+        self.ui.greenAddStop.clicked.connect(self.addGreenStop)
+        self.ui.greenDispatch.clicked.connect(self.addGreenScheduledTrain)
+
+
+        self.ui.pushButton.clicked.connect(self.test)
+
+
+
     ############################################
     ############## MISC FUNCTIONS ##############
     ############################################
+
+    def test(self):
+        destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(0, 0).text())
+
+        stops = []
+
+        # iterate through the tent schedule table
+        for rows in range(0, len(destlist)):
+            # iterate through the stations list to see if the text in that cell is one of the stations
+            for item in range(0, len(self.greenStations)):
+                if destlist[rows] == self.greenStations[item]:
+                    stops.append(self.greenStopsBlocks[item])
 
     def iterDispatch(self):
         self.ui.greenTrainInfoTable.setRowCount(0)
         stops = [73]
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
     
-    def timeSelect(self):
+    def timeSelect(self): ########
         # Get the button that was clicked
         clickedButton = self.sender()
 
@@ -222,7 +317,7 @@ class ctcMainUI(QMainWindow):
             else:
                 button.setStyleSheet("background-color: white;")
         
-    def changeLabel(self, hrs, mins, secs):
+    def changeLabel(self, hrs, mins, secs): #######
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
         self.dispatchGreenLine()
 
@@ -238,11 +333,15 @@ class ctcMainUI(QMainWindow):
     def fiftyTimeSpeed(self):
         signals.CTCFiftyTimesSpeed.emit()
 
+
+
     ############################################
     ########## AUTO MODE FUNCTIONS #############
     ############################################
-
+    
+    #, hrs, mins, secs
     def dispatchGreenLine(self):
+
         try:
             if self.ui.greenScheduledTrains.rowCount() > 0:
                 pass
@@ -269,26 +368,16 @@ class ctcMainUI(QMainWindow):
     ######### MANUAL MODE FUNCTIONS ############
     ############################################
 
-    def calculateDispatchTime(self, line, destBlock):
-
-        iterr = greenRouteArr.index(destBlock)
-        disTime = 0
-
-        for i in range(0, iterr + 1):
-            disTime += float(self.funcTrack.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
-
-        return disTime
-
     # if the entry is correct a stop is added to the tentative schedule
     def addGreenStop(self):
-        pattern = r"^(?:0\d|1\d|2[0-3]):(?:[0-5]\d)$"
+        pattern = r"^\d{2}:\d{2}$"
 
         if (self.ui.greenDestination.text() not in self.greenStations) or (not re.match(pattern, self.ui.greenTime.text())):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
-            print("wrong syntax")
             return
         else:
+
             try:
                 greenTempBlock = int(self.ui.greenDestination.text())
                 destTemp = str(greenTempBlock)
@@ -299,6 +388,7 @@ class ctcMainUI(QMainWindow):
             temp = time[0] + ":" + time[1]
 
             rowCount = self.ui.greenTentSchedule.rowCount()
+
             self.ui.greenTentSchedule.insertRow(rowCount)
 
             dest = QTableWidgetItem(destTemp)
@@ -307,6 +397,16 @@ class ctcMainUI(QMainWindow):
             self.ui.greenTentSchedule.setItem(rowCount, 1, at)
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
+
+    def calculateDispatchTime(self, line, destBlock):
+
+        iterr = greenRouteArr.index(destBlock)
+        disTime = 0
+
+        for i in range(0, iterr + 1):
+            disTime += float(self.funcTrack.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
+
+        return disTime
 
     # reads the green tentative scheule and dispatches it to the scheduled trains list to be dispatched
     def addGreenScheduledTrain(self):
@@ -424,7 +524,7 @@ class ctcMainUI(QMainWindow):
         signals.ctcSwitchStates.emit(self.greenSwitchStates, self.redSwitchStates)
     
     # opens and parses a file selected by the user
-    def openFile(self):
+    def openFile(self): ########
         # Open a file dialog and get the path of the selected file
             filePath, _ = QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
             if filePath:
@@ -435,7 +535,7 @@ class ctcMainUI(QMainWindow):
                 print("No file was selected")
 
     # adds a train to the scheduled trains list to wait to be dispatched
-    def addScheduledTrain(self, schedule):
+    def addScheduledTrain(self, schedule): #########
         if schedule.line == "Green":
 
             blocks = []
@@ -461,50 +561,6 @@ class ctcMainUI(QMainWindow):
         self.ui.lineSelectMaintenance.setCurrentIndex(0)
         self.ui.blockSelectMaintenance.setCurrentIndex(0)
         self.ui.modeSelect.setCurrentIndex(0)
-    
-    def updateBlockStatus(self):
-
-        if self.ui.lineSelectMaintenance.currentIndex() == 0: # red line
-            if self.ui.modeSelect.currentIndex() == 0: # open
-                open = QTableWidgetItem('Open')
-                open.setBackground(QColor('White'))
-                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #if self.ui.lineSelectMaintenance.currentIndex() == 0:
-        #    if self.ui.modeSelect.currentIndex() == 0:
-        #        open = QTableWidgetItem('Open')
-        #        open.setBackground(QColor('White'))
-        #        self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
-        #    else:
-        #        maintenance = QTableWidgetItem('Maintenance')
-        #        maintenance.setBackground(QColor('Gold'))
-        #        self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
-        #else:
-        #    if self.ui.modeSelect.currentIndex() == 0:
-        #
-        #        open = QTableWidgetItem('Open')
-        #        open.setBackground(QColor('White'))
-        #        self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
-        #    else:
-        #        maintenance = QTableWidgetItem('Maintenance')
-        #        maintenance.setBackground(QColor('Gold'))
-        #        self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
-    
     
     ############################################
     ######## OCCUPANCY VIEW FUNCTIONS ##########
@@ -639,11 +695,193 @@ class ctcMainUI(QMainWindow):
     ##############################################################################################
     # CLEAN UP LATER
     
+    
+    def clearGreenDispatch(self):
+        #clear the station selections
+        # Set the selected property of all buttons to False
+        for button in self.greenStations:
+            button.setProperty("selected", False)
+            self.greenStaionStates.append(button.property("selected"))
+
+        # Update the background color of all buttons to white
+        for button in self.greenStations:
+            button.setStyleSheet("background-color: white;")
+
+        self.ui.greenTentSchedule.clear()
+
+        self.ui.greenBlockDispatch.setCurrentIndex(0)
+
+    def clearRedDispatch(self):
+        #clear the station selections
+        # Set the selected property of all buttons to False
+        for button in self.redStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.redStations:
+            button.setStyleSheet("background-color: white;")
+
+        self.ui.redTentSchedule.clear()
+
+        self.ui.redBlockDispatch.setCurrentIndex(0)
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     
     
-   
+    
+    ############################################
+    ########DISPATCHING TRAINS FUNCTIONS########
+    ############################################
+
+    def greenAddStation(self, stationStates):
+
+        greenStationStates = stationStates
+
+        if self.ui.greenBlockDispatch.currentIndex() != 0:
+            return
+
+        # Set the selected property of all buttons to False
+        for button in self.greenStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.greenStations:
+            button.setStyleSheet("background-color: white;")
+
+        pioneer = self.ui.pioneerStation.property("selected")
+        print(pioneer)
+
+        print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
+        print('Edgebrook Station     : ' + str(greenStationStates[1]))
+        print('Whited Station        : ' + str(greenStationStates[2]))
+        print('South Bank Station    : ' + str(greenStationStates[3]))
+        print('Central Station       : ' + str(greenStationStates[4]))
+        print('Inglewood Station     : ' + str(greenStationStates[5]))
+        print('Overbrook Station     : ' + str(greenStationStates[6]))
+        print('Glenbury Station      : ' + str(greenStationStates[7]))
+        print('Dormont Station       : ' + str(greenStationStates[8]))
+        print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
+        print('Poplar Station        : ' + str(greenStationStates[10]))
+        print('Castle Shannon Station: ' + str(greenStationStates[11]))
+
+    def addRedTentStation(self):
+        if self.ui.redBlockDispatch.currentIndex() != 0:
+            return
+
+        # Set the selected property of all buttons to False
+        for button in self.redStations:
+            button.setProperty("selected", False)
+
+        # Update the background color of all buttons to white
+        for button in self.redStations:
+            button.setStyleSheet("background-color: white;")
+
+    def handleGreenStationClicked(self):
+        # Get the button that was clicked
+        clickedButton = self.sender()
+
+        # Set the selected property of the clicked button to True
+        clickedButton.setProperty("selected", True)
+
+        # Set the selected property of all other buttons to False
+        for button in self.greenStations:
+            if button != clickedButton:
+                button.setProperty("selected", False)
+
+        # Update the background color of all buttons based on their selected state
+        for button in self.greenStations:
+            if button.property("selected"):
+                button.setStyleSheet("background-color: blue;")
+            else:
+                button.setStyleSheet("background-color: white;")
+
+        greenStationStates = [
+            self.ui.pioneerStation.property("selected")   , self.ui.edgebrookStation.property("selected") , self.ui.whitedStation.property("selected"), 
+            self.ui.southBankStation.property("selected") , self.ui.centralStation.property("selected")   , self.ui.inglewoodStation.property("selected"), 
+            self.ui.overbrookStation.property("selected") , self.ui.glenburyStation.property("selected")  , self.ui.dormontStation.property("selected"), 
+            self.ui.lebanonStation.property("selected")   , self.ui.poplarStation.property("selected")    , self.ui.castleShannonStation.property("selected")
+        ]
+
+        # signals.greenStationProperties.emit(greenStationStates)
+
+        #print('\n\nPioneer Station       : ' + str(greenStationStates[0]))
+        #print('Edgebrook Station     : ' + str(greenStationStates[1]))
+        #print('Whited Station        : ' + str(greenStationStates[2]))
+        #print('South Bank Station    : ' + str(greenStationStates[3]))
+        #print('Central Station       : ' + str(greenStationStates[4]))
+        #print('Inglewood Station     : ' + str(greenStationStates[5]))
+        #print('Overbrook Station     : ' + str(greenStationStates[6]))
+        #print('Glenbury Station      : ' + str(greenStationStates[7]))
+        #print('Dormont Station       : ' + str(greenStationStates[8]))
+        #print('Mt. Lebanon Station   : ' + str(greenStationStates[9]))
+        #print('Poplar Station        : ' + str(greenStationStates[10]))
+        #print('Castle Shannon Station: ' + str(greenStationStates[11]))
+
+        #return greenStationStates
+
+    def handleRedStationClicked(self):
+        # Get the button that was clicked
+        clickedButton = self.sender()
+
+        # Set the selected property of the clicked button to True
+        clickedButton.setProperty("selected", True)
+
+        # Set the selected property of all other buttons to False
+        for button in self.redStations:
+            if button != clickedButton:
+                button.setProperty("selected", False)
+
+        # Update the background color of all buttons based on their selected state
+        for button in self.redStations:
+            if button.property("selected"):
+                button.setStyleSheet("background-color: blue;")
+            else:
+                button.setStyleSheet("background-color: white;")
+
+        redStationStates = [
+            self.ui.shadysideStation.property("selected")   , self.ui.herronStation.property("selected")     , self.ui.swissvilleStation.property("selected"), 
+            self.ui.pennStation.property("selected")        , self.ui.steelPlazaStaion.property("selected")  , self.ui.firstAveStation.property("selected"), 
+            self.ui.staionSquareStation.property("selected"), self.ui.southHillsStation.property("selected")
+        ]
+
+        print('\n\nShady Side Station     : ' + str(redStationStates[0]))
+        print('Herron Ave Station     : ' + str(redStationStates[1]))
+        print('Swissville Station     : ' + str(redStationStates[2]))
+        print('Penn Station           : ' + str(redStationStates[3]))
+        print('Steel Plaza Station    : ' + str(redStationStates[4]))
+        print('First Ave Station      : ' + str(redStationStates[5]))
+        print('Station Square Station : ' + str(redStationStates[6]))
+        print('South Hills Station    : ' + str(redStationStates[7]))
+
+    
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
@@ -764,11 +1002,43 @@ class ctcMainUI(QMainWindow):
         self.ui.dispatchRed.setChecked(False)
         self.ui.greenDispatch.setChecked(False)
 
+    
+    
+    #################################################
+    ########MAINTENANCE MODE FUNCTIONS###############
+    #################################################
+
+    
+
     #################################################
     ########OPTIONS / THROUGHPUT FUNCTIONS###########
     #################################################
 
-    
+    def updateBlockStatus(self):
+        if self.ui.lineSelectMaintenance.currentIndex() == 0:
+            if self.ui.modeSelect.currentIndex() == 0:
+
+                open = QTableWidgetItem('Open')
+                open.setBackground(QColor('White'))
+                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
+
+                #print(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
+
+                #signals.blockMaintenanceUpdateFromCTC.emit(track.getLine("Green").getBlock(self.ui.blockSelectMaintenance.currentIndex()).maintenance)
+            else:
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
+        else:
+            if self.ui.modeSelect.currentIndex() == 0:
+
+                open = QTableWidgetItem('Open')
+                open.setBackground(QColor('White'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
+            else:
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
 
     
 

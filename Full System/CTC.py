@@ -32,7 +32,6 @@ class CTC(QObject):
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
         signals.ctcSwitchStates.connect(self.sendSwitchStates)
-        signals.ctcCalcDispatchTime.connect(self.calculateDispatchTime)
         
     # function to dispatch the train
     def dispatch(self, line, destBlock):
@@ -63,16 +62,6 @@ class CTC(QObject):
         # update the next ID of the next train
         self.nextID += 1
 
-    def calculateDispatchTime(self, line, destBlock):
-
-        iterr = greenRouteArr.index(destBlock)
-        disTime = 0
-
-        for i in range(0, iterr + 1):
-            disTime += float(self.track.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
-
-        return disTime
-
     def calculateThroughput(self, tickets, line):
         
         if line == "Green":
@@ -82,9 +71,6 @@ class CTC(QObject):
         elif line == "Red":
             self.redTotalTickets += tickets
             signals.ctcGetPassengersPerLine.emit(self.redTotalTickets, "Red")
-
-        else:
-            print("error")
 
     def sendSwitchStates(self, greenSwitches, redSwitches):
         signals.switchStatesFromCTCtoWayside.emit(greenSwitches, redSwitches)
