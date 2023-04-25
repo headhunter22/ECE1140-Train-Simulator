@@ -32,20 +32,6 @@ class CTC(QObject):
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
         signals.ctcSwitchStates.connect(self.sendSwitchStates)
-        
-    # function to dispatch the train
-    def dispatch(self, line, destBlock):
-        # create a new track object and emit to wayside
-        train = Train(self.nextID, self.track.getLine(line), destBlock)
-        train.authority = 3
-        train.suggSpeed = 70
-        print('ctc dispatched')
-        
-
-        signals.waysideDispatchTrain.emit(train)
-
-        # update the next ID of the next train
-        self.nextID += 1
 
     # function to dispatch the train
     def greenDispatch(self, destBlock):
@@ -53,8 +39,19 @@ class CTC(QObject):
         train = Train(self.nextID, self.track.getLine('Green'), destBlock)
         train.authority = 8
         train.suggSpeed = 70
-        print('ctc dispatched')
-        
+
+        signals.waysideDispatchTrain.emit(train)
+        signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock[0])
+
+        # update the next ID of the next train
+        self.nextID += 1
+
+    # function to dispatch the train
+    def redDispatch(self, destBlock):
+        # create a new track object and emit to wayside
+        train = Train(self.nextID, self.track.getLine('Red'), destBlock)
+        train.authority = 8
+        train.suggSpeed = 40
 
         signals.waysideDispatchTrain.emit(train)
         signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)

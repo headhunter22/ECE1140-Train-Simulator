@@ -45,9 +45,14 @@ class TrackModel(QObject):
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
         signals.trackModelPassengersChanging.connect(self.board)
         signals.waysideSwitchtoTrack.connect(self.switchChanged)
+        signals.waysideAuthorityToTrack.connect(self.passAuthority)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
+
+    # function to pass authority to train model
+    def passAuthority(self, blocks, currentBlock):
+        signals.authorityTrackModelToTrainModel.emit(blocks, currentBlock)
 
     # function to dispatch train
     def dispatchTrain(self, train):
@@ -59,7 +64,6 @@ class TrackModel(QObject):
 
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
-        signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
         #signals.waysideUpdateOccupancy.emit(train.block)
 
         # dispatch train with route to train model
@@ -80,15 +84,19 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block, train.route)
             #signals.testAuthTrackModelToWayside.emit(train.line.lineName, train.route)
             signals.trackModelBeaconSending.emit(self.track.getLine(line.lineName).getBlock(block))
+            signals.trackModelTrainInfoToWayside.emit(train)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
+<<<<<<< HEAD
 
             signals.waysideUpdateVacancy.emit(train.line.lineName, train.block, train.route)
+=======
+            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, block, train.route)
+>>>>>>> 1f96ad9c84c7ede35028d5df402d6f706fc20f56
 
     def board(self, train):
         # load new passengers

@@ -17,6 +17,8 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.trainControllerUpdateCommSpeed.connect(self.updateCommandedSpeed)
         signals.trainModelEmerBrake.connect(self.EBClick)
         signals.timerTicked.connect(self.changeLabel)
+        signals.trainControllerKP.connect(self.updateKP)
+        signals.trainControllerKI.connect(self.updateKI)
 
         # Create Time element # 
         self.dataTime = QtWidgets.QLabel(" ", self)
@@ -153,6 +155,18 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.GainChange = QtWidgets.QPushButton("Edit Gain Values", self)
         self.GainChange.setGeometry(25, 550, 100, 50)
         self.GainChange.clicked.connect(self.OpenGainWindow)
+
+        # Init KP/KI Labels
+        self.KPLabel = QtWidgets.QLabel("KP: 100.0", self)
+        self.KILabel = QtWidgets.QLabel("KI: 100.0", self)
+        self.KPLabel.setGeometry(130, 550, 75, 25)
+        self.KILabel.setGeometry(130, 575, 75, 25)
+
+    def updateKP(self, kp):
+         self.KPLabel.setText("KP: " + str(kp))
+
+    def updateKI(self, ki):
+         self.KILabel.setText("KI: " + str(ki))
     
     def CloseGainWindow(self):
         self.GW.close()
@@ -395,3 +409,6 @@ class GainWindow(QtWidgets.QMainWindow):
         self.correctedKIValue.setText("New KP: " + textki)
 
         self.confirmLabel.setText("KP and KI values have been updated")
+
+        signals.trainControllerKP.emit(INPUT2)
+        signals.trainControllerKI.emit(INPUT3)
