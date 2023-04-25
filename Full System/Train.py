@@ -25,6 +25,7 @@ class Train(QObject):
 
         # authority and speeds
         self.authority = 0
+        self.authorityBlocks = 0 
         self.currentSpeed = 0
         self.suggSpeed = 70
         self.commandedSpeed = 0

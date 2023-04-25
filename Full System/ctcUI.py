@@ -43,7 +43,8 @@ class ctcMainUI(QMainWindow):
         ##################################
 
         #main ui starts up in auto mode
-        self.autoMode()
+        self.ui.autoSelect.click()
+        #self.autoMode()
         self.ui.autoSelect.setChecked(True)
         self.fillOccupancy("Green")
         self.fillOccupancy("Red")
@@ -147,20 +148,23 @@ class ctcMainUI(QMainWindow):
         ########UTILITY BUTTONS###########
         ##################################
 
-        #mode buttons
-        self.ui.autoSelect.clicked.connect(self.autoSwitch)
-        self.ui.manualSelect.clicked.connect(self.manualSwitch)
-        self.ui.manualSelect.clicked.connect(self.showPages)
-        self.ui.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
-        self.ui.maintenanceSelect.clicked.connect(self.showPages)
+        # mode buttons
+        self.ui.autoSelect.clicked.connect(self.univPageShow)
 
-        #dispatch buttons
-        self.ui.dispatchGreen.clicked.connect(self.showPages)
-        #self.ui.dispatchGreen.clicked.connect(self.greenDispatch)
-        self.ui.dispatchRed.clicked.connect(self.showPages)
-        #self.ui.dispatchRed.clicked.connect(self.redDispacth)
-        self.ui.scheduledTrains.clicked.connect(self.showPages)
-        #self.ui.scheduledTrains.clicked.connect(self.schedTrains)
+        #mode buttons
+        #self.ui.autoSelect.clicked.connect(self.autoSwitch)
+        #self.ui.manualSelect.clicked.connect(self.manualSwitch)
+        #self.ui.manualSelect.clicked.connect(self.showPages)
+        #self.ui.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
+        #self.ui.maintenanceSelect.clicked.connect(self.showPages)
+#
+        ##dispatch buttons
+        #self.ui.dispatchGreen.clicked.connect(self.showPages)
+        ##self.ui.dispatchGreen.clicked.connect(self.greenDispatch)
+        #self.ui.dispatchRed.clicked.connect(self.showPages)
+        ##self.ui.dispatchRed.clicked.connect(self.redDispacth)
+        #self.ui.scheduledTrains.clicked.connect(self.showPages)
+        ##self.ui.scheduledTrains.clicked.connect(self.schedTrains)
 
         
         
@@ -605,7 +609,7 @@ class ctcMainUI(QMainWindow):
                 if int(self.ui.greenTrainInfoTable.item(rows, 0).text()) == train.ID:
 
                     greenTrainBlock = QTableWidgetItem(str(train.block))
-                    greenTrainAuth = QTableWidgetItem(str(train.authority))
+                    greenTrainAuth = QTableWidgetItem(str(train.authorityBlocks))
                     greenTrainDest = QTableWidgetItem(str(train.destBlock[0]))
 
                     self.ui.greenTrainInfoTable.setItem(rows, 1, greenTrainBlock)
@@ -753,6 +757,14 @@ class ctcMainUI(QMainWindow):
     ##############SHARED FUNCITONS##############
     ############################################
 
+    def univPageShow(self):
+
+        if self.ui.autoSelect.isChecked:
+            if self.ui.autoSelect.isChecked:
+                self.ui.autoSelect.setChecked(True)
+            self.ui.manualSelect.setChecked(False)
+            self.ui.maintenanceSelect.setChecked(False)
+
     def univClear(self):
         clickedButton = self.sender()
 
@@ -764,6 +776,10 @@ class ctcMainUI(QMainWindow):
             self.ui.greenTentSchedule.setRowCount(0)
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
+        elif clickedButton == self.ui.redClear:
+            self.ui.redTentSchedule.setRowCount(0)
+            self.ui.redDestination.clear()
+            self.ui.redTime.clear()
 
     def setColors(self):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
