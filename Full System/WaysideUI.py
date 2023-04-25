@@ -996,9 +996,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.trackconfiguration.clicked.connect(self.runParser)
 
     def makeSectionWindow(self, whichsection):
-        print("in makesectionwindow")
+        #print("in makesectionwindow")
         #print("section range", self.sectionrange)
-        print("whichsection", whichsection)
+        #print("whichsection", whichsection)
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
         self.sectionmatrix = []
@@ -1880,6 +1880,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("sectionrange", self.sectionrange)
         #print("matrix row from in occupied", self.sectionmatrixrow)
 
+        # could just use the icons since they have names
         for i in self.sectionmatrixrow:
             #print("in forloop i", i)
             for j in self.occupied:
@@ -2202,7 +2203,7 @@ class selectionWindow(QWidget):
     def showmain(self):
         self.main = WMainWindowA()
         self.current = self.select.currentIndex()
-        print("current from selection", self.current)
+        #print("current from selection", self.current)
         signals.waysidefirst.emit(self.current)
         self.main.show()
         self.close()

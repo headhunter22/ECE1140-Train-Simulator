@@ -17,8 +17,7 @@ class TrainController(QObject):
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
-        signals.trainModelAuthorityToTrainController.connect(self.setNewAuthority)
-
+       
         self.Ki = 100
         self.Kp = 100
         self.AuthorityHasBeenReset = False
@@ -29,9 +28,6 @@ class TrainController(QObject):
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
-        
-        signals.trainControllerKP.emit(self.Kp)
-        signals.trainControllerKI.emit(self.Ki)
 
     def updateCurrSpeed(self, train, currSpeed):
         print('current speed updated')

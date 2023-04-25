@@ -32,7 +32,7 @@ class TrainModel(QObject):
         signals.trainModelGetTrack.connect(self.trackReceived)
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
         signals.trainModelEmerBrake.connect(self.emerBrakeActive)
-        signals.waysideAuthoritytoTrack.connect(self.newAuthority)
+        signals.authorityTrackModelToTrainModel.connect(self.newAuthority)
         signals.trainControllerManualModeToTrainModel.connect(self.manualModeFunc)
         signals.trainControllerEmerBrake.connect(self.emerBrakeActive)
 
@@ -103,7 +103,7 @@ class TrainModel(QObject):
         # calculating acceleration
         # if starting off at 0m/s, set acceleration to medium
 
-        if train.actSpeed_1 == 0 | self.emerBrake != 1:
+        if train.actSpeed_1 == 0 and self.emerBrake == 0 and self.serviceBrake == 0:
             train.An = 0.5
         elif self.emerBrake == 1:
             train.An = -2.73
@@ -125,15 +125,11 @@ class TrainModel(QObject):
         # if acceleration is too high, cap at 0.5
         if train.An > 0.5:
             train.An = 0.5
-        
-        if self.serviceBrake == True: #TRAIN CONTROLLER: DONT FORGET TO CHANGE THIS SIGNAL BACK TO FALSE
-            train.An = -1.2 
 
         train.actSpeed = train.actSpeed_1 + train.T/2 * (train.An + train.An_1)
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            self.serviceBrake = False
             train.destBlock.pop(0)
 
         prevPos = train.position
@@ -221,7 +217,7 @@ class TrainModel(QObject):
         #next7 = self.track0[currblock+7]
         #next8 = self.track0[currblock+8]
 
-        #signals.trainModelAuthorityToTrainController.emit(auth)
+        signals.trainModelAuthorityToTrainController.emit(auth)
     
     def manualModeFunc(self, manualMode, commSpeed):
         self.manualMode = manualMode
