@@ -32,7 +32,7 @@ class TrainModel(QObject):
         signals.trainModelGetTrack.connect(self.trackReceived)
         signals.trainControllerServiceBrake.connect(self.serviceBrakeActive)
         signals.trainModelEmerBrake.connect(self.emerBrakeActive)
-        signals.waysideAuthoritytoTrack.connect(self.newAuthority)
+        signals.authorityTrackModelToTrainModel.connect(self.newAuthority)
         signals.trainControllerManualModeToTrainModel.connect(self.manualModeFunc)
         signals.trainControllerEmerBrake.connect(self.emerBrakeActive)
 

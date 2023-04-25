@@ -45,9 +45,14 @@ class TrackModel(QObject):
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
         signals.trackModelPassengersChanging.connect(self.board)
         signals.waysideSwitchtoTrack.connect(self.switchChanged)
+        signals.waysideAuthorityToTrack.connect(self.passAuthority)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
+
+    # function to pass authority to train model
+    def passAuthority(self, blocks, currentBlock):
+        signals.authorityTrackModelToTrainModel.emit(blocks, currentBlock)
 
     # function to dispatch train
     def dispatchTrain(self, train):
