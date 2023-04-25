@@ -66,6 +66,8 @@ class Wayside(QObject):
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
+        signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
+        signals.trackModelTrainInfoToWayside.connect(self.trainInfoToCTC)
 
         signals.waysideTrackfromPLC.connect(self.setTracks)
         signals.waysideSectionsfromPLC.connect(self.setSections)
@@ -303,17 +305,12 @@ class Wayside(QObject):
         sec = self.allsection0[id]
         self.updateAuthority(line, block, route)
         signals.wtowOccupancy.emit(line, block, sec)
-        #occupancy sent to the CTC Office
-        signals.ctcUpdateGUIOccupancy.emit(line, block)
     
     def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
         id = self.track0.index(block)
         sec = self.allsection0[id]
         signals.wtowVacancy.emit(line, block, sec)
-
-        #vacancy sent to the CTC Office
-        signals.ctcUpdateGUIOccupancy.emit(line, block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
@@ -393,3 +390,12 @@ class Wayside(QObject):
         print("H:" , redStates[5])
         print("J:" , redStates[6])
         print("\n\n")
+
+    def test(self, line, block, open):
+        if line == "Red":
+            print("Red Block ", block, " is open: ", open)
+        else:
+            print("Green Block ", block, " is open: ", open)
+    
+    def trainInfoToCTC(self, train):
+        signals.ctcUpdateGUITrainInfo.emit(train)
