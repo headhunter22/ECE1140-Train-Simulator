@@ -148,7 +148,9 @@ class Wayside(QObject):
 
             for i in self.stations0:
                 #print("i from inside loop as int", int(i))
-                if int(i) == nextblock1:
+                if int(i) == block:
+                    auth = 0
+                elif int(i) == nextblock1:
                     auth = 1
                 elif int(i) == nextblock2:
                     auth = 2
@@ -194,7 +196,9 @@ class Wayside(QObject):
             #print("8 next block and index", nextblock8, nextindex8)   
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             for i in self.stations1:
-                if int(i) == nextblock1:
+                if int(i) == block:
+                    auth = 0
+                elif int(i) == nextblock1:
                     auth = 1
                 elif int(i) == nextblock2:
                     auth = 2
