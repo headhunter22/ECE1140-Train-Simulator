@@ -4,10 +4,10 @@ sys.path.append('../Full System')
 
 import TrackParser
 from TrackModelUI import TrackModelUI
-from TestUI import TestUI
+from TrackModelTestUI import TestUI
 
 app = QtWidgets.QApplication(sys.argv)
-track = TrackParser.parseTrack('Track Layout.csv')
+track = TrackParser.parseTrack('TrackLayout.csv')
 
 testui = TestUI(track)
 model = TrackModelUI(track)

@@ -19,6 +19,7 @@ class Block:
         self.stationBool = blockInfo[11]
         self.switchBool = blockInfo[12]
         self.underground = blockInfo[15]
+        self.switchStem = bool(blockInfo[16])
 
         self.beacon = Beacon()
 
