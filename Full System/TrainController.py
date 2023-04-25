@@ -17,8 +17,7 @@ class TrainController(QObject):
         signals.trainControllerEmerBrake.connect(self.EmerBrake)
         signals.trainControllerUIKP.connect(self.updateKP)
         signals.trainControllerUIKI.connect(self.updateKI)
-        signals.trainModelAuthorityToTrainController.connect(self.setNewAuthority)
-
+       
         self.Ki = 100
         self.Kp = 100
         self.AuthorityHasBeenReset = False
