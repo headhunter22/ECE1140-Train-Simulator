@@ -75,7 +75,7 @@ class Signals(QObject):
 
     ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
-    authorityTrackModelToTrainModel(int, int) # blocks of authority, current block
+    authorityTrackModelToTrainModel = pyqtSignal(int, int) # blocks of authority, current block
     ########################################
 
     trackModelTempUpdated = pyqtSignal(int) # temperature
