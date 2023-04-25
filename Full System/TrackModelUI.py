@@ -73,9 +73,9 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelTestUIUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelTestUIUpdateGUIVacancy.connect(self.updateVacancy)
         signals.trackModelTestUIUpdateGUICrossings.connect(self.changeCrossings)
-        signals.trackModelTestUIUpdateGUISwitches.connect(self.changeSwitch)
         signals.trackModelTestUIUpdateFault.connect(self.updateFaults)
         signals.trackModelTempUpdated.connect(self.tempUpdate)
+        signals.trackModelUpdateGUISwitches.connect(self.changeSwitch)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -155,8 +155,100 @@ class TrackModelUI(QtWidgets.QMainWindow):
             self.sectionDict[index].occupied.setText(currentText)
 
     # update switch states
-    def changeSwitch(self, inLine, inBlock, switchSelect):
-        self.track.getLine(inLine).getBlock(inBlock).switchConnection = switchSelect
+    def changeSwitch(self, src, dest):
+        ##### RED SWITCHES #####
+        if src == 16:
+            if dest == 1:
+                self.R1.setStyleSheet("color: orange")
+                self.R15.setStyleSheet("color: black")
+            elif dest == 15:
+                self.R15.setStyleSheet("color: orange")
+                self.R1.setStyleSheet("color: black")
+        elif src == 27:
+            if dest == 28:
+                self.R28.setStyleSheet("color: orange")
+                self.R76.setStyleSheet("color: black")
+            elif dest == 76:
+                self.R76.setStyleSheet("color: orange")
+                self.R28.setStyleSheet("color: black")
+        elif src == 33:
+            if dest == 32:
+                self.R32.setStyleSheet("color: orange")
+                self.R72.setStyleSheet("color: black")
+            elif dest == 72:
+                self.R72.setStyleSheet("color: orange")
+                self.R32.setStyleSheet("color: black")
+        elif src == 38:
+            if dest == 39:
+                self.R39.setStyleSheet("color: orange")
+                self.R71.setStyleSheet("color: black")
+            elif dest == 71:
+                self.R71.setStyleSheet("color: orange")
+                self.R39.setStyleSheet("color: black")
+        elif src == 44:
+            if dest == 43:
+                self.R43.setStyleSheet("color: orange")
+                self.R67.setStyleSheet("color: black")
+            elif dest == 67:
+                self.R67.setStyleSheet("color: orange")
+                self.R43.setStyleSheet("color: black")
+        elif src == 52:
+            if dest == 53:
+                self.R53.setStyleSheet("color: orange")
+                self.R66.setStyleSheet("color: black")
+            elif dest == 66:
+                self.R66.setStyleSheet("color: orange")
+                self.R53.setStyleSheet("color: black")
+        elif src == 9:
+            if dest == 10:
+                self.R10.setStyleSheet("color: orange")
+                self.RedYard.setStyleSheet("color: black")
+            elif dest == 0:
+                self.RedYard.setStyleSheet("color: orange")
+                self.R10.setStyleSheet("color: black")
+        ##### GREEN SWITCHES #####    
+        elif src == 13:
+            if dest == 1:
+                self.G1.setStyleSheet("color: orange")
+                self.G12.setStyleSheet("color: black")
+            elif dest == 12:
+                self.G12.setStyleSheet("color: orange")
+                self.G1.setStyleSheet("color: black")
+        elif src == 29:
+            if dest == 30:
+                self.G30.setStyleSheet("color: orange")
+                self.G150.setStyleSheet("color: black")
+            elif dest == 150:
+                self.G150.setStyleSheet("color: orange")
+                self.G30.setStyleSheet("color: black")
+        elif src == 77:
+            if dest == 76:
+                self.G76.setStyleSheet("color: orange")
+                self.G101.setStyleSheet("color: black")
+            elif dest == 101:
+                self.G101.setStyleSheet("color: orange")
+                self.G76.setStyleSheet("color: black")
+        elif src == 85:
+            if dest == 86:
+                self.G86.setStyleSheet("color: orange")
+                self.G100.setStyleSheet("color: black")
+            elif dest == 100:
+                self.G100.setStyleSheet("color: orange")
+                self.G86.setStyleSheet("color: black")
+        elif src == 57:
+            if dest == 0:
+                self.GYard57.setStyleSheet("color: orange")
+                self.G58.setStyleSheet("color: black")
+            elif dest == 58:
+                self.G58.setStyleSheet("color: orange")
+                self.GYard57.setStyleSheet("color: black")
+        elif src == 63:
+            if dest == 0:
+                self.GYard63.setStyleSheet("color: orange")
+                self.G62.setStyleSheet("color: black")
+            elif dest == 62:
+                self.G62.setStyleSheet("color: orange")
+                self.GYard63.setStyleSheet("color: black")
 
     # update faults from test UI
     def updateFaults(self, inLine, inBlock, faultType):
@@ -244,7 +336,7 @@ class TrackModelUI(QtWidgets.QMainWindow):
     # update the heaters based on temp -- add monthly temp
     def tempUpdate(self, temp):
         # turn heaters on if temp is lower than monthly temp
-        if temp >= 39:
+        if temp > 32:
             self.HeaterStatus.setText("Off")
             self.HeaterStatus.setStyleSheet("border: 2px solid rgb(188, 6, 0); color: rgb(148, 0, 17); background-color: rgb(255, 135, 119)")
         else:

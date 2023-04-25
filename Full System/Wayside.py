@@ -64,7 +64,6 @@ class Wayside(QObject):
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
-        signals.testAuthTrackModelToWayside.connect(self.testAuthority)
 
         signals.waysideTrackfromPLC.connect(self.setTracks)
         signals.waysideSectionsfromPLC.connect(self.setSections)
@@ -217,7 +216,7 @@ class Wayside(QObject):
                     auth = 8
         #print("wayside.py update authority auth", auth)
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
-        signals.testWaysideAuthorityToCTC.emit(line, route, auth)
+        signals.waysideAuthorityToCTC.emit(line, route, auth)
 
     def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
         #print("plcinfo start")
@@ -363,10 +362,6 @@ class Wayside(QObject):
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw
     #     print("authority from CTC to Wayside: " + str(self.authority))
-
-    def testAuthority(self, line, route):
-        #signals.testWaysideAuthorityToCTC.emit(line, route)
-        pass
 
     def switchSignalTest(self, greenStates, redStates):
         print("Green:")

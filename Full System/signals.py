@@ -32,13 +32,9 @@ class Signals(QObject):
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
-    ctcCalcDispatchTime = pyqtSignal(int) # first dest block
 
     # wayside controller signals
-
-    testAuthTrackModelToWayside = pyqtSignal(str, list)
-    testWaysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority
-
+    waysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority
     waysideDispatchTrain = pyqtSignal(Train) # trainID, suggSpeed, authority, Line, destination
     trackWaysideToTrackModel = pyqtSignal(Track)
     waysideUpdateOccupancy = pyqtSignal(str, int, list) # line, block
@@ -95,14 +91,13 @@ class Signals(QObject):
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
-    trackModelUpdateGUISwitches = pyqtSignal()
+    trackModelUpdateGUISwitches = pyqtSignal(int, int) # source, dest
     trackModelUpdateGUIFaults = pyqtSignal(Fault)
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUICrossings = pyqtSignal(int) # 1-4 for crossing statuses
-    trackModelTestUIUpdateGUISwitches = pyqtSignal(str, str, str) # line, block, switch option
     trackModelTestUIUpdateFault = pyqtSignal(str, str, str) # line, block, fault type
 
     # train model signals

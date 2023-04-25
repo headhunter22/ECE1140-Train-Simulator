@@ -558,11 +558,6 @@
       </property>
       <column>
        <property name="text">
-        <string>ID</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>Dest.</string>
        </property>
       </column>
@@ -1135,6 +1130,434 @@
       </property>
       <property name="text">
        <string>12-13</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="extraPage">
+     <widget class="QPushButton" name="dormontStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>240</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dormont</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="poplarStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>300</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Poplar</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="glenburyStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>210</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Glenbury</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="overbrookStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>180</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Overbrook</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="centralStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>120</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Central</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="castleShannonStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>330</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Castle Shannon</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="southBankStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>90</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>South Bank</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="blockLabel">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>10</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Block Number:</string>
+      </property>
+     </widget>
+     <widget class="QTimeEdit" name="greenArrivalInput">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>120</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="greenAddBlock">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>40</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Block</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="edgebrookStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edgebrook</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="lebanonStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>270</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Mt. Lebanon</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="greenAddStation">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Station</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="greenBlockDispatch">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>10</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="pioneerStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pioneer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>120</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Arrival Time:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="whitedStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Whited</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="inglewoodStation">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>150</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Inglewood</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="redBlockDispatch">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>160</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="southHillsStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>360</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>South Hills</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="herronStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>180</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Herron Ave</string>
+      </property>
+     </widget>
+     <widget class="QTimeEdit" name="redArrivalInput">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>270</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="swissvilleStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>210</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Swissville</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pennStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>240</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Penn Station</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="shadysideStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>150</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Shadyside</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="firstAveStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>300</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>First Ave</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="redAddBlock">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>190</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Block</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="steelPlazaStaion">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>270</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Steel Plaza</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="blockLabel_3">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>160</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Block Number:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="arrivalLabel_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>270</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Arrival Time:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="redAddStation">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>390</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: DodgerBlue; color: Black</string>
+      </property>
+      <property name="text">
+       <string>Add Station</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="staionSquareStation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>330</y>
+        <width>91</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Station Square</string>
       </property>
      </widget>
     </widget>
