@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.greenTentSchedule.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.greenTentSchedule.setObjectName(u"greenTentSchedule")
-        self.greenTentSchedule.setGeometry(QRect(20, 130, 131, 181))
+        self.greenTentSchedule.setGeometry(QRect(20, 130, 141, 181))
         self.greenDestination = QLineEdit(self.greenLinePage)
         self.greenDestination.setObjectName(u"greenDestination")
         self.greenDestination.setGeometry(QRect(20, 40, 113, 24))
@@ -654,7 +654,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

@@ -1,4 +1,5 @@
 import sys, os
+from signals import signals
 from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtCore import QSize
 
@@ -10,16 +11,17 @@ class FaultDisplay(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         uic.loadUi("FaultDisplay.ui", self)
         self.setWindowTitle('Fault Display')
+        
+        signals.trackModelUpdateGUIFaults.connect(self.addFault)
 
-        # connect dropdowns changing to function to pull up locations with that fault type
-        self.FaultSelect.currentTextChanged.connect(self.getLocation)
-        self.LocationLabel.setText(self.track.faultsToString('Power'))
+    def addFault(self, fault):
+        # create label
+        label = QtWidgets.QLabel()
 
-    def getLocation(self):
-        # line block select
-        faultType = self.FaultSelect.currentText()
+        text = fault.line + ' ' + fault.block + ' '
+        label.setText(text)
 
-        # search faultDict for faults of that type
-        self.LocationLabel.setText(self.track.faultsToString(faultType))
+        # add label to scroll window
+        self.verticalLayout.addWidget(label)
 
 # end fault display class

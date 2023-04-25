@@ -144,6 +144,7 @@ class TrainModel(QObject):
         if currPos > int(currBlockSize):
 
             train.block = train.route[1]
+            prevBlock = train.route[0]
             if (train.block == 57):
                 self.actSpeed = 0
                 print("REACHED THE END OF THE LINE!!")
@@ -156,10 +157,11 @@ class TrainModel(QObject):
                 # update train speed to 0 and delete train
 
             # update track model occupancy to unoccupied for currBlock
-            signals.trackModelUpdateOccupancy.emit(train, train.line, currBlock, False)
+            signals.trackModelUpdateOccupancy.emit(train, train.line, prevBlock, False)
 
             # update track model occupancy to occupied for next block in route
             signals.trackModelUpdateOccupancy.emit(train, train.line, train.route[0], True)
+
             signals.trainControllerUpdateCommSpeed.emit(train.line.getBlock(train.route[0]).speedLimit)
            
         # we have not traversed more than the current block length
@@ -197,20 +199,28 @@ class TrainModel(QObject):
         self.emerBrake = emerBrake
     
     def newAuthority(self,blocks, currentblock): #blocks is int allowed, currentblock is 
-        #for i in range(blocks):
-            #auth = train.route[i]
+        currLine = self.trainList[0].line
+        auth = 0
+        for i in range(blocks):
+            print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).length))
+                  
+            if (str(currLine.getBlock(self.trainList[0].route[i]).length) == '86.6'):
+                newAuth = 87
+            else:
+                newAuth = int(currLine.getBlock(self.trainList[0].route[i]).length)
+            auth += newAuth
         print("new authority")
-        # currblock = self.track0.index(currentblock)
-        # next1 = self.track0[currblock+1]
-        # next2 = self.track0[currblock+2]
-        # next3 = self.track0[currblock+3]
-        # next4 = self.track0[currblock+4]
-        # next5 = self.track0[currblock+5]
-        # next6 = self.track0[currblock+6]
-        # next7 = self.track0[currblock+7]
-        # next8 = self.track0[currblock+8]
+        #currblock = self.track0.index(currentblock)
+        #next1 = self.track0[currblock+1]
+        #next2 = self.track0[currblock+2]
+        #next3 = self.track0[currblock+3]
+        #next4 = self.track0[currblock+4]
+        #next5 = self.track0[currblock+5]
+        #next6 = self.track0[currblock+6]
+        #next7 = self.track0[currblock+7]
+        #next8 = self.track0[currblock+8]
 
-        # signals.trainModelAuthorityToTrainController.emit(auth)
+        #signals.trainModelAuthorityToTrainController.emit(auth)
     
     def manualModeFunc(self, manualMode, commSpeed):
         self.manualMode = manualMode

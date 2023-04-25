@@ -114,8 +114,8 @@ class WTrack:
                 self.crossing1.append(int(block.blockNumber))
 
             if block.switch == '1':
-                self.switches0.append(int(block.blockNumber))
-                self.switchState0.append(int(block.switchState))
+                self.switches1.append(int(block.blockNumber))
+                self.switchState1.append(int(block.switchState))
 
             if block.station == '1':
                 self.stations1.append(block.blockNumber)

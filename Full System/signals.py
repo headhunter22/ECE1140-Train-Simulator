@@ -4,6 +4,7 @@ from Block import Block
 from Train import Train
 from Track import Track
 from Beacon import Beacon
+from Fault import Fault
 import sys
 sys.dont_write_bytecode = True
 
@@ -41,7 +42,7 @@ class Signals(QObject):
     waysideCommandedSpeed = pyqtSignal(int)
     waysideAuthoritytoTrack = pyqtSignal(int, int)
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
-
+    waysideWait = pyqtSignal(bool)
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
@@ -84,19 +85,19 @@ class Signals(QObject):
     trackModelPowerFailure = pyqtSignal() # emit power failed
     trackModelCircuitFailure = pyqtSignal() # emit track circuit failed
     trackModelPassengersChanging = pyqtSignal(Train) # train, emit to signal passengers on and off
-    trackModelBeaconSending = pyqtSignal(Beacon) # emitting Beacon to train model
+    trackModelBeaconSending = pyqtSignal(Block) # emitting Beacon to train model
 
     # track model gui signals
     trackModelUpdateGUIOccupancy = pyqtSignal(str, str)
     trackModelUpdateGUIVacancy = pyqtSignal(str, str)
     trackModelUpdateGUICrossings = pyqtSignal(int)
-    trackModelUpdateGUISwitches = pyqtSignal()
+    trackModelUpdateGUISwitches = pyqtSignal(int, int) # source, dest
+    trackModelUpdateGUIFaults = pyqtSignal(Fault)
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUICrossings = pyqtSignal(int) # 1-4 for crossing statuses
-    trackModelTestUIUpdateGUISwitches = pyqtSignal(str, str, str) # line, block, switch option
     trackModelTestUIUpdateFault = pyqtSignal(str, str, str) # line, block, fault type
 
     # train model signals
