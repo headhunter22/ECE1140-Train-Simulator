@@ -23,9 +23,13 @@ class TestUI(QtWidgets.QMainWindow):
 
         for section in self.track.lines[0].sections:
             for block in section.blocks:
-                self.SwitchBlockSelect.addItem(block.blockName)
+                if block.switchStem:
+                    self.SwitchBlockSelect.addItem(block.blockName)
                 self.OccBlockSel.addItem(block.blockName)
                 self.FaultBlockSelect.addItem(block.blockName)
+
+            self.SwitchOption1.setText('0')
+            self.SwitchOption2.setText('10')
 
         # set up options for switch buttons
         self.SwitchOption1.clicked.connect(self.changeSwitchOpt1)
@@ -79,34 +83,25 @@ class TestUI(QtWidgets.QMainWindow):
         # add the appropriate blocks
         for section in self.track.getLine(line).sections:
             for block in section.blocks:
-                self.SwitchBlockSelect.addItem(block.blockName)
+                if block.switchStem:
+                    self.SwitchBlockSelect.addItem(block.blockName)
 
-        # add connection if there is one
-        self.switchBlockChanged()
+        # display options for first switch
+        if line == 'Green':
+            self.SwitchOption1.setText('1')
+            self.SwitchOption2.setText('12')
+        else:
+            self.SwitchOption1.setText('0')
+            self.SwitchOption2.setText('10')
 
     def switchBlockChanged(self):
-        if self.SwitchBlockSelect.currentText() == '':
-            return 
+        line = self.SwitchLineSelect.currentText()
 
-        # update the label for the connection
-        infrastructureText = self.track.getLine(self.SwitchLineSelect.currentText()).getBlock(self.SwitchBlockSelect.currentText()).infrastructure
-
-        # if its not a switch, don't display
-        if 'SWITCH' not in infrastructureText or 'YARD' in infrastructureText:
-            self.SwitchOption1.setText("")
-            self.SwitchOption2.setText("")
-            return
-
-        # parse out the options
-        start = infrastructureText.find('(')
-        middle = infrastructureText.find(';') 
-        end = infrastructureText.find(')')
-
-        opt1 = infrastructureText[start+1:middle] 
-        opt2 = infrastructureText[middle+1:end]
-
-        self.SwitchOption1.setText(opt1)
-        self.SwitchOption2.setText(opt2)
+        try:    
+            self.SwitchOption1.setText(self.track.getLine(line).getBlock(self.SwitchBlockSelect.currentText()).swOpt1)
+            self.SwitchOption2.setText(self.track.getLine(line).getBlock(self.SwitchBlockSelect.currentText()).swOpt2)
+        except:
+            pass
 
     # function to change dropdowns for occupancy selection
     def occLineChanged(self, line):
@@ -135,10 +130,10 @@ class TestUI(QtWidgets.QMainWindow):
         signals.trackModelTestUIUpdateGUIVacancy.emit(self.OccLineSel.currentText(), self.OccBlockSel.currentText())
 
     def changeSwitchOpt1(self):
-        signals.trackModelTestUIUpdateGUISwitches.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption1.text())
+        signals.trackModelUpdateGUISwitches.emit(int(self.SwitchBlockSelect.currentText()), int(self.SwitchOption1.text()))
 
     def changeSwitchOpt2(self):
-        signals.trackModelTestUIUpdateGUISwitches.emit(self.SwitchLineSelect.currentText(), self.SwitchBlockSelect.currentText(), self.SwitchOption2.text())
+        signals.trackModelUpdateGUISwitches.emit(int(self.SwitchBlockSelect.currentText()), int(self.SwitchOption2.text()))
 
     def induceFault(self, faultType):
         signals.trackModelTestUIUpdateFault.emit(self.FaultLineSelect.currentText(), self.FaultBlockSelect.currentText(), faultType)

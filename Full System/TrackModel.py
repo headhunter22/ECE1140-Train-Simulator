@@ -100,3 +100,10 @@ class TrackModel(QObject):
         return
         # receive switch state from wayside
         # update gui
+
+    def tempChanged(self):
+        # if entry is nonsense, do nothing
+        if not self.tempEntry.text().isnumeric(): 
+            return
+
+        signals.trackModelTempUpdated.emit(int(self.tempEntry.text()))
