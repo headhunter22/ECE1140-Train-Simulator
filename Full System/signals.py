@@ -46,7 +46,7 @@ class Signals(QObject):
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
-    waysideSwitchLocationsfromPLC = pyqtSignal(list, list) # 
+    waysideSwitchLocationsfromPLC = pyqtSignal(list, list, list, list) # 
     waysideSectionsfromPLC = pyqtSignal(list, list)
     waysideAllSectionsfromPLC = pyqtSignal(list, list)
     waysideSwitchStatesfromPLC = pyqtSignal(list, list)
