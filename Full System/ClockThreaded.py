@@ -1,4 +1,4 @@
-import time
+import datetime
 from signals import signals
 from PyQt6.QtCore import QThread, QTimer
 
@@ -13,6 +13,10 @@ class Clock(QThread):
         self.currSecs = 0
         self.currMins = 0
         self.currHrs = 7
+        self.testSecs = 25200
+        self.dispHour = 0
+        self.dispMin = 0
+        self.dispSec = 0
 
         # attributes of thread
         self.running = True
@@ -37,6 +41,16 @@ class Clock(QThread):
         try:
             signals.trainControllerTimeTrigger.emit()
 
+            timeDateTime = datetime.timedelta(seconds=self.testSecs)
+            self.dispHour = timeDateTime // datetime.timedelta(hours=1)
+            self.dispHour = (timeDateTime // datetime.timedelta(minutes=1)) % 60
+            self.dispHour = (timeDateTime // datetime.timedelta(seconds=1)) % 60
+            
+            self.testSecs += 1
+            print(f"{self.dispHour}:{self.dispHour:02}:{self.dispHour:02}")
+            print(self.testSecs)
+
+
             # increment seconds
             self.currSecs += 1
             if self.currSecs == 60: # reset secs after 60
@@ -45,7 +59,7 @@ class Clock(QThread):
             if self.currMins == 60: # reset mins after 60
                 self.currHrs += 1
                 self.curMins = 0
-            if self.currHrs == 24: # reset hrs after 24
+            if self.currHrs == 23: # reset hrs after 24
                 self.currHrs = 0
 
             # emit signal of timer ticking that CTC will received to keep time

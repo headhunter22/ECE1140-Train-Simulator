@@ -64,6 +64,14 @@ class TrainModel(QObject):
         currLine = train.line
         currBlock = train.block
 
+        # if the train has stopped at all given destination, go to yard
+        if train.line.lineName == "Green":
+            if not train.destBlock:
+                train.destBlock.append(57)
+        elif train.line.lineName == "Red":
+            if not train.destBlock:
+                train.destBlock.append(9)
+
         if currBlock == train.destBlock[0]:
             train.reachedDest = True
 
