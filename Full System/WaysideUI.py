@@ -16,10 +16,9 @@ from PLCParser import WTrack
 # MainWindowA N-Z blue
 # MainWindowB A-M red
 
-#if wrong file make error
 #show fault
-#change occupancy on popups
-#change pop up so you don't need to select (maybe)
+#change authority on popups
+#change gate buttons
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
@@ -35,6 +34,12 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.sectionmatrix = []
         self.sectionrow = []
         self.sectionmatrixrow = []
+        self.switchStates0 = []
+        self.switchStates1 = []
+        self.switchMatrix0 = []
+        self.switchMatrix1 = []
+        self.switchDefaults0 = []
+        self.switchDefaults1 = []
 
         self.wayside1range = []
         self.wayside1sectionrange = []
@@ -54,11 +59,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.wayside8sectionrange = []
         self.allthesectionsever0 = []
         self.allthesectionsever1 = []
-        #print("sectionrange1",self.sectionrange)
-        #PLCParser.parse(self)
-        #print("wayside1range 1 in ui",Wtrack.plc.wayside1range)
-        
-        #self.setuppopups(self.first)
         
         #signals
         signals.timerTicked.connect(self.ticka) #clock from ctc
@@ -67,39 +67,19 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.wtowVacancy.connect(self.changeVacancy) #from .py from track controller
         signals.wtowTrainCount.connect(self.activeTrains) #from .py track controller
         signals.waysidesetup.connect(self.setuppopups)
-        #signals.waysideinstance2.connect(self.imoverthis)
-        #signals.actuallyshutup.connect(self.works)
         signals.ranges.connect(self.works)
         signals.sections.connect(self.sectionswork)
-        #signals.please.emit()
+        signals.wtowSwitchesSetup.connect(self.setSwitchesSetup)
+        signals.wtowSwitchChange.connect(self.newSwitchStates)
+        signals.wtowSwitchDefaults.connect(self.setSwitchDefaults)
         
         self.plc = WTrack()
         self.setupplc()
-        #self.firstinstance(self.first)
-        #PLCParser.parse(self)
-        #print("sectionrange4",self.sectionrange)
-        #PLC signals
-        # signals.waysideSwitchStates.connect(self.wholeTrack)
-        # signals.waysideSwitchLocationsfromPLC.connect(self.wholeTrack)
-        # signals.waysideTrackfromPLC.connect(self.wholeTrack)
-        # signals.waysideSectionsfromPLC.connect(self.popupnames)
         
         self.disableallswitchbuttons()
         self.setupgatebuttons()
         self.setupswitchbuttons()
-        #print("wayside1range 2 in ui .plc",WTrack.wayside1range)
-        #print("wayside1range 2 in ui .self",self.wayside1range)
-        #self.instances(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange)
-        #self.setuppopups()
-        
-        #active trains
-        # self.qicon.setPixmap(QPixmap('tracks.png'))
-        # self.wicon.setPixmap(QPixmap('tracks.png'))
-        # self.cicon.setPixmap(QPixmap('redtracks.png'))
-        # self.dicon.setPixmap(QPixmap('tracks.png'))
-        # #self.eicon.setPixmap(QPixmap('redtracks.png'))
-        # #self.ficon.setPixmap(QPixmap('redtracks.png'))
-        # self.jicon.setPixmap(QPixmap('tracks.png'))
+
         counts = 0
         self.activetrains.display(counts)
         self.whichwayside.currentIndexChanged.connect(self.changeinstance)
@@ -129,9 +109,29 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def changeinstance(self):
         num = self.whichwayside.currentIndex()+1
-        #print("change instance", num)
+        print("change instance", num)
         #print("num",num)
-        signals.waysidefirst.emit(num)
+        self.first = num
+        self.setuppopups(self.first)
+        self.SwitchesSetup(self.first)
+        if num == 1:
+            which = 0
+        elif num == 2:
+            which = 0
+        elif num == 3:
+            which = 0
+        elif num == 4:
+            which = 0
+        elif num == 5:
+            which = 1
+        elif num == 6:
+            which = 1
+        elif num == 7:
+            which = 1
+        elif num == 7:
+            which = 1
+        self.changeSwitchButtons(which)
+        #signals.waysidefirst.emit(num)
         #signals.wtowOccupancy.emit() 
         
 
@@ -143,13 +143,16 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("setupplc wayside1range 2 in ui .self",self.wayside1range)
 
     def newparse(self):
-        home_dir = str(Path.home())
-        dialog = QFileDialog()
-        fname, filetypes = dialog.getOpenFileName()#getOpenFileName(self, 'Open file', home_dir)
-        #fname.selectedFiles()
-        #print(" newparse ui fname", fname)
-        #print("neaparse homedir", home_dir)
-        self.plc.parse(fname)
+        try:
+            home_dir = str(Path.home())
+            dialog = QFileDialog()
+            fname, filetypes = dialog.getOpenFileName()#getOpenFileName(self, 'Open file', home_dir)
+            #fname.selectedFiles()
+            #print(" newparse ui fname", fname)
+            #print("neaparse homedir", home_dir)
+            self.plc.parse(fname)
+        except:
+            print("No file to parse")
 
     def works(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("it works in ui from please from .py range1:", range1)
@@ -196,11 +199,290 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.allthesectionsever1.append(range7)
         self.allthesectionsever1.append(range8)
 
+    def setSwitchesSetup(self, allsw0, allsw1):
+        print("setSwitchesSetup ui")
+        self.switchMatrix0 = allsw0
+        self.switchMatrix1 = allsw1
+        # self.changeSwitchButtons(allsw0, allsw1, 0)
+        # self.changeSwitchButtons(allsw0, allsw1, 1)
+        # print("setup sw0", allsw0)
+        # print("setup sw1", allsw1)
+
+    def newSwitchStates(self, sw0, sw1):
+        if self.first == 1:
+            which = 0
+        elif self.first == 2:
+            which = 0
+        elif self.first == 3:
+            which = 0
+        elif self.first == 4:
+            which = 0
+        elif self.first == 5:
+            which = 1
+        elif self.first == 6:
+            which = 1
+        elif self.first == 7:
+            which = 1
+        elif self.first == 7:
+            which = 1
+        self.switchStates0 = sw0
+        self.switchStates1 = sw1
+        self.changeSwitchButtons(which)
+
+    def setSwitchDefaults(self, allsw0, allsw1):
+        print("set defaults in ui")
+        self.switchDefaults0 = allsw0
+        self.switchDefaults1 = allsw1
+        self.switchStates0 = allsw0
+        self.switchStates1 = allsw1
+        # self.changeSwitchButtons(allsw0, allsw1, 0)
+        # self.changeSwitchButtons(allsw0, allsw1, 1)
+        # self.disableallswitchbuttons()
+
+    def SwitchesSetup(self, first):
+        #print("switch matrix", self.switchMatrix0)
+        print("switchessetup ui")
+        which = 0
+        if first == 1:
+            which = 0
+        elif first == 2:
+            which = 0
+        elif first == 3:
+            which = 0
+        elif first == 4:
+            which = 0
+        elif first == 5:
+            which = 1
+        elif first == 6:
+            which = 1
+        elif first == 7:
+            which = 1
+        elif first == 7:
+            which = 1
+
+        self.gate10.hide()
+        self.gate11.hide()
+        self.gate20.hide()
+        self.gate21.hide()
+        self.gate30.hide()
+        self.gate31.hide()
+        self.gate40.hide()
+        self.gate41.hide()
+        self.gate50.hide()
+        self.gate51.hide()
+        self.gate60.hide()
+        self.gate61.hide()
+        self.gate70.hide()
+        self.gate71.hide()
+        self.switchlabel_7.hide()
+
+        if which == 0:
+            self.switchlabel.setText(str(self.switchMatrix0[0][0]))
+            self.gate10.setText(str(self.switchMatrix0[0][1]))
+            self.gate11.setText(str(self.switchMatrix0[0][2]))
+            self.switchlabel_2.setText(str(self.switchMatrix0[1][0]))
+            self.gate20.setText(str(self.switchMatrix0[1][1]))
+            self.gate21.setText(str(self.switchMatrix0[1][2]))
+            self.switchlabel_3.setText(str(self.switchMatrix0[2][0]))
+            self.gate30.setText(str(self.switchMatrix0[2][1]))
+            self.gate31.setText(str(self.switchMatrix0[2][2]))
+            self.switchlabel_4.setText(str(self.switchMatrix0[3][0]))
+            self.gate40.setText(str(self.switchMatrix0[3][1]))
+            self.gate41.setText(str(self.switchMatrix0[3][2]))
+            self.switchlabel_5.setText(str(self.switchMatrix0[4][0]))
+            self.gate50.setText(str(self.switchMatrix0[4][1]))
+            self.gate51.setText(str(self.switchMatrix0[4][2]))
+            self.switchlabel_6.setText(str(self.switchMatrix0[5][0]))
+            self.gate60.setText(str(self.switchMatrix0[5][1]))
+            self.gate61.setText(str(self.switchMatrix0[5][2]))
+            self.gate10.show()
+            self.gate11.show()
+            self.gate20.show()
+            self.gate21.show()
+            self.gate30.show()
+            self.gate31.show()
+            self.gate40.show()
+            self.gate41.show()
+            self.gate50.show()
+            self.gate51.show()
+            self.gate60.show()
+            self.gate61.show()
+
+        elif which == 1:
+            self.switchlabel.setText(str(self.switchMatrix1[0][0]))
+            self.gate10.setText(str(self.switchMatrix1[0][1]))
+            self.gate11.setText(str(self.switchMatrix1[0][2]))
+            self.switchlabel_2.setText(str(self.switchMatrix1[1][0]))
+            self.gate20.setText(str(self.switchMatrix1[1][1]))
+            self.gate21.setText(str(self.switchMatrix1[1][2]))
+            self.switchlabel_3.setText(str(self.switchMatrix1[2][0]))
+            self.gate30.setText(str(self.switchMatrix1[2][1]))
+            self.gate31.setText(str(self.switchMatrix1[2][2]))
+            self.switchlabel_4.setText(str(self.switchMatrix1[3][0]))
+            self.gate40.setText(str(self.switchMatrix1[3][1]))
+            self.gate41.setText(str(self.switchMatrix1[3][2]))
+            self.switchlabel_5.setText(str(self.switchMatrix1[4][0]))
+            self.gate50.setText(str(self.switchMatrix1[4][1]))
+            self.gate51.setText(str(self.switchMatrix1[4][2]))
+            self.switchlabel_6.setText(str(self.switchMatrix1[5][0]))
+            self.gate60.setText(str(self.switchMatrix1[5][1]))
+            self.gate61.setText(str(self.switchMatrix1[5][2]))
+            self.switchlabel_7.setText(str(self.switchMatrix1[6][0]))
+            self.gate70.setText(str(self.switchMatrix1[6][1]))
+            self.gate71.setText(str(self.switchMatrix1[6][2]))
+            self.switchlabel_7.show()
+            self.gate10.show()
+            self.gate11.show()
+            self.gate20.show()
+            self.gate21.show()
+            self.gate30.show()
+            self.gate31.show()
+            self.gate40.show()
+            self.gate41.show()
+            self.gate50.show()
+            self.gate51.show()
+            self.gate60.show()
+            self.gate61.show()
+            self.gate70.show()
+            self.gate71.show()
+        #print("ehich track in switches setup", which)
+        self.changeSwitchButtons(which)
+        #self.changeSwitchButtons(self.switchDefaults0, self.switchDefaults1, 1)
+        self.disableallswitchbuttons()
+
+    def changeSwitchButtons(self, inst):
+        print("changing switch button function")
+        
+
+        if inst == 0:
+            #print("sw0", sw0)
+            if self.switchStates0[0] == 0:
+                
+                self.toggleColor(self.gate10, self.gate11)
+                self.gate10.setStyleSheet('background-color: SkyBlue')
+                self.gate11.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[0] == 1:
+                self.toggleColor(self.gate11, self.gate10)
+                self.gate11.setStyleSheet('background-color: SkyBlue')
+                self.gate10.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates0[1] == 0:
+                self.toggleColor(self.gate20, self.gate21)
+                self.gate20.setStyleSheet('background-color: SkyBlue')
+                self.gate21.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[1] == 1:
+                self.toggleColor(self.gate21, self.gate20)
+                self.gate21.setStyleSheet('background-color: SkyBlue')
+                self.gate20.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates0[2] == 0:
+                self.toggleColor(self.gate30, self.gate31)
+                self.gate30.setStyleSheet('background-color: SkyBlue')
+                self.gate31.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[2] == 1:
+                self.toggleColor(self.gate31, self.gate30)
+                self.gate31.setStyleSheet('background-color: SkyBlue')
+                self.gate30.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates0[3] == 0:
+                self.toggleColor(self.gate40, self.gate41)
+                self.gate40.setStyleSheet('background-color: SkyBlue')
+                self.gate41.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[3] == 1:
+                self.toggleColor(self.gate41, self.gate40)
+                self.gate41.setStyleSheet('background-color: SkyBlue')
+                self.gate40.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates0[4] == 0:
+                self.toggleColor(self.gate50, self.gate51)
+                self.gate50.setStyleSheet('background-color: SkyBlue')
+                self.gate51.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[4] == 1:
+                self.toggleColor(self.gate51, self.gate50)
+                self.gate51.setStyleSheet('background-color: SkyBlue')
+                self.gate50.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates0[5] == 0:
+                #print("switch 6 is 0")
+                self.toggleColor(self.gate60, self.gate61)
+                self.gate60.setStyleSheet('background-color: SkyBlue')
+                self.gate61.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates0[5] == 1:
+                #print("switch 6 is 1")
+                self.toggleColor(self.gate61, self.gate60)
+                self.gate61.setStyleSheet('background-color: SkyBlue')
+                self.gate60.setStyleSheet('background-color: white; color: gray')
+
+        elif inst == 1:
+            #print("sw1", sw1)
+            if self.switchStates1[0] == 0:
+                self.toggleColor(self.gate10, self.gate11)
+                self.gate10.setStyleSheet('background-color: SkyBlue')
+                self.gate11.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[0] == 1:
+                self.toggleColor(self.gate11, self.gate10)
+                self.gate11.setStyleSheet('background-color: SkyBlue')
+                self.gate10.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[1] == 0:
+                self.toggleColor(self.gate20, self.gate21)
+                self.gate20.setStyleSheet('background-color: SkyBlue')
+                self.gate21.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[1] == 1:
+                self.toggleColor(self.gate21, self.gate20)
+                self.gate21.setStyleSheet('background-color: SkyBlue')
+                self.gate20.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[2] == 0:
+                self.toggleColor(self.gate30, self.gate31)
+                self.gate31.setStyleSheet('background-color: SkyBlue')
+            elif self.switchStates1[2] == 1:
+                self.toggleColor(self.gate31, self.gate30)
+                self.gate30.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[3] == 0:
+                self.toggleColor(self.gate40, self.gate41)
+                self.gate40.setStyleSheet('background-color: SkyBlue')
+                self.gate41.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[3] == 1:
+                self.toggleColor(self.gate41, self.gate40)
+                self.gate41.setStyleSheet('background-color: SkyBlue')
+                self.gate40.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[4] == 0:
+                self.toggleColor(self.gate50, self.gate51)
+                self.gate50.setStyleSheet('background-color: SkyBlue')
+                self.gate51.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[4] == 1:
+                self.toggleColor(self.gate51, self.gate50)
+                self.gate51.setStyleSheet('background-color: SkyBlue')
+                self.gate50.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[5] == 0:
+                self.toggleColor(self.gate60, self.gate61)
+                self.gate60.setStyleSheet('background-color: SkyBlue')
+                self.gate61.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[5] == 1:
+                self.toggleColor(self.gate61, self.gate60)
+                self.gate61.setStyleSheet('background-color: SkyBlue')
+                self.gate60.setStyleSheet('background-color: white; color: gray')
+
+            if self.switchStates1[6] == 0:
+                self.toggleColor(self.gate70, self.gate71)
+                self.gate70.setStyleSheet('background-color: SkyBlue')
+                self.gate71.setStyleSheet('background-color: white; color: gray')
+            elif self.switchStates1[6] == 1:
+                self.toggleColor(self.gate71, self.gate70)
+                self.gate71.setStyleSheet('background-color: SkyBlue')
+                self.gate70.setStyleSheet('background-color: white; color: gray')
+        
+
 
 
     def firstinstance(self, num):
         self.first = num
         self.setuppopups(self.first)
+        self.SwitchesSetup(self.first)
         #print("set first", self.first, "=", num)
         #self.whichwayside.setCurrentIndex(self.first)
 
@@ -218,6 +500,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate51.setEnabled(False)
         self.gate60.setEnabled(False)
         self.gate61.setEnabled(False)
+        self.gate70.setEnabled(False)
+        self.gate71.setEnabled(False)
 
     def setupgatebuttons(self):
         #set up gate buttons
@@ -251,6 +535,10 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate61.setStyleSheet('background-color: SkyBlue')
         self.gate61.clicked.connect(lambda: self.toggleColor(self.gate61, self.gate60))
         self.gate60.setStyleSheet('background-color: white; color: gray')
+        self.gate70.clicked.connect(lambda: self.toggleColor(self.gate70, self.gate71))
+        self.gate71.setStyleSheet('background-color: SkyBlue')
+        self.gate71.clicked.connect(lambda: self.toggleColor(self.gate71, self.gate70))
+        self.gate70.setStyleSheet('background-color: white; color: gray')
 
     def setuppopups(self, first):
         self.sectionrange = []
@@ -937,24 +1225,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.picon.show()
             self.qicon.show()
             self.ricon.show()
-        
-            
-        # self.pushn.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[0]))
-        # self.pusho.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[1]))
-        # self.pushp.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[2]))
-        # self.pushq.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[3]))
-        # self.pushr.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[4]))
-        # self.pushs.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[5]))
-        # self.pusht.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[6]))
-        # self.pushu.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[7]))
-        # self.pushv.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[8]))
-        # self.pushw.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[9]))
-        # self.pushx.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[10]))
-        # self.pushy.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[11]))
-        # self.pushz.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[12]))
-        # self.pushaa.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[13]))
-        # self.pushbb.clicked.connect(lambda: self.makeSectionWindow(self.sectionrange[14]))
-        #print("namelist",namelist)
 
     def ticka(self, hrs, mins, secs):
         #print("wayside ticking in class a")
@@ -976,6 +1246,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate51.setEnabled(True)
         self.gate60.setEnabled(True)
         self.gate61.setEnabled(True)
+        self.gate70.setEnabled(False)
+        self.gate71.setEnabled(False)
 
     def automaticMode(self):
         #print("in automatic mode") 
@@ -991,6 +1263,8 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate51.setEnabled(False)
         self.gate60.setEnabled(False)
         self.gate61.setEnabled(False)
+        self.gate70.setEnabled(False)
+        self.gate71.setEnabled(False)
 
     def configurationWindow(self):
         self.trackconfiguration.clicked.connect(self.runParser)
@@ -1890,7 +2164,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     
                     index = self.sectionmatrixrow.index(i) +1
                     self.bl.gridLayout.addWidget(image, index, 1)
-
 
     def changeVacancy(self, line, block, sec):
         #print("wayside a UI block", block, "is vacant")
