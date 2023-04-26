@@ -524,7 +524,7 @@ padding: 2px;</string>
      <string>Click fault image to activate</string>
     </property>
    </widget>
-   <widget class="QLabel" name="trainAcc_2">
+   <widget class="QLabel" name="authority">
     <property name="geometry">
      <rect>
       <x>260</x>
