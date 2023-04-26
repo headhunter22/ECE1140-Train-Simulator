@@ -41,29 +41,13 @@ class Clock(QThread):
         try:
             signals.trainControllerTimeTrigger.emit()
 
-            timeDateTime = datetime.timedelta(seconds=self.testSecs)
-            self.dispHour = timeDateTime // datetime.timedelta(hours=1)
-            self.dispHour = (timeDateTime // datetime.timedelta(minutes=1)) % 60
-            self.dispHour = (timeDateTime // datetime.timedelta(seconds=1)) % 60
-            
+            timeStr = str(datetime.timedelta(seconds=self.testSecs))
+            timeArr = timeStr.split(":")
             self.testSecs += 1
-            print(f"{self.dispHour}:{self.dispHour:02}:{self.dispHour:02}")
-            print(self.testSecs)
-
-
-            # increment seconds
-            self.currSecs += 1
-            if self.currSecs == 60: # reset secs after 60
-                self.currMins += 1
-                self.currSecs = 0
-            if self.currMins == 60: # reset mins after 60
-                self.currHrs += 1
-                self.curMins = 0
-            if self.currHrs == 23: # reset hrs after 24
-                self.currHrs = 0
-
+            self.dispHour = timeArr[0]
+            
             # emit signal of timer ticking that CTC will received to keep time
-            signals.timerTicked.emit(self.currHrs, self.currMins, self.currSecs)
+            signals.timerTicked.emit(int(timeArr[0]), int(timeArr[1]), int(timeArr[2]))
         except:
             print('system ended')
             pass
