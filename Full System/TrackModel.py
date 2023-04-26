@@ -119,7 +119,7 @@ class TrackModel(QObject):
             signals.trackModelTrainInfoToWayside.emit(train)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.waysideUpdateVacancy.emit(train.line.lineName, train.block, train.route)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, block, train.route)
 
     def board(self, train):
         # load new passengers
