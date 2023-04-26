@@ -92,6 +92,7 @@ class Signals(QObject):
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal(int, int) # source, dest
     trackModelUpdateGUIFaults = pyqtSignal(Fault)
+    trackModelGUIWaitingPassengers = pyqtSignal(dict) # station: passengers 
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block

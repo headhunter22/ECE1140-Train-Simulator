@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1154</width>
+    <width>1365</width>
     <height>662</height>
    </rect>
   </property>
@@ -333,10 +333,10 @@
    <widget class="QLabel" name="GeneralInfoLabel">
     <property name="geometry">
      <rect>
-      <x>920</x>
-      <y>0</y>
-      <width>191</width>
-      <height>51</height>
+      <x>880</x>
+      <y>30</y>
+      <width>471</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1468,6 +1468,169 @@ color: black</string>
      <string>9</string>
     </property>
    </widget>
+   <widget class="QLabel" name="StationHeading">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>90</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Station</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PassengersHeading">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>160</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Passengers</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="waitingPassengersSelect">
+    <property name="geometry">
+     <rect>
+      <x>1152</x>
+      <y>120</y>
+      <width>191</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Shadyside</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Herron Ave</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Swissville</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Penn Station</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Steel Plaza</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>First Ave</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Station Square</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>South Hill Junction</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Pioneer</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Edgebrook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Profeta</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Whited</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>South Bank</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Central</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Inglewood</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Overbrook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Glenbury</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dormont</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Mt Lebanon</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Poplar</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Castle Shannon</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="passengersWaiting">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>190</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <zorder>GeneralInfoSpacer</zorder>
    <zorder>RedLineScrollArea</zorder>
    <zorder>RedLineLabel</zorder>
@@ -1553,6 +1716,10 @@ color: black</string>
    <zorder>RedYard</zorder>
    <zorder>R10</zorder>
    <zorder>R9</zorder>
+   <zorder>StationHeading</zorder>
+   <zorder>PassengersHeading</zorder>
+   <zorder>waitingPassengersSelect</zorder>
+   <zorder>passengersWaiting</zorder>
   </widget>
  </widget>
  <resources/>
