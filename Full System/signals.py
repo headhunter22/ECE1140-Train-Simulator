@@ -39,6 +39,7 @@ class Signals(QObject):
     waysideCommandedSpeed = pyqtSignal(int)
     waysideAuthoritytoTrack = pyqtSignal(int, int)
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
+    waysideSwitchtoCTC = pyqtSignal(list, list)#green list then red list
     waysideWait = pyqtSignal(bool)
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
