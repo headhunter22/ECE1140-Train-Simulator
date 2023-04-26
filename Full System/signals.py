@@ -60,6 +60,9 @@ class Signals(QObject):
     wtowVacancy = pyqtSignal(str, int, str) # block
     count = 0
     wtowTrainCount = pyqtSignal(int) # number of active trains
+    wtowSwitchesSetup = pyqtSignal(list, list)#matrix
+    wtowSwitchDefaults = pyqtSignal(list, list)#matrix
+    wtowSwitchChange = pyqtSignal(list, list, int)#lists
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)

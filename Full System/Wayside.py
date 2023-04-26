@@ -69,8 +69,8 @@ class Wayside(QObject):
         #signals.waysideCommandedSpeed.connect(self.commspeed)
         signals.waysideinstances.connect(self.plcinfo)
 
-        signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
-        signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
+        signals.switchStatesFromCTCtoWayside.connect(self.changeSwitchfromCTC)
+        #signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
         signals.trackModelTrainInfoToWayside.connect(self.trainInfoToCTC)
 
         signals.waysideTrackfromPLC.connect(self.setTracks)
@@ -101,16 +101,22 @@ class Wayside(QObject):
         self.stations1 = s1
 
     def setSwitchLocations(self, loc0, loc1, mat0, mat1):
+        print("setswitchlocaitons .py")
         self.switchLocations0 = loc0
         self.switchLocations1 = loc1
         self.switchMatrix0 = mat0
         self.switchMatrix1 = mat1
+        signals.wtowSwitchesSetup.emit(mat0, mat1)
         
     def setSwitchStates(self, state0, state1):
+        print("defaults in set .py")
         self.switchStates0 = state0
         self.switchStates1 = state1
         self.switchDefaults0 = state0
         self.switchDefaults1 = state1
+        
+        signals.wtowSwitchDefaults.emit(self.switchDefaults0, self.switchDefaults1)
+        
 
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
@@ -287,6 +293,7 @@ class Wayside(QObject):
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
+        
 
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))
@@ -331,6 +338,20 @@ class Wayside(QObject):
         self.trackModel = trackModel
         #self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
         self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
+
+    def changeSwitchfromCTC(self, sw0, sw1):
+        if self.switchStates0 == sw0:
+            print("sw0 did not change")
+            change = 1
+        if self.switchStates1 == sw1:
+            print("sw0 did not change")
+            change = 0
+
+        self.switchStates0 = sw0
+        self.switchStates1 = sw1
+
+        signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, change)
+        
 
     def changeSwitch(self, line, block):
         #print("CHANGESWITCH", line)
@@ -397,6 +418,7 @@ class Wayside(QObject):
                     #print("matrixindexint", matrixindexint) 
                 signals.waysideSwitchtoTrack.emit(self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
                 signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
+                signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, 0)
                 #print("signals to track", self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
                 #print("signals to ctc", self.switchStates0, self.switchStates1)
         if line == 'Red':
@@ -442,6 +464,7 @@ class Wayside(QObject):
                     print("toggled switch", self.switchMatrix1[row][0]," since should be facing not == current. now is", opposite)
                 signals.waysideSwitchtoTrack.emit(self.switchMatrix1[row][0], self.switchMatrix1[row][opposite+1])
                 signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
+                signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, 1)
                 #print("signals to track", self.switchMatrix1[row][0], self.switchMatrix1[row][opposite+1])
                 #print("signals to ctc", self.switchStates0, self.switchStates1)
         print("")
@@ -451,29 +474,6 @@ class Wayside(QObject):
     #     self.switch = sw
     #     print("authority from CTC to Wayside: " + str(self.authority))
 
-    def switchSignalTest(self, greenStates, redStates):
-        print("Green:")
-        print("C:" , greenStates[0])
-        print("G:" , greenStates[1])
-        print("J:" , greenStates[2])
-        print("J:" , greenStates[3])
-        print("M:" , greenStates[4])
-        print("N:" , greenStates[5])
-        print("\n\nRed:")
-        print("C:" , redStates[0])
-        print("H:" , redStates[1])
-        print("H:" , redStates[2])
-        print("H:" , redStates[3])
-        print("H:" , redStates[4])
-        print("H:" , redStates[5])
-        print("J:" , redStates[6])
-        print("\n\n")
-
-    def test(self, line, block, open):
-        if line == "Red":
-            print("Red Block ", block, " is open: ", open)
-        else:
-            print("Green Block ", block, " is open: ", open)
     
     def trainInfoToCTC(self, train):
         signals.ctcUpdateGUITrainInfo.emit(train)
