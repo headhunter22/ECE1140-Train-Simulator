@@ -106,6 +106,7 @@ class TrackModel(QObject):
     def board(self, train):
         # load new passengers
         self.ticketSystem.boardTrain(train)
+        print('passengers on:', train.numPassengers)
         signals.trainModelPassengers.emit(train.numPassengers)      
         self.ticketSystem.releasePassengers(train)
 
