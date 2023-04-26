@@ -83,7 +83,16 @@ class TrainController(QObject):
             # calculate uk
             self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
 
+            # Safety Critical Architecture # 
             self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
+            self.commandedPower2 = (self.Kp * self.ek) + (self.Ki * self.uk)
+            self.commandedPower3 = (self.Kp * self.ek) + (self.Ki * self.uk)
+
+            if self.commandedPower2 < self.commandedPower:
+                self.commandedPower = self.commandedPower2
+            
+            if self.commandedPower3 < self.commandedPower:
+                self.commandedPower = self.commandedPower3
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
