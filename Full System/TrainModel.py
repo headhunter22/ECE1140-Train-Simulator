@@ -113,9 +113,9 @@ class TrainModel(QObject):
             if (train.actSpeed == 0):
                 train.An = 0
             power = 0
-        #elif self.serviceBrake == 1:
-            #train.An = -1.2
-            #power = 0
+        elif self.serviceBrake == 1:
+            train.An = -1.2
+            power = 0
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > commSpeed:
