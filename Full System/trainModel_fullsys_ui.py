@@ -184,10 +184,10 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(10, 450, 201, 20))
-        self.trainAcc_2 = QLabel(self.centralwidget)
-        self.trainAcc_2.setObjectName(u"trainAcc_2")
-        self.trainAcc_2.setGeometry(QRect(260, 250, 251, 31))
-        self.trainAcc_2.setStyleSheet(u"border: 2px solid black;\n"
+        self.authority = QLabel(self.centralwidget)
+        self.authority.setObjectName(u"authority")
+        self.authority.setGeometry(QRect(260, 250, 251, 31))
+        self.authority.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -234,6 +234,6 @@ class Ui_MainWindow(object):
         self.trainAcc.setText(QCoreApplication.translate("MainWindow", u"Acceleration:", None))
         self.beaconLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Beacon Info:</p><p><br/></p></body></html>", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Click fault image to activate", None))
-        self.trainAcc_2.setText(QCoreApplication.translate("MainWindow", u"Authority:", None))
+        self.authority.setText(QCoreApplication.translate("MainWindow", u"Authority:", None))
     # retranslateUi
 

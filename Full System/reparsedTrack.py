@@ -3,16 +3,17 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QSize
 
-# Block Info Class
-class BlockInfo(QtWidgets.QMainWindow):
-    def __init__(self, section, *args, **kwargs):
+class reparsedTrack(QtWidgets.QMainWindow):
+    def __init__(self, track, *args, **kwargs):
+        # instantiate the original track
+        self.track = track
+
         super().__init__(*args, **kwargs)
-        uic.loadUi("BlockInfo.ui", self)
-        self.setWindowTitle('Block Info')
+        uic.loadUi("reparsedTrack.ui", self)
+        self.setWindowTitle('Track Model UI')
 
         # set the header
-        self.Header.setText("Section " + section.sectionName + " Info")
-        self.ID = section.sectionName
+        self.Header.setText(self.track.lines[0].lineName)
 
         # fill the rest of the window with appropriate info
         self.widget = QtWidgets.QWidget()
@@ -20,7 +21,7 @@ class BlockInfo(QtWidgets.QMainWindow):
 
         self.rows = []
 
-        for block in section.blocks:
+        for block in self.track.getLine(self.track.lines[0].lineName).blocks:
             self.hbox = QtWidgets.QHBoxLayout()
 
             # create labels and add to the hbox
