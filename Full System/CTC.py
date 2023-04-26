@@ -44,7 +44,7 @@ class CTC(QObject):
     # function to dispatch the train
     def greenDispatch(self, destBlock):
         # create a new track object and emit to wayside
-        destBlock.append(0)
+        destBlock.append(57)
         train = Train(self.nextID, self.track.getLine('Green'), destBlock)
         train.authority = 8
         train.suggSpeed = 70
@@ -59,7 +59,7 @@ class CTC(QObject):
     # function to dispatch the train
     def redDispatch(self, destBlock):
         # create a new track object and emit to wayside
-        destBlock.append(0)
+        destBlock.append(9)
         train = Train(self.nextID, self.track.getLine('Red'), destBlock)
         train.authority = 8
         train.suggSpeed = 40
