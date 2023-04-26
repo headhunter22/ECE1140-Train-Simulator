@@ -28,7 +28,7 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>290</y>
+      <y>300</y>
       <width>251</width>
       <height>23</height>
      </rect>
@@ -109,7 +109,7 @@
       <x>260</x>
       <y>100</y>
       <width>251</width>
-      <height>71</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -138,7 +138,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>310</y>
+      <y>320</y>
       <width>251</width>
       <height>41</height>
      </rect>
@@ -227,7 +227,7 @@ padding: 2px;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>170</y>
+      <y>160</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -338,7 +338,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>200</y>
+      <y>190</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -466,7 +466,7 @@ font: 11pt &quot;Segoe UI&quot;;</string>
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>230</y>
+      <y>220</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -522,6 +522,24 @@ padding: 2px;</string>
     </property>
     <property name="text">
      <string>Click fault image to activate</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="trainAcc_2">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>250</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 2px solid black;
+border-radius: 4px;
+padding: 2px;</string>
+    </property>
+    <property name="text">
+     <string>Authority:</string>
     </property>
    </widget>
   </widget>
