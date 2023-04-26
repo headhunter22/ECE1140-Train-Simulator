@@ -814,6 +814,7 @@ class ctcMainUI(QMainWindow):
         self.ui.dispatchRed.setEnabled(True)
         self.ui.scheduledTrains.setEnabled(True)
         self.ui.uploadSchedule.setEnabled(True)
+        self.ui.thisIsATest.setEnabled(True)
         # setting the default manual to green line
         self.ui.dispatchGreen.setChecked(True)
         self.ui.dispatchRed.setChecked(False)
