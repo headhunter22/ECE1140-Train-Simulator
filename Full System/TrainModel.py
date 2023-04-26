@@ -56,7 +56,6 @@ class TrainModel(QObject):
         
         signals.trainControllerUpdateCommSpeed.emit(self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit)
 
-
     def updatedPower(self, train, power):
         if len(self.trainList) == 0:
             return
@@ -65,8 +64,12 @@ class TrainModel(QObject):
         currBlock = train.block
 
         # if the train has stopped at all given destination, go to yard
-        if not train.destBlock:
-            train.destBlock.append(57)
+        if train.line.lineName == "Green":
+            if not train.destBlock:
+                train.destBlock.append(57)
+        elif train.line.lineName == "Red":
+            if not train.destBlock:
+                train.destBlock.append(9)
 
         if currBlock == train.destBlock[0]:
             train.reachedDest = True
@@ -76,7 +79,7 @@ class TrainModel(QObject):
         if (self.manualMode == False):
             commSpeed = currLine.getBlock(train.route[1]).speedLimit #GET RID OF PLUS 2!! USE ROUTE[]
         else:
-            commSpeed = self.manualCommSpeed *1.609
+            commSpeed = self.manualCommSpeed * 1.609
            
         currBlockSpeedLimit = currLine.getBlock(currBlock).speedLimit 
         if (commSpeed > currBlockSpeedLimit):
