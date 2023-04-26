@@ -26,6 +26,12 @@ greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
                 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
                 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
+redRouteArr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+               31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+               53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46, 45,
+               44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 
+               22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
+
 class TrackModel(QObject):
 
     def __init__(self):
@@ -60,7 +66,12 @@ class TrackModel(QObject):
         
         # increment trains on system
         self.numTrains += 1
-        train.route = deepcopy(greenRouteArr)
+        if train.line.lineName == "Green":
+            train.route = deepcopy(greenRouteArr)
+        elif train.line.lineName == "Red":
+            train.route = deepcopy(redRouteArr)
+
+        print(train.route)
 
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))

@@ -31,6 +31,7 @@ class CTC(QObject):
 
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
+        signals.redLineTrainDispatchFromCtcUI.connect(self.redDispatch)
         signals.ctcSwitchStates.connect(self.sendSwitchStates)
 
     # function to dispatch the train
