@@ -55,6 +55,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainModelGUISpeedLim.connect(self.speedLim)
         signals.trainControllerEmerBrake.connect(self.brakeUI)
         signals.trackModelBeaconSending.connect(self.beaconFunc)
+        signals.trainModelAuthorityToTrainController.connect(self.updateAuthority)
         #displaying the stats of the train popup
 
         self.popUpUI.clicked.connect(self.displayPopUp)
@@ -307,3 +308,8 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.brakeFaultLabel.setIconSize(QSize(50, 50))
             self.brakeFaulVar = False
 
+    def updateAuthority(self, auth):
+         x = auth
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.authority.setText("Authority: {0} meters".format(self.y))
