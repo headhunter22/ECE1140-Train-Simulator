@@ -219,7 +219,7 @@ class TrainModel(QObject):
         #next7 = self.track0[currblock+7]
         #next8 = self.track0[currblock+8]
 
-        signals.trainModelAuthorityToTrainController.emit(auth)
+        #signals.trainModelAuthorityToTrainController.emit(auth)
     
     def manualModeFunc(self, manualMode, commSpeed):
         self.manualMode = manualMode

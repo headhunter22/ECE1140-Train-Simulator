@@ -39,6 +39,7 @@ class Signals(QObject):
     waysideCommandedSpeed = pyqtSignal(int)
     waysideAuthoritytoTrack = pyqtSignal(int, int)
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
+    waysideSwitchtoCTC = pyqtSignal(list, list)#green list then red list
     waysideWait = pyqtSignal(bool)
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
@@ -73,6 +74,8 @@ class Signals(QObject):
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelTrainInfoToWayside = pyqtSignal(Train) # Train object
+    trackModelTrainStopped = pyqtSignal(int, Train) # block stopped at, Train object
+    trackModelPassengersToCTC = pyqtSignal(int, str) # number of passengers got on, line
 
     ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
@@ -114,6 +117,7 @@ class Signals(QObject):
     trainModelLineSignal= pyqtSignal(Line)
     trainModelGUISpeedLim = pyqtSignal(str)
     trainModelAuthorityToTrainController = pyqtSignal(int)
+    sigFaultsig = pyqtSignal(bool)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)

@@ -60,6 +60,7 @@ class TrackModel(QObject):
         signals.trackModelPassengersChanging.connect(self.board)
         signals.waysideSwitchtoTrack.connect(self.switchChanged)
         signals.waysideAuthoritytoTrack.connect(self.passAuthority)
+        signals.trackModelTrainStopped.connect(self.board)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
@@ -70,26 +71,31 @@ class TrackModel(QObject):
 
     # function to dispatch train
     def dispatchTrain(self, train):
-        print('track model dispatched')
+        # increment trains on system
+        self.numTrains += 1
+        if train.line.lineName == "Green":
+            train.route = deepcopy(greenRouteArr)
+        elif train.line.lineName == "Red":
+            train.route = deepcopy(redRouteArr)
 
         # generate passengers for each station
-        passengers = {}
+        self.passengers = {}
         for stop in train.destBlock:
             if stop in greenStations:
                 numPassengers = random.randint(1,222)
-                passengers[greenStations[stop]] = numPassengers
+                self.passengers[greenStations[stop]] = numPassengers
             if stop in redStations:
                 numPassengers = random.randint(1,222)
-                passengers[redStations[stop]] = numPassengers
+                self.passengers[redStations[stop]] = numPassengers
 
         # check for last station on green line
-        if 'Overbrook' in passengers:
-            passengers['Overbrook'] = 0
+        if 'Overbrook' in self.passengers:
+            self.passengers['Overbrook'] = 0
         # check for last station on red line
-        if 'Edgebrook' in passengers:
-            passengers['Edgebrook'] = 0
+        if 'Edgebrook' in self.passengers:
+            self.passengers['Edgebrook'] = 0
         
-        signals.trackModelGUIWaitingPassengers.emit(passengers)
+        signals.trackModelGUIWaitingPassengers.emit(self.passengers)
 
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
@@ -121,12 +127,25 @@ class TrackModel(QObject):
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
             signals.waysideUpdateVacancy.emit(train.line.lineName, block, train.route)
 
-    def board(self, train):
+    def board(self, block, train):
+        # if the block is a station, find num passengers
+        numPassengers = 0
+        # green line
+        if train.line.lineName == 'Green':
+            if block in greenStations:
+                numPassengers = self.passengers[greenStations[block]]
+                self.passengers[greenStations[block]] = 0
+        # red line
+        else:
+            if block in redStations:
+                numPassengers = self.passengers[redStations[block]]
+                self.passengers[redStations[block]] = 0
+
         # load new passengers
-        self.ticketSystem.boardTrain(train)
-        print('passengers on:', train.numPassengers)
-        signals.trainModelPassengers.emit(train.numPassengers)      
-        self.ticketSystem.releasePassengers(train)
+        train.numPassengers = numPassengers
+
+        # emit passengers to CTC office
+        signals.trackModelPassengersToCTC.emit(numPassengers, train.line.lineName)
 
     def switchChanged(self, stem, dest):
         return

@@ -28,6 +28,15 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.ACprogressBar.setValue(70)
         self.tempSlider.valueChanged.connect(self.sliderChanged)
 
+        self.sigFaulVar = False
+        self.powFaulVar = False
+        self.brakeFaulVar = False
+        self.sigFaultLabel.clicked.connect(self.sigFaultFunc)
+        self.powFaultLabel.clicked.connect(self.powFaultFunc)
+        self.brakeFaultLabel.clicked.connect(self.brakeFaultFunc)
+ 
+
+
         #Connecting the received signals to their display functions
         signals.trainModelUpdateGUISpeed.connect(self.displaySpeed)
         signals.trainModelGUIBlock.connect(self.displayBlock)
@@ -175,7 +184,6 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.ACprogressBar.setValue(sliderSize)
 
     def trainDest(self, trainDest):
-        print('length train dest HERHERHERHERHER: ' + str(len(trainDest)))
         text = 'Destination: '
         for x in trainDest:
             if x == 2:
@@ -246,13 +254,55 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.EmerButton.setStyleSheet("background-color: gray; border: 2px solid black; border-radius: 4px;padding: 2px; font: 16pt Segoe UI")
 
     def beaconFunc(self, block):
-        if (block.beaconBool == True):
+        print("sig fault = " + str(self.sigFaulVar))
+        if self.sigFaulVar == True:
+            self.beaconLabel.setText('SIGNAL FAULT: NO BEACON INFO')
+            self.beaconLabel.setStyleSheet("background-color: red")
+        elif (block.beaconBool == True):
+            self.beaconLabel.setStyleSheet("background-color: light gray; border: 2px solid black; border-radius: 4px;padding: 2px")
             if str(block.beacon.stationName) == 'None':
                 self.beaconLabel.setText('Beacon Information: \nPassing a Switch')
             else:
                 self.beaconLabel.setText('Beacon Information: \n' + str(block.beacon.stationName)
                                      +'\nExit Side: '+ str(block.beacon.stationSide))    
         else:
+            self.beaconLabel.setStyleSheet("background-color: light gray; border: 2px solid black; border-radius: 4px;padding: 2px")
             self.beaconLabel.setText("No Beacon Information")
     
+    def sigFaultFunc(self):
+        if self.sigFaulVar == False:
+            sigIcon = QtGui.QIcon("sigON.png")
+            self.sigFaultLabel.setIcon(sigIcon)
+            self.sigFaultLabel.setIconSize(QSize(50, 50))
+            self.sigFaulVar = True
+        else:
+            sigIcon = QtGui.QIcon("sigOFF.png")
+            self.sigFaultLabel.setIcon(sigIcon)
+            self.sigFaultLabel.setIconSize(QSize(50, 50))
+            self.sigFaulVar = False
+
+    def powFaultFunc(self):
+        if self.powFaulVar == False:
+            powIcon = QtGui.QIcon("powON.png")
+            self.powFaultLabel.setIcon(powIcon)
+            self.powFaultLabel.setIconSize(QSize(50, 50))
+            self.powFaulVar = True
+        else:
+            powIcon = QtGui.QIcon("powOFF.png")
+            self.powFaultLabel.setIcon(powIcon)
+            self.powFaultLabel.setIconSize(QSize(50, 50))
+            self.powFaulVar = False
+
+    
+    def brakeFaultFunc(self):
+        if self.brakeFaulVar == False:
+            brakeIcon = QtGui.QIcon("brakesON.png")
+            self.brakeFaultLabel.setIcon(brakeIcon)
+            self.brakeFaultLabel.setIconSize(QSize(50, 50))
+            self.brakeFaulVar = True
+        else:
+            brakeIcon = QtGui.QIcon("brakesOFF.png")
+            self.brakeFaultLabel.setIcon(brakeIcon)
+            self.brakeFaultLabel.setIconSize(QSize(50, 50))
+            self.brakeFaulVar = False
 
