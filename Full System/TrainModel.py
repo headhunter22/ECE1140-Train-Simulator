@@ -133,7 +133,6 @@ class TrainModel(QObject):
 
         if (train.actSpeed < 0):
             train.actSpeed = 0
-            train.destBlock.pop(0)
 
         prevPos = train.position
 
