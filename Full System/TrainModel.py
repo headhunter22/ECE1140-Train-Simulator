@@ -113,9 +113,9 @@ class TrainModel(QObject):
             if (train.actSpeed == 0):
                 train.An = 0
             power = 0
-        #elif self.serviceBrake == 1:
-            #train.An = -1.2
-            #power = 0
+        elif self.serviceBrake == 1:
+            train.An = -1.2
+            power = 0
         # if moving, calculate acceleration
         else:
             if (train.actSpeed*3.6) > commSpeed:
@@ -198,12 +198,7 @@ class TrainModel(QObject):
     
     def newAuthority(self,blocks, currentblock): #blocks is int allowed, currentblock is 
         currLine = self.trainList[0].line
-<<<<<<< HEAD
-        self.trainList[0].authority = blocks
-
-=======
         self.trainList[len(self.trainList)-1].authorityBlocks = blocks
->>>>>>> 63b356602a82967100905a5e6c66b3b5231ae9e7
         auth = 0
         for i in range(blocks):
             #print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).length))
