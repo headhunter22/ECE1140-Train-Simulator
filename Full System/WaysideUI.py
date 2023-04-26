@@ -1623,7 +1623,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("change occ line block sec", line, block, sec)
         img = QPixmap('greentrain.png')
         self.occupied.append(block)
-        #print("occupied blocks", self.occupied)
+        print("occupied blocks from occupied", self.occupied)
         
         if self.first == 1 and line == 'Green':
             #secbutton = self.wayside1sectionrange.index(sec)
@@ -1899,11 +1899,11 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         print("vacancy line, block, sec", line, block, sec)
         try:
             find = self.occupied.index(block)
-            print("find", find)
+            #print("find", find)
             self.occupied.pop(find)
         except:
             print("no blocks occupied yet")
-        print("occupied blocks", self.occupied)
+        #print("occupied blocks from vacancy", self.occupied)
         
         if self.first == 1:
             #secbutton = self.wayside1sectionrange.index(sec)
