@@ -19,18 +19,15 @@ class Signals(QObject):
     CTCTenTimesSpeed = pyqtSignal()
     CTCFiftyTimesSpeed = pyqtSignal()
     greenStationProperties = pyqtSignal(list) # a list of whether or not the buttons are pressed or not
-    blockMaintenanceUpdateFromCTC = pyqtSignal(Track) # block that is updated from open -> maintenance or vice versa
     switchStatesFromCTCtoWayside = pyqtSignal(list, list) # green switch states for blocks [C, G, J, J, M, N], red switch states for blocks [C, E, H, H, H, H, J]
 
     # ctc frontend emission signals
     ctcSwitchStates = pyqtSignal(list, list) # green line switches, red line switches
     greenLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
-    redLineTrainDispatch = pyqtSignal(Train)
-    blockMaintenanceOption = pyqtSignal(Track)
-    ctcUpdateGUIOccupancy = pyqtSignal(str, int) # train.line, train.block
-    ctcUpdateGUIAuthority = pyqtSignal(str, int) # line, authority
-    ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
-    ctcUpdateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, aithority, destination block
+    redLineTrainDispatchFromCtcUI = pyqtSignal(list) # desination blocks
+    blockMaintenanceFromCTCtoWayside = pyqtSignal(str, int, bool) # line, block, maintenance(true/false)
+    ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, authority, destination block
+    ctcUpdateGUITrainInfo = pyqtSignal(Train) # Train object
     ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
@@ -46,7 +43,7 @@ class Signals(QObject):
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
-    waysideSwitchLocationsfromPLC = pyqtSignal(list, list) # 
+    waysideSwitchLocationsfromPLC = pyqtSignal(list, list, list, list) # 
     waysideSectionsfromPLC = pyqtSignal(list, list)
     waysideAllSectionsfromPLC = pyqtSignal(list, list)
     waysideSwitchStatesfromPLC = pyqtSignal(list, list)
@@ -75,9 +72,11 @@ class Signals(QObject):
     # track model signals
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
+    trackModelTrainInfoToWayside = pyqtSignal(Train) # Train object
 
     ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
+    authorityTrackModelToTrainModel = pyqtSignal(int, int) # blocks of authority, current block
     ########################################
 
     trackModelTempUpdated = pyqtSignal(int) # temperature
@@ -93,13 +92,13 @@ class Signals(QObject):
     trackModelUpdateGUICrossings = pyqtSignal(int)
     trackModelUpdateGUISwitches = pyqtSignal(int, int) # source, dest
     trackModelUpdateGUIFaults = pyqtSignal(Fault)
+    trackModelGUIWaitingPassengers = pyqtSignal(dict) # station: passengers 
 
     # track model test ui signals
     trackModelTestUIUpdateGUIOccupancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUIVacancy = pyqtSignal(str, str) # line, block
     trackModelTestUIUpdateGUICrossings = pyqtSignal(int) # 1-4 for crossing statuses
     trackModelTestUIUpdateFault = pyqtSignal(str, str, str) # line, block, fault type
-
     # train model signals
     trainModelDispatchTrain = pyqtSignal(Train) # trainID, Line, destination, commandedSpeed, authority, route
     trainModelGetPower = pyqtSignal(Train, float) # trainID, commandedPower

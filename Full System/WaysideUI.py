@@ -996,9 +996,9 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.trackconfiguration.clicked.connect(self.runParser)
 
     def makeSectionWindow(self, whichsection):
-        print("in makesectionwindow")
+        #print("in makesectionwindow")
         #print("section range", self.sectionrange)
-        print("whichsection", whichsection)
+        #print("whichsection", whichsection)
         self.bl = Ui_Section()
         self.bl.sectionname.setText("Section "+ whichsection)
         self.sectionmatrix = []
@@ -1623,7 +1623,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("change occ line block sec", line, block, sec)
         img = QPixmap('greentrain.png')
         self.occupied.append(block)
-        #print("occupied blocks", self.occupied)
+        print("occupied blocks from occupied", self.occupied)
         
         if self.first == 1 and line == 'Green':
             #secbutton = self.wayside1sectionrange.index(sec)
@@ -1880,6 +1880,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("sectionrange", self.sectionrange)
         #print("matrix row from in occupied", self.sectionmatrixrow)
 
+        # could just use the icons since they have names
         for i in self.sectionmatrixrow:
             #print("in forloop i", i)
             for j in self.occupied:
@@ -1898,11 +1899,11 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         print("vacancy line, block, sec", line, block, sec)
         try:
             find = self.occupied.index(block)
-            print("find", find)
+            #print("find", find)
             self.occupied.pop(find)
         except:
             print("no blocks occupied yet")
-        print("occupied blocks", self.occupied)
+        #print("occupied blocks from vacancy", self.occupied)
         
         if self.first == 1:
             #secbutton = self.wayside1sectionrange.index(sec)
@@ -2202,7 +2203,7 @@ class selectionWindow(QWidget):
     def showmain(self):
         self.main = WMainWindowA()
         self.current = self.select.currentIndex()
-        print("current from selection", self.current)
+        #print("current from selection", self.current)
         signals.waysidefirst.emit(self.current)
         self.main.show()
         self.close()

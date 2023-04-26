@@ -11,10 +11,8 @@ sys.dont_write_bytecode = True
 
 #get switch change from ctc
 #pass on switch state pass stem and branch (int, int)
-#authority start at 8 and decrement if next next next ... is a stop,or switch in wrong direction
-#have CTC send authority as 0 and 1 not red and green
 #vacant signals need to be one behind occupied (is now sending one ahead))
-#
+#make switch array so you can display like section popups
 
 
 class Wayside(QObject):
@@ -24,6 +22,8 @@ class Wayside(QObject):
         self.CTC = ctcOffice
         self.ui = mainui
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
+        self.dest = []
+        self.route = []
 
         self.wayside1range = []#GREEN
         self.wayside1sectionrange = []
@@ -56,6 +56,10 @@ class Wayside(QObject):
         self.switchLocations1 = []
         self.switchStates0 = []
         self.switchStates1 = []
+        self.switchDefaults0 = []
+        self.switchDefaults1 = []
+        self.switchMatrix0 = []
+        self.switchMatrix1 = []
 
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
@@ -66,6 +70,8 @@ class Wayside(QObject):
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.switchSignalTest)
+        signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
+        signals.trackModelTrainInfoToWayside.connect(self.trainInfoToCTC)
 
         signals.waysideTrackfromPLC.connect(self.setTracks)
         signals.waysideSectionsfromPLC.connect(self.setSections)
@@ -94,23 +100,23 @@ class Wayside(QObject):
         self.stations0 = s0
         self.stations1 = s1
 
-    def setSwitchLocations(self, loc0, loc1):
+    def setSwitchLocations(self, loc0, loc1, mat0, mat1):
         self.switchLocations0 = loc0
         self.switchLocations1 = loc1
-
+        self.switchMatrix0 = mat0
+        self.switchMatrix1 = mat1
+        
     def setSwitchStates(self, state0, state1):
         self.switchStates0 = state0
         self.switchStates1 = state1
+        self.switchDefaults0 = state0
+        self.switchDefaults1 = state1
 
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
         auth = 8
-        
-        
         #print("authority currblock", currblock)
         #print("authority line", line)
-        
-        
         if line == 'Green':
             #print("in green")
             currblock = self.track0.index(block)
@@ -141,46 +147,45 @@ class Wayside(QObject):
             #print("8 next block and index", nextblock8, nextindex8)                                                                           
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             #print("stations", self.stations0)
-            # next1 = self.track0[currblock+1]
-            # #print("authority next1", next1)
-            # next2 = self.track0[currblock+2]
-            # #print("authority next2", next2)
-            # next3 = self.track0[currblock+3]
-            # next4 = self.track0[currblock+4]
-            # next5 = self.track0[currblock+5]
-            # next6 = self.track0[currblock+6]
-            # next7 = self.track0[currblock+7]
-            # next8 = self.track0[currblock+8]
 
-            for i in self.stations0:
+            for i in self.dest:
                 #print("i from inside loop as int", int(i))
-                if int(i) == nextblock8:
-                    #print("int i = next block 8", i, nextblock8)
-                    auth = 7
-                elif int(i) == nextblock7:
-                    #print("int i = next block7", i, nextblock7)
-                    auth = 6
-                elif int(i) == nextblock6:
-                    #print("int i = next block6", i, nextblock6)
-                    auth = 5
-                elif int(i) == nextblock5:
-                    #print("int i = next block5", i, nextblock5)
-                    auth = 4
-                elif int(i) == nextblock4:
-                    #print("int i = next block4", i, nextblock4)
-                    auth = 3
-                elif int(i) == nextblock3:
-                    ##print("int i = next block3", i, nextblock3)
-                    auth = 2
-                elif int(i) == nextblock2:
-                    #print("int i = next block2", i, nextblock2)
-                    auth = 1
-                elif int(i) == nextblock1:
-                    #print("int i = next block1", i, nextblock1)
+                if int(i) == block:
                     auth = 0
-                #else:
-                    #print("else from forloop")
-                    #auth = 8
+                    #print("i = block0", int(i), block)
+                    break
+                elif int(i) == nextblock1:
+                    auth = 1
+                    #print("i = block1", int(i), nextblock1)
+                    break
+                elif int(i) == nextblock2:
+                    auth = 2
+                    #print("i = block2", int(i), nextblock2)
+                    break
+                elif int(i) == nextblock3:
+                    auth = 3
+                    #print("i = block3", int(i), nextblock3)
+                    break
+                elif int(i) == nextblock4:
+                    auth = 4
+                    #print("i = block4", int(i), nextblock4)
+                    break
+                elif int(i) == nextblock5:
+                    auth = 5
+                    #print("i = block5", int(i), nextblock5)
+                    break
+                elif int(i) == nextblock6:
+                    auth = 6
+                    #print("i = block6", int(i), nextblock6)
+                    break
+                elif int(i) == nextblock7:
+                    auth = 7
+                    #print("i = block7", int(i), nextblock7)
+                    break
+                elif int(i) == nextblock8:
+                    auth = 8
+                    #print("i = block8", int(i), nextblock8)
+                    break
         elif line == 'Red':
             #print("in green")
             currblock = self.track1.index(block)
@@ -210,23 +215,25 @@ class Wayside(QObject):
             nextindex8 = self.track1.index(nextblock8) 
             #print("8 next block and index", nextblock8, nextindex8)   
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
-            for i in self.stations1:
-                if int(i) == nextblock8:
-                    auth = 7
-                elif int(i) == nextblock7:
-                    auth = 6
-                elif int(i) == nextblock6:
-                    auth = 5
-                elif int(i) == nextblock5:
-                    auth = 4
-                elif int(i) == nextblock4:
-                    auth = 3
-                elif int(i) == nextblock3:
-                    auth = 2
-                elif int(i) == nextblock2:
-                    auth = 1
-                elif int(i) == nextblock1:
+            for i in self.dest:
+                if int(i) == block:
                     auth = 0
+                elif int(i) == nextblock1:
+                    auth = 1
+                elif int(i) == nextblock2:
+                    auth = 2
+                elif int(i) == nextblock3:
+                    auth = 3
+                elif int(i) == nextblock4:
+                    auth = 4
+                elif int(i) == nextblock5:
+                    auth = 5
+                elif int(i) == nextblock6:
+                    auth = 6
+                elif int(i) == nextblock7:
+                    auth = 7
+                elif int(i) == nextblock8:
+                    auth = 8
         #print("wayside.py update authority auth", auth)
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
         signals.waysideAuthorityToCTC.emit(line, route, auth)
@@ -255,13 +262,13 @@ class Wayside(QObject):
         self.wayside8range = range8
         #print("signals sent in .py plcinfo")
         
-    def commspeed(self, train):
-        if (train.authority == '0'):
-            commSpeed = 0
-        else:
-            commSpeed = train.suggSpeed
+    # def commspeed(self, train):
+    #     if (train.authority == '0'):
+    #         commSpeed = 0
+    #     else:
+    #         commSpeed = train.suggSpeed
 
-        signals.waysideCommandedSpeed.emit(commSpeed)
+    #     signals.waysideCommandedSpeed.emit(commSpeed)
 
     def dispatchTrain(self, train):
         # set occupancy of first block
@@ -270,7 +277,12 @@ class Wayside(QObject):
         print('wayside dispatched')
         # compare suggSpeed to commandedSpeed
         #speedLimit = self.track.getLine('Green').getBlock(63).speedLimit
-        self.commspeed(train)
+        #self.commspeed(train)
+        self.dest = train.destBlock
+        print("dest from train obejct", train.destBlock)
+        self.route = train.route
+        print("route from train obejct", train.route)
+        #print("destblock", self.dest)
         # emit dispatched train to track model
         signals.trackModelDispatchTrain.emit(train)
         signals.count = signals.count + 1
@@ -302,18 +314,14 @@ class Wayside(QObject):
         id = self.track0.index(block)
         sec = self.allsection0[id]
         self.updateAuthority(line, block, route)
+        self.changeSwitch(line, block)
         signals.wtowOccupancy.emit(line, block, sec)
-        #occupancy sent to the CTC Office
-        signals.ctcUpdateGUIOccupancy.emit(line, block)
     
     def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
         id = self.track0.index(block)
         sec = self.allsection0[id]
         signals.wtowVacancy.emit(line, block, sec)
-
-        #vacancy sent to the CTC Office
-        signals.ctcUpdateGUIOccupancy.emit(line, block)
 
     def passengersReceived(self, passengers): #dont touch send to CTC
         self.passengers = passengers
@@ -324,53 +332,71 @@ class Wayside(QObject):
         #self.trackModel.blockOccupancyToWayside.connect(self.blockOccupancyReceived)
         self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
 
-    def changeRoute(self, train):
+    def changeSwitch(self, line, block):
+        #print("CHANGESWITCH", line)
+        if line == 'Green':
+            #print("line ==0")
+            currblock = self.track0.index(block)
+            nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
+            nextindex1 = self.track0.index(nextblock1)
+            #get next block from route or from jake
+            print("")
+            #print("next block", nextblock1, nextindex1)
+            #print("switch yes or no", self.everythingtrack0[nextblock1].switch)
+            #print("switchmatrix0", self.switchMatrix0)
+            counti = 0
+            row = 0
+            nb = 0
+            shouldface = 0
+            if self.everythingtrack0[nextblock1].switch == '1':
+                #print("SWITCH next!!")
+                for i in self.switchMatrix0:
+                    try:
+                        try:
+                            cb = i.index(int(block))
+                            #print("CURRENTshould be index for", block, "in row", cb)
+                            if cb == 2:
+                                shouldface = 1
+                            elif cb == 1:
+                                shouldface = 0
+                        except:
+                            nb = i.index(int(nextblock1))
+                            #print("NEXTshould be index for", nextblock1, "in row", nb)
+                            if nb == 2:
+                                shouldface = 1
+                            elif nb == 1:
+                                shouldface = 0
+                        row = counti
+                        #print("final counti", counti)
+                    except:
+                        counti = counti+1
+                #print("we need matrix row", self.switchMatrix0[row])
+                print("current state for switch", self.switchMatrix0[row][0], ":", self.switchStates0[row])
+                print("default switch state is :", self.switchDefaults0[row])
+                print("should be facing", shouldface)
 
-        print(str(train.location))
+                if self.switchDefaults0[row] == 0:
+                    opposite = 1
+                elif self.switchDefaults0[row] == 1:
+                    opposite = 0
 
-        if train.location == 3:
-            self.greenSwitchStates[0] = 0
-        if train.location == 15:
-            self.greenSwitchStates[0] = 1
-
-
-        if train.location == 27:
-            self.greenSwitchStates[1] = 0
-        if train.location == 148:
-            self.greenSwitchStates[1] = 1
-
-
-        if train.location == 55:
-            self.greenSwitchStates[2] = 0
-        if train.location == 60: # wont be on 60 for now
-            self.greenSwitchStates[2] = 1
-
-
-        if train.location == 60: # wont be on 60 for now
-            self.greenSwitchStates[3] = 1
-        else:
-            self.greenSwitchStates[3] = 0
+                if self.switchStates0[row] != self.switchDefaults0[row]:
+                    print("current:",self.switchStates0[row]," != default",  self.switchDefaults0[row])
+                    self.switchStates0[row] = opposite
+                    print("toggeled switch", self.switchMatrix0[row][0]," since current state not == default. now is", opposite)
+                if shouldface != self.switchStates0[row]:
+                    print("shouldface:",shouldface," != current",  self.switchStates0[row])
+                    self.switchStates0[row] = opposite
+                    print("toggeled switch", self.switchMatrix0[row][0]," since shouldface not == current. now is", opposite)
+                    #print("matrixindexint", matrixindexint) 
+        if line == 'Red':
+            currblock = self.track1.index(block)
+            nextblock1 = int(self.everythingtrack1[currblock].nextBlock)
+            nextindex1 = self.track1.index(nextblock1)
+        print("")
 
 
-        if train.location == 74:
-            self.greenSwitchStates[4] = 0
-        if train.location == 79:
-            self.greenSwitchStates[4] = 1
-
-
-        if train.location == 83:
-            self.greenSwitchStates[5] = 0
-        if train.location == 98:
-            self.greenSwitchStates[5] = 1
-
-        self.greenLineSwitches.emit(self.greenSwitchStates)
-
-        print("sw 1: " + str(self.greenSwitchStates[0]))
-        print("sw 2: " + str(self.greenSwitchStates[1]))
-        print("sw 3: " + str(self.greenSwitchStates[2]))
-        print("sw 4: " + str(self.greenSwitchStates[3]))
-        print("sw 5: " + str(self.greenSwitchStates[4]))
-        print("sw 6: " + str(self.greenSwitchStates[5]))  
+         
 
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw
@@ -393,3 +419,12 @@ class Wayside(QObject):
         print("H:" , redStates[5])
         print("J:" , redStates[6])
         print("\n\n")
+
+    def test(self, line, block, open):
+        if line == "Red":
+            print("Red Block ", block, " is open: ", open)
+        else:
+            print("Green Block ", block, " is open: ", open)
+    
+    def trainInfoToCTC(self, train):
+        signals.ctcUpdateGUITrainInfo.emit(train)

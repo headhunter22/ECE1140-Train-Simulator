@@ -1,10 +1,9 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QIntValidator
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog, QTableWidgetItem, QTableWidget, QAbstractItemView
 from ctcMainUiImport import Ui_MainWindow
 
 import ScheduleParser
-import TrackParser
 import pandas as pd
 from signals import signals
 import sys, os, re, ast, datetime
@@ -22,14 +21,18 @@ greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
                 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
                 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
+redRouteArr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+               31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+               53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46, 45,
+               44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 
+               22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
+
 class ctcMainUI(QMainWindow):
     def __init__(self, track):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.funcTrack = track
-        self.greenID = 1
-        self.redID = 1
 
         ###################################
         ########SIGNAL CONNECTIONS#########
@@ -38,27 +41,35 @@ class ctcMainUI(QMainWindow):
         signals.timerTicked.connect(self.changeLabel)
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
-        signals.waysideAuthorityToCTC.connect(self.testOccupancyAuthority)
+        signals.waysideAuthorityToCTC.connect(self.updateOccupancyAuthority)
 
         ##################################
         ########STARTUP FUNCTIONS#########
         ##################################
 
-        #main ui starts up in auto mode
-        self.autoMode()
+        # ui starts up in auto mode
+        self.ui.autoSelect.click()
+        self.autoModeSwitch()
         self.ui.autoSelect.setChecked(True)
         self.fillOccupancy("Green")
         self.fillOccupancy("Red")
-        self.uneditable()
         self.setColors()
 
-        self.greenStations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt. Lebanon", "Poplar", "Castle Shannon"]
+        self.greenStations = ["Pioneer", "Edgebrook", "Whited", "South Bank", "Central", "Inglewood", "Overbrook", "Glenbury", "Dormont", "Mt Lebanon", "Poplar", "Castle Shannon"]
         self.greenStopsBlocks = [2, 9, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96]
         greenBlocks = list(range(1, 151))
+
+        self.redStations = ["Shadyside", "Herron Ave", "Swissville", "Penn Station", "Steel Plaza", "First Ave", "Station Square", "South Hills"]
+        self.redStopsBlocks = [7, 16, 21, 25, 35, 45, 48, 60]
+        redBlocks = list(range(1, 77))
 
         for i in range(0, 150):
             self.greenStations.append(str(greenBlocks[i]))
             self.greenStopsBlocks.append(int(greenBlocks[i]))
+
+        for i in range(0, 76):
+            self.greenStations.append(str(redBlocks[i]))
+            self.greenStopsBlocks.append(int(redBlocks[i]))
 
         for line in track.lines:
             self.ui.lineSelectMaintenance.addItem(line.lineName)
@@ -78,6 +89,10 @@ class ctcMainUI(QMainWindow):
         # manually dispatching trains
         self.ui.greenAddStop.clicked.connect(self.addGreenStop)
         self.ui.greenDispatch.clicked.connect(self.addGreenScheduledTrain)
+        self.ui.redAddStop.clicked.connect(self.addRedStop)
+        self.ui.redDispatch.clicked.connect(self.addRedScheduledTrain)
+        self.ui.greenClear.clicked.connect(self.univClear)
+        self.ui.redClear.clicked.connect(self.univClear)
 
         #upload schedule
         self.ui.uploadSchedule.clicked.connect(self.openFile)
@@ -148,23 +163,15 @@ class ctcMainUI(QMainWindow):
         ########UTILITY BUTTONS###########
         ##################################
 
-        #mode buttons
-        self.ui.autoSelect.clicked.connect(self.autoSwitch)
-        self.ui.manualSelect.clicked.connect(self.manualSwitch)
-        self.ui.manualSelect.clicked.connect(self.showPages)
-        self.ui.maintenanceSelect.clicked.connect(self.maintenanceSwitch)
-        self.ui.maintenanceSelect.clicked.connect(self.showPages)
+        # mode buttons
+        self.ui.autoSelect.clicked.connect(self.autoModeSwitch)
+        self.ui.manualSelect.clicked.connect(self.manualModeSwitch)
+        self.ui.maintenanceSelect.clicked.connect(self.maintenanceModeSwitch)
 
-        #dispatch buttons
-        self.ui.dispatchGreen.clicked.connect(self.showPages)
-        #self.ui.dispatchGreen.clicked.connect(self.greenDispatch)
-        self.ui.dispatchRed.clicked.connect(self.showPages)
-        #self.ui.dispatchRed.clicked.connect(self.redDispacth)
-        self.ui.scheduledTrains.clicked.connect(self.showPages)
-        #self.ui.scheduledTrains.clicked.connect(self.schedTrains)
+        self.ui.dispatchGreen.clicked.connect(self.greenCheckbox)
+        self.ui.dispatchRed.clicked.connect(self.redCheckbox)
+        self.ui.scheduledTrains.clicked.connect(self.schedCheckbox)
 
-        
-        
         #time speed buttons
         self.timeButtons = [self.ui.timePause, self.ui.time1x, self.ui.time10x, self.ui.time50x]
         self.ui.time1x.clicked.connect(self.timeSelect)
@@ -180,27 +187,55 @@ class ctcMainUI(QMainWindow):
         self.ui.timePause.clicked.connect(self.timePause)
         self.ui.time50x.clicked.connect(self.fiftyTimeSpeed)
 
-        ##################################
-        ########TRAINS INFO###############
-        ##################################
-
-        ##################################
-        ########OPTIONS / XINGS###########
-        ##################################
-
         self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
-        self.ui.xButton.clicked.connect(self.clearBlockOptions)
+        self.ui.xButton.clicked.connect(self.univClear)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
-
-
 
     ############################################
     ############## MISC FUNCTIONS ##############
     ############################################
 
+    def setColors(self):
+        self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_G1.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_G2.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_J2_1.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_J2_2.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
+        self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
+        self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.red_C1.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_C2.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_E1.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_E2.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H2_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H3_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H3_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_H4_1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_H4_2.setStyleSheet('background-color: white; color: gray')
+        self.ui.red_J1.setStyleSheet('background-color: SkyBlue')
+        self.ui.red_J2.setStyleSheet('background-color: white; color: gray')
+
+        self.ui.greenOccupancy.setColumnWidth(0,65)
+        self.ui.greenOccupancy.setColumnWidth(1,195)
+        self.ui.greenOccupancy.setColumnWidth(2,85)
+        self.ui.redOccupancy.setColumnWidth(0,65)
+        self.ui.redOccupancy.setColumnWidth(1,195)
+        self.ui.redOccupancy.setColumnWidth(2,85)
+        self.ui.greenTentSchedule.setColumnWidth(0,90)
+        self.ui.greenTentSchedule.setColumnWidth(1,20)
+
     def iterDispatch(self):
         self.ui.greenTrainInfoTable.setRowCount(0)
-        stops = [73]
+        stops = [73, 57]
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
     
     def timeSelect(self):
@@ -225,6 +260,7 @@ class ctcMainUI(QMainWindow):
     def changeLabel(self, hrs, mins, secs):
         self.ui.dataTime.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
         self.dispatchGreenLine()
+        self.dispatchRedLine()
 
     def timePause(self):
         signals.CTCTimePause.emit()
@@ -244,39 +280,57 @@ class ctcMainUI(QMainWindow):
 
     def dispatchGreenLine(self):
         try:
-            if self.ui.greenScheduledTrains.rowCount() > 0:
-                pass
+            for rows in range(0, self.ui.greenScheduledTrains.rowCount()):
+                if self.ui.greenScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
+                    destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(rows, 0).text())
+
+                    stops = []
+
+                    # iterate through the tent schedule table
+                    for i in range(0, len(destlist)):
+                        # iterate through the stations list to see if the text in that cell is one of the stations
+                        for item in range(0, len(self.greenStations)):
+                            if destlist[i] == self.greenStations[item]:
+                                stops.append(self.greenStopsBlocks[item])
+                    
+                    signals.greenLineTrainDispatchFromCtcUI.emit(stops)
+                    self.ui.greenScheduledTrains.removeRow(rows)
         except:
+            self.ui.greenScheduledTrains.setRowCount(0)
             return
         
-        for rows in range(0, self.ui.greenScheduledTrains.rowCount()):
-            if self.ui.greenScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
-                destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(rows, 0).text())
+    def dispatchRedLine(self):
+        try:
+            for rows in range(0, self.ui.redScheduledTrains.rowCount()):
+                print(self.ui.redScheduledTrains.item(rows, 2).text())
+                if self.ui.redScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
+                    destlist = ast.literal_eval(self.ui.redScheduledTrains.item(rows, 0).text())
 
-                stops = []
+                    stops = []
 
-                # iterate through the tent schedule table
-                for rows in range(0, len(destlist)):
-                    # iterate through the stations list to see if the text in that cell is one of the stations
-                    for item in range(0, len(self.greenStations)):
-                        if destlist[rows] == self.greenStations[item]:
-                            stops.append(self.greenStopsBlocks[item])
-                
-                signals.greenLineTrainDispatchFromCtcUI.emit(stops)
-                self.ui.greenScheduledTrains.removeRow(rows)
-    
+                    # iterate through the tent schedule table
+                    for i in range(0, len(destlist)):
+                        # iterate through the stations list to see if the text in that cell is one of the stations
+                        for item in range(0, len(self.redStations)):
+                            if destlist[i] == self.redStations[item]:
+                                stops.append(self.redStopsBlocks[item])
+                    
+                    signals.redLineTrainDispatchFromCtcUI.emit(stops)
+                    self.ui.redScheduledTrains.removeRow(rows)
+        except:
+            self.ui.redScheduledTrains.setRowCount(0)
+            return
+        
     ############################################
     ######### MANUAL MODE FUNCTIONS ############
     ############################################
 
     def calculateDispatchTime(self, line, destBlock):
-
         iterr = greenRouteArr.index(destBlock)
         disTime = 0
 
         for i in range(0, iterr + 1):
             disTime += float(self.funcTrack.getLine(line).getBlock(greenRouteArr[i]).secsToTraverse)
-
         return disTime
 
     # if the entry is correct a stop is added to the tentative schedule
@@ -286,7 +340,6 @@ class ctcMainUI(QMainWindow):
         if (self.ui.greenDestination.text() not in self.greenStations) or (not re.match(pattern, self.ui.greenTime.text())):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
-            print("wrong syntax")
             return
         else:
             try:
@@ -310,49 +363,110 @@ class ctcMainUI(QMainWindow):
 
     # reads the green tentative scheule and dispatches it to the scheduled trains list to be dispatched
     def addGreenScheduledTrain(self):
+        try:
+            rowCount = self.ui.greenScheduledTrains.rowCount()
+            self.ui.greenScheduledTrains.insertRow(rowCount)
 
-        rowCount = self.ui.greenScheduledTrains.rowCount()
+            destList = []
+            atList = []
 
-        self.ui.greenScheduledTrains.insertRow(rowCount)
+            for rows in range(0, self.ui.greenTentSchedule.rowCount()):
+                destList.append(self.ui.greenTentSchedule.item(rows,0).text())
+                atList.append(self.ui.greenTentSchedule.item(rows,1).text())
 
-        destList = []
-        atList = []
+            stops = []
 
-        for rows in range(0, self.ui.greenTentSchedule.rowCount()):
-            destList.append(self.ui.greenTentSchedule.item(rows,0).text())
-            atList.append(self.ui.greenTentSchedule.item(rows,1).text())
+            # iterate through the tent schedule table
+            for rows in range(0, len(destList)):
+                # iterate through the stations list to see if the text in that cell is one of the stations
+                for item in range(0, len(self.greenStations)):
+                    if destList[rows] == self.greenStations[item]:
+                        stops.append(self.greenStopsBlocks[item])
 
-        stops = []
+            disTime = self.calculateDispatchTime("Green", stops[0])
 
-        # iterate through the tent schedule table
-        for rows in range(0, len(destList)):
-            # iterate through the stations list to see if the text in that cell is one of the stations
-            for item in range(0, len(self.greenStations)):
-                if destList[rows] == self.greenStations[item]:
-                    stops.append(self.greenStopsBlocks[item])
+            temp = atList[0]
+            time = temp.split(":")
+            hours = int(time[0]) * 3600
+            minutes = int(time[1]) * 60
+            totalTime = hours + minutes - int(disTime)
+            dispatchTime = str(datetime.timedelta(seconds=totalTime))
 
-        disTime = self.calculateDispatchTime("Green", stops[0])
-
-        temp = atList[0]
-        time = temp.split(":")
-        hours = int(time[0]) * 3600
-        minutes = int(time[1]) * 60
-        totalTime = hours + minutes - int(disTime)
-        dispatchTime = str(datetime.timedelta(seconds=totalTime))
-
-        if int(time[0]) < 10:
-            dispatchTime = "0" + dispatchTime
+            if int(time[0]) < 10:
+                dispatchTime = "0" + dispatchTime
 
 
-        dest = QTableWidgetItem(str(destList))
-        at = QTableWidgetItem(str(atList))
-        dt = QTableWidgetItem(dispatchTime)
-        self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
-        self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
-        self.ui.greenScheduledTrains.setItem(rowCount, 2, dt)
+            dest = QTableWidgetItem(str(destList))
+            at = QTableWidgetItem(str(atList))
+            dt = QTableWidgetItem(dispatchTime)
+            self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
+            self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
+            self.ui.greenScheduledTrains.setItem(rowCount, 2, dt)
 
-        self.ui.greenTentSchedule.setRowCount(0)
+            self.ui.greenTentSchedule.setRowCount(0)
+        except:
+            return
         
+    # if the entry is correct a stop is added to the tentative schedule
+    def addRedStop(self):
+        pattern = r"^(?:0\d|1\d|2[0-3]):(?:[0-5]\d)$"
+
+        if (self.ui.redDestination.text() not in self.redStations) or (not re.match(pattern, self.ui.redTime.text())):
+            self.ui.redDestination.clear()
+            self.ui.redTime.clear()
+            return
+        else:
+            try:
+                redTempBlock = int(self.ui.redDestination.text())
+                destTemp = str(redTempBlock)
+            except:
+                destTemp = self.ui.redDestination.text()
+
+            time = self.ui.redTime.text().split(":")
+            temp = time[0] + ":" + time[1]
+
+            rowCount = self.ui.redTentSchedule.rowCount()
+            self.ui.redTentSchedule.insertRow(rowCount)
+
+            dest = QTableWidgetItem(destTemp)
+            at = QTableWidgetItem(temp)
+            self.ui.redTentSchedule.setItem(rowCount, 0, dest)
+            self.ui.redTentSchedule.setItem(rowCount, 1, at)
+            self.ui.redDestination.clear()
+            self.ui.redTime.clear()
+    
+    def addRedScheduledTrain(self):
+        try:
+            rowCount = self.ui.redScheduledTrains.rowCount()
+            self.ui.redScheduledTrains.insertRow(rowCount)
+
+            destList = []
+            atList = []
+
+            for rows in range(0, self.ui.redTentSchedule.rowCount()):
+                destList.append(self.ui.redTentSchedule.item(rows,0).text())
+                atList.append(self.ui.redTentSchedule.item(rows,1).text())
+
+            stops = []
+
+            # iterate through the tent schedule table
+            for rows in range(0, len(destList)):
+                # iterate through the stations list to see if the text in that cell is one of the stations
+                for item in range(0, len(self.redStations)):
+                    if destList[rows] == self.redStations[item]:
+                        stops.append(self.redStopsBlocks[item])
+
+            dest = QTableWidgetItem(str(destList))
+            at = QTableWidgetItem(str(atList))
+            dt = QTableWidgetItem(str(atList[0]+":00"))
+            self.ui.redScheduledTrains.setItem(rowCount, 0, dest)
+            self.ui.redScheduledTrains.setItem(rowCount, 1, at)
+            self.ui.redScheduledTrains.setItem(rowCount, 2, dt)
+
+            self.ui.redTentSchedule.setRowCount(0)
+        except:
+            return
+    
     ############################################
     ####### MAINTENANCE MODE FUNCTIONS #########
     ############################################
@@ -431,30 +545,42 @@ class ctcMainUI(QMainWindow):
                 fileName = os.path.basename(filePath)
                 schedule = ScheduleParser.parseScedule(fileName)
                 self.addScheduledTrain(schedule)
-            else:
-                print("No file was selected")
 
     # adds a train to the scheduled trains list to wait to be dispatched
     def addScheduledTrain(self, schedule):
         if schedule.line == "Green":
-
-            blocks = []
-
-            for i in range(0, len(schedule.stops)):
-                for item in range(0, len(self.greenStations)):
-                    if schedule.stops[i] == self.greenStations[item]:
-                        blocks.append(self.greenStopsBlocks[item])
             
             rowCount = self.ui.greenScheduledTrains.rowCount()
             self.ui.greenScheduledTrains.insertRow(rowCount)
 
-            dest = QTableWidgetItem(str(schedule.stops[0]))
-            at = QTableWidgetItem(str(schedule.arrivalTimes[0]))
+            stops = []
+
+            # iterate through the tent schedule table
+            for rows in range(0, len(schedule.stops)):
+                # iterate through the stations list to see if the text in that cell is one of the stations
+                for item in range(0, len(self.greenStations)):
+                    if schedule.stops[rows] == self.greenStations[item]:
+                        stops.append(self.greenStopsBlocks[item])
+
+            disTime = self.calculateDispatchTime(schedule.line, stops[0])
+
+            temp = schedule.arrivalTimes[0]
+            time = temp.split(":")
+            hours = int(time[0]) * 3600
+            minutes = int(time[1]) * 60
+            totalTime = hours + minutes - int(disTime)
+            dispatchTime = str(datetime.timedelta(seconds=totalTime))
+
+            if int(time[0]) < 10:
+                dispatchTime = "0" + dispatchTime
+
+            dest = QTableWidgetItem(str(schedule.stops))
+            at = QTableWidgetItem(str(schedule.arrivalTimes))
+            dt = QTableWidgetItem(dispatchTime)
 
             self.ui.greenScheduledTrains.setItem(rowCount, 0, dest)
             self.ui.greenScheduledTrains.setItem(rowCount, 1, at)
-
-            self.dispatchGreenLine(blocks)
+            self.ui.greenScheduledTrains.setItem(rowCount, 2, dt)
     
     # resets all options in the Track Block Options section
     def clearBlockOptions(self):
@@ -470,47 +596,47 @@ class ctcMainUI(QMainWindow):
                 open.setBackground(QColor('White'))
                 self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
 
+                signals.blockMaintenanceFromCTCtoWayside.emit("Red", self.ui.blockSelectMaintenance.currentIndex()+1, True)
+            else: # maintenance
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
 
+                signals.blockMaintenanceFromCTCtoWayside.emit("Red", self.ui.blockSelectMaintenance.currentIndex()+1, False)
+        else: # green line
+            if self.ui.modeSelect.currentIndex() == 0: # open
+                open = QTableWidgetItem('Open')
+                open.setBackground(QColor('White'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
 
+                signals.blockMaintenanceFromCTCtoWayside.emit("Green", self.ui.blockSelectMaintenance.currentIndex()+1, True)
+            else: # maintenance
+                maintenance = QTableWidgetItem('Maintenance')
+                maintenance.setBackground(QColor('Gold'))
+                self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
 
-
-
-
-
-
-
-
-
-
-
-
-
-        #if self.ui.lineSelectMaintenance.currentIndex() == 0:
-        #    if self.ui.modeSelect.currentIndex() == 0:
-        #        open = QTableWidgetItem('Open')
-        #        open.setBackground(QColor('White'))
-        #        self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
-        #    else:
-        #        maintenance = QTableWidgetItem('Maintenance')
-        #        maintenance.setBackground(QColor('Gold'))
-        #        self.ui.redOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
-        #else:
-        #    if self.ui.modeSelect.currentIndex() == 0:
-        #
-        #        open = QTableWidgetItem('Open')
-        #        open.setBackground(QColor('White'))
-        #        self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, open)
-        #    else:
-        #        maintenance = QTableWidgetItem('Maintenance')
-        #        maintenance.setBackground(QColor('Gold'))
-        #        self.ui.greenOccupancy.setItem(self.ui.blockSelectMaintenance.currentIndex(), 2, maintenance)
+                signals.blockMaintenanceFromCTCtoWayside.emit("Green", self.ui.blockSelectMaintenance.currentIndex()+1, False)
     
+    #when the line is switched this replaced the block selection to the correct amount for the given line
+    def switchLineChanged(self, track): #########
+        # clear current options in the dropdowns 
+        self.ui.blockSelectMaintenance.clear()
+
+        if self.ui.blockSelectMaintenance.currentIndex() == 0:
+            line = "Red"
+        else:
+            line = "Green"
+
+        # add the appropriate blocks
+        for section in track.getLine(line).sections:
+            for block in section.blocks:
+                self.ui.blockSelectMaintenance.addItem(block.blockName)
     
     ############################################
     ######## OCCUPANCY VIEW FUNCTIONS ##########
     ############################################
 
-    def testOccupancyAuthority(self, line, route, auth):
+    def updateOccupancyAuthority(self, line, route, auth):
         if line == "Green":
             for i in range(0, 149):
                 if i in route[:auth+1]:
@@ -526,9 +652,21 @@ class ctcMainUI(QMainWindow):
                     vacancy = QTableWidgetItem('')
                     vacancy.setBackground(QColor('white'))
                     self.ui.greenOccupancy.setItem(i-1, 0, vacancy)
-
-        else:
-            pass
+        elif line == "Red":
+            for i in range(0, 75):
+                if i in route[:auth+1]:
+                    if i == route[0]:
+                        location = QTableWidgetItem('')
+                        location.setBackground(QColor('green'))
+                        self.ui.redOccupancy.setItem(i-1, 0, location)
+                    else:
+                        authority = QTableWidgetItem('')
+                        authority.setBackground(QColor('red'))
+                        self.ui.redOccupancy.setItem(i-1, 0, authority)
+                else:
+                    vacancy = QTableWidgetItem('')
+                    vacancy.setBackground(QColor('white'))
+                    self.ui.redOccupancy.setItem(i-1, 0, vacancy)
 
     def fillOccupancy(self, line):
 
@@ -579,16 +717,6 @@ class ctcMainUI(QMainWindow):
                 self.ui.greenOccupancy.setItem(rowCount, 1, infrastructureText)
                 self.ui.greenOccupancy.setItem(rowCount, 2, blockStatus)
 
-    def uneditable(self):
-        self.ui.greenOccupancy.setColumnWidth(0,65)
-        self.ui.greenOccupancy.setColumnWidth(1,195)
-        self.ui.greenOccupancy.setColumnWidth(2,85)
-        self.ui.redOccupancy.setColumnWidth(0,65)
-        self.ui.redOccupancy.setColumnWidth(1,195)
-        self.ui.redOccupancy.setColumnWidth(2,85)
-        self.ui.greenTentSchedule.setColumnWidth(0,90)
-        self.ui.greenTentSchedule.setColumnWidth(1,20)
-    
     def addTrainInfoLine(self, line, id, block, auth, dest):
         if line == 'Green':
             rowCount = self.ui.greenTrainInfoTable.rowCount()
@@ -606,68 +734,63 @@ class ctcMainUI(QMainWindow):
             self.ui.greenTrainInfoTable.setItem(rowCount, 3, greenTrainDest)
 
         elif line == 'Red':
-            self.ui.redTrainInfoTable.insertRow()
-        else:
-            print("error")
+            rowCount = self.ui.redTrainInfoTable.rowCount()
 
-    def updateTrainInfo(self, line, id, block, auth, dest):
-        if line == 'Green':
+            self.ui.redTrainInfoTable.insertRow(rowCount)
+
+            greenTrainID = QTableWidgetItem(str(id))
+            greenTrainBlock = QTableWidgetItem(str(block))
+            greenTrainAuth = QTableWidgetItem(str(auth))
+            greenTrainDest = QTableWidgetItem(str(dest))
+
+            self.ui.redTrainInfoTable.setItem(rowCount, 0, greenTrainID)
+            self.ui.redTrainInfoTable.setItem(rowCount, 1, greenTrainBlock)
+            self.ui.redTrainInfoTable.setItem(rowCount, 2, greenTrainAuth)
+            self.ui.redTrainInfoTable.setItem(rowCount, 3, greenTrainDest)
+
+    def updateTrainInfo(self, train):
+        if train.line.lineName == 'Green':
             for rows in range(0, self.ui.greenTrainInfoTable.rowCount()):
-                if self.ui.greenTrainInfoTable.item(rows, 0) == id:
+                if int(self.ui.greenTrainInfoTable.item(rows, 0).text()) == train.ID:
 
-                    greenTrainBlock = QTableWidgetItem(str(block))
-                    greenTrainAuth = QTableWidgetItem(str(auth))
-                    greenTrainDest = QTableWidgetItem(str(dest))
+                    greenTrainBlock = QTableWidgetItem(str(train.block))
+                    greenTrainAuth = QTableWidgetItem(str(train.authorityBlocks))
+                    greenTrainDest = QTableWidgetItem(str(train.destBlock[0]))
 
                     self.ui.greenTrainInfoTable.setItem(rows, 1, greenTrainBlock)
                     self.ui.greenTrainInfoTable.setItem(rows, 2, greenTrainAuth)
                     self.ui.greenTrainInfoTable.setItem(rows, 3, greenTrainDest)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ##############################################################################################
-    # CLEAN UP LATER
-    
+        elif train.line.lineName == "Red":
+            for rows in range(0, self.ui.redTrainInfoTable.rowCount()):
+                if int(self.ui.redTrainInfoTable.item(rows, 0).text()) == train.ID:
 
-    
-    
-    
-   
+                    greenTrainBlock = QTableWidgetItem(str(train.block))
+                    greenTrainAuth = QTableWidgetItem(str(train.authorityBlocks))
+                    greenTrainDest = QTableWidgetItem(str(train.destBlock[0]))
+
+                    self.ui.redTrainInfoTable.setItem(rows, 1, greenTrainBlock)
+                    self.ui.redTrainInfoTable.setItem(rows, 2, greenTrainAuth)
+                    self.ui.redTrainInfoTable.setItem(rows, 3, greenTrainDest)
+
     ############################################
     ########UTILITY BUTTONS FUNCTIONS###########
     ############################################
 
-    
-
-    def autoSwitch(self):
-        #doesnt allow the user to uncheck the mode and in turn having no mode selected
+    def autoModeSwitch(self):
+        self.ui.stackedWidget.setCurrentIndex(2)
+        # doesnt allow the user to uncheck the mode and in turn having no mode selected
         if self.ui.autoSelect.isChecked:
             self.ui.autoSelect.setChecked(True)
-        
         self.ui.manualSelect.setChecked(False)
         self.ui.maintenanceSelect.setChecked(False)
-
-        #disabling the ability to see the dispatch windows in auto mode
+        # disabling the ability to see the dispatch windows in auto mode
         self.ui.dispatchGreen.setEnabled(False)
         self.ui.dispatchRed.setEnabled(False)
         self.ui.scheduledTrains.setEnabled(False)
         self.ui.scheduledTrains.setChecked(True)
-
-        
-        self.ui.stackedWidget.setCurrentIndex(2)
-
-        #disabling track block options
+        self.ui.uploadSchedule.setEnabled(False)
+        self.ui.thisIsATest.setEnabled(False)
+        # disabling track block options
         self.ui.lineSelectMaintenance.setEnabled(False)
         self.ui.blockSelectMaintenance.setEnabled(False)
         self.ui.modeSelect.setEnabled(False)
@@ -678,29 +801,25 @@ class ctcMainUI(QMainWindow):
         self.ui.optionsLabel.setStyleSheet("color: GhostWhite")
         self.ui.xButton.setStyleSheet("background-color: None")
         self.ui.checkButton.setStyleSheet("background-color: None")
-
-    def autoMode(self):
-        self.autoSwitch()
-        self.ui.stackedWidget.setCurrentIndex(2)
-
-    def manualSwitch(self):
-        #doesnt allow the user to uncheck the mode and in turn having no mode selected
+    
+    def manualModeSwitch(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        # doesnt allow the user to uncheck the mode and in turn having no mode selected
         if self.ui.manualSelect.isChecked:
             self.ui.manualSelect.setChecked(True)
-        
         self.ui.autoSelect.setChecked(False)
         self.ui.maintenanceSelect.setChecked(False)
-
+        # enabling dispatch buttons
         self.ui.dispatchGreen.setEnabled(True)
         self.ui.dispatchRed.setEnabled(True)
         self.ui.scheduledTrains.setEnabled(True)
-
+        self.ui.uploadSchedule.setEnabled(True)
+        self.ui.thisIsATest.setEnabled(True)
+        # setting the default manual to green line
         self.ui.dispatchGreen.setChecked(True)
         self.ui.dispatchRed.setChecked(False)
         self.ui.dispatchGreen.setChecked(False)
-        self.ui.stackedWidget.setCurrentIndex(0)
-
-        #disabling track block options
+        # disabling track block options
         self.ui.lineSelectMaintenance.setEnabled(False)
         self.ui.blockSelectMaintenance.setEnabled(False)
         self.ui.modeSelect.setEnabled(False)
@@ -711,24 +830,22 @@ class ctcMainUI(QMainWindow):
         self.ui.optionsLabel.setStyleSheet("color: GhostWhite")
         self.ui.xButton.setStyleSheet("background-color: None")
         self.ui.checkButton.setStyleSheet("background-color: None")
-
-    def maintenanceSwitch(self):
+    
+    def maintenanceModeSwitch(self):
+        self.ui.stackedWidget.setCurrentIndex(3)
         #doesnt allow the user to uncheck the mode and in turn having no mode selected
         if self.ui.maintenanceSelect.isChecked:
             self.ui.maintenanceSelect.setChecked(True)
-        
         self.ui.manualSelect.setChecked(False)
         self.ui.autoSelect.setChecked(False)
-
         self.ui.dispatchGreen.setChecked(False)
         self.ui.dispatchRed.setChecked(False)
         self.ui.scheduledTrains.setChecked(False)
-
         self.ui.dispatchGreen.setEnabled(False)
         self.ui.dispatchRed.setEnabled(False)
         self.ui.scheduledTrains.setEnabled(False)
-
-        #enabling track block options
+        self.ui.thisIsATest.setEnabled(False)
+        # enabling track block options
         self.ui.lineSelectMaintenance.setEnabled(True)
         self.ui.blockSelectMaintenance.setEnabled(True)
         self.ui.modeSelect.setEnabled(True)
@@ -739,103 +856,40 @@ class ctcMainUI(QMainWindow):
         self.ui.optionsLabel.setStyleSheet("color: Black")
         self.ui.xButton.setStyleSheet("background-color: red")
         self.ui.checkButton.setStyleSheet("background-color: green")
-    
-    def greenDispatch(self):
-        #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.dispatchGreen.isChecked():
+
+    def greenCheckbox(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        if self.ui.dispatchGreen.isChecked:
             self.ui.dispatchGreen.setChecked(True)
-        
-        self.ui.dispatchRed.setChecked(False)
-        self.ui.scheduledTrains.setChecked(False)
+            self.ui.dispatchRed.setChecked(False)
+            self.ui.scheduledTrains.setChecked(False)
 
-    def redDispacth(self):
-        #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.redDispatch.isChecked():
-            self.ui.redDispatch.setChecked(True)
-        
-        self.ui.greenDispatch.setChecked(False)
-        self.ui.scheduledTrains.setChecked(False)
+    def redCheckbox(self):
+        self.ui.stackedWidget.setCurrentIndex(1)
+        if self.ui.dispatchRed.isChecked:
+            self.ui.dispatchGreen.setChecked(False)
+            self.ui.dispatchRed.setChecked(True)
+            self.ui.scheduledTrains.setChecked(False)
 
-    def schedTrains(self):
-        #doesnt allow the user to uncheck the mode and in turn having no mode selected
-        if self.ui.scheduledTrains.isChecked():
+    def schedCheckbox(self):
+        self.ui.stackedWidget.setCurrentIndex(2)
+        if self.ui.scheduledTrains.isChecked:
+            self.ui.dispatchGreen.setChecked(False)
+            self.ui.dispatchRed.setChecked(False)
             self.ui.scheduledTrains.setChecked(True)
-        
-        self.ui.dispatchRed.setChecked(False)
-        self.ui.greenDispatch.setChecked(False)
-
-    #################################################
-    ########OPTIONS / THROUGHPUT FUNCTIONS###########
-    #################################################
-
-    
-
-    
-
-    #when the line is switched this replaced the block selection to the correct amount for the given line
-    def switchLineChanged(self, track): #########
-        # clear current options in the dropdowns 
-        self.ui.blockSelectMaintenance.clear()
-
-        if self.ui.blockSelectMaintenance.currentIndex() == 0:
-            line = "Red"
-        else:
-            line = "Green"
-
-        # add the appropriate blocks
-        for section in track.getLine(line).sections:
-            for block in section.blocks:
-                self.ui.blockSelectMaintenance.addItem(block.blockName)
-
-    ############################################
-    ##############SHARED FUNCITONS##############
-    ############################################
 
     def univClear(self):
-        pass
+        clickedButton = self.sender()
 
-    def setColors(self):
-        self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_G1.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_G2.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_J1_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_J1_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_J2_1.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_J2_2.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_M1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_M2.setStyleSheet('background-color: white; color: gray')
-        self.ui.green_N1.setStyleSheet('background-color: SkyBlue')
-        self.ui.green_N2.setStyleSheet('background-color: white; color: gray')
-
-        self.ui.red_C1.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_C2.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_E1.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_E2.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_H1_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_H1_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_H2_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_H2_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_H3_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_H3_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_H4_1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_H4_2.setStyleSheet('background-color: white; color: gray')
-        self.ui.red_J1.setStyleSheet('background-color: SkyBlue')
-        self.ui.red_J2.setStyleSheet('background-color: white; color: gray')
-
-    def showPages(self):
-        if self.ui.dispatchGreen.isChecked():
-            self.ui.stackedWidget.setCurrentIndex(0)
-        elif self.ui.dispatchRed.isChecked():
-            self.ui.stackedWidget.setCurrentIndex(1)
-        elif self.ui.autoSelect.isChecked() or self.ui.scheduledTrains.isChecked():
-            self.ui.stackedWidget.setCurrentIndex(2)
-        elif self.ui.maintenanceSelect.isChecked():
-            self.ui.stackedWidget.setCurrentIndex(3)
-
-
-# if __name__ == '__main__':
-#     track = TrackParser.parseTrack('TrackLayout.csv')
-#     app = QApplication([])
-#     window = ctcMainUI(track)
-#     app.exec()
+        if clickedButton == self.ui.xButton:
+            self.ui.lineSelectMaintenance.setCurrentIndex(0)
+            self.ui.blockSelectMaintenance.setCurrentIndex(0)
+            self.ui.modeSelect.setCurrentIndex(0)
+        elif clickedButton == self.ui.greenClear:
+            self.ui.greenTentSchedule.setRowCount(0)
+            self.ui.greenDestination.clear()
+            self.ui.greenTime.clear()
+        elif clickedButton == self.ui.redClear:
+            self.ui.redTentSchedule.setRowCount(0)
+            self.ui.redDestination.clear()
+            self.ui.redTime.clear()

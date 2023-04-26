@@ -1,6 +1,7 @@
 # system imports
 import sys, os
 from copy import deepcopy
+import random
 
 # pyqt imports 
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -26,6 +27,19 @@ greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
                 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
                 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
+redRouteArr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+               31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+               53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46, 45,
+               44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 
+               22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
+
+greenStations = {2: "Pioneer", 9: "Edgebrook", 22: "Whited", 31: "South Bank", 
+                 39: "Central", 48: "Inglewood", 57: "Overbrook", 65: "Glenbury", 
+                 73: "Dormont", 77: "Mt Lebanon", 88: "Poplar", 96: "Castle Shannon"}
+
+redStations = {7: "Shadyside", 16: "Herron Ave", 21: "Swissville", 25: "Penn Station", 
+               35: "Steel Plaza", 45: "First Ave", 48: "Station Square", 60: "South Hills"}
+
 class TrackModel(QObject):
 
     def __init__(self):
@@ -45,21 +59,40 @@ class TrackModel(QObject):
         signals.trackModelUpdateOccupancy.connect(self.updateOccupancy)
         signals.trackModelPassengersChanging.connect(self.board)
         signals.waysideSwitchtoTrack.connect(self.switchChanged)
+        signals.waysideAuthoritytoTrack.connect(self.passAuthority)
 
         # create ticketing system
         self.ticketSystem = TicketSystem()
 
+    # function to pass authority to train model
+    def passAuthority(self, blocks, currentBlock):
+        signals.authorityTrackModelToTrainModel.emit(blocks, currentBlock)
+
     # function to dispatch train
     def dispatchTrain(self, train):
         print('track model dispatched')
+
+        # generate passengers for each station
+        passengers = {}
+        for stop in train.destBlock:
+            if stop in greenStations:
+                numPassengers = random.randint(1,222)
+                passengers[greenStations[stop]] = numPassengers
+            if stop in redStations:
+                numPassengers = random.randint(1,222)
+                passengers[redStations[stop]] = numPassengers
+
+        # check for last station on green line
+        if 'Overbrook' in passengers:
+            passengers['Overbrook'] = 0
+        # check for last station on red line
+        if 'Edgebrook' in passengers:
+            passengers['Edgebrook'] = 0
         
-        # increment trains on system
-        self.numTrains += 1
-        train.route = deepcopy(greenRouteArr)
+        signals.trackModelGUIWaitingPassengers.emit(passengers)
 
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
-        signals.ctcUpdateGUIOccupancy.emit(train.line.lineName, train.block)
         #signals.waysideUpdateOccupancy.emit(train.block)
 
         # dispatch train with route to train model
@@ -80,19 +113,18 @@ class TrackModel(QObject):
         # send signal to gui to update
         if occupied:
             signals.trackModelUpdateGUIOccupancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
             signals.waysideUpdateOccupancy.emit(train.line.lineName, train.block, train.route)
             #signals.testAuthTrackModelToWayside.emit(train.line.lineName, train.route)
             signals.trackModelBeaconSending.emit(self.track.getLine(line.lineName).getBlock(block))
+            signals.trackModelTrainInfoToWayside.emit(train)
         else:
             signals.trackModelUpdateGUIVacancy.emit(line.lineName, str(block))
-            signals.ctcUpdateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
-
-            signals.waysideUpdateVacancy.emit(train.line.lineName, train.block, train.route)
+            signals.waysideUpdateVacancy.emit(train.line.lineName, block, train.route)
 
     def board(self, train):
         # load new passengers
         self.ticketSystem.boardTrain(train)
+        print('passengers on:', train.numPassengers)
         signals.trainModelPassengers.emit(train.numPassengers)      
         self.ticketSystem.releasePassengers(train)
 

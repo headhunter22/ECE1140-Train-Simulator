@@ -28,9 +28,6 @@ class TrainController(QObject):
         self.commandedPower = 0
         self.currentSpeed = 0
         self.train = None
-        
-        signals.trainControllerKP.emit(self.Kp)
-        signals.trainControllerKI.emit(self.Ki)
 
     def updateCurrSpeed(self, train, currSpeed):
         print('current speed updated')
@@ -64,10 +61,15 @@ class TrainController(QObject):
         #    # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
     
-        if self.train.authority <= 0:
+        if self.train.actSpeed == 0:
             self.train.authority = 10000
+            signals.trainControllerServiceBrake.emit(False)
 
-        if self.train.authority <= self.StopDistance:
+        print(self.train.destBlock)
+        print(self.train.authority)
+        if self.train.route[0] == self.train.destBlock[0]:
+            
+            self.train.destBlock.pop(0)
             print('authority = ' + str(self.train.authority))
             print('distance = ' + str(self.StopDistance))
             
@@ -86,7 +88,16 @@ class TrainController(QObject):
             # calculate uk
             self.uk = self.UkPrev + ((self.T/2) * (self.ek + self.EkPrev))
 
+            # Safety Critical Architecture # 
             self.commandedPower = (self.Kp * self.ek) + (self.Ki * self.uk)
+            self.commandedPower2 = (self.Kp * self.ek) + (self.Ki * self.uk)
+            self.commandedPower3 = (self.Kp * self.ek) + (self.Ki * self.uk)
+
+            if self.commandedPower2 < self.commandedPower:
+                self.commandedPower = self.commandedPower2
+            
+            if self.commandedPower3 < self.commandedPower:
+                self.commandedPower = self.commandedPower3
 
             self.UkPrev = self.uk
             self.EkPrev = self.ek
