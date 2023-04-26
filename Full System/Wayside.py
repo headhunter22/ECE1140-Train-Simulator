@@ -350,6 +350,7 @@ class Wayside(QObject):
             row = 0
             nb = 0
             shouldface = 0
+            opposite = 0
             if self.everythingtrack0[nextblock1].switch == '1':
                 #print("SWITCH next!!")
                 for i in self.switchMatrix0:
@@ -394,15 +395,57 @@ class Wayside(QObject):
                     self.switchStates0[row] = opposite
                     print("toggled switch", self.switchMatrix0[row][0]," since should be facing not == current. now is", opposite)
                     #print("matrixindexint", matrixindexint) 
+                signals.waysideSwitchtoTrack.emit(self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
+                signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
+                #print("signals to track", self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
+                #print("signals to ctc", self.switchStates0, self.switchStates1)
         if line == 'Red':
-            currblock = self.track1.index(block)
-            nextblock1 = int(self.everythingtrack1[currblock].nextBlock)
-            nextindex1 = self.track1.index(nextblock1)
+            print("")
+            currblock = self.route.index(block)
+            nextblock1 = self.route[currblock+1]
+            counti = 0
+            row = 0
+            nb = 0
+            shouldface = 0
+            opposite = 0
+            if self.everythingtrack1[nextblock1].switch == '1':
+                for i in self.switchMatrix1:
+                    try:
+                        try:
+                            cb = i.index(int(block))
+                            if cb == 2:
+                                shouldface = 1
+                            elif cb == 1:
+                                shouldface = 0
+                        except:
+                            nb = i.index(int(nextblock1))
+                            nb1 = self.route[currblock+2]
+                            nbindex = i.index(int(nb1))
+                            if nbindex == 2:
+                                shouldface = 1
+                            elif nbindex == 1:
+                                shouldface = 0
+                        row = counti
+                    except:
+                        counti = counti+1
+
+                if self.switchDefaults1[row] == 0:
+                    opposite = 1
+                elif self.switchDefaults1[row] == 1:
+                    opposite = 0
+
+                if self.switchStates1[row] != self.switchDefaults1[row]:
+                    self.switchStates1[row] = opposite
+                    print("toggled switch", self.switchMatrix1[row][0]," since current state not == default. now is", opposite)
+                if shouldface != self.switchStates1[row]:
+                    self.switchStates1[row] = opposite
+                    print("toggled switch", self.switchMatrix1[row][0]," since should be facing not == current. now is", opposite)
+                signals.waysideSwitchtoTrack.emit(self.switchMatrix1[row][0], self.switchMatrix1[row][opposite+1])
+                signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
+                #print("signals to track", self.switchMatrix1[row][0], self.switchMatrix1[row][opposite+1])
+                #print("signals to ctc", self.switchStates0, self.switchStates1)
         print("")
         self.route.pop(0)
-
-
-         
 
     # def switchStateReceived(self, bl, updw):
     #     self.switch = sw

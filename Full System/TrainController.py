@@ -65,8 +65,8 @@ class TrainController(QObject):
             self.train.authority = 10000
             signals.trainControllerServiceBrake.emit(False)
 
-        print(self.train.destBlock)
-        print(self.train.authority)
+        # print(self.train.destBlock)
+        # print(self.train.authority)
         if self.train.route[0] == self.train.destBlock[0]:
             
             self.train.destBlock.pop(0)
