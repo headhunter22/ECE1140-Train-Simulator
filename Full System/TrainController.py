@@ -69,7 +69,9 @@ class TrainController(QObject):
         # print(self.train.authority)
         if self.train.route[0] == self.train.destBlock[0]:
             
-            self.train.destBlock.pop(0)
+            blockStoppedAt = self.train.destBlock.pop(0)
+            signals.trackModelTrainStopped.emit(blockStoppedAt, self.train)
+
             print('authority = ' + str(self.train.authority))
             print('distance = ' + str(self.StopDistance))
             

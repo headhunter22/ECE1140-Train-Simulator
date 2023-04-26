@@ -31,7 +31,7 @@ class Ui_MainWindow(object):
         self.trainBox.setGeometry(QRect(20, 65, 191, 31))
         self.powProgressBar = QProgressBar(self.centralwidget)
         self.powProgressBar.setObjectName(u"powProgressBar")
-        self.powProgressBar.setGeometry(QRect(260, 290, 251, 23))
+        self.powProgressBar.setGeometry(QRect(260, 300, 251, 23))
         self.powProgressBar.setStyleSheet(u"QProgressBar {\n"
 "     border: 2px solid black;\n"
 "     border-radius: 5px;\n"
@@ -66,7 +66,7 @@ class Ui_MainWindow(object):
         self.errorLabel.setGeometry(QRect(130, 290, 31, 31))
         self.actSpeed = QLabel(self.centralwidget)
         self.actSpeed.setObjectName(u"actSpeed")
-        self.actSpeed.setGeometry(QRect(260, 100, 251, 71))
+        self.actSpeed.setGeometry(QRect(260, 100, 251, 61))
         self.actSpeed.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
         self.label_22.setGeometry(QRect(20, 30, 131, 31))
         self.powLabel = QLabel(self.centralwidget)
         self.powLabel.setObjectName(u"powLabel")
-        self.powLabel.setGeometry(QRect(260, 310, 251, 41))
+        self.powLabel.setGeometry(QRect(260, 320, 251, 41))
         self.powLabel.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         self.tempText.setGeometry(QRect(10, 280, 161, 20))
         self.commSpeedLabel = QLabel(self.centralwidget)
         self.commSpeedLabel.setObjectName(u"commSpeedLabel")
-        self.commSpeedLabel.setGeometry(QRect(260, 170, 251, 31))
+        self.commSpeedLabel.setGeometry(QRect(260, 160, 251, 31))
         self.commSpeedLabel.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
@@ -129,7 +129,7 @@ class Ui_MainWindow(object):
 "font: 11pt \"Segoe UI\";")
         self.speedLimitLabel = QLabel(self.centralwidget)
         self.speedLimitLabel.setObjectName(u"speedLimitLabel")
-        self.speedLimitLabel.setGeometry(QRect(260, 200, 251, 31))
+        self.speedLimitLabel.setGeometry(QRect(260, 190, 251, 31))
         self.speedLimitLabel.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
@@ -167,7 +167,7 @@ class Ui_MainWindow(object):
         self.popUpUI.setGeometry(QRect(540, 420, 241, 41))
         self.trainAcc = QLabel(self.centralwidget)
         self.trainAcc.setObjectName(u"trainAcc")
-        self.trainAcc.setGeometry(QRect(260, 230, 251, 31))
+        self.trainAcc.setGeometry(QRect(260, 220, 251, 31))
         self.trainAcc.setStyleSheet(u"border: 2px solid black;\n"
 "border-radius: 4px;\n"
 "padding: 2px;")
@@ -184,6 +184,12 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(10, 450, 201, 20))
+        self.trainAcc_2 = QLabel(self.centralwidget)
+        self.trainAcc_2.setObjectName(u"trainAcc_2")
+        self.trainAcc_2.setGeometry(QRect(260, 250, 251, 31))
+        self.trainAcc_2.setStyleSheet(u"border: 2px solid black;\n"
+"border-radius: 4px;\n"
+"padding: 2px;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -228,5 +234,6 @@ class Ui_MainWindow(object):
         self.trainAcc.setText(QCoreApplication.translate("MainWindow", u"Acceleration:", None))
         self.beaconLabel.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Beacon Info:</p><p><br/></p></body></html>", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Click fault image to activate", None))
+        self.trainAcc_2.setText(QCoreApplication.translate("MainWindow", u"Authority:", None))
     # retranslateUi
 
