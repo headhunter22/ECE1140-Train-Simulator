@@ -25,15 +25,40 @@ from TrackModelUI import TrackModelUI
 from TrainControllerUI import TrainControllerUI
 from WaysideUI import selectionWindow, WMainWindowA#, WMainWindowB, WaysideUIFunctions
 
+class Main(QtWidgets.QMainWindow):
+    def __init__(self, ctcUI, trackUI, trainModUI, trainConUI, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("fullsystem.ui", self)
+        self.setWindowTitle('North Shore Extension Home')
+
+        self.ctcUI = ctcUI
+        self.trackUI = trackUI
+        self.trainModUI = trainModUI
+        self.trainConUI = trainConUI
+
+        self.ctcOffice.clicked.connect(self.showCTC)
+        self.trackModel.clicked.connect(self.showTrack)
+        self.trainModel.clicked.connect(self.showTrain)
+        self.trainController.clicked.connect(self.showController)
+        #self.waysideController.clicked.connect(self.showWayside)
+
+    def showCTC(self):
+        self.ctcUI.show()
+    def showTrack(self):
+        self.trackUI.show()
+    def showTrain(self):
+        self.trainModUI.show()
+    def showController(self):
+        self.trainConUI.show()
+
 track = TrackParser.parseTrack("TrackLayout.csv")
 app = QtWidgets.QApplication(sys.argv)
 clock.startTimer()
 
-
 waysidestartUI = selectionWindow()
 
 ctcOffice = CTC(track)
-waysideController = Wayside(ctcOffice,waysidestartUI)
+waysideController = Wayside(ctcOffice, waysidestartUI)
 ctcOffice.addWayside(waysideController)
 trackModel = TrackModel()
 trainModel = TrainModel()
@@ -45,41 +70,11 @@ ctcOffice.propagateTrack()
 # instantiate UIs
 ctcUI = ctcMainUI(track)
 trackUI = TrackModelUI(track)
-
 trainModUI = TrainModelUI()
 trainConUI = TrainControllerUI()
-#waysideUIB = WMainWindowB()
-#funcA = WaysideUIFunctions(waysideUIA)
-#funcB = WaysideUIFunctions(waysideUIB)
 
-# dispatch a test train
-#ctcOffice.dispatch('Green', 1)
-if len(sys.argv) == 1:
-    ctcUI.show()
-    trackUI.show()
-    trainModUI.show()
-    trainConUI.show()
-    waysidestartUI.show()
-elif sys.argv[1] == 'ctc':
-    ctcUI.show()
-elif sys.argv[1] == 'track':
-    trackUI.show()
-elif sys.argv[1] == 'train':
-    trainModUI.show()
-elif sys.argv[1] == 'controller':
-    trainConUI.show()
-elif sys.argv[1] == 'wayside':
-    waysidestartUI.show()
-    #waysideUIB.show()
-elif sys.argv[1] == 'none':
-    pass
-    
+waysidestartUI.show()
+
+mainProgram = Main(ctcUI, trackUI, trainModUI, trainConUI)
+mainProgram.show()
 app.exec()
-
-# show CTC window
-
-# notes:
-# train physics
-# beacons (switch created)
-# parse line into linked list that models the track connections??
-# - or do we have an addTrack function that can be called each time we reparse?
