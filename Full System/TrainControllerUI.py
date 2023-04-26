@@ -19,6 +19,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         signals.timerTicked.connect(self.changeLabel)
         signals.trainControllerKP.connect(self.updateKP)
         signals.trainControllerKI.connect(self.updateKI)
+        signals.trainModelStationtoTrainController.connect(self.updateStations)
 
         # Create Time element # 
         self.dataTime = QtWidgets.QLabel(" ", self)
@@ -121,7 +122,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         # Init Service Brake Button #
         self.ServiceBrake = QtWidgets.QPushButton("Service Brake", self)
-        self.ServiceBrake.setGeometry(600, 125, 200, 100)
+        self.ServiceBrake.setGeometry(350, 385, 200, 100)
         self.ServiceBrake.setFont(font)
         self.ServiceBrake.setCheckable(True)
         self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
@@ -129,7 +130,7 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         # Init A/C button
         self.AC = QtWidgets.QPushButton("Train A/C", self)
-        self.AC.setGeometry(400, 350, 200, 100)
+        self.AC.setGeometry(350, 280, 200, 100)
         self.AC.setFont(font)
         self.AC.setCheckable(True)
         self.AC.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
@@ -162,11 +163,19 @@ class TrainControllerUI(QtWidgets.QMainWindow):
         self.KPLabel.setGeometry(130, 550, 75, 25)
         self.KILabel.setGeometry(130, 575, 75, 25)
 
+        # Init station label #
+        self.stationLabel = QtWidgets.QLabel(" ", self)
+        self.stationLabel.setGeometry(675, 0, 200, 100)
+        self.stationLabel.setFont(font)
+
     def updateKP(self, kp):
          self.KPLabel.setText("KP: " + str(kp))
 
     def updateKI(self, ki):
          self.KILabel.setText("KI: " + str(ki))
+
+    def updateStations(self, string):
+         self.stationLabel.setText(string)
     
     def CloseGainWindow(self):
         self.GW.close()
@@ -175,13 +184,11 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def EBClick(self, emerBrake):
             if self.EmerBrake.isChecked() == False or emerBrake == False:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-                 print("Emergency Brake Disengaged")
                  signals.trainControllerEmerBrake.emit(False)
 
             if self.EmerBrake.isChecked() == True or emerBrake == True:
                  self.EmerBrake.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
                  signals.trainControllerEmerBrake.emit(True)
-                 print("Emergency Brake Engaged")
                  
     
     def EBText(self):
@@ -201,58 +208,43 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def HeadlightsClick(self):
         if self.Headlights.isChecked() == True:
              self.Headlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-             print("Headlights On")
              signals.trainControllerExteriorLights.emit(True)
-            #window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
 
         if self.Headlights.isChecked() == False:
              self.Headlights.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-             print("Headlights Off")
              signals.trainControllerExteriorLights.emit(False)
-             #window2.TestHeadlights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling InteriorLights clicked function #
     def InteriorLightsClick(self):
         if self.InteriorLights.isChecked() == True:
              self.InteriorLights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-             print("Interior Lights On")
              signals.trainControllerInteriorLights.emit(True)
-             #window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
         if self.InteriorLights.isChecked() == False:
              self.InteriorLights.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-             print("Interior Lights Off")
              signals.trainControllerInteriorLights.emit(False)
-             #window2.TestInternalLights.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling LeftDoors clicked function #
     def LeftDoorsClick(self):
         if self.LeftDoors.isChecked() == True:
              self.LeftDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-             print("Left Doors Opened")
              signals.trainControllerLeftDoors.emit(True)
-             #window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
 
         if self.LeftDoors.isChecked() == False:
              self.LeftDoors.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-             print("Left Doors Closed")
              signals.trainControllerLeftDoors.emit(False)
-             #window2.TestLeftDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling RightDoors clicked function #
     def RightDoorsClick(self):
         if self.RightDoors.isChecked() == True:
              self.RightDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
-             print("Right Doors Opened")
              signals.trainControllerRightDoors.emit(True)
-             #window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(0,255,0) }")
+
 
         if self.RightDoors.isChecked() == False:
              self.RightDoors.setStyleSheet("QPushButton { background-color : rgb(255,255,255) }")
-             print("Left Doors Closed")
              signals.trainControllerRightDoors.emit(False)
-             #window2.TestRightDoors.setStyleSheet("QPushButton { background-color : rgb(255,0,0) }")
 
         # Calling Manual button Functions #
     def ManualModeClick(self):
@@ -299,13 +291,11 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def ServiceBrakeClick(self):
          if self.ServiceBrake.isChecked() == True:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
-              print("Service Brake engaged")
               signals.trainControllerServiceBrakeMan.emit(True)
               signals.trainControllerPower.emit(0.0)
 
          if self.ServiceBrake.isChecked() == False:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
-              print("Service Brake Disengaged")
               signals.trainControllerServiceBrakeMan.emit(False)
 
     def updatePower(self, power):
@@ -339,12 +329,10 @@ class TrainControllerUI(QtWidgets.QMainWindow):
     def ACClick(self):
          if self.AC.isChecked() == True:
               self.AC.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
-              print("AC On")
               signals.trainControllerAC.emit(True)
 
          if self.AC.isChecked() == False:
               self.AC.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
-              print("AC Off")
               signals.trainControllerAC.emit(False)
 
     def changeLabel(self, hrs, mins, secs): ####### 
@@ -397,14 +385,12 @@ class GainWindow(QtWidgets.QMainWindow):
         textkp = self.KIChange.text()
         INPUT2 = float(textkp)
         signals.trainControllerUIKP.emit(INPUT2)
-        print("KP changed to " + textkp)
         self.KIChange.setText(textkp)
         self.correctedKPValue.setText("New KP: " + textkp)
 
         textki = self.KIChange.text()
         INPUT3 = float(textki)
         signals.trainControllerUIKI.emit(INPUT3)
-        print("KI changed to " + textki)
         self.KIChange.setText(textki)
         self.correctedKIValue.setText("New KP: " + textki)
 
