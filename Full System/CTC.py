@@ -6,6 +6,7 @@ from Train import Train
 from Track import Track
 from Line import Line
 from signals import signals
+from copy import deepcopy
 sys.dont_write_bytecode = True
 
 greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
@@ -17,6 +18,12 @@ greenRouteArr = [63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
                 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
                 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+
+redRouteArr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+               31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+               53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46, 45,
+               44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 
+               22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
 
 class CTC(QObject):
     def __init__(self, track):
@@ -37,11 +44,11 @@ class CTC(QObject):
     # function to dispatch the train
     def greenDispatch(self, destBlock):
         # create a new track object and emit to wayside
-        destBlock.append(57)
-        print(destBlock)
+        destBlock.append(0)
         train = Train(self.nextID, self.track.getLine('Green'), destBlock)
         train.authority = 8
         train.suggSpeed = 70
+        train.route = deepcopy(greenRouteArr)
 
         signals.waysideDispatchTrain.emit(train)
         signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock[0])
@@ -52,10 +59,11 @@ class CTC(QObject):
     # function to dispatch the train
     def redDispatch(self, destBlock):
         # create a new track object and emit to wayside
-        destBlock.append(9)
+        destBlock.append(0)
         train = Train(self.nextID, self.track.getLine('Red'), destBlock)
         train.authority = 8
         train.suggSpeed = 40
+        train.route = deepcopy(redRouteArr)
 
         signals.waysideDispatchTrain.emit(train)
         signals.ctcCreateGUITrainInfo.emit(train.line.lineName, train.ID, train.block, train.authority, train.destBlock)
