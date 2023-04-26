@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         self.greenClear.setStyleSheet(u"background-color: Red; color: Black")
         self.greenDispatch = QPushButton(self.greenLinePage)
         self.greenDispatch.setObjectName(u"greenDispatch")
-        self.greenDispatch.setGeometry(QRect(170, 320, 61, 21))
+        self.greenDispatch.setGeometry(QRect(100, 320, 61, 21))
         self.greenDispatch.setStyleSheet(u"background-color: Green; color: Black")
         self.arrivalLabel_3 = QLabel(self.greenLinePage)
         self.arrivalLabel_3.setObjectName(u"arrivalLabel_3")
@@ -551,7 +551,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

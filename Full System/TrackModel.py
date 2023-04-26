@@ -1,6 +1,7 @@
 # system imports
 import sys, os
 from copy import deepcopy
+import random
 
 # pyqt imports 
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -32,6 +33,13 @@ redRouteArr = [9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25
                44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 
                22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
 
+greenStations = {2: "Pioneer", 9: "Edgebrook", 22: "Whited", 31: "South Bank", 
+                 39: "Central", 48: "Inglewood", 57: "Overbrook", 65: "Glenbury", 
+                 73: "Dormont", 77: "Mt Lebanon", 88: "Poplar", 96: "Castle Shannon"}
+
+redStations = {7: "Shadyside", 16: "Herron Ave", 21: "Swissville", 25: "Penn Station", 
+               35: "Steel Plaza", 45: "First Ave", 48: "Station Square", 60: "South Hills"}
+
 class TrackModel(QObject):
 
     def __init__(self):
@@ -62,8 +70,6 @@ class TrackModel(QObject):
 
     # function to dispatch train
     def dispatchTrain(self, train):
-        print('track model dispatched')
-        
         # increment trains on system
         self.numTrains += 1
         if train.line.lineName == "Green":
@@ -71,7 +77,24 @@ class TrackModel(QObject):
         elif train.line.lineName == "Red":
             train.route = deepcopy(redRouteArr)
 
-        print(train.route)
+        # generate passengers for each station
+        passengers = {}
+        for stop in train.destBlock:
+            if stop in greenStations:
+                numPassengers = random.randint(1,222)
+                passengers[greenStations[stop]] = numPassengers
+            if stop in redStations:
+                numPassengers = random.randint(1,222)
+                passengers[redStations[stop]] = numPassengers
+
+        # check for last station on green line
+        if 'Overbrook' in passengers:
+            passengers['Overbrook'] = 0
+        # check for last station on red line
+        if 'Edgebrook' in passengers:
+            passengers['Edgebrook'] = 0
+        
+        signals.trackModelGUIWaitingPassengers.emit(passengers)
 
         # update occupancy in gui
         signals.trackModelUpdateGUIOccupancy.emit(train.line.lineName, str(train.block))
