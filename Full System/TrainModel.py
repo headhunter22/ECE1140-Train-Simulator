@@ -56,7 +56,6 @@ class TrainModel(QObject):
         
         signals.trainControllerUpdateCommSpeed.emit(self.track.getLine(train.line.lineName).getBlock(train.block).speedLimit)
 
-
     def updatedPower(self, train, power):
         if len(self.trainList) == 0:
             return
