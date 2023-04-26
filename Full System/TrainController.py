@@ -30,13 +30,11 @@ class TrainController(QObject):
         self.train = None
 
     def updateCurrSpeed(self, train, currSpeed):
-        print('current speed updated')
         self.currentSpeed = currSpeed
         self.train = train
 
     def setNewAuthority(self, auth):
         self.train.authority = auth
-        print("Authority has been updated")
         self.AuthorityHasBeenReset = True
         signals.trainGo.emit()
 
@@ -48,34 +46,22 @@ class TrainController(QObject):
         self.waitTimer.singleShot(30000, self.setNewAuthority)
 
     def sendPower(self):
+
         #the train is moving and not stopped at a station
         self.StopTime = self.train.actSpeed / 1.2
         self.StopDistance = self.StopTime * 0.5 * self.train.actSpeed
 
-        #if self.train.authority <= 0:
-        #    print('waiting')
-        #    self.train.authority = 0
-        #    self.waitAtStation()
-        #    signals.trainControllerAuthority.emit(self.train.authority)
-        #    # wait at station
-        #    # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
     
         if self.train.actSpeed == 0:
             self.train.authority = 10000
             signals.trainControllerServiceBrake.emit(False)
 
-        # print(self.train.destBlock)
-        # print(self.train.authority)
         if self.train.route[0] == self.train.destBlock[0]:
             
             blockStoppedAt = self.train.destBlock.pop(0)
             signals.trackModelTrainStopped.emit(blockStoppedAt, self.train)
 
-            print('authority = ' + str(self.train.authority))
-            print('distance = ' + str(self.StopDistance))
-            
-            print("auth less than dist")
 
             self.commandedPower = 0
             signals.trainControllerServiceBrake.emit(True)
@@ -121,7 +107,6 @@ class TrainController(QObject):
         if signals.trainControllerEmerBrake == True:
             self.commandedPower = 0
             signals.trainModelGetPower.emit(self.train, self.commandedPower)
-            print("Emergency Brake applied, power set to 0")
 
     def updateKP(self, kp):
         self.Kp = kp
