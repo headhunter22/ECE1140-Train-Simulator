@@ -300,13 +300,13 @@ class TrainControllerUI(QtWidgets.QMainWindow):
          if self.ServiceBrake.isChecked() == True:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(0, 255, 0) }")
               print("Service Brake engaged")
-              signals.trainControllerServiceBrake.emit(True)
+              signals.trainControllerServiceBrakeMan.emit(True)
               signals.trainControllerPower.emit(0.0)
 
          if self.ServiceBrake.isChecked() == False:
               self.ServiceBrake.setStyleSheet("QPushButton { background-color : rgb(255, 255, 255) }")
               print("Service Brake Disengaged")
-              signals.trainControllerServiceBrake.emit(False)
+              signals.trainControllerServiceBrakeMan.emit(False)
 
     def updatePower(self, power):
          x = power
