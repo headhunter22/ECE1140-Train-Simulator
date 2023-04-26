@@ -224,7 +224,8 @@ class TrainModelUI(QtWidgets.QMainWindow):
             else:
                 station = 'Central'
 
-            text = text + station + '\n                    '
+            text = text + station + '\n   '
+            signals.trainModelStationtoTrainController.emit(text)
         self.destLabel.setText(text)
 
 

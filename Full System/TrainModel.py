@@ -207,7 +207,9 @@ class TrainModel(QObject):
         auth = 0
         for i in range(blocks):
             #print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).length))
-                  
+            if (str(currLine.getBlock(self.trainList[0].route[i]) == 57)):
+                newAuth = 0
+                continue
             if (str(currLine.getBlock(self.trainList[0].route[i]).length) == '86.6'):
                 newAuth = 87
             else:

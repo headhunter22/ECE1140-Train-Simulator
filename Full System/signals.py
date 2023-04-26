@@ -118,6 +118,7 @@ class Signals(QObject):
     trainModelGUISpeedLim = pyqtSignal(str)
     trainModelAuthorityToTrainController = pyqtSignal(int)
     sigFaultsig = pyqtSignal(bool)
+    trainModelStationtoTrainController = pyqtSignal(str)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)
