@@ -23,6 +23,8 @@ class TrainModel(QObject):
         self.serviceBrakeMan = False
         self.emerBrake = False
         self.manualMode = False
+        self.powFault = False
+        self.brakeFault = False
         self.manualCommSpeed = 0
         self.timeWaiting = 0
 
@@ -37,6 +39,8 @@ class TrainModel(QObject):
         signals.trainControllerManualModeToTrainModel.connect(self.manualModeFunc)
         signals.trainControllerEmerBrake.connect(self.emerBrakeActive)
         signals.trainControllerServiceBrakeMan.connect(self.serviceBrakeManActive)
+        signals.powFaultsig.connect(self.powFaultFunc)
+        signals.brakeFaultsig.connect(self.brakeFaultFunc)
 
     # function to dispatch a train
     def dispatchTrain(self, train):
@@ -110,6 +114,8 @@ class TrainModel(QObject):
 
         if train.actSpeed_1 == 0 and self.emerBrake == 0 and self.serviceBrake == 0 and self.serviceBrakeMan == 0:
             train.An = 0.5
+        elif self.brakeFault == True and self.emerBrake == 0:
+            pass
         elif self.emerBrake == 1:
             train.An = -2.73
             if (train.actSpeed == 0):
@@ -123,7 +129,10 @@ class TrainModel(QObject):
             power = 0
         # if moving, calculate acceleration
         else:
-            if (train.actSpeed*3.6) > commSpeed:
+            if self.powFault == True:
+                power = 0
+                train.An = 0
+            elif (train.actSpeed*3.6) > commSpeed:
                 train.An = -1.2
                 #train.An = ((-1*M*g*math.cos(theta)*friction) + (M*g*math.sin(theta)))/M
             else:
@@ -224,3 +233,9 @@ class TrainModel(QObject):
 
     def serviceBrakeManActive(self, serviceBrake):
         self.serviceBrakeMan = serviceBrake
+
+    def powFaultFunc(self, powInp):
+        self.powFault = powInp
+
+    def brakeFaultFunc(self, brakeInp):
+        self.brakeFault = brakeInp
