@@ -63,6 +63,10 @@ class TrackModelUI(QtWidgets.QMainWindow):
         self.circuitFailure.clicked.connect(self.circuitFailed)
         self.fixButton.clicked.connect(self.fixFaults)
 
+        # connect passengers dropdown
+        self.waitingPassengersSelect.currentTextChanged.connect(self.waitingPassengersSelectChanged)
+        self.passengersWaiting.setText('0')
+
         # connect signals
         signals.trackModelUpdateGUIOccupancy.connect(self.updateOccupancy)
         signals.trackModelUpdateGUIVacancy.connect(self.updateVacancy)
@@ -76,6 +80,7 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelTestUIUpdateFault.connect(self.updateFaults)
         signals.trackModelTempUpdated.connect(self.tempUpdate)
         signals.trackModelUpdateGUISwitches.connect(self.changeSwitch)
+        signals.trackModelGUIWaitingPassengers.connect(self.addWaitingPassengers)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -452,6 +457,21 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
         for block in self.track.getLine(line).blocks:
             self.brokenRailBlockSelect.addItem(block.blockName)
+
+    def addWaitingPassengers(self, passengers):
+        self.passengers = passengers
+
+    def waitingPassengersSelectChanged(self):
+        try:
+            station = self.waitingPassengersSelect.currentText()
+
+            if station in self.passengers:
+                self.passengersWaiting.setText(str(self.passengers[station]))
+            else:
+                self.passengersWaiting.setText('0')
+        except:
+            self.passengersWaiting.setText('0')
+
 # end main UI class
 
 # class for row objects that go in the scroll window
