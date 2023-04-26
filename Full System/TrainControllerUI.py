@@ -165,8 +165,10 @@ class TrainControllerUI(QtWidgets.QMainWindow):
 
         # Init station label #
         self.stationLabel = QtWidgets.QLabel(" ", self)
-        self.stationLabel.setGeometry(675, 0, 200, 100)
-        self.stationLabel.setFont(font)
+        self.stationLabel.setGeometry(625, 25, 400, 100)
+        font3 = QtGui.QFont()
+        font3.setPointSize(14)
+        self.stationLabel.setFont(font3)
 
     def updateKP(self, kp):
          self.KPLabel.setText("KP: " + str(kp))
