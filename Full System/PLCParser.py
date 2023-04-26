@@ -30,6 +30,7 @@ class WTrack:
         self.switchState0 = []
         self.crossing0 = []
         self.stations0 = []
+        self.switchmatrix0 = []
 
         self.everythingtrack1 = []
         self.track1 = []
@@ -39,6 +40,7 @@ class WTrack:
         self.switchState1 = []
         self.crossing1 = []
         self.stations1 = []
+        self.switchmatrix1 = []
 
         self.wayside1range = []
         self.wayside1sectionrange = []
@@ -92,6 +94,8 @@ class WTrack:
             if block.switch == '1':
                 self.switches0.append(int(block.blockNumber))
                 self.switchState0.append(int(block.switchState))
+                currentswitch = [int(block.blockNumber), int(block.switch0), int(block.switch1)]
+                self.switchmatrix0.append(currentswitch)
 
             if block.station == '1':
                 self.stations0.append(block.blockNumber)
@@ -116,6 +120,8 @@ class WTrack:
             if block.switch == '1':
                 self.switches1.append(int(block.blockNumber))
                 self.switchState1.append(int(block.switchState))
+                currentswitch = [int(block.blockNumber), int(block.switch0), int(block.switch1)]
+                self.switchmatrix1.append(currentswitch)
 
             if block.station == '1':
                 self.stations1.append(block.blockNumber)
@@ -190,8 +196,8 @@ class WTrack:
         signals.waysideSectionsfromPLC.emit(self.sections0, self.sections1)
         signals.waysideAllSectionsfromPLC.emit(self.allsection0, self.allsection1)
         #print("switches:", self.switches)
-        signals.waysideSwitchLocationsfromPLC.emit(self.switches0, self.switches1)
-        #print("switchStates:", self.switchStates)
+        signals.waysideSwitchLocationsfromPLC.emit(self.switches0, self.switches1, self.switchmatrix0, self.switchmatrix1)
+        
         signals.waysideSwitchStatesfromPLC.emit(self.switchState0, self.switchState1)
         signals.waysideStationsfromPLC.emit(self.stations0, self.stations1)
 
@@ -231,7 +237,6 @@ class WTrack:
                     #Print("PB", x[3:6]) 
                 elif x[:2] == "LI": 
                     newblock.line = x[3:6]
-                    line = int(x[3:6])
                     #green is 0 red is 1        
                 elif x[:2] == "ST":
                     newblock.station = x[3:4]
@@ -253,6 +258,9 @@ class WTrack:
                     #print("AU", x[3:4])
                 elif x[:2] == "SW":
                     newblock.switch = x[3:4]
+                    newblock.switch0 = x[5:7]
+                    newblock.switch1 = x[7:11]
+                    #print("switch", newblock.switch, "0:[", newblock.switch0, "] 1:[", newblock.switch1, "]")
                     #print("SW", x[3:4])
                 elif x[:2] == "SS":
                     newblock.switchState = x[3:4]
