@@ -77,6 +77,8 @@ class Signals(QObject):
     trackModelUpdateOccupancy = pyqtSignal(Train, Line, int, bool) # trainID, line, blockNumber, 0 = not occupied, 1 = occupied
     trackModelUpdateCommandedSpeed = pyqtSignal(int, int) # trainID, commandedSpeed
     trackModelTrainInfoToWayside = pyqtSignal(Train) # Train object
+    trackModelTrainStopped = pyqtSignal(int, Train) # block stopped at, Train object
+    trackModelPassengersToCTC = pyqtSignal(int, str) # number of passengers got on, line
 
     ##### PASSES TRACK CIRCUIT SIGNALS #####
     trackModelDispatchTrain = pyqtSignal(Train) # trainID, destinationBlock, commandedSpeed, authority, Line
@@ -118,7 +120,9 @@ class Signals(QObject):
     trainModelLineSignal= pyqtSignal(Line)
     trainModelGUISpeedLim = pyqtSignal(str)
     trainModelAuthorityToTrainController = pyqtSignal(int)
-    sigFaultsig = pyqtSignal(bool)
+    powFaultsig = pyqtSignal(bool)
+    brakeFaultsig = pyqtSignal(bool)
+    trainModelStationtoTrainController = pyqtSignal(str)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)
@@ -136,6 +140,7 @@ class Signals(QObject):
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
     trainControllerServiceBrake = pyqtSignal(bool)
+    trainControllerServiceBrakeMan = pyqtSignal(bool)
     trainControllerPower = pyqtSignal(float)
     trainControllerSpeed = pyqtSignal(float)
     trainControllerAuthority = pyqtSignal(float)

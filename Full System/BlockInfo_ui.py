@@ -22,20 +22,20 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(999, 483)
+        MainWindow.resize(1141, 483)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.MainScrollArea = QScrollArea(self.centralwidget)
         self.MainScrollArea.setObjectName(u"MainScrollArea")
-        self.MainScrollArea.setGeometry(QRect(0, 100, 1000, 381))
+        self.MainScrollArea.setGeometry(QRect(0, 100, 1131, 381))
         self.MainScrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 998, 379))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1129, 379))
         self.MainScrollArea.setWidget(self.scrollAreaWidgetContents)
         self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setObjectName(u"horizontalLayoutWidget_2")
-        self.horizontalLayoutWidget_2.setGeometry(QRect(0, 60, 1001, 41))
+        self.horizontalLayoutWidget_2.setGeometry(QRect(0, 60, 1131, 41))
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -105,6 +105,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.label_9)
 
+        self.label_10 = QLabel(self.horizontalLayoutWidget_2)
+        self.label_10.setObjectName(u"label_10")
+        sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
+        self.label_10.setMinimumSize(QSize(125, 0))
+        self.label_10.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_2.addWidget(self.label_10)
+
         self.Header = QLabel(self.centralwidget)
         self.Header.setObjectName(u"Header")
         self.Header.setGeometry(QRect(1, 1, 991, 51))
@@ -125,6 +134,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Speed Limit (mph)", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Station Side", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Underground?", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Beacon?", None))
         self.Header.setText(QCoreApplication.translate("MainWindow", u"Section A Info", None))
     # retranslateUi
 
