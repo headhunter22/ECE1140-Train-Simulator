@@ -235,7 +235,7 @@ class ctcMainUI(QMainWindow):
 
     def iterDispatch(self):
         self.ui.greenTrainInfoTable.setRowCount(0)
-        stops = [73]
+        stops = [73, 57]
         signals.greenLineTrainDispatchFromCtcUI.emit(stops)
     
     def timeSelect(self):

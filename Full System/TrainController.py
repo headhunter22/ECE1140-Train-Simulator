@@ -61,10 +61,15 @@ class TrainController(QObject):
         #    # make authority higher
         signals.trainControllerAuthority.emit(self.train.authority)
     
-        if self.train.authority <= 0:
+        if self.train.actSpeed == 0:
             self.train.authority = 10000
+            signals.trainControllerServiceBrake.emit(False)
 
-        if self.train.authority <= self.StopDistance:
+        print(self.train.destBlock)
+        print(self.train.authority)
+        if self.train.route[0] == self.train.destBlock[0]:
+            
+            self.train.destBlock.pop(0)
             print('authority = ' + str(self.train.authority))
             print('distance = ' + str(self.StopDistance))
             
