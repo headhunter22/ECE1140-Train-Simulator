@@ -6,49 +6,42 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1141</width>
-    <height>483</height>
+    <width>1194</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QScrollArea" name="MainScrollArea">
+   <widget class="QLabel" name="Header">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>100</y>
-      <width>1131</width>
-      <height>381</height>
+      <x>10</x>
+      <y>10</y>
+      <width>961</width>
+      <height>20</height>
      </rect>
     </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
+    <property name="text">
+     <string>Line</string>
     </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>1129</width>
-       <height>379</height>
-      </rect>
-     </property>
-    </widget>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>60</y>
-      <width>1131</width>
+      <x>10</x>
+      <y>40</y>
+      <width>1182</width>
       <height>41</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -57,7 +50,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>75</width>
+         <width>100</width>
          <height>0</height>
         </size>
        </property>
@@ -136,7 +129,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_6">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -151,6 +144,28 @@
        </property>
        <property name="text">
         <string>Speed Limit (mph)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>125</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Underground?</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -180,7 +195,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="label_11">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -225,21 +240,28 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="Header">
+   <widget class="QScrollArea" name="MainScrollArea">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>1</y>
-      <width>991</width>
-      <height>51</height>
+      <x>10</x>
+      <y>90</y>
+      <width>1181</width>
+      <height>501</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Section A Info</string>
+    <property name="widgetResizable">
+     <bool>true</bool>
     </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1179</width>
+       <height>499</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

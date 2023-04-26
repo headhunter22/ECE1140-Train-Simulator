@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>262</width>
+    <width>277</width>
     <height>614</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="trainModel">
+   <widget class="QPushButton" name="trackModel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Train Model</string>
+     <string>Track Model</string>
     </property>
    </widget>
    <widget class="QPushButton" name="ctcOffice">
@@ -40,19 +40,6 @@
      <string>CTC Office</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="waysideController">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>130</y>
-      <width>111</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Wayside Controller</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="trainController">
     <property name="geometry">
      <rect>
@@ -66,7 +53,7 @@
      <string>Train Controller</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="trackModel">
+   <widget class="QPushButton" name="trainModel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -76,7 +63,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Track Model</string>
+     <string>Train Model</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -84,7 +71,7 @@
      <rect>
       <x>150</x>
       <y>40</y>
-      <width>91</width>
+      <width>101</width>
       <height>61</height>
      </rect>
     </property>
@@ -99,7 +86,7 @@ ajk179@pitt.edu
      <rect>
       <x>150</x>
       <y>150</y>
-      <width>101</width>
+      <width>111</width>
       <height>61</height>
      </rect>
     </property>
@@ -114,7 +101,7 @@ meb291@pitt.edu
      <rect>
       <x>160</x>
       <y>260</y>
-      <width>91</width>
+      <width>101</width>
       <height>61</height>
      </rect>
     </property>
@@ -129,7 +116,7 @@ jrk154@pitt.edu
      <rect>
       <x>160</x>
       <y>370</y>
-      <width>81</width>
+      <width>91</width>
       <height>61</height>
      </rect>
     </property>
@@ -144,7 +131,7 @@ ljd52@pitt.edu
      <rect>
       <x>160</x>
       <y>480</y>
-      <width>91</width>
+      <width>101</width>
       <height>61</height>
      </rect>
     </property>
@@ -154,14 +141,33 @@ jdh161@pitt.edu
 734-730-8183</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>150</y>
+      <width>81</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wayside Controller</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>262</width>
-     <height>21</height>
+     <width>277</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
