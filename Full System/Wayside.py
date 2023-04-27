@@ -69,6 +69,7 @@ class Wayside(QObject):
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.changeSwitchfromCTC)
+        signals.wtowSwitchfromUI.connect(self.changeSwitchfromwayside)
         #signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
         signals.trackModelTrainInfoToWayside.connect(self.trainInfoToCTC)
         signals.trackModelBrokenRail.connect(self.brokenRain)# line, block, 'Broken Rail
@@ -110,11 +111,11 @@ class Wayside(QObject):
             #print("brokenrail track0", self.track0)
             id = self.track0.index(int(block))
             sec = self.allsection0[id]
-            signals.wtowOccupancy.emit(line, block, sec)
+            signals.wtowOccupancy.emit(line, block, sec, self.route)
         elif line == 'Red':
             id = self.track1.index(int(block))
             sec = self.allsection0[id]
-            signals.wtowOccupancy.emit(line, block, sec)
+            signals.wtowOccupancy.emit(line, block, sec, self.route)
 
 
     def setTracks(self, track0, track1, etrack0, etrack1):
@@ -370,7 +371,8 @@ class Wayside(QObject):
 
     def blockOccupancyReceived(self, line, block, route):
         #print(". py block", block, "is occupied")
-        self.updateAuthority(line, block, route)
+        self.route = route
+        self.updateAuthority(line, block, self.route)
         self.changeSwitch(line, block) 
         currblock = self.track0.index(block)
         nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
@@ -403,17 +405,94 @@ class Wayside(QObject):
         self.trackModel.totalPassengersToWayside.connect(self.passengersReceived)
 
     def changeSwitchfromCTC(self, sw0, sw1):
-        if self.switchStates0 == sw0:
-            #print("sw0 did not change")
-            change = 1
-        if self.switchStates1 == sw1:
-            #print("sw0 did not change")
-            change = 0
+        #print("current",self.switchStates0, self.switchStates1 )
+        #print("incoming", sw0, sw1)
+        loc = 0
+        state = 0
+        facing = 0
+        counti = 0
+        for i in sw0:
+            if i != self.switchStates0[counti]:
+                loc = self.switchLocations0[counti]
+                state = self.switchStates0[counti]
+                if state ==0:
+                    facing = self.switchMatrix0[counti][2]
+                elif state ==1:
+                    facing = self.switchMatrix0[counti][1]
+                #print("switch", loc, "now facing", facing)
+            else:
+                change = 1
+                #greenline did not change
+            counti = counti+1
+        #print("switch", loc, "now facing", facing)
+        countk = 0
+
+        for i in sw1:
+            if i != self.switchStates1[countk]:
+                loc = self.switchLocations1[countk]
+                state = self.switchStates1[countk]
+                if state ==0:
+                    facing = self.switchMatrix1[countk][2]
+                elif state ==1:
+                    facing = self.switchMatrix1[countk][1]
+                #print("switch", loc, "now facing", facing)
+            else:
+                change = 1
+                #greenline did not change
+            countk = countk+1
 
         self.switchStates0 = sw0
         self.switchStates1 = sw1
 
         signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, change)
+        signals.waysideSwitchtoTrack.emit(loc, facing)
+        #print("to track in ctc", loc, facing)
+        #signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
+
+    def changeSwitchfromwayside(self, sw0, sw1):
+        #print("current",self.switchStates0, self.switchStates1 )
+        #print("incoming", sw0, sw1)
+        loc = 0
+        state = 0
+        facing = 0
+        counti = 0
+        for i in sw0:
+            if i != self.switchStates0[counti]:
+                loc = self.switchLocations0[counti]
+                state = self.switchStates0[counti]
+                if state ==0:
+                    facing = self.switchMatrix0[counti][2]
+                elif state ==1:
+                    facing = self.switchMatrix0[counti][1]
+                #print("switch", loc, "now facing", facing)
+            else:
+                change = 1
+                #greenline did not change
+            counti = counti+1
+        #print("switch", loc, "now facing", facing)
+        countk = 0
+
+        for i in sw1:
+            if i != self.switchStates1[countk]:
+                loc = self.switchLocations1[countk]
+                state = self.switchStates1[countk]
+                if state ==0:
+                    facing = self.switchMatrix1[countk][2]
+                elif state ==1:
+                    facing = self.switchMatrix1[countk][1]
+                #print("switch", loc, "now facing", facing)
+            else:
+                change = 1
+                #greenline did not change
+            countk = countk+1
+
+        self.switchStates0 = sw0
+        self.switchStates1 = sw1
+
+        #signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, change)
+        signals.waysideSwitchtoTrack.emit(loc, facing)
+        #print("to track in ctc", loc, facing)
+        signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
         
     def changeSwitch(self, line, block):
         #print("CHANGESWITCH", line)
@@ -486,6 +565,7 @@ class Wayside(QObject):
                         #print("toggled switch", self.switchMatrix0[row][0]," since should be facing not == current. now is", opposite)
                         #print("matrixindexint", matrixindexint) 
                     signals.waysideSwitchtoTrack.emit(self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
+                    #print("to track in change", self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])
                     signals.waysideSwitchtoCTC.emit(self.switchStates0, self.switchStates1)
                     signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, 0)
                     #print("signals to track", self.switchMatrix0[row][0], self.switchMatrix0[row][opposite+1])

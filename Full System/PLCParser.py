@@ -120,6 +120,7 @@ class WTrack:
             if block.switch == '1':
                 self.switches1.append(int(block.blockNumber))
                 self.switchState1.append(int(block.switchState))
+                #print(int(block.blockNumber), int(block.switch0), int(block.switch1))
                 currentswitch = [int(block.blockNumber), int(block.switch0), int(block.switch1)]
                 self.switchmatrix1.append(currentswitch)
 
@@ -278,5 +279,5 @@ class WTrack:
             
             newtrack0.Waysides()
             newtrack0.wholeTrack()
-            #print("end of parser")
+            print("New PLC file parsed")
             

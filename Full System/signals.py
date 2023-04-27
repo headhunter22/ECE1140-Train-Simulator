@@ -69,6 +69,7 @@ class Signals(QObject):
     wtowSwitchChange = pyqtSignal(list, list, int)#lists
     wtowCrossing = pyqtSignal(int, bool) #line, red false green true
     wtowAuthority = pyqtSignal(list, str)
+    wtowSwitchfromUI = pyqtSignal(list, list)
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
