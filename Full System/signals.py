@@ -28,7 +28,8 @@ class Signals(QObject):
     blockMaintenanceFromCTCtoWayside = pyqtSignal(str, int, bool) # line, block, maintenance(true/false)
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, authority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(Train) # Train object
-    ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
+    ctcThroughput = pyqtSignal(str, str) # number of tickets, line
+    #ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals
     waysideAuthorityToCTC = pyqtSignal(str, list, int) # line, route, authority

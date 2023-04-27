@@ -35,11 +35,15 @@ class CTC(QObject):
         self.redTotalTickets = 0
         self.greenThroughput = 0
         self.redThroughput = 0
+        self.totalElapsedSeconds = 1
+        self.totalElapsedHours = 0
 
         # signals from ctc UI
         signals.greenLineTrainDispatchFromCtcUI.connect(self.greenDispatch)
         signals.redLineTrainDispatchFromCtcUI.connect(self.redDispatch)
         signals.ctcSwitchStates.connect(self.sendSwitchStates)
+        signals.trackModelPassengersToCTC.connect(self.incrementTickets)
+        signals.timerTicked.connect(self.incrementTime)
 
     # function to dispatch the train
     def greenDispatch(self, destBlock):
@@ -71,15 +75,28 @@ class CTC(QObject):
         # update the next ID of the next train
         self.nextID += 1
 
-    def calculateThroughput(self, tickets, line):
-        
+    def incrementTickets(self, tickets, line):
         if line == "Green":
             self.greenTotalTickets += tickets
-            signals.ctcGetPassengersPerLine.emit(self.greenTotalTickets, "Green")
 
         elif line == "Red":
             self.redTotalTickets += tickets
-            signals.ctcGetPassengersPerLine.emit(self.redTotalTickets, "Red")
+    
+    def incrementTime(self):
+        if self.totalElapsedSeconds == 3600:
+            self.totalElapsedSeconds = 1
+            self.totalElapsedHours += 1
+        else:
+            self.totalElapsedSeconds += 1
+        self.calculateThroughput()
+
+    def calculateThroughput(self):
+        self.greenThroughput = self.greenTotalTickets / (self.totalElapsedHours + (float(self.totalElapsedSeconds) /100))
+        self.redThroughput = self.redTotalTickets / (self.totalElapsedHours + (float(self.totalElapsedSeconds) /100))
+        greenFormatted = "{:.2f}".format(self.greenThroughput)
+        redFormatted = "{:.2f}".format(self.redThroughput)
+        signals.ctcThroughput.emit(greenFormatted, "Green")
+        signals.ctcThroughput.emit(redFormatted, "Red")
 
     def sendSwitchStates(self, greenSwitches, redSwitches):
         signals.switchStatesFromCTCtoWayside.emit(greenSwitches, redSwitches)
