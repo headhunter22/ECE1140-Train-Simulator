@@ -11,7 +11,7 @@ class TicketSystem:
         print('Passengers Off: ' + str(passengersOff))
         train.numPassengers = 0
         TicketSystem.totalPassengersMoved[train.line.lineName] += passengersOff
-        signals.ctcGetPassengersPerLine.emit(passengersOff, train.line)
+        #signals.ctcGetPassengersPerLine.emit(passengersOff, train.line)
 
     def boardTrain(self, train):
         passengersWaiting = random.randint(1, 222)
