@@ -394,7 +394,7 @@ class GainWindow(QtWidgets.QMainWindow):
         INPUT3 = float(textki)
         signals.trainControllerUIKI.emit(INPUT3)
         self.KIChange.setText(textki)
-        self.correctedKIValue.setText("New KP: " + textki)
+        self.correctedKIValue.setText("New KI: " + textki)
 
         self.confirmLabel.setText("KP and KI values have been updated")
 
