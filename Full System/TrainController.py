@@ -67,7 +67,7 @@ class TrainController(QObject):
             signals.trainControllerServiceBrake.emit(True)
 
         if self.train.actSpeed == 0: #beginning state; train is not moving
-            self.commandedPower = 120000
+            self.commandedPower = 0
             signals.trainControllerSpeed.emit(self.train.actSpeed)
         else:
             # velocity error calcuation
