@@ -92,18 +92,18 @@ class Ui_MainWindow(object):
         self.greenLinePage = QtWidgets.QWidget()
         self.greenLinePage.setObjectName("greenLinePage")
         self.greenClear = QtWidgets.QPushButton(parent=self.greenLinePage)
-        self.greenClear.setGeometry(QtCore.QRect(30, 320, 61, 21))
+        self.greenClear.setGeometry(QtCore.QRect(90, 320, 61, 21))
         self.greenClear.setStyleSheet("background-color: Red; color: Black")
         self.greenClear.setObjectName("greenClear")
         self.greenDispatch = QtWidgets.QPushButton(parent=self.greenLinePage)
-        self.greenDispatch.setGeometry(QtCore.QRect(170, 320, 61, 21))
+        self.greenDispatch.setGeometry(QtCore.QRect(210, 320, 61, 21))
         self.greenDispatch.setStyleSheet("background-color: Green; color: Black")
         self.greenDispatch.setObjectName("greenDispatch")
         self.arrivalLabel_3 = QtWidgets.QLabel(parent=self.greenLinePage)
-        self.arrivalLabel_3.setGeometry(QtCore.QRect(30, 111, 161, 20))
+        self.arrivalLabel_3.setGeometry(QtCore.QRect(90, 120, 161, 20))
         self.arrivalLabel_3.setObjectName("arrivalLabel_3")
         self.greenTentSchedule = QtWidgets.QTableWidget(parent=self.greenLinePage)
-        self.greenTentSchedule.setGeometry(QtCore.QRect(30, 130, 201, 181))
+        self.greenTentSchedule.setGeometry(QtCore.QRect(90, 140, 181, 181))
         self.greenTentSchedule.setObjectName("greenTentSchedule")
         self.greenTentSchedule.setColumnCount(2)
         self.greenTentSchedule.setRowCount(0)
@@ -127,22 +127,33 @@ class Ui_MainWindow(object):
         self.blockLabel_7 = QtWidgets.QLabel(parent=self.greenLinePage)
         self.blockLabel_7.setGeometry(QtCore.QRect(170, 20, 91, 21))
         self.blockLabel_7.setObjectName("blockLabel_7")
+        self.label_4 = QtWidgets.QLabel(parent=self.greenLinePage)
+        self.label_4.setGeometry(QtCore.QRect(0, 70, 91, 41))
+        self.label_4.setObjectName("label_4")
+        self.line_12 = QtWidgets.QFrame(parent=self.greenLinePage)
+        self.line_12.setGeometry(QtCore.QRect(-10, 100, 101, 20))
+        self.line_12.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_12.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+        self.line_12.setObjectName("line_12")
+        self.label_5 = QtWidgets.QLabel(parent=self.greenLinePage)
+        self.label_5.setGeometry(QtCore.QRect(0, 120, 81, 211))
+        self.label_5.setObjectName("label_5")
         self.stackedWidget.addWidget(self.greenLinePage)
         self.redLinePage = QtWidgets.QWidget()
         self.redLinePage.setObjectName("redLinePage")
         self.redClear = QtWidgets.QPushButton(parent=self.redLinePage)
-        self.redClear.setGeometry(QtCore.QRect(30, 320, 61, 21))
+        self.redClear.setGeometry(QtCore.QRect(90, 320, 61, 21))
         self.redClear.setStyleSheet("background-color: Red; color: Black")
         self.redClear.setObjectName("redClear")
         self.redDispatch = QtWidgets.QPushButton(parent=self.redLinePage)
-        self.redDispatch.setGeometry(QtCore.QRect(170, 320, 61, 21))
+        self.redDispatch.setGeometry(QtCore.QRect(210, 320, 61, 21))
         self.redDispatch.setStyleSheet("background-color: Green; color: Black")
         self.redDispatch.setObjectName("redDispatch")
         self.arrivalLabel_4 = QtWidgets.QLabel(parent=self.redLinePage)
-        self.arrivalLabel_4.setGeometry(QtCore.QRect(30, 110, 151, 20))
+        self.arrivalLabel_4.setGeometry(QtCore.QRect(90, 120, 151, 20))
         self.arrivalLabel_4.setObjectName("arrivalLabel_4")
         self.redTentSchedule = QtWidgets.QTableWidget(parent=self.redLinePage)
-        self.redTentSchedule.setGeometry(QtCore.QRect(30, 130, 201, 181))
+        self.redTentSchedule.setGeometry(QtCore.QRect(90, 140, 181, 181))
         self.redTentSchedule.setObjectName("redTentSchedule")
         self.redTentSchedule.setColumnCount(2)
         self.redTentSchedule.setRowCount(0)
@@ -166,6 +177,17 @@ class Ui_MainWindow(object):
         self.redAddStop.setGeometry(QtCore.QRect(120, 80, 71, 21))
         self.redAddStop.setStyleSheet("background-color: DodgerBlue; color: Black")
         self.redAddStop.setObjectName("redAddStop")
+        self.line_13 = QtWidgets.QFrame(parent=self.redLinePage)
+        self.line_13.setGeometry(QtCore.QRect(-10, 100, 101, 20))
+        self.line_13.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_13.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
+        self.line_13.setObjectName("line_13")
+        self.label_6 = QtWidgets.QLabel(parent=self.redLinePage)
+        self.label_6.setGeometry(QtCore.QRect(0, 120, 81, 141))
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(parent=self.redLinePage)
+        self.label_7.setGeometry(QtCore.QRect(0, 70, 91, 41))
+        self.label_7.setObjectName("label_7")
         self.stackedWidget.addWidget(self.redLinePage)
         self.scheduledPage = QtWidgets.QWidget()
         self.scheduledPage.setObjectName("scheduledPage")
@@ -544,7 +566,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "CTC Office"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.scheduledTrains.setText(_translate("MainWindow", "Scheduled Trains"))
         self.legendLabel_3.setText(_translate("MainWindow", "- Train authority"))
         self.legendLabel.setText(_translate("MainWindow", "Occupancy Legend"))
@@ -564,6 +586,21 @@ class Ui_MainWindow(object):
         self.greenAddStop.setText(_translate("MainWindow", "Add Stop"))
         self.blockLabel_6.setText(_translate("MainWindow", "Destination:"))
         self.blockLabel_7.setText(_translate("MainWindow", "Arrival (hh:mm):"))
+        self.label_4.setText(_translate("MainWindow", "Destinations list\n"
+"(Case Sensitive):"))
+        self.label_5.setText(_translate("MainWindow", "Pioneer\n"
+"Edgebrook\n"
+"Whited\n"
+"South Bank\n"
+"Central\n"
+"Inglewood\n"
+"Overbrook\n"
+"Glenbury\n"
+"Dormont\n"
+"Mt Lebanon\n"
+"Poplar\n"
+"Castle Shannon\n"
+"Blocks 1-150"))
         self.redClear.setText(_translate("MainWindow", "Clear"))
         self.redDispatch.setText(_translate("MainWindow", "Dispatch"))
         self.arrivalLabel_4.setText(_translate("MainWindow", "Red Line Tentative Schedule:"))
@@ -574,6 +611,17 @@ class Ui_MainWindow(object):
         self.blockLabel_8.setText(_translate("MainWindow", "Arrival (hh:mm):"))
         self.blockLabel_9.setText(_translate("MainWindow", "Destination:"))
         self.redAddStop.setText(_translate("MainWindow", "Add Stop"))
+        self.label_6.setText(_translate("MainWindow", "Shadyside\n"
+"Herron Ave\n"
+"Swissville\n"
+"Penn Station\n"
+"Steel Plaza\n"
+"First Ave\n"
+"Station Square\n"
+"South Hills\n"
+"Blocks 1-76"))
+        self.label_7.setText(_translate("MainWindow", "Destinations list\n"
+"(Case Sensitive):"))
         self.arrivalLabel_5.setText(_translate("MainWindow", "Green Line Scheduled Trains:"))
         self.arrivalLabel_6.setText(_translate("MainWindow", "Red Line Scheduled Trains:"))
         item = self.greenScheduledTrains.horizontalHeaderItem(0)

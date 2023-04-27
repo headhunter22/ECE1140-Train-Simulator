@@ -29,6 +29,8 @@ class Signals(QObject):
     ctcCreateGUITrainInfo = pyqtSignal(str, int, int, int, int) # line, id, block, commanded speed, authority, destination block
     ctcUpdateGUITrainInfo = pyqtSignal(Train) # Train object
     ctcThroughput = pyqtSignal(str, str) # number of tickets, line
+    greenErrorSignal = pyqtSignal()
+    redErrorSignal = pyqtSignal()
     #ctcGetPassengersPerLine = pyqtSignal(int, Line) # passengers offloaded, line
 
     # wayside controller signals

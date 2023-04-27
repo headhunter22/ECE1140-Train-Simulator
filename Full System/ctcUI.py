@@ -189,7 +189,7 @@ class ctcMainUI(QMainWindow):
         self.ui.timePause.clicked.connect(self.timePause)
         self.ui.time50x.clicked.connect(self.fiftyTimeSpeed)
 
-        self.ui.lineSelectMaintenance.currentTextChanged.connect(lambda: self.switchLineChanged(track))
+        self.ui.lineSelectMaintenance.currentTextChanged.connect(self.switchLineChanged)
         self.ui.xButton.clicked.connect(self.univClear)
         self.ui.checkButton.clicked.connect(self.updateBlockStatus)
 
@@ -289,6 +289,8 @@ class ctcMainUI(QMainWindow):
     def dispatchGreenLine(self):
         try:
             for rows in range(0, self.ui.greenScheduledTrains.rowCount()):
+                disTime = self.ui.greenScheduledTrains.item(rows, 2).text().split(":")
+                wallTime = self.ui.dataTime.text().split(":")
                 if self.ui.greenScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
                     destlist = ast.literal_eval(self.ui.greenScheduledTrains.item(rows, 0).text())
 
@@ -302,6 +304,8 @@ class ctcMainUI(QMainWindow):
                                 stops.append(self.greenStopsBlocks[item])
                     
                     signals.greenLineTrainDispatchFromCtcUI.emit(stops)
+                    self.ui.greenScheduledTrains.removeRow(rows)
+                elif ((int(disTime[0]) * 3600) + (int(disTime[1]) * 60) + int(disTime[2])) < ((int(wallTime[0]) * 3600) + (int(wallTime[1]) * 60) + (int(wallTime[2]))):
                     self.ui.greenScheduledTrains.removeRow(rows)
         except:
             self.ui.greenScheduledTrains.setRowCount(0)
@@ -347,6 +351,7 @@ class ctcMainUI(QMainWindow):
         if (self.ui.greenDestination.text() not in self.greenStations) or (not re.match(pattern, self.ui.greenTime.text())):
             self.ui.greenDestination.clear()
             self.ui.greenTime.clear()
+            signals.greenErrorSignal.emit()
             return
         else:
             try:
@@ -625,17 +630,12 @@ class ctcMainUI(QMainWindow):
                 signals.blockMaintenanceFromCTCtoWayside.emit("Green", self.ui.blockSelectMaintenance.currentIndex()+1, False)
     
     #when the line is switched this replaced the block selection to the correct amount for the given line
-    def switchLineChanged(self, track):
+    def switchLineChanged(self, line):
         # clear current options in the dropdowns 
         self.ui.blockSelectMaintenance.clear()
 
-        if self.ui.blockSelectMaintenance.currentIndex() == 0:
-            line = "Red"
-        else:
-            line = "Green"
-
         # add the appropriate blocks
-        for section in track.getLine(line).sections:
+        for section in self.funcTrack.getLine(line).sections:
             for block in section.blocks:
                 self.ui.blockSelectMaintenance.addItem(block.blockName)
     
@@ -706,7 +706,6 @@ class ctcMainUI(QMainWindow):
         else:
             self.ui.red_J2.click()
 
-        
     ############################################
     ######## OCCUPANCY VIEW FUNCTIONS ##########
     ############################################
