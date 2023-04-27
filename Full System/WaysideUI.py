@@ -16,9 +16,6 @@ from PLCParser import WTrack
 # MainWindowA N-Z blue
 # MainWindowB A-M red
 
-#show fault
-#change authority on popups
-#change gate buttons
 
 class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
     def __init__(self, *args, obj=None, **kwargs):
@@ -114,14 +111,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         image.setPixmap(pic.scaled(50, 50))
 
         matrixrow = self.sectionrange.index(section)
-        print("index matrixrow", matrixrow)
-        print("sectionmatrix", self.sectionmatrix)
+        #print("index matrixrow", matrixrow)
+        #print("sectionmatrix", self.sectionmatrix)
         sectionBlocks = self.sectionmatrix[matrixrow]
-        print("checking these sectionBlocks", sectionBlocks)
+        #print("checking these sectionBlocks", sectionBlocks)
         for i in sectionBlocks:
             for j in blocks:
                 if i == j:
-                    print(j," has authority in it and =i", i)
+                    #print(j," has authority in it and =i", i)
                     index = self.sectionmatrixrow.index(i) +1
                     self.bl.gridLayout.addWidget(image, index, 1)
 
@@ -1624,7 +1621,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         img = QPixmap('greentrain.png')
         self.occupied.append(block)
         #auth = QPixmap('redtracks.png')
-        print("occupied blocks", self.occupied)
+        #print("occupied blocks", self.occupied)
         
         if self.first == 1 and line == 'Green':
             #secbutton = self.wayside1sectionrange.index(sec)
@@ -1958,13 +1955,14 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("wayside a UI block", block, "is vacant")
         #train is sending next block not previous so have jake look at that
         img = QPixmap('tracks.png')
-        print("vacancy line, block, sec", line, block, sec)
+        #print("vacancy line, block, sec", line, block, sec)
         try:
             find = self.occupied.index(block)
             #print("find", find)
             self.occupied.pop(find)
         except:
-            print("no blocks occupied yet")
+            pass
+            #print("no blocks occupied yet")
         #print("occupied blocks from vacancy", self.occupied)
         
         if self.first == 1:
