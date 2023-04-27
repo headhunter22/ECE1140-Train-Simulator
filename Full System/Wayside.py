@@ -74,6 +74,7 @@ class Wayside(QObject):
         signals.switchStatesFromCTCtoWayside.connect(self.changeSwitchfromCTC)
         #signals.blockMaintenanceFromCTCtoWayside.connect(self.test)
         signals.trackModelTrainInfoToWayside.connect(self.trainInfoToCTC)
+        signals.trackModelBrokenRail.connect(self.brokenRain)# line, block, 'Broken Rail
 
         signals.waysideTrackfromPLC.connect(self.setTracks)
         signals.waysideSectionsfromPLC.connect(self.setSections)
@@ -105,6 +106,18 @@ class Wayside(QObject):
             signalfortrack = 4
 
         signals.waysideUpdateCrossingLights.emit(signalfortrack)
+
+    def brokenRain(self,line, block, name):
+        print(name)
+        if line == 'Green':
+            #print("brokenrail track0", self.track0)
+            id = self.track0.index(int(block))
+            sec = self.allsection0[id]
+            signals.wtowOccupancy.emit(line, block, sec)
+        elif line == 'Red':
+            id = self.track1.index(int(block))
+            sec = self.allsection0[id]
+            signals.wtowOccupancy.emit(line, block, sec)
 
 
     def setTracks(self, track0, track1, etrack0, etrack1):
