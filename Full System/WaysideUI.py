@@ -25,7 +25,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         super(WMainWindowA, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle('Wayside Main UI')
-        self.resize(640, 715)        
+        self.resize(640, 735)        
         
         self.instance =  ''
         self.first = 1
@@ -72,6 +72,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.wtowSwitchesSetup.connect(self.setSwitchesSetup)
         signals.wtowSwitchChange.connect(self.newSwitchStates)
         signals.wtowSwitchDefaults.connect(self.setSwitchDefaults)
+        signals.wtowCrossing.connect(self.crossingLights)
         
         self.plc = WTrack()
         self.setupplc()
@@ -107,9 +108,33 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
 
+    def crossingLights(self, track, color): #red false green true
+        red = QPixmap('redlight.png')
+        green = QPixmap('greenlight.png')
+        blank = QPixmap('offlight.png')
+
+        if track == 0:
+            if color == True:
+                self.gatepositiona.setText("Inactive")
+                self.greena.setPixmap(green)
+                self.reda.setPixmap(blank)
+            elif color == False:
+                self.gatepositiona.setText("Active")
+                self.greena.setPixmap(blank)
+                self.reda.setPixmap(red)
+        elif track == 1:
+            if color == True:
+                self.gatepositiona.setText("Inactive")
+                self.greena.setPixmap(green)
+                self.reda.setPixmap(blank)
+            elif color == False:
+                self.gatepositiona.setText("Active")
+                self.greena.setPixmap(blank)
+                self.reda.setPixmap(red)
+
     def changeinstance(self):
         num = self.whichwayside.currentIndex()+1
-        print("change instance", num)
+        #print("change instance", num)
         #print("num",num)
         self.first = num
         self.setuppopups(self.first)
@@ -200,7 +225,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.allthesectionsever1.append(range8)
 
     def setSwitchesSetup(self, allsw0, allsw1):
-        print("setSwitchesSetup ui")
+        #print("setSwitchesSetup ui")
         self.switchMatrix0 = allsw0
         self.switchMatrix1 = allsw1
         # self.changeSwitchButtons(allsw0, allsw1, 0)
@@ -230,7 +255,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.changeSwitchButtons(which)
 
     def setSwitchDefaults(self, allsw0, allsw1):
-        print("set defaults in ui")
+        #print("set defaults in ui")
         self.switchDefaults0 = allsw0
         self.switchDefaults1 = allsw1
         self.switchStates0 = allsw0
@@ -241,7 +266,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     def SwitchesSetup(self, first):
         #print("switch matrix", self.switchMatrix0)
-        print("switchessetup ui")
+        #print("switchessetup ui")
         which = 0
         if first == 1:
             which = 0
@@ -351,7 +376,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.disableallswitchbuttons()
 
     def changeSwitchButtons(self, inst):
-        print("changing switch button function")
+        #print("changing switch button function")
         
 
         if inst == 0:
@@ -476,9 +501,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                 self.gate71.setStyleSheet('background-color: SkyBlue')
                 self.gate70.setStyleSheet('background-color: white; color: gray')
         
-
-
-
     def firstinstance(self, num):
         self.first = num
         self.setuppopups(self.first)
@@ -1562,327 +1584,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
         h = 30 + 46*len(self.sectionmatrix[self.sectionrow])
         self.bl.resize(505, h) 
-
-        #positions = [(i, 1) for i in range(2,len(self.sectionrange)+2)]
-        #print("length of sectionrange", self.sectionrange)
-        #print(positions)
-        # image = QLabel()
-        # pic = QPixmap('tracks.png')
-        # image.setPixmap(pic.scaled(50, 50))
-        # for i in range(2,len(self.sectionrange)+2):
-        #     if image == '':
-        #         continue
-        #     label = QLabel(image)
-        #     #namelist.append(name)
-        #     self.gridLayout_4.addWidget(label, i, 1)
         self.bl.show()
-            #button.clicked.connect(lambda: self.makeSectionWindow(name))
-
-
-
-
-        """image = QLabel()
-        pic = QPixmap('tracks.png')
-        image.setPixmap(pic.scaled(50, 50))
-        image1 = QLabel()
-        pic = QPixmap('tracks.png')
-        image1.setPixmap(pic.scaled(50, 50))
-        image2 = QLabel()
-        pic = QPixmap('tracks.png')
-        image2.setPixmap(pic.scaled(50, 50))
-        image3 = QLabel()
-        pic = QPixmap('tracks.png')
-        image3.setPixmap(pic.scaled(50, 50))
-        image4 = QLabel()
-        pic = QPixmap('tracks.png')
-        image4.setPixmap(pic.scaled(50, 50))
-        image5 = QLabel()
-        pic = QPixmap('tracks.png')
-        image5.setPixmap(pic.scaled(50, 50))
-        image6 = QLabel()
-        pic = QPixmap('tracks.png')
-        image6.setPixmap(pic.scaled(50, 50))
-        image7 = QLabel()
-        pic = QPixmap('tracks.png')
-        image7.setPixmap(pic.scaled(50, 50))
-        image8 = QLabel()
-        pic = QPixmap('tracks.png')
-        image8.setPixmap(pic.scaled(50, 50))
-        image9 = QLabel()
-        pic = QPixmap('tracks.png')
-        image9.setPixmap(pic.scaled(50, 50))
-        image10 = QLabel()
-        pic = QPixmap('tracks.png')
-        image10.setPixmap(pic.scaled(50, 50))
-        image11 = QLabel()
-        pic = QPixmap('tracks.png')
-        image11.setPixmap(pic.scaled(50, 50))
-        image12 = QLabel()
-        pic = QPixmap('tracks.png')
-        image12.setPixmap(pic.scaled(50, 50))
-        image13 = QLabel()
-        pic = QPixmap('tracks.png')
-        image13.setPixmap(pic.scaled(50, 50))
-        image14 = QLabel()
-        pic = QPixmap('tracks.png')
-        image14.setPixmap(pic.scaled(50, 50))
-        image15 = QLabel()
-        pic = QPixmap('tracks.png')
-        image15.setPixmap(pic.scaled(50, 50))
-        image16 = QLabel()
-        pic = QPixmap('tracks.png')
-        image16.setPixmap(pic.scaled(50, 50))
-        image17 = QLabel()
-        pic = QPixmap('tracks.png')
-        image17.setPixmap(pic.scaled(50, 50))
-        self.bl.bicon.setPixmap(QPixmap('tracks.png'))
-        self.bl.bicon.setPixmap(QPixmap('tracks.png'))
-        switch = QLabel("X")
-        switch2 = QLabel("X")
-
-        if whichsection == 'N':
-            #'77' or '78' or '79' or '80' or '81' or '83' or '84' or '85':
-            self.bl.label_5.setText('77')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('78')
-            self.bl.label_7.setText('79')
-            self.bl.label_8.setText('80')
-            self.bl.label_9.setText('81')
-            label_10 = QLabel('82')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('83')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            label_12 = QLabel('84')
-            self.bl.gridLayout.addWidget(label_12, 8,0)
-            label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image3,8,1)
-            label_13 = QLabel('85')
-            self.bl.gridLayout.addWidget(label_13, 9,0)
-            label_13.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image4,9,1)
-            self.bl.gridLayout.addWidget(switch2, 9,2)
-            switch2.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.show()
-        elif whichsection == 'O':
-            #'86' or '87' or '88':
-            self.bl.label_5.setText('86')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.setText('87')
-            self.bl.label_7.setText('88')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'P':
-            #'89' or '90' or '91' or '92' or '93' or '94' or '95' or '96' or '97':
-            self.bl.label_5.setText('89')
-            self.bl.label_6.setText('90')
-            self.bl.label_7.setText('91')
-            self.bl.label_8.setText('92')
-            self.bl.label_9.setText('93')
-            label_10 = QLabel('94')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('95')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            label_12 = QLabel('96')
-            self.bl.gridLayout.addWidget(label_12, 8,0)
-            label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image3,8,1)
-            label_13 = QLabel('97')
-            self.bl.gridLayout.addWidget(label_13, 9,0)
-            label_13.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image4,9,1)
-            self.bl.show()
-        elif whichsection == 'Q':
-            #'98' or '99' or '100':
-            self.bl.label_5.setText('98')
-            self.bl.label_6.setText('99')
-            self.bl.label_7.setText('100')
-            self.bl.gridLayout.addWidget(switch, 3,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'R':
-            #'101':
-            self.bl.label_5.setText('101')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.hide()
-            self.bl.bicon.hide()
-            self.bl.label_7.hide()
-            self.bl.cicon.hide()
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'S':
-            #'102' or '103' or '104':
-            self.bl.label_5.setText('102')
-            self.bl.label_6.setText('103')
-            self.bl.label_7.setText('104')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'T':
-            #'105' or '106' or '107' or '108' or '109':
-            self.bl.label_5.setText('105')
-            self.bl.label_6.setText('106')
-            self.bl.label_7.setText('107')
-            self.bl.label_8.setText('108')
-            self.bl.label_9.setText('109')
-            self.bl.show()
-        elif whichsection == 'U':
-            #'110' or '111' or '112' or '113' or '114' or '115' or '116':
-            self.bl.label_5.setText('110')
-            self.bl.label_6.setText('111')
-            self.bl.label_7.setText('112')
-            self.bl.label_8.setText('113')
-            self.bl.label_9.setText('114')
-            label_10 = QLabel('115')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('116')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            self.bl.show()
-        elif whichsection == 'V':
-            #'117' or '118' or '119' or '120' or '121':
-            self.bl.label_5.setText('117')
-            self.bl.label_6.setText('118')
-            self.bl.label_7.setText('119')
-            self.bl.label_8.setText('120')
-            self.bl.label_9.setText('121')
-            self.bl.show()
-        elif whichsection == 'W':
-            #'122' or '123' or '124' or '125' or '126' or '127' or '128' or '129' or '130' 
-            # or '131' or '132' or '133' or '134' or '135' or '136' or '137' or '138' or '139' or '140' or '141' or '142' or '143':
-            self.bl.label_5.setText('122')
-            self.bl.label_6.setText('123')
-            self.bl.label_7.setText('124')
-            self.bl.label_8.setText('125')
-            self.bl.label_9.setText('126')
-            label_10 = QLabel('127')
-            self.bl.gridLayout.addWidget(label_10, 6,0)
-            label_10.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image,6,1)
-            label_11 = QLabel('128')
-            self.bl.gridLayout.addWidget(label_11, 7,0)
-            label_11.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image2,7,1)
-            label_12 = QLabel('129')
-            self.bl.gridLayout.addWidget(label_12, 8,0)
-            label_12.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image3,8,1)
-            label_13 = QLabel('130')
-            self.bl.gridLayout.addWidget(label_13, 9,0)
-            label_13.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image4,9,1)
-            label_14 = QLabel('131')
-            self.bl.gridLayout.addWidget(label_14, 10,0)
-            label_14.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image5,10,1)
-            label_15 = QLabel('132')
-            self.bl.gridLayout.addWidget(label_15, 11,0)
-            label_15.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image6,11,1)
-            label_16 = QLabel('133')
-            self.bl.gridLayout.addWidget(label_16, 12,0)
-            label_16.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image7,12,1)
-            label_17 = QLabel('134')
-            self.bl.gridLayout.addWidget(label_17, 13,0)
-            label_17.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image8,13,1)
-            label_18 = QLabel('135')
-            self.bl.gridLayout.addWidget(label_18, 14,0)
-            label_18.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image9,14,1)
-            label_19 = QLabel('136')
-            self.bl.gridLayout.addWidget(label_19, 15,0)
-            label_19.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image10,15,1)
-            label_20 = QLabel('137')
-            self.bl.gridLayout.addWidget(label_20, 16,0)
-            label_20.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image11,16,1)
-            label_21 = QLabel('138')
-            self.bl.gridLayout.addWidget(label_21, 17,0)
-            label_21.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image12,17,1)
-            label_22 = QLabel('139')
-            self.bl.gridLayout.addWidget(label_22, 18,0)
-            label_22.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image13,18,1)
-            label_23 = QLabel('140')
-            self.bl.gridLayout.addWidget(label_23, 19,0)
-            label_23.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image14,19,1)
-            label_24 = QLabel('141')
-            self.bl.gridLayout.addWidget(label_24, 20,0)
-            label_24.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image15,20,1)
-            label_25 = QLabel('142')
-            self.bl.gridLayout.addWidget(label_25, 21,0)
-            label_25.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image16,21,1)
-            label_26 = QLabel('143')
-            self.bl.gridLayout.addWidget(label_26, 22,0)
-            label_26.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.gridLayout.addWidget(image17,22,1)
-            self.bl.show()
-        elif whichsection == 'X':
-            #'144' or '145' or '146':
-            self.bl.label_5.setText('144')
-            self.bl.label_6.setText('145')
-            self.bl.label_7.setText('146')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'Y':
-            #'147' or '148' or '149':
-            self.bl.label_5.setText('147')
-            self.bl.label_6.setText('148')
-            self.bl.label_7.setText('149')
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()
-        elif whichsection == 'Z':
-            #'150':
-            self.bl.label_5.setText('150')
-            self.bl.gridLayout.addWidget(switch, 1,2)
-            switch.setStyleSheet("background-color: rgb(221, 221, 221);\n""font: 700 12pt \"Georgia\";\n""color: rgb(0, 0, 0);")
-            self.bl.label_6.hide()
-            self.bl.bicon.hide()
-            self.bl.label_7.hide()
-            self.bl.cicon.hide()
-            self.bl.label_8.hide()
-            self.bl.dicon.hide()
-            self.bl.label_9.hide()
-            self.bl.eicon.hide()
-            self.bl.show()"""
 
     #function for toggle switch colors but see if you can do labels instead of buttons??
     def toggleColor(self, button1, button2):
@@ -2143,25 +1845,16 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                 self.ccicon.setPixmap(img)
             else:
                 print("occupied section not on this wayside")
-        #TODO
-        #if sectionmatrix == occupied block matrix 
-        #add widget "greentrain"
+
         image = QLabel()
         pic = QPixmap('greentrain.png')
         image.setPixmap(pic.scaled(50, 50))
-        #img = QPixmap('greentrain.png')
-        #print("section row", self.sectionrow)
-        #print("sectionrange", self.sectionrange)
-        #print("matrix row from in occupied", self.sectionmatrixrow)
-
-        # could just use the icons since they have names
         for i in self.sectionmatrixrow:
             #print("in forloop i", i)
             for j in self.occupied:
                 #print("in forloop j", j)
                 if i == j:
                     #print("i = j", i, j)
-                    
                     index = self.sectionmatrixrow.index(i) +1
                     self.bl.gridLayout.addWidget(image, index, 1)
 
@@ -2423,19 +2116,20 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             else:
                 print("vacant section not on this wayside")
         
-        image = QLabel()
+        imagev = QLabel()
         pic = QPixmap('tracks.png')
-        image.setPixmap(pic.scaled(50, 50))
-        #img = QPixmap('greentrain.png')
-        
+        blank = QLabel()
+        bla = QPixmap('blank.png') 
+        imagev.setPixmap(pic.scaled(50, 50))
+        blank.setPixmap(bla.scaled(50, 50))
         for i in self.sectionmatrixrow:
-            for j in self.occupied:
-                if i == j:
-                    index = self.sectionmatrixrow.index(i)
-                    #print("index i for vacancy", i, j)
-                    item = self.bl.gridLayout.itemAt(index)
-                    self.bl.gridLayout.removeItem(item)
-                    #self.bl.gridLayout.addWidget(image, index, 1)
+            #print("in forloop i", i)
+            if i == block:
+                index = self.sectionmatrixrow.index(i)+1
+                #self.bl.gridLayout.removeWidget(self.image)
+                #self.bl.image.hide()
+                self.bl.gridLayout.addWidget(blank, index, 1)
+                self.bl.gridLayout.addWidget(imagev, index, 1)
 
 
      #function for number of active trains

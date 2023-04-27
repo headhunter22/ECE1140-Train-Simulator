@@ -41,6 +41,8 @@ class Signals(QObject):
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
     waysideSwitchtoCTC = pyqtSignal(list, list)#green list then red list
     waysideWait = pyqtSignal(bool)
+    waysideUpdateCrossingLights = pyqtSignal(int)
+
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
@@ -48,7 +50,7 @@ class Signals(QObject):
     waysideSectionsfromPLC = pyqtSignal(list, list)
     waysideAllSectionsfromPLC = pyqtSignal(list, list)
     waysideSwitchStatesfromPLC = pyqtSignal(list, list)
-    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
 
     ranges = pyqtSignal(list, list, list, list, list, list, list, list)
     sections = pyqtSignal(list, list, list, list, list, list, list, list)
@@ -63,6 +65,7 @@ class Signals(QObject):
     wtowSwitchesSetup = pyqtSignal(list, list)#matrix
     wtowSwitchDefaults = pyqtSignal(list, list)#matrix
     wtowSwitchChange = pyqtSignal(list, list, int)#lists
+    wtowCrossing = pyqtSignal(int, bool) #line, red false green true
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
