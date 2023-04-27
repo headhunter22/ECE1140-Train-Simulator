@@ -29,7 +29,7 @@ class Ui_MainWindowA(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 621, 691))
+        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 621, 711))
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -392,13 +392,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
-        self.label_16 = QLabel(self.verticalLayoutWidget_2)
-        self.label_16.setObjectName(u"label_16")
-        self.label_16.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel.setObjectName(u"switchlabel")
+        self.switchlabel.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_16.setAlignment(Qt.AlignCenter)
+        self.switchlabel.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_12.addWidget(self.label_16)
+        self.horizontalLayout_12.addWidget(self.switchlabel)
 
         self.gate10 = QPushButton(self.verticalLayoutWidget_2)
         self.gate10.setObjectName(u"gate10")
@@ -416,13 +416,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.label_17 = QLabel(self.verticalLayoutWidget_2)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel_2 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_2.setObjectName(u"switchlabel_2")
+        self.switchlabel_2.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_17.setAlignment(Qt.AlignCenter)
+        self.switchlabel_2.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_7.addWidget(self.label_17)
+        self.horizontalLayout_7.addWidget(self.switchlabel_2)
 
         self.gate20 = QPushButton(self.verticalLayoutWidget_2)
         self.gate20.setObjectName(u"gate20")
@@ -440,13 +440,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.label_20 = QLabel(self.verticalLayoutWidget_2)
-        self.label_20.setObjectName(u"label_20")
-        self.label_20.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel_3 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_3.setObjectName(u"switchlabel_3")
+        self.switchlabel_3.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_20.setAlignment(Qt.AlignCenter)
+        self.switchlabel_3.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_8.addWidget(self.label_20)
+        self.horizontalLayout_8.addWidget(self.switchlabel_3)
 
         self.gate30 = QPushButton(self.verticalLayoutWidget_2)
         self.gate30.setObjectName(u"gate30")
@@ -464,13 +464,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.label_21 = QLabel(self.verticalLayoutWidget_2)
-        self.label_21.setObjectName(u"label_21")
-        self.label_21.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel_4 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_4.setObjectName(u"switchlabel_4")
+        self.switchlabel_4.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_21.setAlignment(Qt.AlignCenter)
+        self.switchlabel_4.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_9.addWidget(self.label_21)
+        self.horizontalLayout_9.addWidget(self.switchlabel_4)
 
         self.gate40 = QPushButton(self.verticalLayoutWidget_2)
         self.gate40.setObjectName(u"gate40")
@@ -488,13 +488,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
-        self.label_22 = QLabel(self.verticalLayoutWidget_2)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel_5 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_5.setObjectName(u"switchlabel_5")
+        self.switchlabel_5.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_22.setAlignment(Qt.AlignCenter)
+        self.switchlabel_5.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_10.addWidget(self.label_22)
+        self.horizontalLayout_10.addWidget(self.switchlabel_5)
 
         self.gate50 = QPushButton(self.verticalLayoutWidget_2)
         self.gate50.setObjectName(u"gate50")
@@ -512,13 +512,13 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.label_23 = QLabel(self.verticalLayoutWidget_2)
-        self.label_23.setObjectName(u"label_23")
-        self.label_23.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+        self.switchlabel_6 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_6.setObjectName(u"switchlabel_6")
+        self.switchlabel_6.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
 "color: rgb(0, 0, 0);")
-        self.label_23.setAlignment(Qt.AlignCenter)
+        self.switchlabel_6.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_13.addWidget(self.label_23)
+        self.horizontalLayout_13.addWidget(self.switchlabel_6)
 
         self.gate60 = QPushButton(self.verticalLayoutWidget_2)
         self.gate60.setObjectName(u"gate60")
@@ -533,6 +533,30 @@ class Ui_MainWindowA(object):
 
 
         self.verticalLayout_8.addLayout(self.horizontalLayout_13)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.switchlabel_7 = QLabel(self.verticalLayoutWidget_2)
+        self.switchlabel_7.setObjectName(u"switchlabel_7")
+        self.switchlabel_7.setStyleSheet(u"font: 700 10pt \"Georgia\";\n"
+"color: rgb(0, 0, 0);")
+        self.switchlabel_7.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout.addWidget(self.switchlabel_7)
+
+        self.gate70 = QPushButton(self.verticalLayoutWidget_2)
+        self.gate70.setObjectName(u"gate70")
+
+        self.horizontalLayout.addWidget(self.gate70)
+
+        self.gate71 = QPushButton(self.verticalLayoutWidget_2)
+        self.gate71.setObjectName(u"gate71")
+        self.gate71.setCheckable(False)
+
+        self.horizontalLayout.addWidget(self.gate71)
+
+
+        self.verticalLayout_8.addLayout(self.horizontalLayout)
 
 
         self.verticalLayout_9.addLayout(self.verticalLayout_8)
@@ -598,14 +622,6 @@ class Ui_MainWindowA(object):
         self.reda.setScaledContents(True)
 
         self.horizontalLayout_27.addWidget(self.reda)
-
-        self.yellowa = QLabel(self.verticalLayoutWidget_2)
-        self.yellowa.setObjectName(u"yellowa")
-        self.yellowa.setMaximumSize(QSize(21, 21))
-        self.yellowa.setPixmap(QPixmap(u"offlight.png"))
-        self.yellowa.setScaledContents(True)
-
-        self.horizontalLayout_27.addWidget(self.yellowa)
 
         self.greena = QLabel(self.verticalLayoutWidget_2)
         self.greena.setObjectName(u"greena")
@@ -766,31 +782,33 @@ class Ui_MainWindowA(object):
         self.sectionrangelabel.setText(QCoreApplication.translate("MainWindowA", u"N - Z", None))
         self.time.setText(QCoreApplication.translate("MainWindowA", u"11:44 PM", None))
         self.label_19.setText(QCoreApplication.translate("MainWindowA", u"Switches", None))
-        self.label_16.setText(QCoreApplication.translate("MainWindowA", u"1", None))
+        self.switchlabel.setText(QCoreApplication.translate("MainWindowA", u"1", None))
         self.gate10.setText(QCoreApplication.translate("MainWindowA", u"12-13", None))
         self.gate11.setText(QCoreApplication.translate("MainWindowA", u"1-13", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindowA", u"2", None))
+        self.switchlabel_2.setText(QCoreApplication.translate("MainWindowA", u"2", None))
         self.gate20.setText(QCoreApplication.translate("MainWindowA", u"29-30", None))
         self.gate21.setText(QCoreApplication.translate("MainWindowA", u"29-150", None))
-        self.label_20.setText(QCoreApplication.translate("MainWindowA", u"3", None))
+        self.switchlabel_3.setText(QCoreApplication.translate("MainWindowA", u"3", None))
         self.gate30.setText(QCoreApplication.translate("MainWindowA", u"57 - yard", None))
         self.gate31.setText(QCoreApplication.translate("MainWindowA", u"57 - 58", None))
-        self.label_21.setText(QCoreApplication.translate("MainWindowA", u"4", None))
+        self.switchlabel_4.setText(QCoreApplication.translate("MainWindowA", u"4", None))
         self.gate40.setText(QCoreApplication.translate("MainWindowA", u"63 - yard", None))
         self.gate41.setText(QCoreApplication.translate("MainWindowA", u"63 - 62", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindowA", u"5", None))
+        self.switchlabel_5.setText(QCoreApplication.translate("MainWindowA", u"5", None))
         self.gate50.setText(QCoreApplication.translate("MainWindowA", u"77 - 76", None))
         self.gate51.setText(QCoreApplication.translate("MainWindowA", u"77 - 101", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindowA", u"6", None))
+        self.switchlabel_6.setText(QCoreApplication.translate("MainWindowA", u"6", None))
         self.gate60.setText(QCoreApplication.translate("MainWindowA", u"85 - 86", None))
         self.gate61.setText(QCoreApplication.translate("MainWindowA", u"85 - 100", None))
+        self.switchlabel_7.setText(QCoreApplication.translate("MainWindowA", u"7", None))
+        self.gate70.setText(QCoreApplication.translate("MainWindowA", u"52 - 53", None))
+        self.gate71.setText(QCoreApplication.translate("MainWindowA", u"52 - 66", None))
         self.label_50.setText(QCoreApplication.translate("MainWindowA", u"Crossing", None))
         self.label_51.setText(QCoreApplication.translate("MainWindowA", u"Position", None))
         self.label_52.setText(QCoreApplication.translate("MainWindowA", u"Lights", None))
         self.label_53.setText(QCoreApplication.translate("MainWindowA", u"1", None))
         self.gatepositiona.setText(QCoreApplication.translate("MainWindowA", u"Active", None))
         self.reda.setText("")
-        self.yellowa.setText("")
         self.greena.setText("")
         self.activetrainlabel.setText(QCoreApplication.translate("MainWindowA", u"Active Trains  ", None))
         self.automaticmode.setText(QCoreApplication.translate("MainWindowA", u"Automatic Mode", None))
