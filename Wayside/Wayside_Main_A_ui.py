@@ -29,7 +29,7 @@ class Ui_MainWindowA(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 621, 671))
+        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 621, 711))
         self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -623,14 +623,6 @@ class Ui_MainWindowA(object):
 
         self.horizontalLayout_27.addWidget(self.reda)
 
-        self.yellowa = QLabel(self.verticalLayoutWidget_2)
-        self.yellowa.setObjectName(u"yellowa")
-        self.yellowa.setMaximumSize(QSize(21, 21))
-        self.yellowa.setPixmap(QPixmap(u"offlight.png"))
-        self.yellowa.setScaledContents(True)
-
-        self.horizontalLayout_27.addWidget(self.yellowa)
-
         self.greena = QLabel(self.verticalLayoutWidget_2)
         self.greena.setObjectName(u"greena")
         self.greena.setMaximumSize(QSize(21, 21))
@@ -817,7 +809,6 @@ class Ui_MainWindowA(object):
         self.label_53.setText(QCoreApplication.translate("MainWindowA", u"1", None))
         self.gatepositiona.setText(QCoreApplication.translate("MainWindowA", u"Active", None))
         self.reda.setText("")
-        self.yellowa.setText("")
         self.greena.setText("")
         self.activetrainlabel.setText(QCoreApplication.translate("MainWindowA", u"Active Trains  ", None))
         self.automaticmode.setText(QCoreApplication.translate("MainWindowA", u"Automatic Mode", None))
