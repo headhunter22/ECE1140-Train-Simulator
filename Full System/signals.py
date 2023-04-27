@@ -38,6 +38,7 @@ class Signals(QObject):
     waysideUpdateOccupancy = pyqtSignal(str, int, list) # line, block
     waysideUpdateVacancy = pyqtSignal(str, int, list) # line, block
     waysideCommandedSpeed = pyqtSignal(int)
+    waysideSuggestedSpeed = pyqtSignal(int)
     waysideAuthoritytoTrack = pyqtSignal(int, int)
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
     waysideSwitchtoCTC = pyqtSignal(list, list)#green list then red list
@@ -59,7 +60,7 @@ class Signals(QObject):
     waysidesetup = pyqtSignal(int)
 
     # wayside UI signals
-    wtowOccupancy = pyqtSignal(str, int, str) # block
+    wtowOccupancy = pyqtSignal(str, int, str, int) # block
     wtowVacancy = pyqtSignal(str, int, str) # block
     count = 0
     wtowTrainCount = pyqtSignal(int) # number of active trains
@@ -67,6 +68,7 @@ class Signals(QObject):
     wtowSwitchDefaults = pyqtSignal(list, list)#matrix
     wtowSwitchChange = pyqtSignal(list, list, int)#lists
     wtowCrossing = pyqtSignal(int, bool) #line, red false green true
+    wtowAuthority = pyqtSignal(list, str)
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)

@@ -80,7 +80,7 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"Adam Kort\n"
 "ajk179@pitt.edu\n"
 "814-873-1543", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Mikayle Bernhard\n"
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Mikayla Bernhard\n"
 "meb291@pitt.edu\n"
 "724-504-7402", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Jacob Kerstetter\n"
