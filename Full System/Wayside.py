@@ -60,6 +60,8 @@ class Wayside(QObject):
         self.switchDefaults1 = []
         self.switchMatrix0 = []
         self.switchMatrix1 = []
+        self.cross0 = []
+        self.cross1 = []
 
         # connect signals
         signals.waysideDispatchTrain.connect(self.dispatchTrain)
@@ -81,6 +83,30 @@ class Wayside(QObject):
         signals.waysideAllSectionsfromPLC.connect(self.setAllSections)
 
         
+    def crossinglights(self, block, line): # 1 both active 2 red active 3 green active 4 both inactive
+        #print("checking crossing")
+        currblock = self.track0.index(block)
+        nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
+        signalfortrack = 4
+        #if line == 'Green':
+        if ((nextblock1 == self.cross0[0]) or (block == self.cross0[0])) and line == 'Green':
+            print("coming up on crossing green")
+            signals.wtowCrossing.emit(0, False)
+            signalfortrack = 3
+        #elif line == 'Red':
+        elif ((nextblock1 == self.cross1[0]) or (block == self.cross1[0])) and line == 'Red':
+            print("coming up on crossing red")
+            signals.wtowCrossing.emit(1, False)
+            signalfortrack = 2
+        else:
+            #print("no crossings")
+            signals.wtowCrossing.emit(0, True)
+            signals.wtowCrossing.emit(1, True)
+            signalfortrack = 4
+
+        signals.waysideUpdateCrossingLights.emit(signalfortrack)
+
+
     def setTracks(self, track0, track1, etrack0, etrack1):
         self.track0 = track0
         self.track1 = track1
@@ -117,7 +143,6 @@ class Wayside(QObject):
         
         signals.wtowSwitchDefaults.emit(self.switchDefaults0, self.switchDefaults1)
         
-
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
         auth = 8
@@ -244,7 +269,7 @@ class Wayside(QObject):
         signals.waysideAuthoritytoTrack.emit(auth, currblock)
         signals.waysideAuthorityToCTC.emit(line, route, auth)
 
-    def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8):#, range):
+    def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8, cross0, cross1):#, range):
         #print("plcinfo start")
         signals.sections.emit(section1, section2, section3, section4, section5, section6, section7, section8)
         self.wayside1sectionrange = section1
@@ -266,15 +291,10 @@ class Wayside(QObject):
         self.wayside6range = range6
         self.wayside7range = range7
         self.wayside8range = range8
-        #print("signals sent in .py plcinfo")
-        
-    # def commspeed(self, train):
-    #     if (train.authority == '0'):
-    #         commSpeed = 0
-    #     else:
-    #         commSpeed = train.suggSpeed
 
-    #     signals.waysideCommandedSpeed.emit(commSpeed)
+        self.cross0 = cross0
+        self.cross1 = cross1
+        #print("signals sent in .py plcinfo")
 
     def dispatchTrain(self, train):
         # set occupancy of first block
@@ -294,7 +314,6 @@ class Wayside(QObject):
         signals.count = signals.count + 1
         signals.wtowTrainCount.emit(signals.count)
         
-
     def authorityReceived(self, train):
         print("authority from CTC to Wayside: " + str(train.authority))
 
@@ -317,12 +336,17 @@ class Wayside(QObject):
 
     def blockOccupancyReceived(self, line, block, route):
         #print(". py block", block, "is occupied")
-        
-        id = self.track0.index(block)
-        sec = self.allsection0[id]
         self.updateAuthority(line, block, route)
-        self.changeSwitch(line, block)
-        signals.wtowOccupancy.emit(line, block, sec)
+        self.changeSwitch(line, block) 
+        self.crossinglights(block, line)
+        if line == 'Green':
+            id = self.track0.index(block)
+            sec = self.allsection0[id]
+            signals.wtowOccupancy.emit(line, block, sec)
+        elif line == 'Red':
+            id = self.track1.index(block)
+            sec = self.allsection0[id]
+            signals.wtowOccupancy.emit(line, block, sec)
     
     def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
@@ -341,10 +365,10 @@ class Wayside(QObject):
 
     def changeSwitchfromCTC(self, sw0, sw1):
         if self.switchStates0 == sw0:
-            print("sw0 did not change")
+            #print("sw0 did not change")
             change = 1
         if self.switchStates1 == sw1:
-            print("sw0 did not change")
+            #print("sw0 did not change")
             change = 0
 
         self.switchStates0 = sw0
@@ -352,7 +376,6 @@ class Wayside(QObject):
 
         signals.wtowSwitchChange.emit(self.switchStates0, self.switchStates1, change)
         
-
     def changeSwitch(self, line, block):
         #print("CHANGESWITCH", line)
         if line == 'Green':
@@ -469,11 +492,6 @@ class Wayside(QObject):
                 #print("signals to ctc", self.switchStates0, self.switchStates1)
         print("")
         self.route.pop(0)
-
-    # def switchStateReceived(self, bl, updw):
-    #     self.switch = sw
-    #     print("authority from CTC to Wayside: " + str(self.authority))
-
-    
+   
     def trainInfoToCTC(self, train):
         signals.ctcUpdateGUITrainInfo.emit(train)

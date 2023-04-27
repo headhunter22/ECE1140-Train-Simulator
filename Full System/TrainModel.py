@@ -215,7 +215,7 @@ class TrainModel(QObject):
         self.trainList[len(self.trainList)-1].authorityBlocks = blocks
         auth = 0
         for i in range(blocks):
-            print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).blockName))
+            #print('currLine: ' +str(currLine.getBlock(self.trainList[0].route[i]).blockName))
             if (currLine.getBlock(self.trainList[0].route[i]).blockName == 57):
                 newAuth = 0
                 continue

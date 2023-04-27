@@ -180,7 +180,7 @@ class WTrack:
         
         #add 5 6 7 8
         signals.waysideinstances.emit(self.wayside1range, self.wayside1sectionrange, self.wayside2range, self.wayside2sectionrange, self.wayside3range, self.wayside3sectionrange, self.wayside4range, self.wayside4sectionrange, 
-                                    self.wayside5range, self.wayside5sectionrange, self.wayside6range, self.wayside6sectionrange, self.wayside7range, self.wayside7sectionrange, self.wayside8range, self.wayside8sectionrange)
+                                    self.wayside5range, self.wayside5sectionrange, self.wayside6range, self.wayside6sectionrange, self.wayside7range, self.wayside7sectionrange, self.wayside8range, self.wayside8sectionrange, self.crossing0, self.crossing1)
         #print("signals sent from plcparser waysides")
         #self.main.setupinstances()
         #print("plcparsere rage 2", self.wayside1range)
