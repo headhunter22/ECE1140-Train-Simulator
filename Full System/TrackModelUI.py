@@ -83,6 +83,7 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelUpdateGUISwitches.connect(self.changeSwitch)
         signals.trackModelGUIWaitingPassengers.connect(self.addWaitingPassengers)
         signals.waysideSwitchtoTrack.connect(self.changeSwitch)
+        signals.waysideUpdateCrossingLights.connect(self.changeCrossings)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
