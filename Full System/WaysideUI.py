@@ -122,16 +122,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     index = self.sectionmatrixrow.index(i) +1
                     self.bl.gridLayout.addWidget(image, index, 1)
 
-        # sectionstoCheck = []
-        
-        # for possibleSections in self.sectionrange:
-            
-        #     if possibleSections == current:
-        #         continue
-        #     else:
-        #         current = possibleSections
-        #         self.sectionrange.append(current)
-
 
     def crossingLights(self, track, color): #red false green true
         red = QPixmap('redlight.png')
@@ -192,16 +182,16 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #print("setupplc wayside1range 2 in ui .self",self.wayside1range)
 
     def newparse(self):
-        try:
-            home_dir = str(Path.home())
-            dialog = QFileDialog()
-            fname, filetypes = dialog.getOpenFileName()#getOpenFileName(self, 'Open file', home_dir)
-            #fname.selectedFiles()
-            #print(" newparse ui fname", fname)
-            #print("neaparse homedir", home_dir)
-            self.plc.parse(fname)
-        except:
-            print("No file to parse")
+        #try:
+        home_dir = str(Path.home())
+        dialog = QFileDialog()
+        fname, filetypes = dialog.getOpenFileName()#getOpenFileName(self, 'Open file', home_dir)
+        #fname.selectedFiles()
+        #print(" newparse ui fname", fname)
+        #print("neaparse homedir", home_dir)
+        self.plc.parse(fname)
+        #except:
+            #print("No file to parse")
 
     def works(self, range1, range2, range3, range4, range5, range6, range7, range8):
         #print("it works in ui from please from .py range1:", range1)
@@ -585,6 +575,32 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.gate71.setStyleSheet('background-color: SkyBlue')
         self.gate71.clicked.connect(lambda: self.toggleColor(self.gate71, self.gate70))
         self.gate70.setStyleSheet('background-color: white; color: gray')
+        self.gate10.clicked.connect(lambda: self.uichangedswitches( 0, 0))
+        self.gate11.clicked.connect(lambda: self.uichangedswitches( 0, 1))
+        self.gate20.clicked.connect(lambda: self.uichangedswitches( 1, 0))
+        self.gate21.clicked.connect(lambda: self.uichangedswitches( 1, 1))
+        self.gate30.clicked.connect(lambda: self.uichangedswitches( 2, 0))
+        self.gate31.clicked.connect(lambda: self.uichangedswitches( 2, 1))
+        self.gate40.clicked.connect(lambda: self.uichangedswitches( 3, 0))
+        self.gate41.clicked.connect(lambda: self.uichangedswitches( 3, 1))
+        self.gate50.clicked.connect(lambda: self.uichangedswitches( 4, 0))
+        self.gate51.clicked.connect(lambda: self.uichangedswitches( 4, 1))
+        self.gate60.clicked.connect(lambda: self.uichangedswitches( 5, 0))
+        self.gate61.clicked.connect(lambda: self.uichangedswitches( 5, 1))
+        self.gate70.clicked.connect(lambda: self.uichangedswitches( 6, 0))
+        self.gate71.clicked.connect(lambda: self.uichangedswitches( 6, 1))
+
+
+    def uichangedswitches(self, gate, state):
+        #print("current", self.switchStates0, self.switchStates1)
+        if self.first == 1 or self.first == 2 or self.first == 3 or self.first ==4:
+            self.switchStates0[gate]=state
+        elif self.first == 5 or self.first == 6 or self.first == 7 or self.first ==8:
+            self.switchStates1[gate]=state
+        #print("new", self.switchStates0, self.switchStates1)
+        
+        
+        signals.wtowSwitchfromUI.emit(self.switchStates0, self.switchStates1)
 
     def setuppopups(self, first):
         self.sectionrange = []
@@ -1604,7 +1620,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
             self.bl.block1.setText(str(self.sectionmatrix[self.sectionrow][0]))
 
         h = 30 + 46*len(self.sectionmatrix[self.sectionrow])
-        self.bl.resize(505, h) 
+        self.bl.resize(250, h) 
         self.bl.show()
 
     #function for toggle switch colors but see if you can do labels instead of buttons??
