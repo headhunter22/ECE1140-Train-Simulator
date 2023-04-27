@@ -8,6 +8,7 @@ from Fault import Fault
 from Section import Section
 import TrackParser 
 from signals import signals
+from reparsedTrack import reparsedTrack
 
 # Main Window Class
 class TrackModelUI(QtWidgets.QMainWindow):
@@ -81,6 +82,8 @@ class TrackModelUI(QtWidgets.QMainWindow):
         signals.trackModelTempUpdated.connect(self.tempUpdate)
         signals.trackModelUpdateGUISwitches.connect(self.changeSwitch)
         signals.trackModelGUIWaitingPassengers.connect(self.addWaitingPassengers)
+        signals.waysideSwitchtoTrack.connect(self.changeSwitch)
+        signals.waysideUpdateCrossingLights.connect(self.changeCrossings)
 
     def updateTime(self, hrs, mins, secs):
         self.time.setText(f'{int(hrs):02d}' + ':' + f'{int(mins):02d}' + ':' + f'{int(secs):02d}')
@@ -419,26 +422,17 @@ class TrackModelUI(QtWidgets.QMainWindow):
 
     def openTrackUpload(self):
         # open the file explorer 
-        response = self.fileBrowser.getOpenFileNames(
-            caption='Select File',
-            directory=os.getcwd(),
-            initialFilter='Data File (*.csv)'
-        )
-
-        # test to make sure filename isn't blank (upload canceled)
-        try:
-            filename = str(response[0][0])
+        filePath, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', '', 'CSV files (*.csv)')
+        if filePath:
+            filename = os.path.basename(filePath)
             self.reparseTrack(filename)
-        except: 
-            print('no file selected')
 
     def reparseTrack(self, filename):
         # put the track into a new track class with the parser
-        self.track = TrackParser.parseTrack(filename)
+        track = TrackParser.parseTrack(filename)
 
-        # recreate the ui with new track
-        # clear the widgets from the scroll area
-        self.RedLineScrollArea.removeWidget
+        self.newWindow = reparsedTrack(track)
+        self.newWindow.show()
 
     def showFaultWindow(self):
         self.faultWindow.show()

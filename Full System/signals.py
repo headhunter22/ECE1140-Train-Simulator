@@ -42,6 +42,8 @@ class Signals(QObject):
     waysideSwitchtoTrack = pyqtSignal(int, int)#change switch to send to track "stem" of switch, stem connects to
     waysideSwitchtoCTC = pyqtSignal(list, list)#green list then red list
     waysideWait = pyqtSignal(bool)
+    waysideUpdateCrossingLights = pyqtSignal(int)
+
     #plc
     waysideTrackfromPLC = pyqtSignal(list, list, list, list)
     waysideStationsfromPLC = pyqtSignal(list, list)
@@ -49,7 +51,7 @@ class Signals(QObject):
     waysideSectionsfromPLC = pyqtSignal(list, list)
     waysideAllSectionsfromPLC = pyqtSignal(list, list)
     waysideSwitchStatesfromPLC = pyqtSignal(list, list)
-    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
+    waysideinstances = pyqtSignal(list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list, list) #from plc
 
     ranges = pyqtSignal(list, list, list, list, list, list, list, list)
     sections = pyqtSignal(list, list, list, list, list, list, list, list)
@@ -61,6 +63,10 @@ class Signals(QObject):
     wtowVacancy = pyqtSignal(str, int, str) # block
     count = 0
     wtowTrainCount = pyqtSignal(int) # number of active trains
+    wtowSwitchesSetup = pyqtSignal(list, list)#matrix
+    wtowSwitchDefaults = pyqtSignal(list, list)#matrix
+    wtowSwitchChange = pyqtSignal(list, list, int)#lists
+    wtowCrossing = pyqtSignal(int, bool) #line, red false green true
 
     # signals to track model
     # suggSpeedWaysideToTrackModel = pyqtSignal(Train)
@@ -118,7 +124,9 @@ class Signals(QObject):
     trainModelLineSignal= pyqtSignal(Line)
     trainModelGUISpeedLim = pyqtSignal(str)
     trainModelAuthorityToTrainController = pyqtSignal(int)
-    sigFaultsig = pyqtSignal(bool)
+    powFaultsig = pyqtSignal(bool)
+    brakeFaultsig = pyqtSignal(bool)
+    trainModelStationtoTrainController = pyqtSignal(str)
 
     # train model UI signals
     trainModelEmerBrake = pyqtSignal(bool)
@@ -136,6 +144,7 @@ class Signals(QObject):
     # Train Controller UI Signals #
     trainControllerEmerBrake = pyqtSignal(bool) # Emergency Brake On/Off
     trainControllerServiceBrake = pyqtSignal(bool)
+    trainControllerServiceBrakeMan = pyqtSignal(bool)
     trainControllerPower = pyqtSignal(float)
     trainControllerSpeed = pyqtSignal(float)
     trainControllerAuthority = pyqtSignal(float)

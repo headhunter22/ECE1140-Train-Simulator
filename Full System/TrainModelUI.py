@@ -55,6 +55,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
         signals.trainModelGUISpeedLim.connect(self.speedLim)
         signals.trainControllerEmerBrake.connect(self.brakeUI)
         signals.trackModelBeaconSending.connect(self.beaconFunc)
+        signals.trainModelAuthorityToTrainController.connect(self.updateAuthority)
         #displaying the stats of the train popup
 
         self.popUpUI.clicked.connect(self.displayPopUp)
@@ -93,6 +94,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
         self.actSpeed.setText("Speed: {0} mi/h".format(floatTxt)) #actSpeed is the qt creator object
 
     def displayAcc(self,train):
+        if self.brakeFaulVar == True:
+            self.trainAcc.setStyleSheet("background-color: red;border: 2px solid black; border-radius: 4px;padding: 2px;")
+        else:
+            self.trainAcc.setStyleSheet("background-color: light gray;border: 2px solid black; border-radius: 4px;padding: 2px;")
+
         acc = float(train)*2.237
         txt = f"{acc:.2f}"
         floatTxt = float(txt)
@@ -112,6 +118,11 @@ class TrainModelUI(QtWidgets.QMainWindow):
     
     
     def displayPower(self,train):
+        if self.powFaulVar == True: 
+            self.powLabel.setStyleSheet("background-color: red;border: 2px solid black; border-radius: 4px;padding: 2px;")
+        else:
+            self.powLabel.setStyleSheet("background-color: light gray;border: 2px solid black; border-radius: 4px;padding: 2px;")
+
         self.powLabel.setText("Power Input: {0} Watts".format(train))
         self.powProgressBar.setMinimum(0)
         self.powProgressBar.setMaximum(120001)
@@ -157,7 +168,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.intLightLabel.setStyleSheet("background-color: red")
             self.intLightLabel.setText("OFF")
     
-    def emergencyBrake(self):
+    def emergencyBrake(self):      
         if (self.EmerButton.styleSheet() == 'background-color: red'):
             self.actSpeed.setStyleSheet("background-color: red; border: 2px solid black; border-radius: 4px;padding: 2px;")
             self.EmerButton.setText("Reset")
@@ -224,7 +235,8 @@ class TrainModelUI(QtWidgets.QMainWindow):
             else:
                 station = 'Central'
 
-            text = text + station + '\n                    '
+            text = text + station + '\n   '
+            signals.trainModelStationtoTrainController.emit(text)
         self.destLabel.setText(text)
 
 
@@ -292,6 +304,7 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.powFaultLabel.setIcon(powIcon)
             self.powFaultLabel.setIconSize(QSize(50, 50))
             self.powFaulVar = False
+        signals.powFaultsig.emit(self.powFaulVar)
 
     
     def brakeFaultFunc(self):
@@ -305,4 +318,10 @@ class TrainModelUI(QtWidgets.QMainWindow):
             self.brakeFaultLabel.setIcon(brakeIcon)
             self.brakeFaultLabel.setIconSize(QSize(50, 50))
             self.brakeFaulVar = False
+        signals.brakeFaultsig.emit(self.brakeFaulVar)
 
+    def updateAuthority(self, auth):
+         x = auth
+         txt = f"{x:.2f}"
+         self.y = float(txt)
+         self.authority.setText("Authority: {0} meters".format(self.y))

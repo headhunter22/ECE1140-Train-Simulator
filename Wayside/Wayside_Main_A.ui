@@ -20,7 +20,7 @@
       <x>10</x>
       <y>0</y>
       <width>621</width>
-      <height>691</height>
+      <height>711</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -710,7 +710,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_12">
                <item>
-                <widget class="QLabel" name="label_16">
+                <widget class="QLabel" name="switchlabel">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -745,7 +745,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
-                <widget class="QLabel" name="label_17">
+                <widget class="QLabel" name="switchlabel_2">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -780,7 +780,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_8">
                <item>
-                <widget class="QLabel" name="label_20">
+                <widget class="QLabel" name="switchlabel_3">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -815,7 +815,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_9">
                <item>
-                <widget class="QLabel" name="label_21">
+                <widget class="QLabel" name="switchlabel_4">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -850,7 +850,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_10">
                <item>
-                <widget class="QLabel" name="label_22">
+                <widget class="QLabel" name="switchlabel_5">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -885,7 +885,7 @@ color: rgb(0, 0, 0);</string>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_13">
                <item>
-                <widget class="QLabel" name="label_23">
+                <widget class="QLabel" name="switchlabel_6">
                  <property name="styleSheet">
                   <string notr="true">font: 700 10pt &quot;Georgia&quot;;
 color: rgb(0, 0, 0);</string>
@@ -912,6 +912,41 @@ color: rgb(0, 0, 0);</string>
                 <widget class="QPushButton" name="gate61">
                  <property name="text">
                   <string>85 - 100</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QLabel" name="switchlabel_7">
+                 <property name="styleSheet">
+                  <string notr="true">font: 700 10pt &quot;Georgia&quot;;
+color: rgb(0, 0, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>7</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="gate70">
+                 <property name="text">
+                  <string>52 - 53</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="gate71">
+                 <property name="text">
+                  <string>52 - 66</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -1022,25 +1057,6 @@ color: rgb(0, 0, 0);</string>
                  </property>
                  <property name="pixmap">
                   <pixmap>greenlight.png</pixmap>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="yellowa">
-                 <property name="maximumSize">
-                  <size>
-                   <width>21</width>
-                   <height>21</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap>offlight.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
