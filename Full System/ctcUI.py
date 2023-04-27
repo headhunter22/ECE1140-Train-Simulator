@@ -42,6 +42,8 @@ class ctcMainUI(QMainWindow):
         signals.ctcCreateGUITrainInfo.connect(self.addTrainInfoLine)
         signals.ctcUpdateGUITrainInfo.connect(self.updateTrainInfo)
         signals.waysideAuthorityToCTC.connect(self.updateOccupancyAuthority)
+        signals.waysideSwitchtoCTC.connect(self.switchStatesFromWayside)
+        signals.ctcThroughput.connect(self.displayThroughput)
 
         ##################################
         ########STARTUP FUNCTIONS#########
@@ -195,6 +197,12 @@ class ctcMainUI(QMainWindow):
     ############## MISC FUNCTIONS ##############
     ############################################
 
+    def displayThroughput(self, tickets, line):
+        if line == "Green":
+            self.ui.greenThroughput.setText(tickets + " passengers")
+        elif line == "Red":
+            self.ui.redThroughput.setText(tickets + " passengers")
+
     def setColors(self):
         self.ui.green_C1.setStyleSheet('background-color: SkyBlue')
         self.ui.green_C2.setStyleSheet('background-color: white; color: gray')
@@ -302,7 +310,6 @@ class ctcMainUI(QMainWindow):
     def dispatchRedLine(self):
         try:
             for rows in range(0, self.ui.redScheduledTrains.rowCount()):
-                print(self.ui.redScheduledTrains.item(rows, 2).text())
                 if self.ui.redScheduledTrains.item(rows, 2).text() == self.ui.dataTime.text():
                     destlist = ast.literal_eval(self.ui.redScheduledTrains.item(rows, 0).text())
 
@@ -618,7 +625,7 @@ class ctcMainUI(QMainWindow):
                 signals.blockMaintenanceFromCTCtoWayside.emit("Green", self.ui.blockSelectMaintenance.currentIndex()+1, False)
     
     #when the line is switched this replaced the block selection to the correct amount for the given line
-    def switchLineChanged(self, track): #########
+    def switchLineChanged(self, track):
         # clear current options in the dropdowns 
         self.ui.blockSelectMaintenance.clear()
 
@@ -632,6 +639,74 @@ class ctcMainUI(QMainWindow):
             for block in section.blocks:
                 self.ui.blockSelectMaintenance.addItem(block.blockName)
     
+    def switchStatesFromWayside(self, greenSwitches, redSwitches):
+        if greenSwitches[0] == 0:
+            self.ui.green_C2.click()
+        else:
+            self.ui.green_C1.click()
+
+        if greenSwitches[1] == 0:
+            self.ui.green_G1.click()
+        else:
+            self.ui.green_G2.click()
+
+        if greenSwitches[2] == 0:
+            self.ui.green_J1_1.click()
+        else:
+            self.ui.green_J1_2.click()
+
+        if greenSwitches[3] == 0:
+            self.ui.green_J2_2.click()
+        else:
+            self.ui.green_J2_1.click()
+
+        if greenSwitches[4] == 0:
+            self.ui.green_M1.click()
+        else:
+            self.ui.green_M2.click()
+
+        if greenSwitches[5] == 0:
+            self.ui.green_N1.click()
+        else:
+            self.ui.green_N2.click()
+
+        
+        if redSwitches[0] == 0:
+            self.ui.red_C2.click()
+        else:
+            self.ui.red_C1.click()
+
+        if redSwitches[1] == 0:
+            self.ui.red_E2.click()
+        else:
+            self.ui.red_E1.click()
+
+        if redSwitches[2] == 0:
+            self.ui.red_H1_1.click()
+        else:
+            self.ui.red_H1_2.click()
+
+        if redSwitches[3] == 0:
+            self.ui.red_H2_1.click()
+        else:
+            self.ui.red_H2_2.click()
+
+        if redSwitches[4] == 0:
+            self.ui.red_H3_1.click()
+        else:
+            self.ui.red_H3_2.click()
+
+        if redSwitches[5] == 0:
+            self.ui.red_H4_1.click()
+        else:
+            self.ui.red_H4_2.click()
+
+        if redSwitches[6] == 0:
+            self.ui.red_J1.click()
+        else:
+            self.ui.red_J2.click()
+
+        
     ############################################
     ######## OCCUPANCY VIEW FUNCTIONS ##########
     ############################################
