@@ -73,6 +73,7 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         signals.wtowSwitchChange.connect(self.newSwitchStates)
         signals.wtowSwitchDefaults.connect(self.setSwitchDefaults)
         signals.wtowCrossing.connect(self.crossingLights)
+        #signals.wtowAuthority.connect(self.updateAuthority)
         
         self.plc = WTrack()
         self.setupplc()
@@ -107,6 +108,33 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #lights
         #self.reda.setPixmap(QPixmap('greenlight.png'))
         #self.greenb.setPixmap(QPixmap('greenlight.png'))
+    def updateAuthority(self, blocks, section):
+        image = QLabel()
+        pic = QPixmap('redtracks.png')
+        image.setPixmap(pic.scaled(50, 50))
+
+        matrixrow = self.sectionrange.index(section)
+        print("index matrixrow", matrixrow)
+        print("sectionmatrix", self.sectionmatrix)
+        sectionBlocks = self.sectionmatrix[matrixrow]
+        print("checking these sectionBlocks", sectionBlocks)
+        for i in sectionBlocks:
+            for j in blocks:
+                if i == j:
+                    print(j," has authority in it and =i", i)
+                    index = self.sectionmatrixrow.index(i) +1
+                    self.bl.gridLayout.addWidget(image, index, 1)
+
+        # sectionstoCheck = []
+        
+        # for possibleSections in self.sectionrange:
+            
+        #     if possibleSections == current:
+        #         continue
+        #     else:
+        #         current = possibleSections
+        #         self.sectionrange.append(current)
+
 
     def crossingLights(self, track, color): #red false green true
         red = QPixmap('redlight.png')
@@ -159,7 +187,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         #signals.waysidefirst.emit(num)
         #signals.wtowOccupancy.emit() 
         
-
     def setupplc(self):
         
         self.plc.parse()#fname = "plcLogic_Red")
@@ -566,9 +593,6 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
         self.sectionrange = []
         #print("first", first)
         #print("setuppopups start")
-        #print("first",first)
-        #pop up windows
-        #current = ''
         if first == 1:
             self.linelabel.setText("Green Line")
             self.sectionrange = []
@@ -1595,11 +1619,12 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
 
     #occupation 2 blocks ahead for now
     #!!!!!! TO DO !!!!!!!!!
-    def changeOccupancy(self, line, block, sec):
+    def changeOccupancy(self, line, block, sec, auth):
         #print("change occ line block sec", line, block, sec)
         img = QPixmap('greentrain.png')
         self.occupied.append(block)
-        print("occupied blocks from occupied", self.occupied)
+        #auth = QPixmap('redtracks.png')
+        print("occupied blocks", self.occupied)
         
         if self.first == 1 and line == 'Green':
             #secbutton = self.wayside1sectionrange.index(sec)
@@ -1845,10 +1870,36 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                 self.ccicon.setPixmap(img)
             else:
                 print("occupied section not on this wayside")
+        # print("sectionrange", self.sectionrange)
+        # try:
+        #     rowindex = self.sectionrange.index(self.sectionrow)
+        #     print("rowindex", rowindex)
+        #     nextrow = self.ssectionrange[rowindex+1]
+        #     print("nextrow", nextrow)
+        #     self.sectionmatrixrow = self.sectionmatrix[self.sectionrow]
+        # except:
+        #     return
 
         image = QLabel()
         pic = QPixmap('greentrain.png')
         image.setPixmap(pic.scaled(50, 50))
+        auth1 = QLabel()
+        pica = QPixmap('redtracks.png')
+        auth1.setPixmap(pica.scaled(50, 50))
+        auth2 = QLabel()
+        auth2.setPixmap(pica.scaled(50, 50))
+        auth3 = QLabel()
+        auth3.setPixmap(pica.scaled(50, 50))
+        auth4 = QLabel()
+        auth4.setPixmap(pica.scaled(50, 50))
+        auth5 = QLabel()
+        auth5.setPixmap(pica.scaled(50, 50))
+        auth6 = QLabel()
+        auth6.setPixmap(pica.scaled(50, 50))
+        auth7 = QLabel()
+        auth7.setPixmap(pica.scaled(50, 50))
+        auth8 = QLabel()
+        auth8.setPixmap(pica.scaled(50, 50))
         for i in self.sectionmatrixrow:
             #print("in forloop i", i)
             for j in self.occupied:
@@ -1857,6 +1908,51 @@ class WMainWindowA(QtWidgets.QMainWindow, Ui_MainWindowA):
                     #print("i = j", i, j)
                     index = self.sectionmatrixrow.index(i) +1
                     self.bl.gridLayout.addWidget(image, index, 1)
+                    if auth == 1:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                    elif auth == 2:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                    elif auth == 3:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                    elif auth == 4:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                        self.bl.gridLayout.addWidget(auth4, index+4, 1)
+                    elif auth == 5:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                        self.bl.gridLayout.addWidget(auth4, index+4, 1)
+                        self.bl.gridLayout.addWidget(auth5, index+5, 1)
+                    elif auth == 6:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                        self.bl.gridLayout.addWidget(auth4, index+4, 1)
+                        self.bl.gridLayout.addWidget(auth5, index+5, 1)
+                        self.bl.gridLayout.addWidget(auth6, index+6, 1)
+                    elif auth == 7:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                        self.bl.gridLayout.addWidget(auth4, index+4, 1)
+                        self.bl.gridLayout.addWidget(auth5, index+5, 1)
+                        self.bl.gridLayout.addWidget(auth6, index+6, 1)
+                        self.bl.gridLayout.addWidget(auth7, index+7, 1)
+                    elif auth == 8:
+                        self.bl.gridLayout.addWidget(auth1, index+1, 1)
+                        self.bl.gridLayout.addWidget(auth2, index+2, 1)
+                        self.bl.gridLayout.addWidget(auth3, index+3, 1)
+                        self.bl.gridLayout.addWidget(auth4, index+4, 1)
+                        self.bl.gridLayout.addWidget(auth5, index+5, 1)
+                        self.bl.gridLayout.addWidget(auth6, index+6, 1)
+                        self.bl.gridLayout.addWidget(auth7, index+7, 1)
+                        self.bl.gridLayout.addWidget(auth8, index+8, 1)
+
 
     def changeVacancy(self, line, block, sec):
         #print("wayside a UI block", block, "is vacant")

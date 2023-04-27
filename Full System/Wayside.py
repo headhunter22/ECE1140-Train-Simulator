@@ -24,6 +24,7 @@ class Wayside(QObject):
         self.greenSwitchStates = [1, 1, 0, 0, 0, 0]
         self.dest = []
         self.route = []
+        self.auth = 8
 
         self.wayside1range = []#GREEN
         self.wayside1sectionrange = []
@@ -68,7 +69,7 @@ class Wayside(QObject):
         signals.trackCTCToWayside.connect(self.trackReceived)
         signals.waysideUpdateOccupancy.connect(self.blockOccupancyReceived)
         signals.waysideUpdateVacancy.connect(self.blockVacancyReceived)
-        #signals.waysideCommandedSpeed.connect(self.commspeed)
+        signals.waysideCommandedSpeed.connect(self.suggSpeedReceived)
         signals.waysideinstances.connect(self.plcinfo)
 
         signals.switchStatesFromCTCtoWayside.connect(self.changeSwitchfromCTC)
@@ -158,10 +159,13 @@ class Wayside(QObject):
         
     def updateAuthority(self, line, block, route):
         #print("authority starts at 8")
-        auth = 8
+        self.auth= 8
+        authoritylist = []
         #print("authority currblock", currblock)
         #print("authority line", line)
         if line == 'Green':
+            id = self.track0.index(block)
+            sec = self.allsection0[id]
             #print("in green")
             currblock = self.track0.index(block)
             #print("current block", currblock)
@@ -195,42 +199,52 @@ class Wayside(QObject):
             for i in self.dest:
                 #print("i from inside loop as int", int(i))
                 if int(i) == block:
-                    auth = 0
+                    self.auth= 0
                     #print("i = block0", int(i), block)
                     break
                 elif int(i) == nextblock1:
-                    auth = 1
+                    self.auth= 1
+                    authoritylist = [nextblock1]
                     #print("i = block1", int(i), nextblock1)
                     break
                 elif int(i) == nextblock2:
-                    auth = 2
+                    self.auth= 2
+                    authoritylist = [nextblock1, nextblock2]
                     #print("i = block2", int(i), nextblock2)
                     break
                 elif int(i) == nextblock3:
-                    auth = 3
+                    self.auth= 3
+                    authoritylist = [nextblock1, nextblock2, nextblock3]
                     #print("i = block3", int(i), nextblock3)
                     break
                 elif int(i) == nextblock4:
-                    auth = 4
+                    self.auth= 4
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4]
                     #print("i = block4", int(i), nextblock4)
                     break
                 elif int(i) == nextblock5:
-                    auth = 5
+                    self.auth= 5
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5]
                     #print("i = block5", int(i), nextblock5)
                     break
                 elif int(i) == nextblock6:
-                    auth = 6
+                    self.auth= 6
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6]
                     #print("i = block6", int(i), nextblock6)
                     break
                 elif int(i) == nextblock7:
-                    auth = 7
+                    self.auth= 7
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6, nextblock7]
                     #print("i = block7", int(i), nextblock7)
                     break
                 elif int(i) == nextblock8:
-                    auth = 8
+                    self.auth= 8
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6, nextblock7, nextblock8]
                     #print("i = block8", int(i), nextblock8)
                     break
         elif line == 'Red':
+            id = self.track1.index(block)
+            sec = self.allsection0[id]
             #print("in green")
             currblock = self.track1.index(block)
             #print("current block", currblock)
@@ -261,26 +275,36 @@ class Wayside(QObject):
             #print("next blocks:", nextblock1, nextblock2, nextblock3,nextblock4, nextblock5, nextblock6, nextblock7, nextblock8)
             for i in self.dest:
                 if int(i) == block:
-                    auth = 0
+                    self.auth= 0
                 elif int(i) == nextblock1:
-                    auth = 1
+                    self.auth= 1
+                    authoritylist = [nextblock1]
                 elif int(i) == nextblock2:
-                    auth = 2
+                    self.auth= 2
+                    authoritylist = [nextblock1, nextblock2]
                 elif int(i) == nextblock3:
-                    auth = 3
+                    self.auth= 3
+                    authoritylist = [nextblock1, nextblock2, nextblock3]
                 elif int(i) == nextblock4:
-                    auth = 4
+                    self.auth= 4
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4]
                 elif int(i) == nextblock5:
-                    auth = 5
+                    self.auth= 5
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5]
                 elif int(i) == nextblock6:
-                    auth = 6
+                    self.auth= 6
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6]
                 elif int(i) == nextblock7:
-                    auth = 7
+                    self.auth= 7
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6, nextblock7]
                 elif int(i) == nextblock8:
-                    auth = 8
+                    self.auth= 8
+                    authoritylist = [nextblock1, nextblock2, nextblock3, nextblock4, nextblock5, nextblock6, nextblock7, nextblock8]
+            
         #print("wayside.py update authority auth", auth)
-        signals.waysideAuthoritytoTrack.emit(auth, currblock)
-        signals.waysideAuthorityToCTC.emit(line, route, auth)
+        signals.waysideAuthoritytoTrack.emit(self.auth, currblock)
+        signals.waysideAuthorityToCTC.emit(line, route, self.auth)
+        signals.wtowAuthority.emit(authoritylist, sec)
 
     def plcinfo(self, range1, section1, range2, section2, range3, section3, range4, section4, range5, section5, range6, section6, range7, section7, range8, section8, cross0, cross1):#, range):
         #print("plcinfo start")
@@ -334,8 +358,8 @@ class Wayside(QObject):
         print("authority from Wayside to Track:", str(blocks))
         signals.waysideAuthority.emit(blocks)
         
-    def suggSpeedReceived(self, train):
-        print("speed from CTC to Wayside: " + str(train.suggSpeed))
+    def suggSpeedReceived(self, speed):
+        signals.waysideSuggestedSpeed.emit(speed)
 
     def trainReceived(self, train):
         # pass train onto track model
@@ -351,15 +375,20 @@ class Wayside(QObject):
         #print(". py block", block, "is occupied")
         self.updateAuthority(line, block, route)
         self.changeSwitch(line, block) 
-        self.crossinglights(block, line)
+        currblock = self.track0.index(block)
+        nextblock1 = int(self.everythingtrack0[currblock].nextBlock)
+        if ((nextblock1 == self.cross0[0]) or (block == self.cross0[0])) and line == 'Green':
+            self.crossinglights(block, line)
+        elif ((nextblock1 == self.cross1[0]) or (block == self.cross1[0])) and line == 'Red':
+            self.crossinglights(block, line)
         if line == 'Green':
             id = self.track0.index(block)
             sec = self.allsection0[id]
-            signals.wtowOccupancy.emit(line, block, sec)
+            signals.wtowOccupancy.emit(line, block, sec, self.auth)
         elif line == 'Red':
             id = self.track1.index(block)
             sec = self.allsection0[id]
-            signals.wtowOccupancy.emit(line, block, sec)
+            signals.wtowOccupancy.emit(line, block, sec, self.auth)
     
     def blockVacancyReceived(self, line, block):
         #print(".py block", block, "is vacant")
