@@ -1,5 +1,5 @@
 # Pitt ECE1140-Team-1
-#####Contributors#####
+# Contributors
 # Jacob Kerstetter
 # Adam Kort
 # Jason Head
