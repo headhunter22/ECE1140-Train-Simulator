@@ -7,9 +7,5 @@
 # Mikayla Bernhard
 
 This project was a semester-long task to create a train system. Each of our group members took a different module of the project:
-CTC Office
-Wayside Controller
-Track Model
-Train Model 
-Train Controller
+CTC Office, Wayside Controller, Track Model, Train Model, and Train Controller
 
